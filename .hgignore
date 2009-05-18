@@ -10,7 +10,6 @@ TODO.pdf
 kay/lib/jinja2
 kay/lib/babel
 kay/lib/simplejson
-kay/lib/werkzeug
 settings.py
 
 syntax: regexp
