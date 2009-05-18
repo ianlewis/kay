@@ -1350,9 +1350,9 @@ class ModelField(Field):
 
     The first argument is the name of the model. If the key is not
     given (None) the primary key is assumed. You can also specify
-    filter and query parameter on init. It forces filter based
-    validation.  You can construct choices by giving query_dict named
-    parameter to form's __init__ method.
+    query parameter on init. It forces query based validation.  You
+    can override query by giving query_dict named parameter to form's
+    __init__ method.
 
     """
     messages = dict(not_found=lazy_gettext(
@@ -1362,7 +1362,7 @@ class ModelField(Field):
     def __init__(self, model, key=None, label=None, help_text=None,
                  required=False, message=None, validators=None, widget=None,
                  messages=None, default=missing, on_not_found=None,
-                 filter=None, query=None, option_name=None):
+                 query=None, option_name=None):
         Field.__init__(self, label, help_text, validators, widget, messages,
                        default)
         self.model = model
@@ -1370,7 +1370,6 @@ class ModelField(Field):
         self.required = required
         self.message = message
         self.on_not_found = on_not_found
-        self.filter = filter
         self.query = query or self.model.all()
         self.option_name = option_name
 
@@ -1387,8 +1386,6 @@ class ModelField(Field):
             query = self.query.filter("__key__ =", db.Key(value))
         else:
             query = self.query.filter("%s =" % self.key, value)
-        if self.filter is not None:
-            query = query.filter(*self.filter)
         rv = query.get()
 
         if rv is None:
@@ -1428,8 +1425,6 @@ class ModelField(Field):
         q = self.query
       else:
         self.query = q
-      if self.filter is not None:
-        q = q.filter(*self.filter)
       self.choices = [("", u"----")] + \
           [(e.key(), escape(self._get_option_name(e)))
            for e in q.fetch(1000)]
