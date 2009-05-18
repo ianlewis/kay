@@ -1599,6 +1599,7 @@ class MultiChoiceField(ChoiceField):
         return map(unicode, _force_list(value))
 
 
+
 class IntegerField(Field):
     """Field for integers.
 
@@ -1657,6 +1658,66 @@ class IntegerField(Field):
             raise ValidationError(message)
 
         return int(value)
+
+
+class FloatField(Field):
+    """Field for integers.
+
+    >>> field = IntegerField(min_value=0, max_value=99)
+    >>> field('13.4')
+    13.4
+
+    >>> field('thirteen')
+    Traceback (most recent call last):
+      ...
+    ValidationError: Please enter a float number.
+
+    >>> field('193.2')
+    Traceback (most recent call last):
+      ...
+    ValidationError: Ensure this value is less than or equal to 99.
+    """
+
+    messages = dict(
+        too_small=None,
+        too_big=None,
+        no_float=lazy_gettext('Please enter a float number.')
+    )
+
+    def __init__(self, label=None, help_text=None, required=False,
+                 min_value=None, max_value=None, validators=None,
+                 widget=None, messages=None, default=missing):
+        Field.__init__(self, label, help_text, validators, widget, messages,
+                       default)
+        self.required = required
+        self.min_value = min_value
+        self.max_value = max_value
+
+    def convert(self, value):
+        value = _to_string(value)
+        if not value:
+            if self.required:
+                raise ValidationError(self.messages['required'])
+            return None
+        try:
+            value = float(value)
+        except ValueError:
+            raise ValidationError(self.messages['no_float'])
+
+        if self.min_value is not None and value < self.min_value:
+            message = self.messages['too_small']
+            if message is None:
+                message = _(u'Ensure this value is greater than or '
+                            u'equal to %s.') % self.min_value
+            raise ValidationError(message)
+        if self.max_value is not None and value > self.max_value:
+            message = self.messages['too_big']
+            if message is None:
+                message = _(u'Ensure this value is less than or '
+                            u'equal to %s.') % self.max_value
+            raise ValidationError(message)
+
+        return float(value)
 
 
 class FileField(Field):
@@ -1964,9 +2025,9 @@ class Form(object):
         # TODO: implement
         #if self.request.user.is_somebody:
         #    user_id = self.request.user.id
-        if self.request.hasattr('session'):
+        try:
           login_time = self.request.session.get('lt', -1)
-        else:
+        except AttributeError:
           login_time = -1
         import settings
         key = settings.SECRET_KEY

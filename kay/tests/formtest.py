@@ -103,5 +103,41 @@ class FormTest(GAETestBase):
     entries = TestModel.all().fetch(100)
     db.delete(entries)
 
+class TestForm2(forms.Form):
+  csrf_protected = False
+  float_field = forms.FloatField("float", min_value=5.5, max_value=99.9)
+
+class FloatFieldTest(GAETestBase):
+  def setUp(self):
+    super(FloatFieldTest, self).setUp()
+    os.environ['REQUEST_METHOD'] = 'POST'
+    local.request = Request(self.get_env())
+
+  def test_validate_float(self):
+    """
+    Float value validation test.
+    """
+    f = TestForm2()
+    result = f.validate({'float_field': 10.7})
+    self.assertEqual(result, True)
+    result = f.validate({'float_field': 'ten'})
+    self.assertEqual(result, False)
+
+  def test_min(self):
+    """
+    Minimal value validation test.
+    """
+    f = TestForm2()
+    result = f.validate({'float_field': 5.4})
+    self.assertEqual(result, False)
+
+  def test_max(self):
+    """
+    Maximum value validation test.
+    """
+    f = TestForm2()
+    result = f.validate({'float_field': 100.1})
+    self.assertEqual(result, False)
+
 if __name__ == "__main__":
   unittest.main()
