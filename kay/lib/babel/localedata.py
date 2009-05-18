@@ -26,11 +26,11 @@ except ImportError:
     import dummy_threading as threading
 from UserDict import DictMixin
 
+from google.appengine.api import memcache
+
 __all__ = ['exists', 'list', 'load']
 __docformat__ = 'restructuredtext en'
 
-_cache = {}
-_cache_lock = threading.RLock()
 _filename = os.path.join(os.path.dirname(__file__), 'localedata.zip')
 
 
@@ -41,8 +41,9 @@ def exists(name):
     :return: `True` if the locale data exists, `False` otherwise
     :rtype: `bool`
     """
-    if name in _cache:
-        return True
+    data = memcache.get("locale:%s")
+    if data is not None:
+      return True
     zfile = zipfile.ZipFile(_filename)
     try:
       zfile.getinfo("localedata/%s.dat" % name)
@@ -94,31 +95,28 @@ def load(name, merge_inherited=True):
     :raise `IOError`: if no locale data file is found for the given locale
                       identifer, or one of the locales it inherits from
     """
-    _cache_lock.acquire()
-    zfile = zipfile.ZipFile(_filename)
-    try:
-        data = _cache.get(name)
-        if not data:
-            # Load inherited data
-            if name == 'root' or not merge_inherited:
-                data = {}
-            else:
-                parts = name.split('_')
-                if len(parts) == 1:
-                    parent = 'root'
-                else:
-                    parent = '_'.join(parts[:-1])
-                data = load(parent).copy()
-            filename = os.path.join('localedata/%s.dat' % name)
-            zdata = zfile.read(filename)
-            if name != 'root' and merge_inherited:
-                merge(data, pickle.loads(zdata))
-            else:
-                data = pickle.loads(zdata)
-            _cache[name] = data
-        return data
-    finally:
-        _cache_lock.release()
+
+    data = memcache.get("locale:%s" % name)
+    if not data:
+      zfile = zipfile.ZipFile(_filename)
+      # Load inherited data
+      if name == 'root' or not merge_inherited:
+        data = {}
+      else:
+        parts = name.split('_')
+        if len(parts) == 1:
+          parent = 'root'
+        else:
+          parent = '_'.join(parts[:-1])
+        data = load(parent).copy()
+      filename = os.path.join('localedata/%s.dat' % name)
+      zdata = zfile.read(filename)
+      if name != 'root' and merge_inherited:
+        merge(data, pickle.loads(zdata))
+      else:
+        data = pickle.loads(zdata)
+      memcache.set("" % name, data, 86400)
+    return data
 
 
 def merge(dict1, dict2):
