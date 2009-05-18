@@ -16,6 +16,7 @@ This file is originally derived from Zine project.
 import pickle
 import struct
 from os import listdir, path
+from os.path import join, dirname
 kaydir = join(dirname(dirname(__file__)), 'kay')
 libpath = path.dirname(kaydir)
 import sys

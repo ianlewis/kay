@@ -1,0 +1,7 @@
+Kay Requirements
+----------------
+* babel
+* jinja2
+  you would need to invoke python setup.py develop beforehand.
+* simplejson
+* werkzeug
