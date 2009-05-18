@@ -19,6 +19,7 @@
 
 import os
 import pickle
+import zipfile
 try:
     import threading
 except ImportError:
@@ -30,7 +31,7 @@ __docformat__ = 'restructuredtext en'
 
 _cache = {}
 _cache_lock = threading.RLock()
-_dirname = os.path.join(os.path.dirname(__file__), 'localedata')
+_filename = os.path.join(os.path.dirname(__file__), 'localedata.zip')
 
 
 def exists(name):
@@ -42,7 +43,12 @@ def exists(name):
     """
     if name in _cache:
         return True
-    return os.path.exists(os.path.join(_dirname, '%s.dat' % name))
+    zfile = zipfile.ZipFile(_filename)
+    try:
+      zfile.getinfo("localedata/%s.dat" % name)
+    except KeyError:
+      return False
+    return True
 
 
 def list():
@@ -53,8 +59,11 @@ def list():
     :rtype: `list`
     :since: version 0.8.1
     """
+    
+    zfile = zipfile.ZipFile(_filename)
+    filelist = [fname[len('localedata/'):] for fname in zfile.namelist()]
     return [stem for stem, extension in [
-        os.path.splitext(filename) for filename in os.listdir(_dirname)
+        os.path.splitext(filename) for filename in filelist
     ] if extension == '.dat' and stem != 'root']
 
 
@@ -86,6 +95,7 @@ def load(name, merge_inherited=True):
                       identifer, or one of the locales it inherits from
     """
     _cache_lock.acquire()
+    zfile = zipfile.ZipFile(_filename)
     try:
         data = _cache.get(name)
         if not data:
@@ -99,16 +109,13 @@ def load(name, merge_inherited=True):
                 else:
                     parent = '_'.join(parts[:-1])
                 data = load(parent).copy()
-            filename = os.path.join(_dirname, '%s.dat' % name)
-            fileobj = open(filename, 'rb')
-            try:
-                if name != 'root' and merge_inherited:
-                    merge(data, pickle.load(fileobj))
-                else:
-                    data = pickle.load(fileobj)
-                _cache[name] = data
-            finally:
-                fileobj.close()
+            filename = os.path.join('localedata/%s.dat' % name)
+            zdata = zfile.read(filename)
+            if name != 'root' and merge_inherited:
+                merge(data, pickle.loads(zdata))
+            else:
+                data = pickle.loads(zdata)
+            _cache[name] = data
         return data
     finally:
         _cache_lock.release()
@@ -140,7 +147,12 @@ def merge(dict1, dict2):
                     merge(others, val2)
                     val1 = (alias, others)
                 else:
-                    val1 = val1.copy()
+                    try:
+                      val1 = val1.copy()
+                    except:
+                      print "key: %s" % key
+                      print "val1: %s" % val1
+                      raise
                     merge(val1, val2)
             else:
                 val1 = val2
