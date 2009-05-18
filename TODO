@@ -5,19 +5,18 @@ TODO
 kay.i18n
 ---------
 
+* None
+
 kay.utils.forms
 ----------------
 
 * Media (javascript など) を書けると良いかな...
 
+ * AjaxModelField みたいなのを作る
+
 * ModelField の実装
 
- * 件数について制限とか必要かな。filter を指定できるようにしたのでこれ
-   で様子をみる
-
  * 自動で選択肢をキャッシュするようにする
-
-* テスト書く
 
 
 kay.auth
@@ -43,20 +42,11 @@ kay
  * アプリケーションを簡単に追加できたり <- startapp scripts
 
  * シェルツールとかもう少し充実する
-
+ 
 babel
 -----
 
-* num_plurals の判定がおかしくて、日本語のメッセージが fuzzy になる件
-
- * とりあえず手パッチをあてて対処してある。後でなんとかする。
-
-   /opt/local/lib/python2.5/site-packages/babel/messages/catalog.py の _merge 
-
-* localedata 以下にファイルがいっぱいある。そのうちなんとかしないと。
-
- * 多分 zip して localedata.py をほげほげすればいける
-
+* None
 
 ====
 DONE
@@ -71,6 +61,7 @@ kay.i18n
 * kay 自体も extract の対象に入れようよ
 
 * i18n を 無効にできるようにした
+
 
 kay
 ----
@@ -93,8 +84,27 @@ kay.utils.forms
 
 * ModelField の実装
 
+ * 件数について制限とか必要かな。query を指定できるようにした。
+
+* テスト書く
+
+
 kay.middleware.session
 -----------------------
 
 * セッションの有効期間をセットする。
 
+
+babel
+-----
+
+* localedata 以下にファイルがいっぱいある。そのうちなんとかしないと。
+
+ * 多分 zip して localedata.py をほげほげすればいける
+
+* num_plurals の判定がおかしくて、日本語のメッセージが fuzzy になる件
+
+ * とりあえず手パッチをあてて対処してある。後でなんとかする。
+
+   /opt/local/lib/python2.5/site-packages/babel/messages/catalog.py の _merge 
+   -> babel も bundle したので良いかな
