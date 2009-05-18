@@ -1,0 +1,90 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""
+Add new Translation
+~~~~~~~~~~~~~~~~~~~
+
+This script adds a new translation to Zine or a Zine plugin.
+
+:copyright: (c) 2009 by the Zine Team, see AUTHORS for more details.
+:copyright: (c) 2009 by Takashi Matsuo <tmatsuo@candit.jp>
+:license: BSD, see LICENSE for more details.
+This file is originally derived from Zine project.
+"""
+from os import makedirs
+from os.path import dirname, join, realpath, pardir, isdir, isfile
+kaydir = join(dirname(dirname(__file__)), 'kay')
+libpath = dirname(kaydir)
+import sys
+sys.path.append(libpath)
+import kay
+
+from optparse import OptionParser
+from datetime import datetime
+from babel import Locale, UnknownLocaleError
+from babel.messages import Catalog
+from babel.messages.pofile import read_po, write_po
+from babel.util import LOCALTZ
+
+
+def main():
+  global parser
+  parser = OptionParser(usage='%prog [options] language')
+  parser.add_option('--app', dest='app', help='Create the '
+                    'translation for this application.  This '
+                    'has to be the full path to the application package.')
+  options, args = parser.parse_args()
+  if len(args) != 1:
+    parser.error('incorrect number of arguments')
+
+  try:
+    locale = Locale.parse(args[0])
+  except UnknownLocaleError, e:
+    parser.error(str(e))
+
+  if options.app is None:
+    create_kay_lang(locale)
+  else:
+    create_app_lang(locale, options.app)
+
+
+def create_from_pot(locale, path):
+  try:
+    f = file(path)
+  except IOError, e:
+    parser.error(str(e))
+  try:
+    catalog = read_po(f, locale=locale)
+  finally:
+    f.close()
+  catalog.locale = locale
+  catalog.revision_date = datetime.now(LOCALTZ)
+  return catalog
+
+
+def write_catalog(catalog, folder):
+  target = join(folder, str(catalog.locale), 'LC_MESSAGES')
+  if not isdir(target):
+    makedirs(target)
+  f = file(join(target, 'messages.po'), 'w')
+  try:
+    write_po(f, catalog, width=79)
+  finally:
+    f.close()
+
+
+def create_kay_lang(locale):
+  catalog = create_from_pot(locale, join(kaydir, 'i18n', 'messages.pot'))
+  write_catalog(catalog, join(kaydir, 'i18n'))
+  print 'Created catalog for %s' % locale
+
+
+def create_app_lang(locale, path):
+  catalog = create_from_pot(locale, join(path, 'i18n', 'messages.pot'))
+  write_catalog(catalog, join(path, 'i18n'))
+  print 'Created catalog for %s' % locale
+
+
+if __name__ == '__main__':
+    main()
+

@@ -1,0 +1,81 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""
+Compile translations
+~~~~~~~~~~~~~~~~~~~~
+
+Compile translations into pickles containing the translated messages.
+We do not use standard MO files because we have to store additional
+information in those files.
+
+:copyright: (c) 2009 by the Zine Team, see AUTHORS for more details.
+:copyright: (c) 2009 by Takashi Matsuo <tmatsuo@candit.jp>
+:license: BSD, see LICENSE for more details.
+This file is originally derived from Zine project.
+"""
+import pickle
+import struct
+from os import listdir, path
+kaydir = join(dirname(dirname(__file__)), 'kay')
+libpath = path.dirname(kaydir)
+import sys
+sys.path.append(libpath)
+import kay
+
+from optparse import OptionParser
+from babel.messages.pofile import read_po
+from babel.messages.mofile import write_mo
+
+domains = ['messages']
+
+
+def is_untranslated(obj):
+  if not obj:
+    return True
+  elif isinstance(obj, basestring):
+    return not obj.strip()
+  for translation in obj:
+    if translation.strip():
+      return False
+  return True
+
+
+def main():
+  parser = OptionParser(usage='%prog [path]')
+  parser.add_option('--statistics', '-s', default=False,
+                    action='store_true', help="show statistics")
+  options, args = parser.parse_args()
+
+  if not args:
+    print 'Compiling builtin languages'
+    root = path.abspath(path.join(path.dirname(__file__),
+                                  path.pardir, 'kay', 'i18n'))
+  elif len(args) == 1:
+    root = path.join(path.abspath(args[0]), 'i18n')
+    if not path.isdir(root):
+      parser.error('i18n folder missing')
+    print 'Compiling', root
+  else:
+    parser.error('incorrent number of arguments')
+
+  for domain in domains:
+    for lang in listdir(root):
+      folder = path.join(root, lang)
+      translations = path.join(folder, 'LC_MESSAGES', domain + '.po')
+
+      if path.isfile(translations):
+        mo_file = open(translations.replace('.po', '.mo'), 'wb')
+        print 'Compiling %r' % lang,
+        f = file(translations)
+        try:
+          catalog = read_po(f, locale=lang)
+        finally:
+          f.close()
+        # Write standard catalog
+        write_mo(mo_file, catalog)
+        mo_file.close()
+  print 'All done.'
+
+
+if __name__ == '__main__':
+  main()

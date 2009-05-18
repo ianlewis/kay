@@ -1,0 +1,17 @@
+syntax: glob
+*.pyc
+*.swp
+*.tmp
+*~
+*.mo
+.DS_Store
+my-ja.json
+TODO.pdf
+kay/lib/jinja2
+kay/lib/babel
+kay/lib/simplejson
+kay/lib/werkzeug
+
+syntax: regexp
+(.*/)?\#[^/]*\#$
+(.*/)?\.\#[^/]*$
