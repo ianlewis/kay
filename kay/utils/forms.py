@@ -1964,7 +1964,10 @@ class Form(object):
         # TODO: implement
         #if self.request.user.is_somebody:
         #    user_id = self.request.user.id
-        login_time = self.request.session.get('lt', -1)
+        if self.request.hasattr('session'):
+          login_time = self.request.session.get('lt', -1)
+        else:
+          login_time = -1
         import settings
         key = settings.SECRET_KEY
         return sha1(('%s|%s|%s|%s' % (path, login_time, user_id, key))
