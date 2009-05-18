@@ -31,9 +31,6 @@ from werkzeug import Request
 from kay.utils import local
 from kay.utils import forms
 
-def _(v):
-  return v
-
 class GAETestBase(unittest.TestCase):
 
   def get_env(self):
@@ -66,10 +63,10 @@ class TestModel(db.Model):
   
 class TestForm(forms.Form):
   csrf_protected = False
-  username = forms.TextField(_("user name"), required=True)
-  password = forms.TextField(_("password"), required=True)
-  password_again = forms.TextField(_("confirm password"), required=True)
-  model_field = forms.ModelField(TestModel, label=_("ModelField Test"),
+  username = forms.TextField("user name", required=True)
+  password = forms.TextField("password", required=True)
+  password_again = forms.TextField("confirm password", required=True)
+  model_field = forms.ModelField(TestModel, label="ModelField Test",
                                  required=True, filter=('is_active =', True),
                                  option_name='data')
   
