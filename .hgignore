@@ -7,7 +7,6 @@ syntax: glob
 .DS_Store
 my-ja.json
 TODO.pdf
-kay/lib/jinja2
 kay/lib/simplejson
 appengine_env.py
 settings.py
