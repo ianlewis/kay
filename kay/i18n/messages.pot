@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: tmatsuo@candit.jp\n"
-"POT-Creation-Date: 2009-05-18 11:59+0900\n"
+"POT-Creation-Date: 2009-05-18 16:56+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,102 +21,106 @@ msgstr ""
 msgid "now"
 msgstr ""
 
-#: kay/utils/forms.py:690
+#: kay/utils/forms.py:689
 msgid "No choices."
 msgstr ""
 
-#: kay/utils/forms.py:790
+#: kay/utils/forms.py:789
 msgid "Submit"
 msgstr ""
 
-#: kay/utils/forms.py:943
+#: kay/utils/forms.py:942
 msgid "This field is required."
 msgstr ""
 
-#: kay/utils/forms.py:1111
+#: kay/utils/forms.py:1115
 msgid "Invalid security token submitted."
 msgstr ""
 
-#: kay/utils/forms.py:1164 kay/utils/forms.py:1553
+#: kay/utils/forms.py:1168 kay/utils/forms.py:1584
 #, python-format
 msgid "Please provide at least %d item."
 msgid_plural "Please provide at least %d items."
 msgstr[0] ""
 msgstr[1] ""
 
-#: kay/utils/forms.py:1171 kay/utils/forms.py:1560
+#: kay/utils/forms.py:1175 kay/utils/forms.py:1591
 #, python-format
 msgid "Please provide no more than %d item."
 msgid_plural "Please provide no more than %d items."
 msgstr[0] ""
 msgstr[1] ""
 
-#: kay/utils/forms.py:1284
+#: kay/utils/forms.py:1288
 #, python-format
 msgid "Please enter at least %d character."
 msgid_plural "Please enter at least %d characters."
 msgstr[0] ""
 msgstr[1] ""
 
-#: kay/utils/forms.py:1291
+#: kay/utils/forms.py:1295
 #, python-format
 msgid "Please enter no more than %d character."
 msgid_plural "Please enter no more than %d characters."
 msgstr[0] ""
 msgstr[1] ""
 
-#: kay/utils/forms.py:1315
+#: kay/utils/forms.py:1319
 msgid "Please enter a valid date."
 msgstr ""
 
-#: kay/utils/forms.py:1353
+#: kay/utils/forms.py:1358
 msgid "The selected entity does not exist, or is not allowed to select."
 msgstr ""
 
-#: kay/utils/forms.py:1417
+#: kay/utils/forms.py:1448
 msgid "Invalid value."
 msgstr ""
 
-#: kay/utils/forms.py:1418
+#: kay/utils/forms.py:1449
 msgid "Key does not exist."
 msgstr ""
 
-#: kay/utils/forms.py:1488
+#: kay/utils/forms.py:1519
 msgid "Please enter a valid choice."
 msgstr ""
 
-#: kay/utils/forms.py:1547
+#: kay/utils/forms.py:1578
 #, python-format
 msgid "“%s” is not a valid choice"
 msgstr ""
 
-#: kay/utils/forms.py:1592
+#: kay/utils/forms.py:1624
 msgid "Please enter a whole number."
 msgstr ""
 
-#: kay/utils/forms.py:1618
+#: kay/utils/forms.py:1650 kay/utils/forms.py:1710
 #, python-format
 msgid "Ensure this value is greater than or equal to %s."
 msgstr ""
 
-#: kay/utils/forms.py:1624
+#: kay/utils/forms.py:1656 kay/utils/forms.py:1716
 #, python-format
 msgid "Ensure this value is less than or equal to %s."
 msgstr ""
 
-#: kay/utils/forms.py:1644
+#: kay/utils/forms.py:1684
+msgid "Please enter a float number."
+msgstr ""
+
+#: kay/utils/forms.py:1736
 msgid "Please select a file to upload."
 msgstr ""
 
-#: kay/utils/forms.py:1647
+#: kay/utils/forms.py:1739
 msgid "File must not empty."
 msgstr ""
 
-#: kay/utils/forms.py:1666
+#: kay/utils/forms.py:1758
 msgid "True"
 msgstr ""
 
-#: kay/utils/forms.py:1667
+#: kay/utils/forms.py:1759
 msgid "False"
 msgstr ""
 
