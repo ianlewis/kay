@@ -135,7 +135,6 @@ def _decode(data):
     """
     list_marker = object()
     value_marker = object()
-
     if isinstance(data, MultiDict):
         listiter = data.iterlists()
     else:
@@ -1040,6 +1039,11 @@ class Field(object):
             rv = rv[:-1] + ' [bound]>'
         return rv
 
+    def delayed_init(self, name, **kwargs):
+        """
+        Delayed initialization when on form init.
+        """
+        pass
 
 class Mapping(Field):
     """Apply a set of fields to a dictionary of values.
@@ -1346,17 +1350,19 @@ class ModelField(Field):
 
     The first argument is the name of the model. If the key is not
     given (None) the primary key is assumed. You can also specify
-    filter parameter on init. It forces filter based validation.  You
-    can construct choices by giving query_dict named parameter to
-    form's __init__ method.
+    filter and query parameter on init. It forces filter based
+    validation.  You can construct choices by giving query_dict named
+    parameter to form's __init__ method.
+
     """
     messages = dict(not_found=lazy_gettext(
         u'The selected entity does not exist, or is not allowed to select.'))
+    widget = SelectBox
 
     def __init__(self, model, key=None, label=None, help_text=None,
                  required=False, message=None, validators=None, widget=None,
                  messages=None, default=missing, on_not_found=None,
-                 filter=None):
+                 filter=None, query=None, option_name=None):
         Field.__init__(self, label, help_text, validators, widget, messages,
                        default)
         self.model = model
@@ -1365,6 +1371,8 @@ class ModelField(Field):
         self.message = message
         self.on_not_found = on_not_found
         self.filter = filter
+        self.query = query or self.model.all()
+        self.option_name = option_name
 
     def convert(self, value):
         if isinstance(value, self.model):
@@ -1376,9 +1384,9 @@ class ModelField(Field):
         value = self._coerce_value(value)
 
         if self.key is None:
-            query = self.model.all().filter("__key__ =", db.Key(value))
+            query = self.query.filter("__key__ =", db.Key(value))
         else:
-            query = self.model.gql("WHERE %s = :1" % self.key, value)
+            query = self.query.filter("%s =" % self.key, value)
         if self.filter is not None:
             query = query.filter(*self.filter)
         rv = query.get()
@@ -1402,6 +1410,29 @@ class ModelField(Field):
             else:
                 value = getattr(value, self.key)
         return unicode(value)
+
+    def _get_option_name(self, entry):
+      if self.option_name is not None:
+        return getattr(entry, self.option_name)
+      try:
+        return entry.__unicode__()
+      except AttributeError:
+        return entry.__repr__()
+
+    def delayed_init(self, name, **kwargs):
+      query_dict = kwargs.get('query_dict', None)
+      if query_dict is None:
+        return
+      q = query_dict.get(name, None)
+      if q is None:
+        q = self.query
+      else:
+        self.query = q
+      if self.filter is not None:
+        q = q.filter(*self.filter)
+      self.choices = [("", u"----")] + \
+          [(e.key(), escape(self._get_option_name(e)))
+           for e in q.fetch(1000)]
 
 
 class HiddenModelField(ModelField):
@@ -1866,7 +1897,7 @@ class Form(object):
     csrf_protected = True
 #    redirect_tracking = True
 
-    def __init__(self, initial=None, query_dict={}):
+    def __init__(self, initial=None, **kwargs):
         self.request = get_request()
         if initial is None:
             initial = {}
@@ -1877,14 +1908,7 @@ class Form(object):
         self.reset()
         # construct ModelField choices.
         for name, field in self._root_field.fields.iteritems():
-          if isinstance(field, ModelField):
-            q = query_dict.get(name, None)
-            if q is None:
-              q = field.model.all()
-            if field.filter is not None:
-              q = q.filter(*field.filter)
-            field.choices = [("", u"----")] + [(e.key(), e.__unicode__())
-                                               for e in q.fetch(1000)]
+          field.delayed_init(name, **kwargs)
             
     def __getitem__(self, key):
         return self.data[key]
@@ -1974,7 +1998,8 @@ class Form(object):
     def validate(self, data, files=None):
         """Validate the form against the data passed."""
         self.raw_data = _decode(data)
-        self.raw_data.update(_decode(files))
+        if files is not None:
+          self.raw_data.update(_decode(files))
 
         # for each field in the root that requires validation on value
         # omission we add `None` into the raw data dict.  Because the
