@@ -1595,8 +1595,8 @@ class MultiChoiceField(ChoiceField):
 
 
 
-class IntegerField(Field):
-    """Field for integers.
+class NumberField(Field):
+    """Field for numbers.
 
     >>> field = IntegerField(min_value=0, max_value=99)
     >>> field('13')
@@ -1616,7 +1616,7 @@ class IntegerField(Field):
     messages = dict(
         too_small=None,
         too_big=None,
-        no_integer=lazy_gettext('Please enter a whole number.')
+        value_error=lazy_gettext('Please enter a number.')
     )
 
     def __init__(self, label=None, help_text=None, required=False,
@@ -1635,9 +1635,9 @@ class IntegerField(Field):
                 raise ValidationError(self.messages['required'])
             return None
         try:
-            value = int(value)
+            value = self._convert(value)
         except ValueError:
-            raise ValidationError(self.messages['no_integer'])
+            raise ValidationError(self.messages['value_error'])
 
         if self.min_value is not None and value < self.min_value:
             message = self.messages['too_small']
@@ -1652,11 +1652,43 @@ class IntegerField(Field):
                             u'equal to %s.') % self.max_value
             raise ValidationError(message)
 
-        return int(value)
+        return value
+
+    def _convert(self, value):
+        try:
+          return int(value)
+        except ValueError:
+          return float(value)
 
 
-class FloatField(Field):
+class IntegerField(NumberField):
     """Field for integers.
+
+    >>> field = IntegerField(min_value=0, max_value=99)
+    >>> field('13')
+    13
+
+    >>> field('thirteen')
+    Traceback (most recent call last):
+      ...
+    ValidationError: Please enter a whole number.
+
+    >>> field('193')
+    Traceback (most recent call last):
+      ...
+    ValidationError: Ensure this value is less than or equal to 99.
+    """
+    messages = dict(
+        too_small=None,
+        too_big=None,
+        value_error=lazy_gettext('Please enter a whole number.')
+    )
+    def _convert(self, value):
+      return int(value)
+
+
+class FloatField(NumberField):
+    """Field for floats.
 
     >>> field = IntegerField(min_value=0, max_value=99)
     >>> field('13.4')
@@ -1672,47 +1704,13 @@ class FloatField(Field):
       ...
     ValidationError: Ensure this value is less than or equal to 99.
     """
-
     messages = dict(
         too_small=None,
         too_big=None,
-        no_float=lazy_gettext('Please enter a float number.')
+        value_error=lazy_gettext('Please enter a float number.')
     )
-
-    def __init__(self, label=None, help_text=None, required=False,
-                 min_value=None, max_value=None, validators=None,
-                 widget=None, messages=None, default=missing):
-        Field.__init__(self, label, help_text, validators, widget, messages,
-                       default)
-        self.required = required
-        self.min_value = min_value
-        self.max_value = max_value
-
-    def convert(self, value):
-        value = _to_string(value)
-        if not value:
-            if self.required:
-                raise ValidationError(self.messages['required'])
-            return None
-        try:
-            value = float(value)
-        except ValueError:
-            raise ValidationError(self.messages['no_float'])
-
-        if self.min_value is not None and value < self.min_value:
-            message = self.messages['too_small']
-            if message is None:
-                message = _(u'Ensure this value is greater than or '
-                            u'equal to %s.') % self.min_value
-            raise ValidationError(message)
-        if self.max_value is not None and value > self.max_value:
-            message = self.messages['too_big']
-            if message is None:
-                message = _(u'Ensure this value is less than or '
-                            u'equal to %s.') % self.max_value
-            raise ValidationError(message)
-
-        return float(value)
+    def _convert(self, value):
+      return float(value)
 
 
 class FileField(Field):
