@@ -13,8 +13,7 @@ import re
 import time     # Needed for Windows
 
 from kay.conf import global_settings
-from kay.utils.lazy import LazyObject
-from kay.utils import importlib
+from kay.misc.lazy import LazyObject
 
 
 class LazySettings(LazyObject):
@@ -65,6 +64,7 @@ class LazySettings(LazyObject):
 
 class Settings(object):
   def __init__(self, settings_module):
+    from kay.utils import importlib
     # update this dict from global settings (but only for ALL_CAPS settings)
     for setting in dir(global_settings):
       if setting == setting.upper():
