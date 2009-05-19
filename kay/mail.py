@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Tools for sending email.
+TODO: use local.app.app_settings.ADMINS instead of kay.conf.settings
 """
 
 from google.appengine.api import mail

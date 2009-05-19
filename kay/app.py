@@ -20,16 +20,18 @@ from kay.utils.importlib import import_module
 from kay._internal import InternalApp
 from kay import utils, exceptions, mail
 
-from kay.conf import settings
+from kay.conf import settings, LazySettings
 
 translations_cache = {}
 
 def get_application():
   application = KayApp(settings)
   internal_app = InternalApp()
-  application = DispatcherMiddleware(application, {
-    '/_kay': internal_app,
-  })
+  submount_apps = {'/_kay': internal_app}
+  for app_name in settings.SUBMOUNT_APPS:
+    app = KayApp(LazySettings('%s.settings' % app_name))
+    submount_apps['/%s' % app_name] = app
+  application = DispatcherMiddleware(application, submount_apps)
   return application
 
 class NullUndefined(Undefined):

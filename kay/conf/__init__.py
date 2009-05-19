@@ -83,7 +83,7 @@ class Settings(object):
     # Settings that should be converted into tuples if they're
     # mistakenly entered as strings.
 
-    tuple_settings = ("INSTALLED_APPS", "TEMPLATE_DIRS")
+    tuple_settings = ("INSTALLED_APPS", "TEMPLATE_DIRS", "SUBMOUNT_APPS")
 
     for setting in dir(mod):
       if setting == setting.upper():

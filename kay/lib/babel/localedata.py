@@ -26,7 +26,11 @@ except ImportError:
     import dummy_threading as threading
 from UserDict import DictMixin
 
-from google.appengine.api import memcache
+try:
+  from google.appengine.api import memcache
+except ImportError:
+  from kay.misc import NullMemcache
+  memcache = NullMemcache()
 
 __all__ = ['exists', 'list', 'load']
 __docformat__ = 'restructuredtext en'
@@ -115,7 +119,7 @@ def load(name, merge_inherited=True):
         merge(data, pickle.loads(zdata))
       else:
         data = pickle.loads(zdata)
-      memcache.set("" % name, data, 86400)
+      memcache.set("locale:%s" % name, data, 86400)
     return data
 
 

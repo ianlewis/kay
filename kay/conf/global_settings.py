@@ -25,6 +25,9 @@ DEFAULT_LANG = 'en'
 INSTALLED_APPS = (
 )
 
+SUBMOUNT_APPS = (
+)
+
 MIDDLEWARE_CLASSES = (
   'kay.sessions.middleware.SessionMiddleware',
   'kay.auth.middleware.GoogleAuthenticationMiddleware',
