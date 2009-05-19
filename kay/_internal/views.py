@@ -5,7 +5,6 @@ import datetime
 
 from werkzeug import Response
 
-import settings
 from kay import utils
 
 batch_num = 30

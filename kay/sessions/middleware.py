@@ -3,7 +3,6 @@
 Kay session middleware
 """
 
-import settings
 import base64
 import datetime
 import cPickle as pickle
@@ -18,10 +17,11 @@ except ImportError:
   sha_constructor = sha.new
 
 from werkzeug.contrib import sessions
+from werkzeug.exceptions import HTTPException
 from google.appengine.ext import db
 
+from kay.conf import settings
 from models import GAESession
-
 
 class GAESessionStore(sessions.SessionStore):
   """
@@ -76,9 +76,6 @@ class GAESessionStore(sessions.SessionStore):
 class SessionMiddleware(object):
 
   def __init__(self):
-    """
-    TODO: Add a capability to set various cookie settings.
-    """
     self.session_store = GAESessionStore()
 
   def process_request(self, request):
@@ -92,6 +89,7 @@ class SessionMiddleware(object):
   def process_response(self, request, response):
     if request.session.should_save:
       self.session_store.save(request.session)
-      response.set_cookie(settings.COOKIE_NAME, request.session.sid,
-                          max_age=settings.COOKIE_AGE)
+      if not isinstance(response, HTTPException):
+        response.set_cookie(settings.COOKIE_NAME, request.session.sid,
+                            max_age=settings.COOKIE_AGE)
     return response

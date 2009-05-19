@@ -64,7 +64,7 @@ import simplejson
 
 from kay import utils
 from kay.utils.importlib import import_module
-import settings
+from kay.conf import settings
 
 __all__ = ['_', 'gettext', 'ngettext', 'lazy_gettext', 'lazy_ngettext']
 

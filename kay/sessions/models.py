@@ -3,7 +3,6 @@
 Kay session middleware
 """
 
-import settings
 import base64
 import cPickle as pickle
 try:
@@ -18,6 +17,8 @@ except ImportError:
 
 from werkzeug.contrib import sessions
 from google.appengine.ext import db
+
+from kay.conf import settings
 
 class GAESession(db.Model):
   """

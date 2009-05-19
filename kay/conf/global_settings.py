@@ -4,17 +4,16 @@ import os
 DEFAULT_TIMEZONE = 'Asia/Tokyo'
 DEBUG = True
 PROFILE = False
-SECRET_KEY = 'hogehoge'
+SECRET_KEY = 'please set secret keys here'
 SESSION_PREFIX = 'gaesess:'
 COOKIE_AGE = 1209600 # 2 weeks
 COOKIE_NAME = 'KAY_SID'
 
 ADMINS = (
-  ['Takashi Matsuo', 'tmatsuo@shehas.net'],
+  ['Admin', 'admin@example.com'],
 )
 
 TEMPLATE_DIRS = (
-  'templates',
 )
 
 USE_I18N = True
@@ -24,5 +23,6 @@ INSTALLED_APPS = (
 )
 
 MIDDLEWARE_CLASSES = (
-  'kay.middleware.session.SessionMiddleware',
+  'kay.sessions.middleware.SessionMiddleware',
+  'kay.auth.middleware.GoogleAuthenticationMiddleware',
 )

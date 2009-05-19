@@ -17,12 +17,10 @@ from jinja2 import (
 )
 from pytz import timezone, UTC
 
-import settings
-
+from kay.conf import settings
 
 local = Local()
 local_manager = LocalManager([local])
-application = local('application')
 
 _translations_cache = {}
 _default_translations = None
@@ -134,9 +132,11 @@ def init_lang(lang):
 def use_i18n():
   return settings.USE_I18N
 
+
 def use_session():
   return 'kay.middleware.session.SessionMiddleware' in \
       settings.MIDDLEWARE_CLASSES
+
 
 def init_jinja2_environ():
   """
@@ -145,7 +145,7 @@ def init_jinja2_environ():
   TODO: Pluggable utility mechanism.
   """
   global local
-  base_loader = FileSystemLoader(settings.TEMPLATE_PATHS)
+  base_loader = FileSystemLoader(settings.TEMPLATE_DIRS)
   per_app_loaders = {}
   for app in settings.INSTALLED_APPS:
     per_app_loaders[app] = FileSystemLoader(os.path.join(app, 'templates'))
@@ -161,7 +161,10 @@ def init_jinja2_environ():
   )
   
   jinja2_env = Environment(**env_dict)
-  jinja2_env.globals['reverse'] = reverse
+  jinja2_env.globals.update({'url_for': url_for,
+                             'reverse': reverse,
+                             'request': local.request})
+
   setattr(local, 'jinja2_env', jinja2_env)
 
 
@@ -201,9 +204,6 @@ def render_to_response(template, context):
   """
   A function for adding useful variables to context automatically.
   """
-  user = users.get_current_user()
-  if user:
-    context['user'] = user
   context['login_url'] = users.create_login_url('/')
   context['logout_url'] = users.create_logout_url('/')
   return Response(render_to_string(template, context), mimetype='text/html')

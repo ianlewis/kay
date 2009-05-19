@@ -5,7 +5,7 @@ Tools for sending email.
 
 from google.appengine.api import mail
 
-import settings
+from kay.conf import settings
 
 def mail_admins(subject, message, fail_silently=False):
   """Sends a message to the admins, as defined by the ADMINS setting."""

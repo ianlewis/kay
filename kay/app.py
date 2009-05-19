@@ -14,7 +14,7 @@ from kay.utils import local, local_manager
 from kay._internal import InternalApp
 from kay import utils, exceptions, mail
 
-import settings
+from kay.conf import settings
 
 
 def get_application():
