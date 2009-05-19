@@ -11,10 +11,6 @@ from werkzeug import (
   Local, LocalManager, Response
 )
 from werkzeug.exceptions import NotFound
-from jinja2 import (
-  Environment, FileSystemLoader, ChoiceLoader, PrefixLoader,
-  Undefined,
-)
 from pytz import timezone, UTC
 
 from kay.conf import settings
@@ -61,20 +57,6 @@ def raise_on_dev():
     pass
 
 
-class NullUndefined(Undefined):
-  """
-  Do nothing except for logging when the specified variable doesn't exist.
-  """
-  def __int__(self):
-    return 0
-  def __getattr__(self, value):
-    logging.debug("The variable '%s' undefined." % self._undefined_name)
-    return u''
-  def __html__(self):
-    logging.debug("The variable '%s' undefined." % self._undefined_name)
-    return u''
-
-
 def get_request():
   return local.request
 
@@ -105,84 +87,6 @@ def url_for(endpoint, **args):
   if anchor is not None:
     rv += '#' + url_quote(anchor)
   return rv
-
-
-def init_lang(lang):
-  """
-  Initialize translations with specified language.
-  """
-  global local, _translations_cache
-  from kay.i18n import load_translations
-  jinja2_env = getattr(local, 'jinja2_env', None)
-
-  if use_i18n():
-    try:
-      translations = _translations_cache[lang]
-    except KeyError:
-      translations = load_translations(lang)
-    _translations_cache[lang] = translations
-    setattr(local, 'active_translations', translations)
-    jinja2_env.install_gettext_translations(translations)
-  else:
-    from gettext import NullTranslations
-    setattr(local, 'active_translations', NullTranslations())
-    jinja2_env.install_null_translations()
-
-
-def use_i18n():
-  return settings.USE_I18N
-
-
-def use_session():
-  return 'kay.middleware.session.SessionMiddleware' in \
-      settings.MIDDLEWARE_CLASSES
-
-
-def init_jinja2_environ():
-  """
-  Initialize the environment for jinja2.
-  TODO: Capability to disable i18n stuff.
-  TODO: Pluggable utility mechanism.
-  """
-  global local
-  base_loader = FileSystemLoader(settings.TEMPLATE_DIRS)
-  per_app_loaders = {}
-  for app in settings.INSTALLED_APPS:
-    per_app_loaders[app] = FileSystemLoader(os.path.join(app, 'templates'))
-
-  env_dict = dict(
-    loader = ChoiceLoader([
-      base_loader,
-      PrefixLoader(per_app_loaders),
-    ]),
-    autoescape=True,
-    undefined=NullUndefined,
-    extensions=['jinja2.ext.i18n'],
-  )
-  
-  jinja2_env = Environment(**env_dict)
-  jinja2_env.globals.update({'url_for': url_for,
-                             'reverse': reverse,
-                             'request': local.request,
-                             'create_login_url': create_login_url,
-                             'create_logout_url': create_logout_url})
-
-  setattr(local, 'jinja2_env', jinja2_env)
-
-
-def get_active_translations():
-  """
-  Return active translations tied with the local env.
-  """
-  global _default_translations
-  ret = getattr(local, 'active_translations', None)
-  if ret is not None:
-    return ret
-
-  if _default_translations is None:
-    from kay.i18n import load_translations
-    _default_translations = load_translations(settings.DEFAULT_LANG)
-  return _default_translations
 
 
 def create_logout_url(request=None):
@@ -219,8 +123,7 @@ def render_to_string(template, context={}):
   """
   A function for template rendering.
   """
-  jinja2_env = getattr(local, 'jinja2_env', None)
-  template = jinja2_env.get_template(template)
+  template = local.jinja2_env.get_template(template)
   return template.render(context)
 
 

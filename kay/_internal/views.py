@@ -5,9 +5,13 @@ import datetime
 
 from werkzeug import Response
 
-from kay import utils
+from kay.conf import settings
 
 batch_num = 30
+
+def use_session():
+  return 'kay.middleware.session.SessionMiddleware' in \
+      settings.MIDDLEWARE_CLASSES
 
 def cron_frequent(request):
   logging.debug("cron frequent handler called.")
@@ -15,7 +19,7 @@ def cron_frequent(request):
 
 def cron_hourly(request):
   logging.debug("cron hourly handler called.")
-  if utils.use_session():
+  if use_session():
     from google.appengine.ext import db
     from kay.middleware.session import GAESession
     now = datetime.datetime.now()

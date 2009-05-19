@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import sys
+import os
 import logging
 
 from werkzeug import Request, ClosingIterator
@@ -8,39 +9,117 @@ from werkzeug.exceptions import (
   HTTPException, InternalServerError, NotFound
 )
 from werkzeug.utils import DispatcherMiddleware
+from jinja2 import (
+  Environment, FileSystemLoader, ChoiceLoader, PrefixLoader,
+  Undefined,
+)
 
 import kay
 from kay.utils import local, local_manager
+from kay.utils.importlib import import_module
 from kay._internal import InternalApp
 from kay import utils, exceptions, mail
 
 from kay.conf import settings
 
+translations_cache = {}
 
 def get_application():
-  application = KayApp()
+  application = KayApp(settings)
   internal_app = InternalApp()
   application = DispatcherMiddleware(application, {
     '/_kay': internal_app,
   })
   return application
 
+class NullUndefined(Undefined):
+  """
+  Do nothing except for logging when the specified variable doesn't exist.
+  """
+  def __int__(self):
+    return 0
+  def __getattr__(self, value):
+    logging.debug("The variable '%s' undefined." % self._undefined_name)
+    return u''
+  def __html__(self):
+    logging.debug("The variable '%s' undefined." % self._undefined_name)
+    return u''
+
+
 class KayApp(object):
 
-  def __init__(self):
-    from urls import make_url, all_views
+  def __init__(self, app_settings):
+    self.app_settings = app_settings
+    try:
+      mod = import_module(self.app_settings.ROOT_URL_MODULE)
+    except ImportError:
+      raise ImproperlyConfigured("Can't import ROOT_URL_MODULE: %s." %
+                                 self.app_settings.ROOT_URL_MODULE)
+    make_url = getattr(mod, 'make_url')
+    all_views = getattr(mod, 'all_views')
     self.views = all_views
     self.url_map = make_url()
     self._request_middleware = self._response_middleware = \
         self._view_middleware = self._exception_middleware = None
+
+  def init_jinja2_environ(self):
+    """
+    Initialize the environment for jinja2.
+    TODO: Capability to disable i18n stuff.
+    TODO: Pluggable utility mechanism.
+    """
+    global local
+    base_loader = FileSystemLoader(self.app_settings.TEMPLATE_DIRS)
+    per_app_loaders = {}
+    for app in self.app_settings.INSTALLED_APPS:
+      per_app_loaders[app] = FileSystemLoader(os.path.join(app, 'templates'))
+
+    env_dict = dict(
+      loader = ChoiceLoader([
+        base_loader,
+        PrefixLoader(per_app_loaders),
+      ]),
+      autoescape=True,
+      undefined=NullUndefined,
+      extensions=['jinja2.ext.i18n'],
+    )
+  
+    local.jinja2_env = Environment(**env_dict)
+    from kay.utils import url_for, reverse, create_login_url, create_logout_url
+    local.jinja2_env.globals.update({'url_for': url_for,
+                                     'reverse': reverse,
+                                     'request': local.request,
+                                     'create_login_url': create_login_url,
+                                     'create_logout_url': create_logout_url})
+
+  def init_lang(self, lang):
+    """
+    Initialize translations with specified language.
+    """
+    from kay.i18n import load_translations
+    global translations_cache
+    if self.app_settings.USE_I18N:
+      translations = translations_cache.get("%s:%s" %
+                                            (self.app_settings.APP_NAME, lang),
+                                            None)
+      if translations is None:
+        translations = load_translations(lang)
+        translations_cache["trans:%s:%s" %
+                     (self.app_settings.APP_NAME, lang)] = translations
+      self.active_translations = translations
+      local.jinja2_env.install_gettext_translations(translations)
+    else:
+      from gettext import NullTranslations
+      self.active_translations = NullTranslations()
+      local.jinja2_env.install_null_translations()
+
 
   def load_middleware(self):
     self._response_middleware = []
     self._view_middleware = []
     self._exception_middleware = []
     request_middleware = []
-    from kay.utils.importlib import import_module
-    for mw_path in settings.MIDDLEWARE_CLASSES:
+    for mw_path in self.app_settings.MIDDLEWARE_CLASSES:
       try:
         dot = mw_path.rindex('.')
       except ValueError:
@@ -85,10 +164,10 @@ class KayApp(object):
       if response:
         return response
 
-    utils.init_jinja2_environ()
+    self.init_jinja2_environ()
     lang = (request.accept_languages.best or 
-            settings.DEFAULT_LANG).split('-')[0].lower()
-    utils.init_lang(lang)
+            self.app_settings.DEFAULT_LANG).split('-')[0].lower()
+    self.init_lang(lang)
 
     try:
       endpoint, values = local.url_adapter.match()
@@ -140,7 +219,7 @@ class KayApp(object):
     return '\n'.join(traceback.format_exception(*(exc_info or sys.exc_info())))
 
   def __call__(self, environ, start_response):
-    local.application = self
+    local.app = self
     local.request = request = Request(environ)
     local.url_adapter = self.url_map.bind_to_environ(environ)
 

@@ -16,12 +16,12 @@ from kay.conf import global_settings
 from kay.utils.lazy import LazyObject
 from kay.utils import importlib
 
+
 class LazySettings(LazyObject):
   """
   A lazy proxy for either global Django settings or a app local
-  settings object.  The user can manually configure settings prior to
-  using them. Otherwise, Django uses the settings module passed to
-  __init__ medthod.
+  settings object. Kay uses the settings module passed to __init__
+  medthod.
   """
   def __init__(self, settings_module=None):
     super(LazySettings, self).__init__()

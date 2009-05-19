@@ -24,7 +24,7 @@ class InternalApp(object):
     self.url_map = _make_url()
 
   def __call__(self, environ, start_response):
-    local.application = self
+    local.app = self
     local.request = request = Request(environ)
     local.url_adapter = self.url_map.bind_to_environ(environ)
 

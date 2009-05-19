@@ -13,7 +13,8 @@ class GoogleUser(db.Model):
   first_name = db.StringProperty(required=False)
   last_name = db.StringProperty(required=False)
   tz = db.StringProperty(choices=pytz.all_timezones, required=True,
-                         default=settings.DEFAULT_TIMEZONE,indexed=False)
+                         default=settings.DEFAULT_TIMEZONE,
+                         indexed=False)
   created = db.DateTimeProperty(auto_now_add=True)
   last_login = db.DateTimeProperty(auto_now=True)
 

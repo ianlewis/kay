@@ -63,6 +63,7 @@ from werkzeug.exceptions import NotFound
 import simplejson
 
 from kay import utils
+from kay.utils import local
 from kay.utils.importlib import import_module
 from kay.conf import settings
 
@@ -76,6 +77,7 @@ TIME_FORMATS = ['%H:%M', '%H:%M:%S', '%I:%M %p', '%I:%M:%S %p']
 
 _js_translations = WeakKeyDictionary()
 
+
 def load_translations(locale):
   """Load the translation for a locale.  If a locale does not exist
   the return value a fake translation object.  If the locale is unknown
@@ -83,7 +85,7 @@ def load_translations(locale):
   """
   domain = "messages"
   ret = KayTranslations.load(utils.get_kay_locale_path(),
-                              locale, domain)
+                             locale, domain)
   def _merge(path):
     t = KayTranslations.load(path, locale, domain)
     if t is not None:
@@ -93,7 +95,7 @@ def load_translations(locale):
         ret.merge(t)
     return ret
 
-  for appname in settings.INSTALLED_APPS:
+  for appname in local.app.app_settings.INSTALLED_APPS:
     app = import_module(appname)
     apppath = os.path.join(os.path.dirname(app.__file__), 'i18n')
 
@@ -116,7 +118,13 @@ class KayTranslations(TranslationsBase):
 
 def get_translations():
   """Get the active translations or default translations."""
-  return utils.get_active_translations()
+  try:
+    ret = local.app.active_translations
+  except:
+    ret = None
+  if ret is not None:
+    return ret
+  return load_translations(local.app.app_settings.DEFAULT_LANG)
 
 
 def gettext(string):
