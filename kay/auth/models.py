@@ -20,6 +20,12 @@ class GoogleUser(db.Model):
   def __unicode__(self):
     return unicode(self.email)
 
+  def is_anonymous(self):
+    return False
+
+  def is_authenticated(self):
+    return True
+
 class AnonymousUser(object):
   __slots__ = ('tz')
   tz = settings.DEFAULT_TIMEZONE

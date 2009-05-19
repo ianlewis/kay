@@ -163,7 +163,9 @@ def init_jinja2_environ():
   jinja2_env = Environment(**env_dict)
   jinja2_env.globals.update({'url_for': url_for,
                              'reverse': reverse,
-                             'request': local.request})
+                             'request': local.request,
+                             'create_login_url': create_login_url,
+                             'create_logout_url': create_logout_url})
 
   setattr(local, 'jinja2_env', jinja2_env)
 
@@ -183,6 +185,28 @@ def get_active_translations():
   return _default_translations
 
 
+def create_logout_url(request=None):
+  """
+  An utilyty function for jinja2.
+  """
+  # TODO: Change implementation according to auth backend settings.
+  from google.appengine.api import users
+  if request is None:
+    request = local.request
+  return users.create_logout_url(request.url)
+
+
+def create_login_url(request=None):
+  """
+  An utilyty function for jinja2.
+  """
+  # TODO: Change implementation according to auth backend settings.
+  from google.appengine.api import users
+  if request is None:
+    request = local.request
+  return users.create_login_url(request.url)
+
+
 def reverse(endpoint, _external=False, method='GET', **values):
   """
   An utility function for jinja2.
@@ -200,13 +224,12 @@ def render_to_string(template, context={}):
   return template.render(context)
 
 
-def render_to_response(template, context):
+def render_to_response(template, context, mimetype='text/html'):
   """
-  A function for adding useful variables to context automatically.
+  A function for adding useful variables to context automatically, but
+  none yet.
   """
-  context['login_url'] = users.create_login_url('/')
-  context['logout_url'] = users.create_logout_url('/')
-  return Response(render_to_string(template, context), mimetype='text/html')
+  return Response(render_to_string(template, context), mimetype=mimetype)
 
 
 def to_local_timezone(datetime, tzname=settings.DEFAULT_TIMEZONE):
