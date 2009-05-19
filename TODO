@@ -24,8 +24,6 @@ kay.auth
 
 * user 認証をどうするか。抽象化したユーザクラスが要りそう
 
- * Google Account 使うケース
-
  * 独自の認証を使いたい場合も
 
   * 独自認証の場合 https 使う場合にはログイン画面でドメインが変わる事もある
@@ -38,11 +36,6 @@ kay
 ----
 
 * もっとフレームワークぽく
-
- * アプリケーションのマウント方法は二種類あると良いな。
-
-  * django のように urls.py でくっつけるだけの奴とWSGIApplication 自体
-    別のインスタンスを作ってディスパッチする奴
 
  * アプリケーションを簡単に追加できたり <- startapp scripts
 
@@ -81,6 +74,17 @@ kay
  * 本番環境でエラーが出たらアドミンにメール
 
  * Anonymous Session を middleware にする
+
+ * アプリケーションのマウント方法は二種類あると良いな。
+
+  * django のように urls.py でくっつけるだけの奴とWSGIApplication 自体
+    別のインスタンスを作ってディスパッチする奴
+
+
+kay.auth
+--------
+
+ * Google Account 使うケース
 
 
 kay.utils.forms
