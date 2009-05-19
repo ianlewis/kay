@@ -20,7 +20,6 @@ _views = {
 class InternalApp(object):
 
   def __init__(self):
-    local.application = self
     self.views = _views
     self.url_map = _make_url()
 

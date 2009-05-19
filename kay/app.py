@@ -28,7 +28,6 @@ def get_application():
 class KayApp(object):
 
   def __init__(self):
-    local.application = self
     from urls import make_url, all_views
     self.views = all_views
     self.url_map = make_url()
