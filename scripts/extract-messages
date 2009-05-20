@@ -10,13 +10,9 @@
     :license: BSD, see LICENSE for more details.
 """
 from os import path, makedirs
-from os.path import join, dirname
-import sys
 
-kaydir = join(dirname(dirname(__file__)), 'kay')
-libpath = path.dirname(kaydir)
-sys.path.append(libpath)
 import kay
+kay.setup()
 
 from optparse import OptionParser
 from babel.messages import Catalog

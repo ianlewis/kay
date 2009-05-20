@@ -12,12 +12,9 @@ Update the translations from the POT.
 This file is originally derived from Zine project.
 """
 from os import path, listdir, rename
-from os.path import join, dirname
-kaydir = join(dirname(dirname(__file__)), 'kay')
-libpath = path.dirname(kaydir)
 import sys
-sys.path.append(libpath)
 import kay
+kay.setup()
 
 from optparse import OptionParser
 from babel import Locale

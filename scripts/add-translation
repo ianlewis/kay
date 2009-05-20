@@ -13,11 +13,8 @@ This file is originally derived from Zine project.
 """
 from os import makedirs
 from os.path import dirname, join, realpath, pardir, isdir, isfile
-kaydir = join(dirname(dirname(__file__)), 'kay')
-libpath = dirname(kaydir)
-import sys
-sys.path.append(libpath)
 import kay
+kay.setup()
 
 from optparse import OptionParser
 from datetime import datetime
