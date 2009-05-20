@@ -1,0 +1,48 @@
+application: kay-sample
+version: 1
+runtime: python
+api_version: 1
+
+skip_files: |
+  ^(.*/)?(
+  (app\.yaml)|
+  (app\.yml)|
+  (app\.yaml\.sample)|
+  (index\.yaml)|
+  (index\.yml)|
+  (index\.yaml\.sample)|
+  (appengine_console\.py)|
+  (appengine_env\.py)|
+  (my-ja\.json)|
+  (TODO)|
+  (README)|
+  (scripts\/.*)|
+  (TODO\.pdf)|
+  (#.*#)|
+  (.*~)|
+  (.*\.py[co])|
+  (\..*)|
+  )$
+
+handlers:
+- url: /favicon.ico
+  static_files: favicon.ico
+  upload: favicon.ico
+
+- url: /media
+  static_dir: media
+  login: required
+  secure: optional
+
+- url: /_kay/.*
+  script: kay/main.py
+  login: admin
+
+- url: /remote_api
+  script: $PYTHON_LIB/google/appengine/ext/remote_api/handler.py
+  login: admin
+
+- url: /.*
+  script: kay/main.py
+  secure: optional
+
