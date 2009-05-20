@@ -52,18 +52,22 @@ class KayApp(object):
 
   def __init__(self, app_settings):
     self.app_settings = app_settings
+    self.url_map = None
+    self.views = None
+    self._request_middleware = self._response_middleware = \
+        self._view_middleware = self._exception_middleware = None
+
+  def init_url_map(self):
     try:
       mod = import_module(self.app_settings.ROOT_URL_MODULE)
     except ImportError:
-      raise ImproperlyConfigured("Can't import ROOT_URL_MODULE: %s." %
-                                 self.app_settings.ROOT_URL_MODULE)
+      raise exceptions.ImproperlyConfigured("Can't import module: %s." %
+                                            self.app_settings.ROOT_URL_MODULE)
     make_url = getattr(mod, 'make_url')
     all_views = getattr(mod, 'all_views')
     self.views = all_views
     self.url_map = make_url()
-    self._request_middleware = self._response_middleware = \
-        self._view_middleware = self._exception_middleware = None
-
+    
   def init_jinja2_environ(self):
     """
     Initialize the environment for jinja2.
@@ -71,16 +75,24 @@ class KayApp(object):
     TODO: Pluggable utility mechanism.
     """
     global local
-    base_loader = FileSystemLoader(self.app_settings.TEMPLATE_DIRS)
     per_app_loaders = {}
     for app in self.app_settings.INSTALLED_APPS:
-      per_app_loaders[app] = FileSystemLoader(os.path.join(app, 'templates'))
-
+      try:
+        mod = import_module(app)
+      except ImportError:
+        logging.warning("Failed to import app '%s', skipped.")
+        continue
+      per_app_loaders[app] = FileSystemLoader(
+        os.path.join(os.path.dirname(mod.__file__), 'templates'))
+    loader = PrefixLoader(per_app_loaders)  
+    if self.app_settings.TEMPLATE_DIRS:
+      import kay
+      base_loader = FileSystemLoader(
+        [os.path.join(kay.PROJECT_DIR, d)
+         for d in self.app_settings.TEMPLATE_DIRS])
+      loader = ChoiceLoader([base_loader, loader])
     env_dict = dict(
-      loader = ChoiceLoader([
-        base_loader,
-        PrefixLoader(per_app_loaders),
-      ]),
+      loader = loader,
       autoescape=True,
       undefined=NullUndefined,
       extensions=['jinja2.ext.i18n'],
@@ -221,8 +233,11 @@ class KayApp(object):
     return '\n'.join(traceback.format_exception(*(exc_info or sys.exc_info())))
 
   def __call__(self, environ, start_response):
+    kay.setup()
     local.app = self
     local.request = request = Request(environ)
+    if self.url_map is None:
+      self.init_url_map()
     local.url_adapter = self.url_map.bind_to_environ(environ)
 
     response = self.get_response(request)
