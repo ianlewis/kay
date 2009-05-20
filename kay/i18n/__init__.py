@@ -54,7 +54,6 @@ from gettext import NullTranslations
 from datetime import datetime
 from time import strptime
 from weakref import WeakKeyDictionary
-import logging
 
 from babel import Locale, dates, UnknownLocaleError
 from babel.support import Translations as TranslationsBase
@@ -94,8 +93,11 @@ def load_translations(locale):
       elif isinstance(ret, KayTranslations):
         ret.merge(t)
     return ret
-
-  for appname in local.app.app_settings.INSTALLED_APPS:
+  try:
+    installed_apps = local.app.app_settings.INSTALLED_APPS
+  except AttributeError:
+    installed_apps = settings.INSTALLED_APPS
+  for appname in installed_apps:
     app = import_module(appname)
     apppath = os.path.join(os.path.dirname(app.__file__), 'i18n')
 
@@ -120,11 +122,13 @@ def get_translations():
   """Get the active translations or default translations."""
   try:
     ret = local.app.active_translations
+    default = local.app.app_settings.DEFAULT_LANG
   except:
     ret = None
+    default = settings.DEFAULT_LANG
   if ret is not None:
     return ret
-  return load_translations(local.app.app_settings.DEFAULT_LANG)
+  return load_translations(default)
 
 
 def gettext(string):
