@@ -12,8 +12,15 @@ Requirements:
 * simplejson
 
 """
+import os
+import sys
 
-import sys, os
-libdir = os.path.join(
-  os.path.abspath(os.path.dirname(__file__)), "lib")
-sys.path = [libdir] + sys.path
+KAY_DIR = os.path.abspath(os.path.dirname(__file__))
+PROJECT_DIR = os.path.dirname(KAY_DIR)
+LIB_DIR = os.path.join(KAY_DIR, 'lib')
+
+def setup():
+  if not PROJECT_DIR in sys.path:
+    sys.path = [PROJECT_DIR] + sys.path
+  if not LIB_DIR in sys.path:
+    sys.path = [LIB_DIR] + sys.path
