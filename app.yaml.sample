@@ -11,9 +11,8 @@ skip_files: |
   (index\.yaml)|
   (index\.yml)|
   (index\.yaml\.sample)|
-  (appengine_console\.py)|
-  (appengine_env\.py)|
   (my-ja\.json)|
+  (manage\.py)|
   (TODO)|
   (README)|
   (scripts\/.*)|

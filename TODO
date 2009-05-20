@@ -37,10 +37,10 @@ kay
 
 * もっとフレームワークぽく
 
- * アプリケーションを簡単に追加できたり <- startapp scripts
+ * manage.py にいろいろ機能を足していく。
 
- * シェルツールとかもう少し充実する
-
+  * runserver
+  * shell で datastore 触れるように
  
 babel
 -----
