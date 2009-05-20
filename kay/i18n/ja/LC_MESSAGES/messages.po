@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version:  kay-0.9\n"
 "Report-Msgid-Bugs-To: tmatsuo@candit.jp\n"
 "POT-Creation-Date: 2009-05-15 14:07+0900\n"
-"PO-Revision-Date: 2009-05-18 16:56+0900\n"
+"PO-Revision-Date: 2009-05-21 04:52+0900\n"
 "Last-Translator: Takashi Matsuo <tmatsuo@candit.jp>\n"
 "Language-Team: Takashi Matsuo <tmatsuo@candit.jp>\n"
 "Plural-Forms: nplurals=1; plural=0\n"
@@ -17,108 +17,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 0.9.4\n"
 
-#: kay/i18n/__init__.py:283
+#: kay/i18n/__init__.py:295
 msgid "now"
 msgstr "現在"
-
-#: kay/utils/forms.py:689
-msgid "No choices."
-msgstr "選択肢がありません。"
-
-#: kay/utils/forms.py:789
-msgid "Submit"
-msgstr "サブミット"
-
-#: kay/utils/forms.py:942
-msgid "This field is required."
-msgstr "このフィールドは必須です。"
-
-#: kay/utils/forms.py:1115
-msgid "Invalid security token submitted."
-msgstr "不正なセキュリティトークンが検出されました。"
-
-#: kay/utils/forms.py:1168 kay/utils/forms.py:1584
-#, python-format
-msgid "Please provide at least %d item."
-msgid_plural "Please provide at least %d items."
-msgstr[0] "少なくともアイテムが %d 個必要です。"
-
-#: kay/utils/forms.py:1175 kay/utils/forms.py:1591
-#, python-format
-msgid "Please provide no more than %d item."
-msgid_plural "Please provide no more than %d items."
-msgstr[0] "アイテムの数は %d 個以内である必要があります。"
-
-#: kay/utils/forms.py:1288
-#, python-format
-msgid "Please enter at least %d character."
-msgid_plural "Please enter at least %d characters."
-msgstr[0] "%d 文字以上入力してください。"
-
-#: kay/utils/forms.py:1295
-#, python-format
-msgid "Please enter no more than %d character."
-msgid_plural "Please enter no more than %d characters."
-msgstr[0] "%d 文字以内で入力してください。"
-
-#: kay/utils/forms.py:1319
-msgid "Please enter a valid date."
-msgstr "有効な日付を入力してください。"
-
-#: kay/utils/forms.py:1358
-msgid "The selected entity does not exist, or is not allowed to select."
-msgstr "選択されたエンティティは存在しないか、選択する事ができません。"
-
-#: kay/utils/forms.py:1448
-msgid "Invalid value."
-msgstr "不正な値です。"
-
-#: kay/utils/forms.py:1449
-msgid "Key does not exist."
-msgstr "キーが存在しません。"
-
-#: kay/utils/forms.py:1519
-msgid "Please enter a valid choice."
-msgstr "有効な選択肢を選んでください。"
-
-#: kay/utils/forms.py:1578
-#, python-format
-msgid "“%s” is not a valid choice"
-msgstr "“%s” は有効な選択肢ではありません。"
-
-#: kay/utils/forms.py:1624
-msgid "Please enter a whole number."
-msgstr "整数を入力してください。"
-
-#: kay/utils/forms.py:1650 kay/utils/forms.py:1710
-#, python-format
-msgid "Ensure this value is greater than or equal to %s."
-msgstr "この値は %s 以上を入力してください。"
-
-#: kay/utils/forms.py:1656 kay/utils/forms.py:1716
-#, python-format
-msgid "Ensure this value is less than or equal to %s."
-msgstr "この値は %s 以下を入力してください。"
-
-#: kay/utils/forms.py:1684
-msgid "Please enter a float number."
-msgstr "浮動小数点数を入力してください。"
-
-#: kay/utils/forms.py:1736
-msgid "Please select a file to upload."
-msgstr "アップロードするファイルを選択してください。"
-
-#: kay/utils/forms.py:1739
-msgid "File must not empty."
-msgstr "ファイルは空でした。中身のあるファイルをアップロードしてください。"
-
-#: kay/utils/forms.py:1758
-msgid "True"
-msgstr "はい"
-
-#: kay/utils/forms.py:1759
-msgid "False"
-msgstr "いいえ"
 
 #: kay/utils/validators.py:79
 msgid "You have to enter a valid e-mail address."
@@ -163,4 +64,107 @@ msgstr "URL prefix はスラッシュで終る事ができません。"
 #: kay/utils/validators.py:167
 msgid "The text must not be empty."
 msgstr "何らかのテキストを入力してください。"
+
+#: kay/utils/forms/__init__.py:689
+msgid "No choices."
+msgstr "選択肢がありません。"
+
+#: kay/utils/forms/__init__.py:789
+msgid "Submit"
+msgstr "サブミット"
+
+#: kay/utils/forms/__init__.py:942
+msgid "This field is required."
+msgstr "このフィールドは必須です。"
+
+#: kay/utils/forms/__init__.py:1115
+msgid "Invalid security token submitted."
+msgstr "不正なセキュリティトークンが検出されました。"
+
+#: kay/utils/forms/__init__.py:1168 kay/utils/forms/__init__.py:1579
+#, python-format
+msgid "Please provide at least %d item."
+msgid_plural "Please provide at least %d items."
+msgstr[0] "少なくともアイテムが %d 個必要です。"
+
+#: kay/utils/forms/__init__.py:1175 kay/utils/forms/__init__.py:1586
+#, python-format
+msgid "Please provide no more than %d item."
+msgid_plural "Please provide no more than %d items."
+msgstr[0] "アイテムの数は %d 個以内である必要があります。"
+
+#: kay/utils/forms/__init__.py:1288
+#, python-format
+msgid "Please enter at least %d character."
+msgid_plural "Please enter at least %d characters."
+msgstr[0] "%d 文字以上入力してください。"
+
+#: kay/utils/forms/__init__.py:1295
+#, python-format
+msgid "Please enter no more than %d character."
+msgid_plural "Please enter no more than %d characters."
+msgstr[0] "%d 文字以内で入力してください。"
+
+#: kay/utils/forms/__init__.py:1319
+msgid "Please enter a valid date."
+msgstr "有効な日付を入力してください。"
+
+#: kay/utils/forms/__init__.py:1358
+msgid "The selected entity does not exist, or is not allowed to select."
+msgstr "選択されたエンティティは存在しないか、選択する事ができません。"
+
+#: kay/utils/forms/__init__.py:1443
+msgid "Invalid value."
+msgstr "不正な値です。"
+
+#: kay/utils/forms/__init__.py:1444
+msgid "Key does not exist."
+msgstr "キーが存在しません。"
+
+#: kay/utils/forms/__init__.py:1514
+msgid "Please enter a valid choice."
+msgstr "有効な選択肢を選んでください。"
+
+#: kay/utils/forms/__init__.py:1573
+#, python-format
+msgid "“%s” is not a valid choice"
+msgstr "“%s” は有効な選択肢ではありません。"
+
+#: kay/utils/forms/__init__.py:1619
+msgid "Please enter a number."
+msgstr "数字を入力してください。"
+
+#: kay/utils/forms/__init__.py:1645
+#, python-format
+msgid "Ensure this value is greater than or equal to %s."
+msgstr "この値は %s 以上を入力してください。"
+
+#: kay/utils/forms/__init__.py:1651
+#, python-format
+msgid "Ensure this value is less than or equal to %s."
+msgstr "この値は %s 以下を入力してください。"
+
+#: kay/utils/forms/__init__.py:1684
+msgid "Please enter a whole number."
+msgstr "整数を入力してください。"
+
+#: kay/utils/forms/__init__.py:1710
+msgid "Please enter a float number."
+msgstr "浮動小数点数を入力してください。"
+
+#: kay/utils/forms/__init__.py:1729
+msgid "Please select a file to upload."
+msgstr "アップロードするファイルを選択してください。"
+
+#: kay/utils/forms/__init__.py:1732
+msgid "File must not empty."
+msgstr "ファイルは空でした。中身のあるファイルをアップロードしてください。"
+
+#: kay/utils/forms/__init__.py:1751
+msgid "True"
+msgstr "はい"
+
+#: kay/utils/forms/__init__.py:1752
+msgid "False"
+msgstr "いいえ"
 
