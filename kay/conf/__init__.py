@@ -52,7 +52,10 @@ class LazySettings(LazyObject):
       raise ImportError("Settings cannot be imported, because environment variable %s is undefined." % ENVIRONMENT_VARIABLE)
 
     self._wrapped = Settings(self.settings_module)
-    del self.settings_module
+    try:
+      del self.settings_module
+    except AttributeError:
+      pass
 
   def configured(self):
     """
