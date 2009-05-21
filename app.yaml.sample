@@ -16,6 +16,7 @@ skip_files: |
   (TODO)|
   (README)|
   (scripts\/.*)|
+  (kay\/management\/.*)|
   (TODO\.pdf)|
   (#.*#)|
   (.*~)|
