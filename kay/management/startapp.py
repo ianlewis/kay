@@ -1,5 +1,12 @@
 # -*- coding: utf-8 -*-
 
+"""
+Kay startapp management commands.
+
+:copyright: (c) 2009 by Kay Team, see AUTHORS for more details.
+:license: BSD, see LICENSE for more details.
+"""
+
 import os
 import sys
 import re

@@ -1,17 +1,12 @@
 # -*- coding: utf-8 -*-
-"""
-Kay
-
-This is a web framework for GAE/Python.
-
-Requirements:
-* WerkZeug
-* Jinja2
-* pytz
-* babel
-* simplejson
 
 """
+Kay framework.
+
+:copyright: (c) 2009 by Kay Team, see AUTHORS for more details.
+:license: BSD, see LICENSE for more details.
+"""
+
 import os
 import sys
 

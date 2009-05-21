@@ -1,5 +1,12 @@
 # -*- coding: utf-8 -*-
 
+"""
+Middleware for authentication.
+
+:copyright: (c) 2009 by Kay Team, see AUTHORS for more details.
+:license: BSD, see LICENSE for more details.
+"""
+
 from kay import auth
 from kay.exceptions import ImproperlyConfigured
 

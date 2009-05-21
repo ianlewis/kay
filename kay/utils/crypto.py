@@ -1,14 +1,18 @@
-"""
-    kay.utils.crypto
-    ~~~~~~~~~~~~~~~~~
+# -*- coding: utf-8 -*-
 
-    This module implements various cryptographic functions.
-
-    :copyright: (c) 2009 by the Zine Team, see AUTHORS for more details.
-    :license: BSD, see LICENSE for more details.
-    :copyright: (c) 2009 by Takashi Matsuo <tmatsuo@candit.jp>
-    This file is originally derived from Zine project.
 """
+kay.utils.crypto
+~~~~~~~~~~~~~~~~~
+
+This module implements various cryptographic functions.
+
+:copyright: (c) 2009 by Kay Team, see AUTHORS for more details.
+:copyright: (c) 2009 by the Zine Team, see AUTHORS for more details.
+:license: BSD, see LICENSE for more details.
+
+This file originally derives from Zine project.
+"""
+
 import string
 from random import choice, randrange
 try:

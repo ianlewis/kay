@@ -1,15 +1,18 @@
 # -*- coding: utf-8 -*-
-"""
-    kay.utils.datastructures
-    ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    Various data structures.
-
-    :copyright: (c) 2009 by the Zine Team, see AUTHORS for more details.
-    :copyright: (c) 2009 by Takashi Matsuo <tmatsuo@candit.jp>
-    :license: BSD, see LICENSE for more details.
-    This file is originally derived from Zine project.
 """
+kay.utils.datastructures
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Various data structures.
+
+:copyright: (c) 2009 by Kay Team, see AUTHORS for more details.
+:copyright: (c) 2009 by the Zine Team, see AUTHORS for more details.
+:license: BSD, see LICENSE for more details.
+
+This file originally derives from Zine project.
+"""
+
 from itertools import izip, imap
 from copy import deepcopy
 

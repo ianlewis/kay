@@ -39,8 +39,8 @@ To compile the translations into the MO files just use
 
 New languages are added with `add-translation`.
 
+:copyright: (c) 2009 by Kay Team, see AUTHORS for more details.
 :copyright: (c) 2009 by the Zine Team, see AUTHORS for more details.
-:copyright: (c) 2009 by Takashi Matsuo <tmatsuo@candit.jp>
 :license: BSD, see LICENSE for more details.
 
 This file is originally derived from Zine project.

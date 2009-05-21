@@ -1,5 +1,12 @@
 # -*- coding: utf-8 -*-
 
+"""
+Kay remote shell management command.
+
+:copyright: (c) 2009 by Kay Team, see AUTHORS for more details.
+:license: BSD, see LICENSE for more details.
+"""
+
 import logging
 
 def init_remote_shell():

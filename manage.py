@@ -1,6 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""
+Kay management script.
+
+:copyright: (c) 2009 by Kay Team, see AUTHORS for more details.
+:license: BSD, see LICENSE for more details.
+"""
+
 import sys
 import os
 import logging

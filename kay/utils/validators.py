@@ -1,19 +1,23 @@
+# -*- coding: utf-8 -*-
+
 """
-    kay.utils.validators
-    ~~~~~~~~~~~~~~~~~~~~~
+kay.utils.validators
+~~~~~~~~~~~~~~~~~~~~~
 
-    This module implements various functions for validation of miscellaneous
-    things, e.g. urls.
+This module implements various functions for validation of miscellaneous
+things, e.g. urls.
 
-    TODO: convert most of the functions in this module into functions that
-          raise `forms.ValidationError`\s.  They are used in hand validated
-          forms currently which should be replaced by real forms soon.
+TODO: convert most of the functions in this module into functions that
+raise `forms.ValidationError`\s.  They are used in hand validated
+forms currently which should be replaced by real forms soon.
 
-    :copyright: (c) 2009 by the Zine Team, see AUTHORS for more details.
-    :copyright: (c) 2009 by Takashi Matsuo <tmatsuo@candit.jp>
-    :license: BSD, see LICENSE for more details.
-    This file is originally derived from Zine project.
+:copyright: (c) 2009 by Kay Team, see AUTHORS for more details.
+:copyright: (c) 2009 by the Zine Team, see AUTHORS for more details.
+:license: BSD, see LICENSE for more details.
+
+This file originally derives from Zine project.
 """
+
 import re
 from urlparse import urlparse
 

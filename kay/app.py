@@ -1,5 +1,12 @@
 # -*- coding: utf-8 -*-
 
+"""
+Kay application.
+
+:copyright: (c) 2009 by Kay Team, see AUTHORS for more details.
+:license: BSD, see LICENSE for more details.
+"""
+
 import sys
 import os
 import logging
@@ -82,7 +89,11 @@ class KayApp(object):
       except ImportError:
         logging.warning("Failed to import app '%s', skipped.")
         continue
-      per_app_loaders[app] = FileSystemLoader(
+      try:
+        app_key = getattr(mod, 'template_loader_key')
+      except AttributeError:
+        app_key = app
+      per_app_loaders[app_key] = FileSystemLoader(
         os.path.join(os.path.dirname(mod.__file__), 'templates'))
     loader = PrefixLoader(per_app_loaders)  
     if self.app_settings.TEMPLATE_DIRS:

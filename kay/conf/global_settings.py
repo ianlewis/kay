@@ -1,4 +1,12 @@
 # -*- coding: utf-8 -*-
+
+"""
+Kay default settings.
+
+:copyright: (c) 2009 by Kay Team, see AUTHORS for more details.
+:license: BSD, see LICENSE for more details.
+"""
+
 import os
 
 APP_NAME = 'kay_main'

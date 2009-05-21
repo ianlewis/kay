@@ -1,9 +1,14 @@
+# -*- coding: utf-8 -*-
+
 """
 Settings and configuration for Kay.
 
 Values will be read from the module passed when initialization and
 then, kay.conf.global_settings; see the global settings file for a
 list of all possible variables.
+
+:copyright: (c) 2009 by Kay Team, see AUTHORS for more details.
+:license: BSD, see LICENSE for more details.
 
 Taken from django.
 """

@@ -1,5 +1,12 @@
 # -*- coding: utf-8 -*-
 
+"""
+Kay application for sessions.
+
+:copyright: (c) 2009 by Kay Team, see AUTHORS for more details.
+:license: BSD, see LICENSE for more details.
+"""
+
 from middleware import GAESessionStore
 
 def renew_session(request):

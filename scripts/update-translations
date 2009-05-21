@@ -6,10 +6,11 @@ Update the translations
 
 Update the translations from the POT.
 
+:copyright: (c) 2009 by Kay Team, see AUTHORS for more details.
 :copyright: (c) 2009 by the Zine Team, see AUTHORS for more details.
-:copyright: (c) 2009 by Takashi Matsuo <tmatsuo@candit.jp>
 :license: BSD, see LICENSE for more details.
-This file is originally derived from Zine project.
+
+This file originally derives from Zine Project.
 """
 from os import path, listdir, rename
 import sys

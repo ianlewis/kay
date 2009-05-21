@@ -1,8 +1,13 @@
 # -*- coding: utf-8 -*-
+
 """
 Tools for sending email.
-TODO: use local.app.app_settings.ADMINS instead of kay.conf.settings
+
+:copyright: (c) 2009 by Kay Team, see AUTHORS for more details.
+:license: BSD, see LICENSE for more details.
 """
+
+#TODO: use local.app.app_settings.ADMINS instead of kay.conf.settings
 
 from google.appengine.api import mail
 

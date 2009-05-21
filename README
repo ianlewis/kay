@@ -1,7 +1,93 @@
-Kay Requirements
-----------------
+=============
+Kay Framework
+=============
+
+What's this
+-----------
+
+Kay is a web framework completely specialising on Google App
+Engine. But basic design is based on the Django framework, like
+middleware, settings and pluggable application, etc. Kay uses Werkzeug
+as lower level framework, uses Jinja2 as template engine, uses babel
+for handling language translations. This software is distributed under
+BSD license. See LICENSE for the details.
+
+
+The software that Kay bundles
+-----------------------------
 * babel
 * jinja2
-  you would need to invoke python setup.py develop beforehand.
 * simplejson
 * werkzeug
+* pytz
+
+Dependencies
+------------
+* Google App Engine SDK
+
+  Plase create google_appengine symlink /usr/local/google_appengine.
+  
+.. code-block:: console
+
+   $ sudo ln -s /some/whare/google_appengine /usr/local/google_appengine    
+
+
+Quick Start
+-----------
+
+* First, copy whole kay directory with your project name, and cd into
+  it.
+
+.. code-block:: console
+
+   $ cp -r kay yourproject
+   $ cd yourproject
+
+* Second, you can create your first application with following command.
+
+.. code-block:: console
+
+   $ python manage.py startapp hello
+   $ vi urls.py
+   $ vi settings.py
+
+There is a sample urls.py in the file hello/urls.py as a comment. You
+have to add 'hello' to the INSTALLED_APPS tupple in the settings.py.
+
+
+* You can handle i18n like following.
+
+.. code-block:: console
+
+   $ scripts/extract-messages hello
+   $ scripts/add-translation --app hello ja
+   $ vi hello/i18n/ja/LC_MESSAGES/messages.po
+   $ scripts/compile-translations hello
+
+You can also merge newly added catalogue into your translations as
+follows.
+
+.. code-block:: console
+
+   $ scripts/extract-messages hello
+   $ scripts/update-translation -l ja hello
+   $ vi hello/i18n/ja/LC_MESSAGES/messages.po
+   $ scripts/compile-translations hello
+
+
+* You must use GAE models directly. You can use kay.utils.forms for
+  form handling. You can construct a form automatically from the model
+  difinition with kay.utils.forms.modelform.ModelForm.
+
+
+Questions and Bug Report
+------------------------
+
+* Please visit Kay framework google group.
+  http://groups.google.com/group/kay-users
+  
+* Or, contact the project leader directly.
+  Takashi Matsuo <tmatsuo@candit.jp>
+
+* Source code repository:
+  http://bitbucket.org/tmatsuo/kay/  

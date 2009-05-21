@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
+
 """
-Kay session middleware
+Kay session middleware.
+
+:copyright: (c) 2009 by Kay Team, see AUTHORS for more details.
+:license: BSD, see LICENSE for more details.
 """
 
 import base64

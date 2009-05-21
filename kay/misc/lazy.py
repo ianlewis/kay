@@ -1,5 +1,14 @@
 # -*- coding: utf-8 -*-
-# taken from django
+
+"""
+Kay lazy object for settings.
+
+:copyright: (c) 2009 by Kay Team, see AUTHORS for more details.
+:license: BSD, see LICENSE for more details.
+
+taken from django
+"""
+
 
 class LazyObject(object):
   """

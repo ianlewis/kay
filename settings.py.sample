@@ -1,4 +1,12 @@
 # -*- coding: utf-8 -*-
+
+"""
+A sample of kay settings.
+
+:copyright: (c) 2009 by Kay Team, see AUTHORS for more details.
+:license: BSD, see LICENSE for more details.
+"""
+
 import os
 
 DEFAULT_TIMEZONE = 'Asia/Tokyo'
@@ -21,8 +29,9 @@ USE_I18N = True
 DEFAULT_LANG = 'en'
 
 INSTALLED_APPS = (
+  'kay.sessions',
 )
 
 MIDDLEWARE_CLASSES = (
-  'kay.middleware.session.SessionMiddleware',
+  'kay.sessions.middleware.SessionMiddleware',
 )

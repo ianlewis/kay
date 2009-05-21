@@ -1,4 +1,12 @@
 # -*- coding: utf-8 -*-
+
+"""
+A decorators related authentication.
+
+:copyright: (c) 2009 by Kay Team, see AUTHORS for more details.
+:license: BSD, see LICENSE for more details.
+"""
+
 from functools import update_wrapper
 
 from werkzeug import redirect
