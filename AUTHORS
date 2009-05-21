@@ -75,3 +75,42 @@ Patches and suggestions:
 - Peter van Dijk (Habbie)
 - Stefan Ebner
 -------------------------------------------------------------------
+
+kay.forms package derives from Zine project.
+-------------------------------------------------------------------
+Zine is written and maintained by the Zine Team and various contributors:
+
+Project Leader:
+
+- Armin Ronacher <armin.ronacher@active-4.com>
+
+Developers:
+
+- Georg Brandl
+- Lukas Meuser
+- Christopher Grebs
+- Christopher Denter
+
+Contributors:
+
+- Pedro Algarvio
+- Jason Kirtland
+- Ali Afshar
+- Christopher Lenz
+- Tim Hatch
+- Rafael Weber
+- Ronny Pfannschmidt
+- Brynjar Magnusson
+
+Translators:
+
+- Nikita Kabardin; into Russian
+- Christopher Grebs, Armin Ronacher; into German
+- Vinicius Figueiredo; into Brazilian Portuguese
+- Pedro Algarvio; into Portuguese
+
+Authors of libraries or code snippets included in Zine:
+
+- Matt Chisholm (PottyMouth, used by Text parser)
+- Manfred Stienstra and Yuri Takhteyev (markdown.py, used by Markdown plugin)
+-------------------------------------------------------------------

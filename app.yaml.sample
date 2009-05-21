@@ -7,23 +7,24 @@ skip_files: |
   ^(.*/)?(
   (app\.yaml)|
   (app\.yml)|
-  (app\.yaml\.sample)|
   (index\.yaml)|
   (index\.yml)|
-  (index\.yaml\.sample)|
-  (my-ja\.json)|
-  (manage\.py)|
-  (TODO)|
-  (README)|
-  (scripts\/.*)|
-  (kay\/management\/.*)|
-  (TODO\.pdf)|
   (#.*#)|
   (.*~)|
   (.*\.py[co])|
   (.*\.po)|
   (.*\.pot)|
   (\..*)|
+  (app\.yaml\.sample)|
+  (index\.yaml\.sample)|
+  (manage\.py)|
+  (TODO)|
+  (TODO\.pdf)|
+  (README)|
+  (LICENSE)|
+  (scripts\/.*)|
+  (docs\/.*)|
+  (kay\/management\/.*)|
   )$
 
 handlers:

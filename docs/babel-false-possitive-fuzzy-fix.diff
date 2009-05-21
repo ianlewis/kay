@@ -1,0 +1,12 @@
+--- /opt/local/lib/python2.5/site-packages/babel/messages/catalog.py	2009-05-21 04:51:23.000000000 +0900
++++ kay/lib/babel/messages/catalog.py					2009-05-18 15:59:44.000000000 +0900
+@@ -679,6 +679,7 @@
+                     message.string = tuple(
+                         [message.string] + ([u''] * (len(message.id) - 1))
+                     )
+-                elif len(message.string) != len(message.id):
++                elif len(message.string) != len(message.id) and \
++                    len(message.string) != self.num_plurals:
+                     fuzzy = True
+                     message.string = tuple(message.string[:len(oldmsg.string)])
+             elif isinstance(message.string, (list, tuple)):
