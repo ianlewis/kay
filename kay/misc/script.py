@@ -1,5 +1,32 @@
 # -*- coding: utf-8 -*-
 
+import logging
+
+def init_remote_shell():
+  from google.appengine.ext import db
+  from kay.conf import settings
+  from kay.utils.importlib import import_module
+  def deleteAllEntities(model, num=20):
+    entries = db.Query(model, keys_only=True).fetch(num)
+    while len(entries) > 0:
+      print "Now deleting %d entries." % len(entries)
+      db.delete([k.key() for k in entries])
+      entries = db.Query(model, keys_only=True).fetch(num)
+  local_d = locals()
+  for app in settings.INSTALLED_APPS:
+    try:
+      mod = import_module("%s.models" % app)
+    except ImportError:
+      logging.warning("Failed to import app '%s', skipped.")
+      continue
+    for name, c in mod.__dict__.iteritems():
+      try:
+        if issubclass(c, db.Model):
+          local_d[name] = c
+      except TypeError:
+        pass
+  return local_d
+
 def make_remote_shell(init_func=None, banner=None, use_ipython=True):
   if banner is None:
     banner = 'Interactive Kay Remote Shell'
