@@ -7,15 +7,15 @@ def make_remote_shell(init_func=None, banner=None, use_ipython=True):
     init_func = dict
   def action(appid=('a', ''), host=('h', ''), ipython=use_ipython):
     """Start a new interactive python session."""
+    import sys
     import getpass
     from google.appengine.ext.remote_api import remote_api_stub
-    import sys
+    from kay.misc import get_appid
     namespace = init_func()
     def auth_func():
       return raw_input('Username:'), getpass.getpass('Password:')
     if not appid:
-      sys.stderr.write("appid required.\n")
-      sys.exit(1)
+      appid = get_appid()
     if not host:
       host = "%s.appspot.com" % appid
     remote_api_stub.ConfigureRemoteDatastore(appid, '/remote_api', auth_func,

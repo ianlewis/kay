@@ -13,6 +13,8 @@ from kay.misc.runserver import start_dev_appserver
 
 def init_remote_shell():
   from google.appengine.ext import db
+  from kay.conf import settings
+  
   def deleteAllEntities(model, num=20):
     entries = db.Query(model, keys_only=True).fetch(num)
     while len(entries) > 0:
