@@ -20,10 +20,10 @@ import sys
 
 from kay.misc import get_datastore_paths
 
-def start_dev_appserver(clear_datastore=('c', False), addr=('a', ''),
-                        port=('p', 8000), datastore_path='',
-                        history_path='', smtp_host='', smtp_port=0,
-                        enable_sendmail=False):
+def start_dev_appserver(help=('h', False), addr=('a', ''), port=('p', 8000),
+                        datastore_path='', history_path='', smtp_host='',
+                        smtp_port=0, enable_sendmail=False,
+                        clear_datastore=('c', False)):
   """Starts the appengine dev_appserver program for the Django project.
 
   The appserver is run with default parameters. If you need to pass any special
@@ -33,8 +33,7 @@ def start_dev_appserver(clear_datastore=('c', False), addr=('a', ''),
   progname = sys.argv[0]
   args = []
   # hack __main__ so --help in dev_appserver_main works OK.
-  sys.modules['__main__'] = dev_appserver_main
-
+  sys.modules['__main__'] = dev_appserver_main    
   if clear_datastore:
     args.extend(["-c"])
   if addr:

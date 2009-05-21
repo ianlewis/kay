@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
-from google.appengine.api import apiproxy_stub_map
 import os, sys
 
-have_appserver = bool(apiproxy_stub_map.apiproxy.GetStub('datastore_v3'))
-
 def get_appid():
+  from google.appengine.api import apiproxy_stub_map
+  have_appserver = bool(apiproxy_stub_map.apiproxy.GetStub('datastore_v3'))
   if have_appserver:
     appid = os.environ.get('APPLICATION_ID')
   else:

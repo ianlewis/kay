@@ -12,10 +12,12 @@ from werkzeug import script
 from kay.management.rshell import make_remote_shell, init_remote_shell
 from kay.management.runserver import start_dev_appserver
 from kay.management.startapp import startapp
+from kay.management.appcfg import do_appcfg
 
 action_shell = script.make_shell()
 action_rshell = make_remote_shell(init_remote_shell)
 action_runserver = start_dev_appserver
+action_appcfg = do_appcfg
 action_startapp = startapp
 
 if __name__ == '__main__':
