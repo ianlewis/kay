@@ -5,7 +5,9 @@ TODO
 kay.i18n
 ---------
 
-* None
+* ポータビリティの確認
+
+* manage.py でできるようにする
 
 kay.utils.forms
 ----------------
@@ -35,13 +37,11 @@ kay.auth
 kay
 ----
 
-* もっとフレームワークぽく
+* manage.py で dumpdata と loaddata を作る
 
- * manage.py にいろいろ機能を足していく。
+* manage.py で国際化メッセージの処理をできるようにする
 
-  * runserver
-  * shell で datastore 触れるように
- 
+
 babel
 -----
 
@@ -74,6 +74,11 @@ kay
  * 本番環境でエラーが出たらアドミンにメール
 
  * Anonymous Session を middleware にする
+
+ * manage.py にいろいろ機能を足していく。
+
+  * runserver
+  * shell で datastore 触れるように
 
  * アプリケーションのマウント方法は二種類あると良いな。
 
