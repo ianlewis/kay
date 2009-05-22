@@ -107,7 +107,7 @@ Shell tools
   your console session. You must restart your dev server for
   reflecting the result of the console sessions.
 
-* Invoking `python manage.py rshell` is the same above except for
+* Invoking `python manage.py rshell` is the same as above except for
   using RemoteDatastore stub. You can access the data on the
   production server.
 
@@ -122,6 +122,10 @@ Datastore
 * You must use GAE models directly. You can use kay.utils.forms for
   form handling. You can construct a form automatically from the model
   definition with kay.utils.forms.modelform.ModelForm.
+
+  Unfortunately, for now, there is no documentation about forms
+  package yet. Please see kay.tests.formtest for examples. Sorry for
+  the inconvinience.
 
 * By default, db.Model.kind() returns ('model's app name' + _ + 'model
   name').lower(). So when you see the management console, there will
