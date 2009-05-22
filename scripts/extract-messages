@@ -13,9 +13,12 @@ Extract messages into a PO-Template.
 This file originally derives from Zine Project.
 """
 from os import path, makedirs
+import sys
+
+sys.path.insert(0, path.abspath(path.dirname(path.dirname(__file__))))
 
 import kay
-kay.setup()
+kay.setup_syspath()
 
 from optparse import OptionParser
 from babel.messages import Catalog

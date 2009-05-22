@@ -244,7 +244,7 @@ class KayApp(object):
     return '\n'.join(traceback.format_exception(*(exc_info or sys.exc_info())))
 
   def __call__(self, environ, start_response):
-    kay.setup()
+    kay.setup_syspath()
     local.app = self
     local.request = request = Request(environ)
     if self.url_map is None:

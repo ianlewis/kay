@@ -23,7 +23,6 @@ from kay.utils.repr import dump
 from kay.misc import get_appid
 from kay.misc import get_datastore_paths
 
-
 def get_all_models_as_dict():
   ret = {}
   for app in settings.INSTALLED_APPS:
@@ -35,6 +34,8 @@ def get_all_models_as_dict():
     for name, c in mod.__dict__.iteritems():
       try:
         if issubclass(c, db.Model):
+          while ret.has_key(name):
+            name = name + '_'
           ret[name] = c
       except TypeError:
         pass

@@ -123,6 +123,13 @@ Datastore
   form handling. You can construct a form automatically from the model
   definition with kay.utils.forms.modelform.ModelForm.
 
+* By default, db.Model.kind() returns ('model's app name' + _ + 'model
+  name').lower(). So when you see the management console, there will
+  be 'appname_modelname' style kind names . Please don't be surprised
+  with those names.
+
+  You can change this behaviour by settings ADD_APP_PREFIX_TO_KIND to
+  False in your settings.py.
 
 Questions and Bug Report
 ------------------------

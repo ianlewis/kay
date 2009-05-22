@@ -16,6 +16,7 @@ KAY_DIR = os.path.abspath(os.path.dirname(__file__))
 PROJECT_DIR = os.path.dirname(KAY_DIR)
 LIB_DIR = os.path.join(KAY_DIR, 'lib')
 
+
 def setup_env(manage_py_env=False):
   """Configures app engine environment for command-line apps."""
   # Try to import the appengine code from the system path.
@@ -61,9 +62,6 @@ def setup_env(manage_py_env=False):
           break
     sys.path = EXTRA_PATHS + sys.path
     from google.appengine.api import apiproxy_stub_map
-
-  # Add this folder to sys.path
-  sys.path = [os.path.abspath(os.path.dirname(__file__))] + sys.path
   setup()
 
   if not manage_py_env:
@@ -71,6 +69,59 @@ def setup_env(manage_py_env=False):
   print 'Running on Kay-%s' % __version__
 
 def setup():
+  setup_syspath()
+  from kay.conf import settings
+  from google.appengine.ext import db
+  from google.appengine.ext.db import polymodel
+
+  class _meta(object):
+    __slots__ = ('app_label', 'module_name', '_db_table', 'abstract')
+    def __init__(self, model):
+      try:
+        self.app_label = model.__module__.split('.')[-2]
+      except IndexError:
+        raise ValueError('Kay expects models (here: %s.%s) to be defined in their own apps!' % (model.__module__, model.__name__))
+      self.module_name = model.__name__.lower()
+      self.abstract = model is db.Model
+
+    def _set_db_table(self, db_table):
+      self._db_table = db_table
+
+    def _get_db_table(self):
+      if getattr(settings, 'ADD_APP_PREFIX_TO_KIND', True):
+        if hasattr(self, '_db_table'):
+          return self._db_table
+        return '%s_%s' % (self.app_label, self.module_name)
+      return self.object_name
+    db_table = property(_get_db_table, _set_db_table)
+
+  def _initialize_model(cls):
+    cls._meta = _meta(cls)  
+
+  old_propertied_class_init = db.PropertiedClass.__init__
+  def __init__(cls, name, bases, attrs, map_kind=True):
+    """
+    Just add _meta to db.Model.
+    """
+    _initialize_model(cls)
+    old_propertied_class_init(cls, name, bases, attrs,
+                              not cls._meta.abstract)
+  db.PropertiedClass.__init__ = __init__
+
+  old_poly_init = polymodel.PolymorphicClass.__init__
+  def __init__(cls, name, bases, attrs):
+    if polymodel.PolyModel not in bases:
+      _initialize_model(cls)
+    old_poly_init(cls, name, bases, attrs)
+  polymodel.PolymorphicClass.__init__ = __init__
+
+  @classmethod
+  def kind(cls):
+    return cls._meta.db_table
+  db.Model.kind = kind
+
+
+def setup_syspath():
   if not PROJECT_DIR in sys.path:
     sys.path = [PROJECT_DIR] + sys.path
   if not LIB_DIR in sys.path:
