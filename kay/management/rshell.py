@@ -7,19 +7,25 @@ Kay remote shell management command.
 :license: BSD, see LICENSE for more details.
 """
 
+import os
+import sys
+import getpass
 import logging
 
-def init_remote_shell():
-  from google.appengine.ext import db
-  from kay.conf import settings
-  from kay.utils.importlib import import_module
-  def deleteAllEntities(model, num=20):
-    entries = db.Query(model, keys_only=True).fetch(num)
-    while len(entries) > 0:
-      print "Now deleting %d entries." % len(entries)
-      db.delete([k.key() for k in entries])
-      entries = db.Query(model, keys_only=True).fetch(num)
-  local_d = locals()
+from google.appengine.ext import db
+from google.appengine.ext.remote_api import remote_api_stub
+from google.appengine.api import apiproxy_stub_map
+from google.appengine.api import datastore_file_stub
+    
+from kay.conf import settings
+from kay.utils.importlib import import_module
+from kay.utils.repr import dump
+from kay.misc import get_appid
+from kay.misc import get_datastore_paths
+
+
+def get_all_models_as_dict():
+  ret = {}
   for app in settings.INSTALLED_APPS:
     try:
       mod = import_module("%s.models" % app)
@@ -29,10 +35,64 @@ def init_remote_shell():
     for name, c in mod.__dict__.iteritems():
       try:
         if issubclass(c, db.Model):
-          local_d[name] = c
+          ret[name] = c
       except TypeError:
         pass
+  return ret
+
+
+def auth_func():
+  return raw_input('Username:'), getpass.getpass('Password:')
+
+
+def deleteAllEntities(model, num=20):
+  entries = db.Query(model, keys_only=True).fetch(num)
+  while len(entries) > 0:
+    print "Now deleting %d entries." % len(entries)
+    db.delete([k.key() for k in entries])
+    entries = db.Query(model, keys_only=True).fetch(num)
+
+
+def create_useful_locals():
+  local_d = {'db': db,
+             'settings': settings,
+             'dump': dump}
+  local_d.update(get_all_models_as_dict())
   return local_d
+
+
+def create_useful_locals_for_rshell():
+  local_d = {'deleteAllEntities': deleteAllEntities}
+  local_d.update(create_useful_locals())
+  return local_d
+
+
+def shell(datastore_path='', history_path=''):
+  banner = 'Interactive Kay Shell'
+  namespace = create_useful_locals()
+  appid = get_appid()
+  os.environ['APPLICATION_ID'] = appid
+  p = get_datastore_paths()
+  if not datastore_path:
+    datastore_path = p[0]
+  if not history_path:
+    history_path = p[1]
+  apiproxy_stub_map.apiproxy = apiproxy_stub_map.APIProxyStubMap()
+  stub = datastore_file_stub.DatastoreFileStub(appid, datastore_path,
+                                               history_path)
+  apiproxy_stub_map.apiproxy.RegisterStub('datastore_v3', stub)
+
+  try:
+    import IPython
+  except ImportError:
+    pass
+  else:
+    sh = IPython.Shell.IPShellEmbed(argv='', banner=banner)
+    sh(global_ns={}, local_ns=namespace)
+    return
+  from code import interact
+  interact(banner, local=namespace)
+
 
 def make_remote_shell(init_func=None, banner=None, use_ipython=True):
   if banner is None:
@@ -41,13 +101,7 @@ def make_remote_shell(init_func=None, banner=None, use_ipython=True):
     init_func = dict
   def action(appid=('a', ''), host=('h', ''), ipython=use_ipython):
     """Start a new interactive python session."""
-    import sys
-    import getpass
-    from google.appengine.ext.remote_api import remote_api_stub
-    from kay.misc import get_appid
     namespace = init_func()
-    def auth_func():
-      return raw_input('Username:'), getpass.getpass('Password:')
     if not appid:
       appid = get_appid()
     if not host:

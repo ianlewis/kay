@@ -26,14 +26,32 @@ import sys
 
 from kay.misc import get_datastore_paths
 
-def start_dev_appserver(help=('h', False), addr=('a', ''), port=('p', 8000),
-                        datastore_path='', history_path='', smtp_host='',
-                        smtp_port=0, enable_sendmail=False,
-                        clear_datastore=('c', False)):
+def runserver_passthru_argv():
+  from google.appengine.tools import dev_appserver_main
+  progname = sys.argv[0]
+  args = []
+  # hack __main__ so --help in dev_appserver_main works OK.
+  sys.modules['__main__'] = dev_appserver_main    
+  args.extend(sys.argv[2:])
+
+  p = get_datastore_paths()
+  if not "--datastore_path" in args:
+    args.extend(["--datastore_path", p[0]])
+  if not "--history_path" in args:
+    args.extend(["--history_path", p[1]])
+  # Append the current working directory to the arguments.
+  dev_appserver_main.main([progname] + args + [os.getcwdu()])
+
+
+def runserver(help=('h', False), addr=('a', ''), port=('p', 8000),
+              datastore_path='', history_path='', smtp_host='',
+              smtp_port=0, enable_sendmail=False,
+              clear_datastore=('c', False)):
   """Starts the appengine dev_appserver program for the Django project.
 
   The appserver is run with default parameters. If you need to pass any special
   parameters to the dev_appserver you will have to invoke it manually.
+  This function is for use with werkzeug.script.run().
   """
   from google.appengine.tools import dev_appserver_main
   progname = sys.argv[0]

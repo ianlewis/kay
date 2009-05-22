@@ -10,6 +10,26 @@ Kay appcfg management command.
 import os
 import sys
 
+def do_appcfg_passthru_argv():
+  from google.appengine.tools import appcfg
+  progname = sys.argv[0]
+  if len(sys.argv) < 3:
+    sys.stderr.write('action required.\n')
+    sys.exit(1)
+  sys.modules['__main__'] = appcfg
+
+  args = sys.argv[2:]
+  if "--help" in args:
+    args = [progname] + args
+  else:
+    args = [progname] + args + [os.getcwdu()]
+  appcfg.main(args)
+  from kay.conf import settings
+  if settings.PROFILE and sys.argv[2] == 'update':
+    print '--------------------------\n' \
+        'WARNING: PROFILER ENABLED!\n' \
+        '--------------------------'
+
 def do_appcfg(action='', quiet=('q', False), verbose=('v', False), noisy=False,
               server=('s', 'appengine.google.com'), secure=False,
               email=('e', ''), cookies=True):
