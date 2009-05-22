@@ -5,6 +5,7 @@ syntax: glob
 *~
 .DS_Store
 TODO.pdf
+README.pdf
 settings.py
 
 syntax: regexp

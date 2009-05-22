@@ -36,12 +36,14 @@ Quick Start
 -----------
 
 * First, copy whole kay directory with your project name, and cd into
-  it.
+  it, copy settings files.
 
 .. code-block:: console
 
    $ cp -r kay yourproject
    $ cd yourproject
+   $ cp settings.py.sample settings.py
+   $ cp app.yaml.sample app.yaml
 
 * Second, you can create your first application with following command.
 
@@ -53,6 +55,20 @@ Quick Start
 
 There is a sample urls.py in the file hello/urls.py as a comment. You
 have to add 'hello' to the INSTALLED_APPS tupple in the settings.py.
+
+
+* Run your application
+
+.. code-block:: console
+
+  $ python manage.py runserver
+
+
+* Upload your application
+
+.. code-block:: console
+
+  $ python manage.py appcfg update
 
 
 * You can handle i18n like following.
@@ -77,7 +93,7 @@ follows.
 
 * You must use GAE models directly. You can use kay.utils.forms for
   form handling. You can construct a form automatically from the model
-  difinition with kay.utils.forms.modelform.ModelForm.
+  definition with kay.utils.forms.modelform.ModelForm.
 
 
 Questions and Bug Report
