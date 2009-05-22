@@ -25,7 +25,9 @@ Dependencies
 ------------
 * Google App Engine SDK
 
-  Plase create google_appengine symlink /usr/local/google_appengine.
+  If you installed zip version of the SDK(most unix style operation
+  system users are so), don't forget to create a symlink pointed to
+  the real SDK at /usr/local/google_appengine.
   
 .. code-block:: console
 
@@ -90,6 +92,32 @@ follows.
    $ vi hello/i18n/ja/LC_MESSAGES/messages.po
    $ scripts/compile-translations hello
 
+
+Shell tools
+-----------
+
+* Invoking `python manage.py shell` gives you python (or ipython if
+  available) console session with the same DatastoreFileStub settings
+  of local dev server.
+
+**Note:**
+
+  The local dev server reads datastore data file only on startup. So,
+  the dev server will never notice about the datastore operation on
+  your console session. You must restart your dev server for
+  reflecting the result of the console sessions.
+
+* Invoking `python manage.py rshell` is the same above except for
+  using RemoteDatastore stub. You can access the data on the
+  production server.
+
+**Note:**
+  
+  Be careful when use this feature.
+
+
+Datastore
+---------
 
 * You must use GAE models directly. You can use kay.utils.forms for
   form handling. You can construct a form automatically from the model

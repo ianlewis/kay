@@ -4,6 +4,7 @@ syntax: glob
 *.tmp
 *~
 .DS_Store
+app.yaml
 TODO.pdf
 README.pdf
 settings.py
