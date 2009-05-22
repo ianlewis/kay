@@ -68,6 +68,7 @@ def create_useful_locals_for_rshell():
 
 
 def shell(datastore_path='', history_path=''):
+  """ Start a new interactive python session."""
   banner = 'Interactive Kay Shell'
   namespace = create_useful_locals()
   appid = get_appid()
@@ -100,7 +101,7 @@ def make_remote_shell(init_func=None, banner=None, use_ipython=True):
   if init_func is None:
     init_func = dict
   def action(appid=('a', ''), host=('h', ''), ipython=use_ipython):
-    """Start a new interactive python session."""
+    """Start a new interactive python session with RemoteDatastore stub."""
     namespace = init_func()
     if not appid:
       appid = get_appid()

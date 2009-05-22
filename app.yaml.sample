@@ -9,6 +9,8 @@ skip_files: |
   (app\.yml)|
   (index\.yaml)|
   (index\.yml)|
+  (cron\.yaml)|
+  (cron\.yml)|
   (#.*#)|
   (.*~)|
   (.*\.py[co])|
@@ -17,6 +19,7 @@ skip_files: |
   (\..*)|
   (app\.yaml\.sample)|
   (index\.yaml\.sample)|
+  (cron\.yaml\.sample)|
   (manage\.py)|
   (TODO)|
   (TODO\.pdf)|
