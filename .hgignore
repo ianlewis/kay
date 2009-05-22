@@ -3,7 +3,6 @@ syntax: glob
 *.swp
 *.tmp
 *~
-*.mo
 .DS_Store
 TODO.pdf
 settings.py

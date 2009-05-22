@@ -9,7 +9,7 @@ from %app_name% import urls as %app_name%_urls
 
 def make_url():
   return Map([
-    Submount('/%app_name%', %app_name%_urls.make_url())
+    Submount('/%app_name%', %app_name%_urls.make_rules())
   ])
 
 all_views = {
@@ -26,7 +26,7 @@ from werkzeug.routing import (
 )
 import %app_name%.views
 
-def make_url():
+def make_rules():
   return [
     EndpointPrefix('%app_name%/', [
       Rule('/', endpoint='index'),

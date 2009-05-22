@@ -16,7 +16,7 @@ sys.path = [os.path.abspath(os.path.dirname(__file__))] + sys.path
 import kay
 kay.setup_env(manage_py_env=True)
 from werkzeug import script
-from kay.management.rshell import (
+from kay.management.shell import (
   make_remote_shell, create_useful_locals_for_rshell, shell
 )
 from kay.management.runserver import (
