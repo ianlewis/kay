@@ -13,8 +13,8 @@ http://accense.com/
 
 
 
-
 The authors of the bundled softwares:
+
 -------------------------------------------------------------------
 Werkzeug is written and maintained by the Werkzeug Team and various
 contributors:
@@ -76,6 +76,7 @@ Patches and suggestions:
 - Stefan Ebner
 -------------------------------------------------------------------
 
+
 kay.forms package derives from Zine project.
 -------------------------------------------------------------------
 Zine is written and maintained by the Zine Team and various contributors:
@@ -113,4 +114,10 @@ Authors of libraries or code snippets included in Zine:
 
 - Matt Chisholm (PottyMouth, used by Text parser)
 - Manfred Stienstra and Yuri Takhteyev (markdown.py, used by Markdown plugin)
+-------------------------------------------------------------------
+
+
+simplejson-2.0.9
+-------------------------------------------------------------------
+Bob Ippolito
 -------------------------------------------------------------------
