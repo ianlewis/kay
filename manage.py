@@ -17,7 +17,7 @@ import kay
 kay.setup_env(manage_py_env=True)
 from werkzeug import script
 from kay.management.shell import (
-  make_remote_shell, create_useful_locals_for_rshell, shell
+  rshell, shell
 )
 from kay.management.runserver import (
   runserver, runserver_passthru_argv,
@@ -28,7 +28,7 @@ from kay.management.appcfg import (
 )
 
 action_shell = shell
-action_rshell = make_remote_shell(create_useful_locals_for_rshell)
+action_rshell = rshell
 action_startapp = startapp
 
 if __name__ == '__main__':

@@ -67,10 +67,13 @@ def create_useful_locals_for_rshell():
   return local_d
 
 
-def shell(datastore_path='', history_path=''):
+def shell(datastore_path='', history_path='', useful_imports=True):
   """ Start a new interactive python session."""
   banner = 'Interactive Kay Shell'
-  namespace = create_useful_locals()
+  if useful_imports:
+    namespace = create_useful_locals()
+  else:
+    namespace = {}
   appid = get_appid()
   os.environ['APPLICATION_ID'] = appid
   p = get_datastore_paths()
@@ -94,30 +97,31 @@ def shell(datastore_path='', history_path=''):
   from code import interact
   interact(banner, local=namespace)
 
-
-def make_remote_shell(init_func=None, banner=None, use_ipython=True):
-  if banner is None:
-    banner = 'Interactive Kay Remote Shell'
-  if init_func is None:
-    init_func = dict
-  def action(appid=('a', ''), host=('h', ''), ipython=use_ipython):
-    """Start a new interactive python session with RemoteDatastore stub."""
-    namespace = init_func()
-    if not appid:
-      appid = get_appid()
-    if not host:
-      host = "%s.appspot.com" % appid
-    remote_api_stub.ConfigureRemoteDatastore(appid, '/remote_api', auth_func,
-                                             host)
-    if ipython:
-      try:
-        import IPython
-      except ImportError:
-        pass
-      else:
-        sh = IPython.Shell.IPShellEmbed(argv='', banner=banner)
-        sh(global_ns={}, local_ns=namespace)
-        return
-    from code import interact
-    interact(banner, local=namespace)
-  return action
+def rshell(appid=('a', ''), host=('h', ''), useful_imports=True):
+  """Start a new interactive python session with RemoteDatastore stub."""
+  banner = ("Interactive Kay Shell with RemoteDatastore. \n"
+            "-----------------WARNING--------------------\n"
+            "\n"
+            "Please be careful in this console session.\n"
+            "\n"
+            "-----------------WARNING--------------------\n")
+  if useful_imports:
+    namespace = create_useful_locals_for_rshell()
+  else:
+    namespace = {}
+  if not appid:
+    appid = get_appid()
+  if not host:
+    host = "%s.appspot.com" % appid
+  remote_api_stub.ConfigureRemoteDatastore(appid, '/remote_api', auth_func,
+                                           host)
+  try:
+    import IPython
+  except ImportError:
+    pass
+  else:
+    sh = IPython.Shell.IPShellEmbed(argv='', banner=banner)
+    sh(global_ns={}, local_ns=namespace)
+    return
+  from code import interact
+  interact(banner, local=namespace)
