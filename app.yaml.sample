@@ -29,6 +29,7 @@ skip_files: |
   (scripts\/.*)|
   (docs\/.*)|
   (kay\/management\/.*)|
+  (kay\/tests\/.*)|
   )$
 
 handlers:

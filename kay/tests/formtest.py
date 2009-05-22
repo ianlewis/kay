@@ -14,11 +14,12 @@ import unittest
 
 g_path = "/usr/local/google_appengine"
 extra_path = [
+  os.path.abspath(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))),
   g_path,
   os.path.join(g_path, 'lib', 'antlr3'),
   os.path.join(g_path, 'lib', 'webob'),
   os.path.join(g_path, 'lib', 'django'),
-  os.path.join(g_path, 'lib', 'yaml', 'lib')
+  os.path.join(g_path, 'lib', 'yaml', 'lib'),
 ]
 sys.path = extra_path + sys.path
 APP_ID = u'test'
@@ -26,19 +27,17 @@ os.environ['APPLICATION_ID'] = APP_ID
 
 from google.appengine.ext import db
 import kay
+kay.setup()
+
 from werkzeug import Request
 
 from kay.utils import local
 from kay.utils import forms
 from kay.utils.forms import ValidationError
+from kay.tests.models import TestModel
 
 from base import GAETestBase
 
-class TestModel(db.Model):
-  number = db.IntegerProperty()
-  data = db.StringProperty()
-  is_active = db.BooleanProperty()
-  
 class TestForm(forms.Form):
   csrf_protected = False
   username = forms.TextField("user name", required=True)
