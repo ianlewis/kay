@@ -24,6 +24,7 @@ skip_files: |
   (TODO)|
   (TODO\.pdf)|
   (README)|
+  (README\.pdf)|
   (LICENSE)|
   (scripts\/.*)|
   (docs\/.*)|
