@@ -952,6 +952,7 @@ class Field(object):
     # validation.  It means that even though a value was not in the
     # submitted data it's validated against a default value.
     validate_on_omission = False
+    creation_counter = 0
 
     def __init__(self, label=None, help_text=None, validators=None,
                  widget=None, messages=None, default=missing):
@@ -970,6 +971,8 @@ class Field(object):
         self._default = default
         assert not issubclass(self.widget, InternalWidget), \
             'can\'t use internal widgets as widgets for fields'
+        self.creation_counter = Field.creation_counter
+        Field.creation_counter += 1
 
     def __call__(self, value):
         value = self.convert(value)
