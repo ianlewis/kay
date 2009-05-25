@@ -17,7 +17,7 @@ from kay.conf import settings
 batch_num = 30
 
 def use_session():
-  return 'kay.middleware.session.SessionMiddleware' in \
+  return 'kay.sessions.middleware.SessionMiddleware' in \
       settings.MIDDLEWARE_CLASSES
 
 def cron_frequent(request):
