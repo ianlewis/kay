@@ -1737,31 +1737,39 @@ class FileField(Field):
 
 
 class BooleanField(Field):
-    """Field for boolean values.
+  """Field for boolean values.
 
-    >>> field = BooleanField()
-    >>> field('1')
-    True
+  >>> field = BooleanField()
+  >>> field('1')
+  True
 
-    >>> field = BooleanField()
-    >>> field('')
-    False
-    """
+  >>> field = BooleanField()
+  >>> field('')
+  False
+  """
 
-    widget = Checkbox
-    validate_on_omission = True
-    choices = [
-        (u'True', lazy_gettext(u'True')),
-        (u'False', lazy_gettext(u'False'))
-    ]
+  widget = Checkbox
+  validate_on_omission = True
+  choices = [
+    (u'True', lazy_gettext(u'True')),
+    (u'False', lazy_gettext(u'False'))
+  ]
 
-    def convert(self, value):
-        return value != u'False' and bool(value)
+  def __init__(self, label=None, help_text=None, required=False,
+               validators=None, widget=None, messages=None, default=missing):
+    Field.__init__(self, label, help_text, validators, widget, messages,
+                   default)
+    self.required = required
 
-    def to_primitive(self, value):
-        if self.convert(value):
-            return u'True'
-        return u'False'
+  def convert(self, value):
+    if self.required and isinstance(value, basestring) and value == u"":
+      raise ValidationError(_("Please select True or False."))
+    return value != u'False' and bool(value)
+
+  def to_primitive(self, value):
+    if self.convert(value):
+      return u'True'
+    return u'False'
 
 
 class FormMeta(type):
@@ -1775,11 +1783,17 @@ class FormMeta(type):
         root_validator_functions = []
 
         for base in reversed(bases):
-            if hasattr(base, '_root_field'):
+            if hasattr(base, "_root_field"):
                 # base._root_field is always a FormMapping field
                 fields.update(base._root_field.fields)
                 root_validator_functions.extend(base._root_field.validators)
 
+        if d.has_key("_base_fields"):
+            for key, value in d["_base_fields"].iteritems():
+                if isinstance(value, Field):
+                    fields[key] = value
+                    d[key] = FieldDescriptor(key)
+              
         for key, value in d.iteritems():
             if key.startswith('validate_') and callable(value):
                 validator_functions[key[9:]] = value
@@ -1965,7 +1979,7 @@ class Form(object):
         self.reset()
         # construct ModelField choices.
         for name, field in self._root_field.fields.iteritems():
-          field.delayed_init(name, **kwargs)
+            field.delayed_init(name, **kwargs)
             
     def __getitem__(self, key):
         return self.data[key]

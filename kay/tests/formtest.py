@@ -11,6 +11,7 @@ Tests for forms.
 import sys
 import os
 import unittest
+import logging
 
 g_path = "/usr/local/google_appengine"
 extra_path = [
@@ -33,10 +34,53 @@ from werkzeug import Request
 
 from kay.utils import local
 from kay.utils import forms
+from kay.utils.forms.modelform import ModelForm
 from kay.utils.forms import ValidationError
 from kay.tests.models import TestModel
 
 from base import GAETestBase
+
+class TestModelForm(ModelForm):
+  csrf_protected = False
+  class Meta():
+    model = TestModel
+
+class ModelFormTest(GAETestBase):
+  def setUp(self):
+    super(ModelFormTest, self).setUp()
+    entries = TestModel.all().fetch(100)
+    db.delete(entries)
+
+  def test_form(self):
+    """Form validation test with ModelForm."""
+    os.environ['REQUEST_METHOD'] = 'POST'
+    local.request = Request(self.get_env())
+    f = TestModelForm()
+    params = {"number": "12"}
+    # In your view, you can validate the form data with:
+    # f.validate(request.form)
+    # or with(If you have FileField):
+    # f.validate(request.form, request.files)
+    self.assertEqual(f.validate(params), False)
+
+    f.reset()
+    params = {"number": "12",
+              "data_field": "data string longer than 20 characters",
+              "is_active": "False"}
+    self.assertEqual(f.validate(params), False)
+
+    f.reset()
+    params = {"number": "12", "data_field": "data string",
+              "is_active": "False"}
+    self.assertEqual(f.validate(params), True)
+    f.save()
+    self.assertEqual(TestModel.all().count(), 1)
+    
+
+  def tearDown(self):
+    entries = TestModel.all().fetch(100)
+    db.delete(entries)
+    
 
 class TestForm(forms.Form):
   csrf_protected = False
@@ -46,7 +90,7 @@ class TestForm(forms.Form):
   model_field = forms.ModelField(TestModel, label="ModelField Test",
                                  required=True,
                                  query=TestModel.all().filter('is_active =', True),
-                                 option_name='data')
+                                 option_name='data_field')
   
   def context_validate(self, data):
     if data['password'] != data['password_again']:
@@ -57,7 +101,8 @@ class FormTest(GAETestBase):
     super(FormTest, self).setUp()
     if TestModel.all().count() == 0:
       for i in range(10):
-        t = TestModel(number=i, data='Test Data %02d' % i, is_active=(i%2==0))
+        t = TestModel(number=i, data_field='Test Data %02d' % i,
+                      is_active=(i%2==0))
         t.put()
 
   def test_form(self):

@@ -77,6 +77,7 @@ from kay import exceptions
 from kay.utils import forms
 from kay.utils import datastructures
 from kay.i18n import lazy_gettext as _
+from kay.exceptions import ImproperlyConfigured
 
 def monkey_patch(name, bases, namespace):
   """A 'metaclass' for adding new methods to an existing class.
@@ -527,7 +528,7 @@ class ModelFormMetaclass(forms.FormMeta):
 
   See the docs for ModelForm below for a usage example.
   """
-
+  bad_attr_names = ('data', 'errors', 'raw_data')
   def __new__(cls, class_name, bases, attrs):
     """Constructor for a new ModelForm class instance.
 
@@ -543,12 +544,11 @@ class ModelFormMetaclass(forms.FormMeta):
                      if isinstance(obj, forms.Field)),
                     key=lambda obj: obj[1].creation_counter)
     for base in bases[::-1]:
-      if hasattr(base, 'base_fields'):
-        fields = base.base_fields.items() + fields
+      if hasattr(base, '_base_fields'):
+        fields = base._base_fields.items() + fields
     declared_fields = datastructures.OrderedDict()
     for field_name, obj in fields:
       declared_fields[field_name] = obj
-
     opts = ModelFormOptions(attrs.get('Meta', None))
     attrs['_meta'] = opts
 
@@ -578,8 +578,13 @@ class ModelFormMetaclass(forms.FormMeta):
         if form_field is not None:
           model_fields[name] = form_field
 
+      for bad_attr_name in ModelFormMetaclass.bad_attr_names:
+        if model_fields.has_key(bad_attr_name):
+          raise ImproperlyConfigured("When you use ModelForm, you can not"
+                                     " use these names as field names: %s"
+                                     % str(ModelFormMetaclass.bad_attr_names))
       model_fields.update(declared_fields)
-      attrs['base_fields'] = model_fields
+      attrs['_base_fields'] = model_fields
 
       props = opts.model.properties()
       for name, field in model_fields.iteritems():
@@ -592,11 +597,9 @@ class ModelFormMetaclass(forms.FormMeta):
             return value
           field.convert = convert_for_property_field
     else:
-      attrs['base_fields'] = declared_fields
+      attrs['_base_fields'] = declared_fields
     # corresponds with form not rendered
     # maybe i should handle this in forms.FormMeta
-    attrs.update(attrs['base_fields'])
-    del attrs['base_fields']
     return super(ModelFormMetaclass, cls).__new__(cls,
                                                   class_name, bases, attrs)
 
