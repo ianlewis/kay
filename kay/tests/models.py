@@ -24,3 +24,4 @@ class TestModel(db.Model):
   data_field = db.StringProperty(required=True,
                                  validator=CreateMaxLengthValidator(20))
   is_active = db.BooleanProperty(required=True)
+  string_list_field = db.StringListProperty(required=True)

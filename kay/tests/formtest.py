@@ -66,12 +66,20 @@ class ModelFormTest(GAETestBase):
     f.reset()
     params = {"number": "12",
               "data_field": "data string longer than 20 characters",
-              "is_active": "False"}
+              "is_active": "False",
+              "string_list_field": "test"}
+    self.assertEqual(f.validate(params), False)
+
+    f.reset()
+    params = {"number": "12",
+              "data_field": "data string",
+              "is_active": "False",
+              "string_list_field": ""}
     self.assertEqual(f.validate(params), False)
 
     f.reset()
     params = {"number": "12", "data_field": "data string",
-              "is_active": "False"}
+              "is_active": "False", "string_list_field": "list"}
     self.assertEqual(f.validate(params), True)
     f.save()
     self.assertEqual(TestModel.all().count(), 1)

@@ -150,7 +150,7 @@ class Property(db.Property):
       defaults['choices'] = choices
       form_class = forms.ChoiceField
     if self.default is not None:
-      defaults['initial'] = self.default
+      defaults['default'] = self.default
     defaults.update(kwargs)
     return form_class(**defaults)
 
@@ -381,8 +381,7 @@ class StringListProperty(db.StringListProperty):
 
     This defaults to a Textarea widget with a blank initial value.
     """
-    defaults = {'form_class': forms.LineSeparated,
-                'initial': ''}
+    defaults = {'field': forms.TextField(), 'form_class': forms.LineSeparated}
     defaults.update(kwargs)
     return super(StringListProperty, self).get_form_field(**defaults)
 

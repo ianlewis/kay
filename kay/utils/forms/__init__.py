@@ -1152,12 +1152,14 @@ class Multiple(Field):
 
     def __init__(self, field, label=None, help_text=None, min_size=None,
                  max_size=None, validators=None, widget=None, messages=None,
-                 default=missing):
+                 default=missing, required=False):
         Field.__init__(self, label, help_text, validators, widget, messages,
                        default)
         self.field = field
         self.min_size = min_size
         self.max_size = max_size
+        if required and self.min_size is None:
+          self.min_size = 1
 
     @property
     def multiple_choices(self):
@@ -1214,10 +1216,10 @@ class CommaSeparated(Multiple):
 
     def __init__(self, field, label=None, help_text=None, min_size=None,
                  max_size=None, sep=u',', validators=None, widget=None,
-                 messages=None, default=missing):
+                 messages=None, default=missing, required=False):
         Multiple.__init__(self, field, label, help_text, min_size,
                           max_size, validators, widget, messages,
-                          default)
+                          default, required)
         self.sep = sep
 
     def convert(self, value):
