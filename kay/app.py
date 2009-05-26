@@ -149,7 +149,7 @@ class KayApp(object):
         dot = mw_path.rindex('.')
       except ValueError:
         raise exceptions.ImproperlyConfigured, \
-            '%s isn\'t a middleware module' % middleware_path
+            '%s isn\'t a middleware module' % mw_path
       mw_module, mw_classname = mw_path[:dot], mw_path[dot+1:]
       try:
         mod = import_module(mw_module)
