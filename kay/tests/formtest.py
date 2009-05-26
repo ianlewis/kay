@@ -51,6 +51,36 @@ class ModelFormTest(GAETestBase):
     entries = TestModel.all().fetch(100)
     db.delete(entries)
 
+  def test_modify(self):
+    """Test for modifying existing entity with ModelForm."""
+    os.environ['REQUEST_METHOD'] = 'POST'
+    local.request = Request(self.get_env())
+
+    # first create a new entity
+    f = TestModelForm()
+    params = {"number": "12", "data_field": "data string",
+              "is_active": "False", "string_list_field": "list"}
+    self.assertEqual(f.validate(params), True)
+    f.save()
+    self.assertEqual(TestModel.all().count(), 1)
+    entity = TestModel.all().get()
+    self.assertEqual(entity.number, 12)
+
+    # modify with TestModelForm
+    f = TestModelForm(instance=entity)
+    params = {"number": "13", "data_field": "modified data",
+              "is_active": "True", "string_list_field": "line 1\nline 2"}
+    self.assertEqual(f.validate(params), True)
+    f.save()
+
+    # check values
+    self.assertEqual(TestModel.all().count(), 1)
+    entity = TestModel.all().get()
+    self.assertEqual(entity.number, 13)
+    self.assertEqual(entity.data_field, "modified data")
+    self.assertEqual(entity.is_active, True)
+    self.assertEqual(entity.string_list_field, ["line 1", "line 2"])
+
   def test_form(self):
     """Form validation test with ModelForm."""
     os.environ['REQUEST_METHOD'] = 'POST'
@@ -77,6 +107,7 @@ class ModelFormTest(GAETestBase):
               "string_list_field": ""}
     self.assertEqual(f.validate(params), False)
 
+    # create a new entity
     f.reset()
     params = {"number": "12", "data_field": "data string",
               "is_active": "False", "string_list_field": "list"}
