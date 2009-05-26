@@ -46,7 +46,7 @@ def auth_func():
   return raw_input('Username:'), getpass.getpass('Password:')
 
 
-def deleteAllEntities(model, num=20):
+def delete_all_entities(model, num=20):
   entries = db.Query(model, keys_only=True).fetch(num)
   while len(entries) > 0:
     print "Now deleting %d entries." % len(entries)
@@ -63,7 +63,7 @@ def create_useful_locals():
 
 
 def create_useful_locals_for_rshell():
-  local_d = {'deleteAllEntities': deleteAllEntities}
+  local_d = {'delete_all_entities': delete_all_entities}
   local_d.update(create_useful_locals())
   return local_d
 
