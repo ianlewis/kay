@@ -9,6 +9,8 @@ Middleware for authentication.
 
 from kay import auth
 from kay.exceptions import ImproperlyConfigured
+from kay.conf import settings
+from kay.utils.importlib import import_module
 
 
 class LazyUser(object):
@@ -33,7 +35,25 @@ class AuthenticationMiddleware(object):
 class LazyGoogleUser(object):
   def __get__(self, request, obj_type=None):
     if not hasattr(request, '_cached_user'):
-      from kay.auth.models import AnonymousUser, GoogleUser
+      from kay.auth.models import AnonymousUser
+      try:
+        dot = settings.AUTH_USER_MODEL.rindex(".")
+      except ValueError:
+        raise ImproperlyConfigured, \
+            '%s isn\'t a auth user model.' % settings.AUTH_USER_MODEL
+      auth_model_module = settings.AUTH_USER_MODEL[:dot]
+      auth_model_classname = settings.AUTH_USER_MODEL[dot+1:]
+      try:
+        mod = import_module(auth_model_module)
+      except ImportError, e:
+        raise ImproperlyConfigured, \
+            'Error importing auth model %s: "%s"' % (auth_model_module, e)
+      try:
+        auth_model_class = getattr(mod, auth_model_classname)
+      except AttributeError:
+        raise ImproperlyConfigured, \
+            'Auth model module "%s" does not define a "%s" class' % \
+            (auth_model_module, auth_model_classname)
       from google.appengine.api import users
       from google.appengine.ext import db
       user = users.get_current_user()
@@ -41,9 +61,9 @@ class LazyGoogleUser(object):
         key_name = '_%s' % user.user_id()
         email = user.email()
         def txn():
-          entity = GoogleUser.get_by_key_name(key_name)
+          entity = auth_model_class.get_by_key_name(key_name)
           if entity is None:
-            entity = GoogleUser(key_name=key_name, email=email)
+            entity = auth_model_class(key_name=key_name, email=email)
             entity.put()
           elif entity.email != email:
             entity.email = email
