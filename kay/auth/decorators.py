@@ -20,3 +20,15 @@ def login_required(func):
     return func(request, *args, **kwargs)
   update_wrapper(inner, func)
   return inner
+
+def admin_required(func):
+  def inner(request, *args, **kwargs):
+    if request.user.is_staff:
+      # TODO: The user could be logged in already,
+      # which means the login page might redirect back
+      # and cause redirect loops. 
+      # Need to allow redirecting to an error page.
+      return redirect(create_login_url(request))
+    return func(request, *args, **kwargs)
+  update_wrapper(inner, func)
+  return inner

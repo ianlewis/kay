@@ -33,6 +33,11 @@ class AuthenticationMiddleware(object):
 
 
 class LazyGoogleUser(object):
+  """
+  A lazily evaluated object that contains information
+  about the current user.
+  WARNING: Should not be used for anything but the CURRENT user.
+  """  
   def __get__(self, request, obj_type=None):
     if not hasattr(request, '_cached_user'):
       from kay.auth.models import AnonymousUser
@@ -60,14 +65,26 @@ class LazyGoogleUser(object):
       if user:
         key_name = '_%s' % user.user_id()
         email = user.email()
+        is_current_user_admin = users.is_current_user_admin()
         def txn():
           entity = auth_model_class.get_by_key_name(key_name)
           if entity is None:
-            entity = auth_model_class(key_name=key_name, email=email)
+            entity = auth_model_class(
+                key_name=key_name,
+                email=email,
+                is_admin=is_current_user_admin,
+            )
             entity.put()
-          elif entity.email != email:
-            entity.email = email
-            entity.put()
+          else:
+            update_user = False
+            if entity.is_admin != is_current_user_admin:
+                entity.is_admin = is_current_user_admin
+                update_user = True
+            if entity.email != email:
+                entity.email = email
+                update_user = True
+            if update_user:
+                entity.put()
           return entity
         request._cached_user = db.run_in_transaction(txn)
       else:

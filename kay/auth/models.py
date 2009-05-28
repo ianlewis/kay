@@ -19,6 +19,7 @@ class GoogleUser(db.Model):
   email = db.EmailProperty(required=True)
   first_name = db.StringProperty(required=False)
   last_name = db.StringProperty(required=False)
+  is_admin = db.BooleanProperty(required=True, default=False)
   tz = db.StringProperty(choices=pytz.all_timezones, required=True,
                          default=settings.DEFAULT_TIMEZONE,
                          indexed=False)
