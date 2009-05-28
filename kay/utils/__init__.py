@@ -98,7 +98,7 @@ def url_for(endpoint, **args):
 
 def create_logout_url(request=None):
   """
-  An utilyty function for jinja2.
+  An utility function for jinja2.
   """
   # TODO: Change implementation according to auth backend settings.
   from google.appengine.api import users
@@ -109,7 +109,7 @@ def create_logout_url(request=None):
 
 def create_login_url(request=None):
   """
-  An utilyty function for jinja2.
+  An utility function for jinja2.
   """
   # TODO: Change implementation according to auth backend settings.
   from google.appengine.api import users
