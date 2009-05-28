@@ -12,19 +12,22 @@ from google.appengine.ext import db
 
 from kay.conf import settings
 
-class GoogleUser(db.Model):
+class User(db.Model):
   """
-  Use User.user_id() as key_name for this model.
+  Basic user type that can be used with other login
+  schemes other than Google logins
   """
   email = db.EmailProperty(required=True)
   first_name = db.StringProperty(required=False)
   last_name = db.StringProperty(required=False)
-  is_admin = db.BooleanProperty(required=True, default=False)
+
+  created = db.DateTimeProperty(auto_now_add=True)
+  last_login = db.DateTimeProperty(auto_now=True)
+
+  #TODO: Is this really needed here? 
   tz = db.StringProperty(choices=pytz.all_timezones, required=True,
                          default=settings.DEFAULT_TIMEZONE,
                          indexed=False)
-  created = db.DateTimeProperty(auto_now_add=True)
-  last_login = db.DateTimeProperty(auto_now=True)
 
   def __unicode__(self):
     return unicode(self.email)
@@ -34,6 +37,12 @@ class GoogleUser(db.Model):
 
   def is_authenticated(self):
     return True
+
+class GoogleUser(User):
+  """
+  Use User.user_id() as key_name for this model.
+  """
+  is_admin = db.BooleanProperty(required=True, default=False)
 
 class AnonymousUser(object):
   __slots__ = ('tz')

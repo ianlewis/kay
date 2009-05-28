@@ -23,7 +23,7 @@ def login_required(func):
 
 def admin_required(func):
   def inner(request, *args, **kwargs):
-    if request.user.is_staff:
+    if users.current_user_is_admin():
       # TODO: The user could be logged in already,
       # which means the login page might redirect back
       # and cause redirect loops. 
