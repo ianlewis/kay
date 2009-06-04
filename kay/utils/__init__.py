@@ -21,12 +21,14 @@ from werkzeug.exceptions import NotFound
 from pytz import timezone, UTC
 
 from kay.conf import settings
+from kay.utils.importlib import import_module
 
 local = Local()
 local_manager = LocalManager([local])
 
 _translations_cache = {}
 _default_translations = None
+_standard_context_processors = None
 
 
 def get_project_path():
@@ -134,12 +136,42 @@ def render_to_string(template, context={}):
   return template.render(context)
 
 
-def render_to_response(template, context, mimetype='text/html'):
+def render_to_response(template, context, mimetype='text/html',
+                       processors=None):
   """
-  A function for adding useful variables to context automatically, but
-  none yet.
+  A function for adding useful variables to context automatically,
+  according to the CONTEXT_PROCESSORS settings.
   """
+  if processors is None:
+    processors = ()
+  else:
+    processors = tuple(processors)
+  for processor in get_standard_processors() + processors:
+    context.update(processor(get_request()))
   return Response(render_to_string(template, context), mimetype=mimetype)
+
+def get_standard_processors():
+  from kay.conf import settings
+  global _standard_context_processors
+  if _standard_context_processors is None:
+    processors = []
+    for path in settings.CONTEXT_PROCESSORS:
+      i = path.rfind('.')
+      module, attr = path[:i], path[i+1:]
+      try:
+        mod = import_module(module)
+      except ImportError, e:
+        raise ImproperlyConfigured('Error importing request processor module'
+                                   ' %s: "%s"' % (module, e))
+      try:
+        func = getattr(mod, attr)
+      except AttributeError:
+        raise ImproperlyConfigured('Module "%s" does not define a "%s" '
+                                   'callable request processor' %
+                                   (module, attr))
+      processors.append(func)
+    _standard_context_processors = tuple(processors)
+  return _standard_context_processors
 
 
 def to_local_timezone(datetime, tzname=settings.DEFAULT_TIMEZONE):

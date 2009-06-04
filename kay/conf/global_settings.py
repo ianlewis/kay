@@ -35,6 +35,12 @@ DEFAULT_LANG = 'en'
 INSTALLED_APPS = (
 )
 
+CONTEXT_PROCESSORS = (
+  'kay.auth.process_context',
+  'kay.context_processors.request',
+  'kay.context_processors.url_functions',
+)
+
 SUBMOUNT_APPS = (
 )
 

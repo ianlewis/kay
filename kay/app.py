@@ -110,12 +110,6 @@ class KayApp(object):
     )
   
     local.jinja2_env = Environment(**env_dict)
-    from kay.utils import url_for, reverse, create_login_url, create_logout_url
-    local.jinja2_env.globals.update({'url_for': url_for,
-                                     'reverse': reverse,
-                                     'request': local.request,
-                                     'create_login_url': create_login_url,
-                                     'create_logout_url': create_logout_url})
 
   def init_lang(self, lang):
     """

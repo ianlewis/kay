@@ -11,3 +11,6 @@ from kay.auth.models import AnonymousUser
 
 def get_user(request):
   return AnonymousUser()
+
+def process_context(request):
+  return {'user': request.user}
