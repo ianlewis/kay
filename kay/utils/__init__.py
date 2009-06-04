@@ -128,19 +128,10 @@ def reverse(endpoint, _external=False, method='GET', **values):
       force_external=_external)
 
 
-def render_to_string(template, context={}):
+def render_to_string(template, context={}, processors=None):
   """
-  A function for template rendering.
-  """
-  template = local.jinja2_env.get_template(template)
-  return template.render(context)
-
-
-def render_to_response(template, context, mimetype='text/html',
-                       processors=None):
-  """
-  A function for adding useful variables to context automatically,
-  according to the CONTEXT_PROCESSORS settings.
+  A function for template rendering adding useful variables to context
+  automatically, according to the CONTEXT_PROCESSORS settings.
   """
   if processors is None:
     processors = ()
@@ -148,7 +139,17 @@ def render_to_response(template, context, mimetype='text/html',
     processors = tuple(processors)
   for processor in get_standard_processors() + processors:
     context.update(processor(get_request()))
-  return Response(render_to_string(template, context), mimetype=mimetype)
+  template = local.jinja2_env.get_template(template)
+  return template.render(context)
+
+
+def render_to_response(template, context, mimetype='text/html',
+                       processors=None):
+  """
+  A function for render html pages.
+  """
+  return Response(render_to_string(template, context, processors),
+                  mimetype=mimetype)
 
 def get_standard_processors():
   from kay.conf import settings
