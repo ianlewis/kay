@@ -65,11 +65,10 @@ class KayApp(object):
         self._view_middleware = self._exception_middleware = None
 
   def init_url_map(self):
-    try:
-      mod = import_module(self.app_settings.ROOT_URL_MODULE)
-    except ImportError:
-      raise exceptions.ImproperlyConfigured("Can't import module: %s." %
-                                            self.app_settings.ROOT_URL_MODULE)
+    # Stopped to use try..except here because it's bad to conceal the
+    # cause.
+    mod = import_module(self.app_settings.ROOT_URL_MODULE)
+
     make_url = getattr(mod, 'make_url')
     all_views = getattr(mod, 'all_views')
     self.views = all_views
