@@ -16,6 +16,17 @@ kay
 
 * debugger でペーストする先を変えないとまずいかも
 
+* 下記のような事をしてくれるスクリプトを用意する
+
+.. code-block:: console
+
+   $ mkdir yourproject
+   $ cd yourproject
+   $ ln -s ../kay/kay .
+   $ ln -s ../kay/manage.py .
+   $ cp ../kay/settings.py.sample ./settings.py
+   $ cp ../kay/app.yaml.sample ./app.yaml
+   $ cp ../kay/urls.py .
 
 kay.utils.forms
 ----------------
