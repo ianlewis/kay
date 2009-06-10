@@ -23,6 +23,7 @@ except ImportError:
 from werkzeug.contrib import sessions
 from werkzeug.exceptions import HTTPException
 from google.appengine.ext import db
+from google.appengine.api import memcache
 
 from kay.conf import settings
 from models import GAESession
@@ -39,11 +40,15 @@ class GAESessionStore(sessions.SessionStore):
     return '%s:%s' %(self.session_prefix ,sid)
 
   def save(self, session):
-    GAESession(key_name = self.get_key_name(session.sid),
-               data = self.encode(dict(session)),
-               expire_date = (datetime.datetime.now() +
-                              datetime.timedelta(seconds=settings.COOKIE_AGE))
-    ).put()
+    key_name = self.get_key_name(session.sid)
+    gae_session = GAESession(
+      key_name = key_name,
+      data = self.encode(dict(session)),
+      expire_date = (datetime.datetime.now() +
+                     datetime.timedelta(seconds=settings.COOKIE_AGE))
+    )
+    gae_session.put()
+    memcache.set(key_name, gae_session, settings.SESSION_MEMCACHE_AGE)
 
   def delete(self, session):
     s = GAESession.get_by_key_name(self.get_key_name(session.sid))
@@ -51,7 +56,10 @@ class GAESessionStore(sessions.SessionStore):
       s.delete()
 
   def get(self, sid):
-    s = GAESession.get_by_key_name(self.get_key_name(sid))
+    key_name = self.get_key_name(sid)
+    s = memcache.get(key_name)
+    if s is None:
+      s = GAESession.get_by_key_name(key_name)
     if not self.is_valid_key(sid) or s is None:
       return self.new()
     else:
