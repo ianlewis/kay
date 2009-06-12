@@ -28,7 +28,7 @@ def cron_hourly(request):
   logging.debug("cron hourly handler called.")
   if use_session():
     from google.appengine.ext import db
-    from kay.middleware.session import GAESession
+    from kay.sessions.models import GAESession
     now = datetime.datetime.now()
     entries = db.Query(GAESession, keys_only=True).filter(
       'expire_date <', now).fetch(batch_num)
