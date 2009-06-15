@@ -9,6 +9,7 @@ A decorators related authentication.
 
 from functools import update_wrapper
 
+from google.appengine.api import users
 from werkzeug import redirect
 
 from kay.utils import create_login_url
@@ -23,7 +24,7 @@ def login_required(func):
 
 def admin_required(func):
   def inner(request, *args, **kwargs):
-    if users.current_user_is_admin():
+    if users.is_current_user_admin():
       # TODO: The user could be logged in already,
       # which means the login page might redirect back
       # and cause redirect loops. 
