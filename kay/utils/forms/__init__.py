@@ -1042,11 +1042,6 @@ class Field(object):
             rv = rv[:-1] + ' [bound]>'
         return rv
 
-    def delayed_init(self, name, **kwargs):
-        """
-        Delayed initialization when on form init.
-        """
-        pass
 
 class Mapping(Field):
     """Apply a set of fields to a dictionary of values.
@@ -1421,18 +1416,11 @@ class ModelField(Field):
       except AttributeError:
         return entry.__repr__()
 
-    def delayed_init(self, name, **kwargs):
-      query_dict = kwargs.get('query_dict', None)
-      if query_dict is None:
-        return
-      q = query_dict.get(name, None)
-      if q is None:
-        q = self.query
-      else:
-        self.query = q
+    def set_query(self, query):
+      self.query = query
       self.choices = [("", u"----")] + \
           [(e.key(), escape(self._get_option_name(e)))
-           for e in q.fetch(1000)]
+           for e in query.fetch(1000)]
 
 
 class HiddenModelField(ModelField):
@@ -1979,9 +1967,6 @@ class Form(object):
 
         self._root_field = _bind(self.__class__._root_field, self, {})
         self.reset()
-        # construct ModelField choices.
-        for name, field in self._root_field.fields.iteritems():
-            field.delayed_init(name, **kwargs)
             
     def __getitem__(self, key):
         return self.data[key]
