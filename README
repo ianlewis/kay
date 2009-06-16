@@ -81,20 +81,20 @@ have to add 'hello' to the INSTALLED_APPS tupple in the settings.py.
 
 .. code-block:: console
 
-   $ scripts/extract-messages hello
-   $ scripts/add-translation --app hello ja
+   $ ../kay/scripts/extract-messages hello
+   $ ../kay/scripts/add-translation --app hello ja
    $ vi hello/i18n/ja/LC_MESSAGES/messages.po
-   $ scripts/compile-translations hello
+   $ ../kay/scripts/compile-translations hello
 
 You can also merge newly added catalogue into your translations as
 follows.
 
 .. code-block:: console
 
-   $ scripts/extract-messages hello
-   $ scripts/update-translation -l ja hello
+   $ ../kay/scripts/extract-messages hello
+   $ ../kay/scripts/update-translation -l ja hello
    $ vi hello/i18n/ja/LC_MESSAGES/messages.po
-   $ scripts/compile-translations hello
+   $ ../kay/scripts/compile-translations hello
 
 
 Shell tools
@@ -149,4 +149,5 @@ Questions and Bug Report
   Takashi Matsuo <tmatsuo@candit.jp>
 
 * Source code repository:
-  http://bitbucket.org/tmatsuo/kay/  
+  http://bitbucket.org/tmatsuo/kay/
+
