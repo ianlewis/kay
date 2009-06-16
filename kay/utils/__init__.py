@@ -98,26 +98,26 @@ def url_for(endpoint, **args):
   return rv
 
 
-def create_logout_url(request=None):
+def create_logout_url(url=None):
   """
   An utility function for jinja2.
   """
   # TODO: Change implementation according to auth backend settings.
   from google.appengine.api import users
-  if request is None:
-    request = local.request
-  return users.create_logout_url(request.url)
+  if url is None:
+    url = local.request.url
+  return users.create_logout_url(url)
 
 
-def create_login_url(request=None):
+def create_login_url(url=None):
   """
   An utility function for jinja2.
   """
   # TODO: Change implementation according to auth backend settings.
   from google.appengine.api import users
-  if request is None:
-    request = local.request
-  return users.create_login_url(request.url)
+  if url is None:
+    url = local.request.url
+  return users.create_login_url(url)
 
 
 def reverse(endpoint, _external=False, method='GET', **values):
