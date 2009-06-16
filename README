@@ -37,15 +37,19 @@ Dependencies
 Quick Start
 -----------
 
-* First, copy whole kay directory with your project name, and cd into
-  it, copy settings files.
+* First, make symlynk of kay directory inside your project directry,
+  copy settings files.
 
 .. code-block:: console
 
-   $ cp -r kay yourproject
+   $ hg clone http://bitbucket.org/tmatsuo/kay/
+   $ mkdir yourproject
    $ cd yourproject
-   $ cp settings.py.sample settings.py
-   $ cp app.yaml.sample app.yaml
+   $ ln -s ../kay/kay .
+   $ cp ../kay/manage.py .
+   $ cp ../kay/urls.py .
+   $ cp ../kay/settings.py.sample settings.py
+   $ cp ../kay/app.yaml.sample app.yaml
 
 * Second, you can create your first application with following command.
 
