@@ -168,6 +168,7 @@ You can use this form in your view like following.
       else:
         do something with invalid form ...
 
+
 * You can also use ModelForm to create a form automatically from Model
   class.
 
@@ -185,6 +186,8 @@ You can use this form in your view like following.
       class Meta:
         model = MyModel
 
+* For more details about forms, please refer to the docs/forms-usage.rst.
+  
 
 Questions and Bug Report
 ------------------------
@@ -195,6 +198,5 @@ Questions and Bug Report
 * Or, contact the project leader directly.
   Takashi Matsuo <tmatsuo@candit.jp>
 
-* Source code repository:
-  http://bitbucket.org/tmatsuo/kay/
-
+* Code site
+  http://code.google.com/p/kay-framework/
