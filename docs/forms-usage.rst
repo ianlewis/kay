@@ -5,4 +5,4 @@ Kay forms manual
 TODO
 ----
 
-I'm sorry. This document has not written yet.
+I'm sorry. This document has not been written yet.
