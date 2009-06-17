@@ -139,6 +139,53 @@ Datastore
   You can change this behaviour by settings ADD_APP_PREFIX_TO_KIND to
   False in your settings.py.
 
+Forms
+-----
+
+* To define form class, you can define a class that extends
+  kay.utils.forms.Form. For example the code bellow will give you the
+  form contains two text fields with different validators.
+
+.. code-block:: python
+
+    from kay.utils.forms import Form
+    class PersonForm(Form):
+      name = TextField(required=True)
+      age = IntegerField()
+
+
+You can use this form in your view like following.
+ 
+.. code-block:: python
+
+    from forms import PersonForm
+    form = PersonForm()
+    if request.method == 'POST'
+      if form.validate(request.form, request.files):
+        name = form['name']
+	age = form['age']
+        do something with valid form ...
+      else:
+        do something with invalid form ...
+
+* You can also use ModelForm to create a form automatically from Model
+  class.
+
+.. code-block:: python
+
+    from google.appengine.ext import db
+
+    class MyModel(db.Model):
+      name = db.StringProperty(required=True)
+      age = db.IntegerProperty()
+
+    from kay.utils.forms.modelform import ModelForm
+
+    class MyForm(ModelForm):
+      class Meta:
+        model = MyModel
+
+
 Questions and Bug Report
 ------------------------
 
