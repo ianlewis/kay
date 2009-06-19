@@ -81,20 +81,20 @@ have to add 'hello' to the INSTALLED_APPS tupple in the settings.py.
 
 .. code-block:: console
 
-   $ scripts/extract-messages hello
-   $ scripts/add-translation --app hello ja
+   $ ../kay/scripts/extract-messages hello
+   $ ../kay/scripts/add-translation --app hello ja
    $ vi hello/i18n/ja/LC_MESSAGES/messages.po
-   $ scripts/compile-translations hello
+   $ ../kay/scripts/compile-translations hello
 
 You can also merge newly added catalogue into your translations as
 follows.
 
 .. code-block:: console
 
-   $ scripts/extract-messages hello
-   $ scripts/update-translation -l ja hello
+   $ ../kay/scripts/extract-messages hello
+   $ ../kay/scripts/update-translation -l ja hello
    $ vi hello/i18n/ja/LC_MESSAGES/messages.po
-   $ scripts/compile-translations hello
+   $ ../kay/scripts/compile-translations hello
 
 
 Shell tools
@@ -139,6 +139,56 @@ Datastore
   You can change this behaviour by settings ADD_APP_PREFIX_TO_KIND to
   False in your settings.py.
 
+Forms
+-----
+
+* To define form class, you can define a class that extends
+  kay.utils.forms.Form. For example the code bellow will give you the
+  form contains two text fields with different validators.
+
+.. code-block:: python
+
+    from kay.utils.forms import Form
+    class PersonForm(Form):
+      name = TextField(required=True)
+      age = IntegerField()
+
+
+You can use this form in your view like following.
+ 
+.. code-block:: python
+
+    from forms import PersonForm
+    form = PersonForm()
+    if request.method == 'POST'
+      if form.validate(request.form, request.files):
+        name = form['name']
+	age = form['age']
+        do something with valid form ...
+      else:
+        do something with invalid form ...
+
+
+* You can also use ModelForm to create a form automatically from Model
+  class.
+
+.. code-block:: python
+
+    from google.appengine.ext import db
+
+    class MyModel(db.Model):
+      name = db.StringProperty(required=True)
+      age = db.IntegerProperty()
+
+    from kay.utils.forms.modelform import ModelForm
+
+    class MyForm(ModelForm):
+      class Meta:
+        model = MyModel
+
+* For more details about forms, please refer to the docs/forms-usage.rst.
+  
+
 Questions and Bug Report
 ------------------------
 
@@ -148,5 +198,5 @@ Questions and Bug Report
 * Or, contact the project leader directly.
   Takashi Matsuo <tmatsuo@candit.jp>
 
-* Source code repository:
-  http://bitbucket.org/tmatsuo/kay/  
+* Code site
+  http://code.google.com/p/kay-framework/
