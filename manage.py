@@ -24,8 +24,9 @@ from kay.management.runserver import (
 )
 from kay.management.startapp import startapp
 from kay.management.appcfg import (
-  do_appcfg, do_appcfg_passthru_argv
+  do_appcfg, do_appcfg_passthru_argv,
 )
+from kay.management.bulkloader import do_bulkloader_passthru_argv
 
 action_shell = shell
 action_rshell = rshell
@@ -36,5 +37,7 @@ if __name__ == '__main__':
     runserver_passthru_argv()
   elif sys.argv[1] == "appcfg":
     do_appcfg_passthru_argv()
+  elif sys.argv[1] == "bulkloader":
+    do_bulkloader_passthru_argv()
   else:
     script.run()
