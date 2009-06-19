@@ -17,8 +17,7 @@ from werkzeug.exceptions import (
 )
 from werkzeug.utils import DispatcherMiddleware
 from jinja2 import (
-  Environment, FileSystemLoader, ChoiceLoader, PrefixLoader,
-  Undefined,
+  Environment, Undefined,
 )
 
 import kay
@@ -80,6 +79,18 @@ class KayApp(object):
     TODO: Capability to disable i18n stuff.
     TODO: Pluggable utility mechanism.
     """
+    if 'SERVER_SOFTWARE' in os.environ and \
+          os.environ['SERVER_SOFTWARE'].startswith('Dev'):
+      from jinja2 import (FileSystemLoader, ChoiceLoader, PrefixLoader,)
+      template_dirname = "templates"
+    else:
+      from kay.utils.jinja2.code_loaders import FileSystemCodeLoader as \
+          FileSystemLoader
+      from kay.utils.jinja2.code_loaders import ChoiceCodeLoader as \
+          ChoiceLoader
+      from kay.utils.jinja2.code_loaders import PrefixCodeLoader as \
+          PrefixLoader
+      template_dirname = "templates_compiled"
     global local
     per_app_loaders = {}
     for app in self.app_settings.INSTALLED_APPS:
@@ -93,13 +104,14 @@ class KayApp(object):
       except AttributeError:
         app_key = app
       per_app_loaders[app_key] = FileSystemLoader(
-        os.path.join(os.path.dirname(mod.__file__), 'templates'))
+        os.path.join(os.path.dirname(mod.__file__), template_dirname))
     loader = PrefixLoader(per_app_loaders)  
     if self.app_settings.TEMPLATE_DIRS:
+      target = [d.replace("templates", template_dirname)
+                for d in self.app_settings.TEMPLATE_DIRS]
       import kay
       base_loader = FileSystemLoader(
-        [os.path.join(kay.PROJECT_DIR, d)
-         for d in self.app_settings.TEMPLATE_DIRS])
+        [os.path.join(kay.PROJECT_DIR, d) for d in target])
       loader = ChoiceLoader([base_loader, loader])
     env_dict = dict(
       loader = loader,
