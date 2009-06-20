@@ -16,6 +16,7 @@ from werkzeug.exceptions import (
   HTTPException, InternalServerError, NotFound
 )
 from werkzeug.utils import DispatcherMiddleware
+from werkzeug import Response
 from jinja2 import (
   Environment, Undefined,
 )
@@ -239,7 +240,10 @@ class KayApp(object):
       except Exception, e:
         request_repr = "Request repr() unavailable"
       message = "%s\n\n%s" % (self._get_traceback(exc_info), request_repr)
-      mail.mail_admins(subject, message, fail_silently=True)
+      if local.app.app_settings.DEBUG:
+        return Response(message)
+      else:
+        mail.mail_admins(subject, message, fail_silently=True)
       # TODO: Return an HttpResponse that displays a friendly error message.
       return InternalServerError()
 
