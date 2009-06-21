@@ -18,8 +18,28 @@ To pre-compile whole template directories, use gaefy.jinja2.compiler.
 :license: BSD, see LICENSE.txt for more details.
 """
 
+import base64
+import logging
+
 from jinja2.loaders import FileSystemLoader, PackageLoader, DictLoader, \
   FunctionLoader, PrefixLoader, ChoiceLoader
+
+try:
+  code_cache
+except NameError:
+  logging.debug("Initializing code_cache.")
+  code_cache = {}
+
+def set_code(name, code):
+  code_cache[base64.b64encode(name)] = code
+
+
+def get_code_by_name(name):
+  encoded = base64.b64encode(name)
+  if encoded in code_cache:
+    return code_cache[encoded]
+  return None
+
 
 class BaseCodeLoader(object):
   """Base mixin class for loaders that use pre-parsed Jinja2 templates stored
@@ -29,16 +49,15 @@ class BaseCodeLoader(object):
     """Loads a pre-parsed template, stored as Python code."""
     if globals is None:
       globals = {}
-
-    # first we try to get the source for this template together
-    # with the filename and the uptodate function.
-    source, filename, uptodate = self.get_source(environment, name)
-
-    # build a python code object.
-    code = compile(source, filename, 'exec')
-
-    return environment.template_class.from_code(environment, code,
-                                                globals, uptodate)
+    code = get_code_by_name(name)
+    if code is not None:
+      logging.debug("Loaded the code from module global variable.")
+    else:
+      logging.debug("Load the templates from precompiled source.")
+      source, filename, uptodate = self.get_source(environment, name)
+      code = compile(source, filename, 'exec')
+      set_code(name, code)
+    return environment.template_class.from_code(environment, code, globals)
 
 
 class FileSystemCodeLoader(BaseCodeLoader, FileSystemLoader):
