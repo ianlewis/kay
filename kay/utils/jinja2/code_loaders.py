@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-gaefy.jinja2.code_loaders
+kay.utils.jinja2.code_loaders
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Set of Jinja2 loaders that use pre-compiled templates stored as Python code.
