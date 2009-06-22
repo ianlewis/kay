@@ -1,5 +1,5 @@
 * Werkzeug
-  changeset 817:5f8bd06b9a00
+  changeset 823:c478c8c85fd3
   with a patch: http://dev.pocoo.org/projects/werkzeug/ticket/385
 
 * Jinja2
