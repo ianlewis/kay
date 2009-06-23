@@ -5,7 +5,7 @@ TODO
 kay
 ----
 
-* Write documentations about forms, middlewares, etc..
+* Write documentations about forms, middlewares, jinja2 howtos, etc..
 
 * Re-implement i18n helper commands on manage.py.
 
