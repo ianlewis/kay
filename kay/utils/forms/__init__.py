@@ -1725,6 +1725,9 @@ class FileField(Field):
       raise ValidationError(_("File must not empty."))
     return ret
 
+  def to_primitive(self, value):
+    # always return None
+    return None
 
 class BooleanField(Field):
   """Field for boolean values.
