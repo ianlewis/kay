@@ -10,7 +10,7 @@ Kay framework.
 import os
 import sys
 
-__version__ = '0.1'
+__version__ = "0.1.0b3"
 
 KAY_DIR = os.path.abspath(os.path.dirname(__file__))
 PROJECT_DIR = os.path.dirname(KAY_DIR)
