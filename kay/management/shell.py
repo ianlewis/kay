@@ -115,7 +115,7 @@ def rshell(appid=('a', ''), host=('h', ''), useful_imports=True):
   if not host:
     host = "%s.appspot.com" % appid
   remote_api_stub.ConfigureRemoteDatastore(appid, '/remote_api', auth_func,
-                                           host)
+                                           host, secure=True)
   try:
     import IPython
   except ImportError:
