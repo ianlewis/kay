@@ -5,18 +5,11 @@ TODO
 kay
 ----
 
-* manage.py で dumpdata と loaddata を作る
+* Re-implement i18n helper commands on manage.py.
 
-* manage.py で国際化メッセージの処理をできるようにする
+* Change the url of paste capability in the werkzeug debugger.
 
-* db.kind() に app の prefix を付けるべきかも知れない...が判りづらいし
-  トラブルの元になるかもしれないなあ
-
-  実装してコミットしてみた。色々試す。テスト書くのも良いよね。
-
-* debugger でペーストする先を変えないとまずいかも
-
-* 下記のような事をしてくれるスクリプトを用意する
+* Implement start-project script doing as follows:
 
 .. code-block:: console
 
@@ -31,26 +24,24 @@ kay
 kay.utils.forms
 ----------------
 
-* Media (javascript など) を書けると良いかな...
+* Make widgets can have media(javascript, css)
 
- * AjaxModelField みたいなのを作る
+ * AjaxModelField
 
-* ModelField の実装
+* Implementation of ModelField.
 
- * 自動で選択肢をキャッシュするようにする
+ * Cache the choices automatically
 
 
 kay.auth
 ---------------
 
-* user 認証をどうするか。抽象化したユーザクラスが要りそう
+* Another authentication backend other than Google's auth.
 
- * デベロッパーは GoogleUser を拡張できるようにしよう
-
- * 独自の認証を使いたい場合もあるよね
-
-  * 独自認証の場合 https 関係で、ログイン画面ではドメインが変わるケース
-    もある。(独自ドメインでは https を使えないので)
-
-    ドメインまたがってクッキーを使えないのでその場合はドメインが変わる
-    時に内部でランダムストリングを発行してセッション情報をやり取りする?
+ * When using apps domain, we cannot use https on our domain. We have
+   to use appspot.com domain for SSL. So there will be the problem
+   that Kay can not handle the cookies from our own domain.
+   
+   To handle this situation, parhaps we can generate random string
+   internally for carrying the session values from the domain to the
+   other domain.
