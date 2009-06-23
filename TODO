@@ -5,6 +5,8 @@ TODO
 kay
 ----
 
+* Write documentations about forms, middlewares, etc..
+
 * Re-implement i18n helper commands on manage.py.
 
 * Change the url of paste capability in the werkzeug debugger.
@@ -21,6 +23,7 @@ kay
    $ cp ../kay/app.yaml.sample ./app.yaml
    $ cp ../kay/urls.py .
 
+
 kay.utils.forms
 ----------------
 
@@ -31,6 +34,12 @@ kay.utils.forms
 * Implementation of ModelField.
 
  * Cache the choices automatically
+
+kay.sessions
+------------
+
+* Retry when GAESessionStore.save fails cos' its important to keep
+  users' session data.
 
 
 kay.auth
