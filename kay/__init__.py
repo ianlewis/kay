@@ -75,7 +75,7 @@ def setup():
   from google.appengine.ext.db import polymodel
 
   class _meta(object):
-    __slots__ = ('app_label', 'module_name', '_db_table', 'abstract')
+    __slots__ = ('object_name', 'app_label', 'module_name', '_db_table', 'abstract')
     def __init__(self, model):
       try:
         self.app_label = model.__module__.split('.')[-2]
@@ -83,6 +83,7 @@ def setup():
         raise ValueError('Kay expects models (here: %s.%s) to be defined in their own apps!' % (model.__module__, model.__name__))
       self.module_name = model.__name__.lower()
       self.abstract = model is db.Model
+      self.object_name = model.__name__
 
     def _set_db_table(self, db_table):
       self._db_table = db_table
