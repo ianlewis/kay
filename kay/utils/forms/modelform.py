@@ -381,7 +381,8 @@ class StringListProperty(db.StringListProperty):
 
     This defaults to a Textarea widget with a blank initial value.
     """
-    defaults = {'field': forms.TextField(), 'form_class': forms.LineSeparated}
+    defaults = {'field': forms.TextField(), 'form_class': forms.LineSeparated,
+	        'min_size': 0}
     defaults.update(kwargs)
     return super(StringListProperty, self).get_form_field(**defaults)
 
