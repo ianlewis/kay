@@ -516,7 +516,7 @@ class ModelFormOptions(object):
     self.model = getattr(options, 'model', None)
     self.fields = getattr(options, 'fields', None)
     self.exclude = getattr(options, 'exclude', None)
-
+    self.help_texts = getattr(options, 'help_texts', {})
 
 class ModelFormMetaclass(forms.FormMeta):
   """The metaclass for the ModelForm class defined below.
@@ -573,7 +573,7 @@ class ModelFormMetaclass(forms.FormMeta):
           continue
         if opts.exclude and name in opts.exclude:
           continue
-        form_field = prop.get_form_field()
+        form_field = prop.get_form_field(help_text=opts.help_texts.get(name, None))
         if form_field is not None:
           model_fields[name] = form_field
 

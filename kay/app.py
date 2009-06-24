@@ -25,7 +25,10 @@ import kay
 from kay.utils import local, local_manager
 from kay.utils.importlib import import_module
 from kay._internal import InternalApp
-from kay import utils, exceptions, mail
+from kay import (
+  utils, exceptions, mail,
+)
+from kay.utils.filters import nl2br
 
 from kay.conf import settings, LazySettings
 
@@ -85,11 +88,11 @@ class KayApp(object):
       from jinja2 import (FileSystemLoader, ChoiceLoader, PrefixLoader,)
       template_dirname = "templates"
     else:
-      from kay.utils.jinja2.code_loaders import FileSystemCodeLoader as \
+      from kay.utils.jinja2utils.code_loaders import FileSystemCodeLoader as \
           FileSystemLoader
-      from kay.utils.jinja2.code_loaders import ChoiceCodeLoader as \
+      from kay.utils.jinja2utils.code_loaders import ChoiceCodeLoader as \
           ChoiceLoader
-      from kay.utils.jinja2.code_loaders import PrefixCodeLoader as \
+      from kay.utils.jinja2utils.code_loaders import PrefixCodeLoader as \
           PrefixLoader
       template_dirname = "templates_compiled"
     global local
@@ -120,8 +123,9 @@ class KayApp(object):
       undefined=NullUndefined,
       extensions=['jinja2.ext.i18n'],
     )
-  
-    local.jinja2_env = Environment(**env_dict)
+    jinja2_env = Environment(**env_dict)
+    jinja2_env.filters['nl2br'] = nl2br
+    local.jinja2_env = jinja2_env
 
   def init_lang(self, lang):
     """

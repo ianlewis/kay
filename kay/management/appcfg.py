@@ -36,7 +36,7 @@ def do_appcfg_passthru_argv():
     print "Compiling templates..."
     import kay
     from jinja2 import Environment
-    from kay.utils.jinja2.compiler import compile_dir
+    from kay.utils.jinja2utils.compiler import compile_dir
     env = Environment(extensions=['jinja2.ext.i18n'])
     for dir in find_template_dir(kay.PROJECT_DIR):
       dest = dir.replace("templates", "templates_compiled")
