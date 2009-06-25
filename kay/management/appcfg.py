@@ -11,6 +11,8 @@ import os
 import sys
 from os import listdir, path, mkdir
 
+from kay.utils.filters import nl2br
+
 def find_template_dir(target_path):
   ret = []
   for filename in listdir(target_path):
@@ -38,6 +40,7 @@ def do_appcfg_passthru_argv():
     from jinja2 import Environment
     from kay.utils.jinja2utils.compiler import compile_dir
     env = Environment(extensions=['jinja2.ext.i18n'])
+    env.filters['nl2br'] = nl2br
     for dir in find_template_dir(kay.PROJECT_DIR):
       dest = dir.replace("templates", "templates_compiled")
       if not path.isdir(dest):
