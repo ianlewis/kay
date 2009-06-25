@@ -76,28 +76,16 @@ TIME_FORMATS = ['%H:%M', '%H:%M:%S', '%I:%M %p', '%I:%M:%S %p']
 
 _js_translations = WeakKeyDictionary()
 
-def find_catalog(path, domain, locale, gettext_lookup=False):
-  """Finds the catalog for the given locale on the path.  Return sthe
-  filename of the .mo file if found, otherwise `None` is returned.
-  """
-  args = [path, str(Locale.parse(locale)), domain + '.mo']
-  if gettext_lookup:
-    args.insert(-1, 'LC_MESSAGES')
-  catalog = os.path.join(*args)
-  if os.path.isfile(catalog):
-    return catalog
-
-
 def load_translations(locale):
   """Load the translation for a locale.  If a locale does not exist
   the return value a fake translation object.  If the locale is unknown
   a `UnknownLocaleError` is raised.
   """
   domain = "messages"
-  ret = KayTranslations.load(utils.get_kay_locale_path(),
+  ret = KayTranslations.load_wrapped(utils.get_kay_locale_path(),
                              locale, domain)
   def _merge(path):
-    t = KayTranslations.load(path, locale, domain)
+    t = KayTranslations.load_wrapped(path, locale, domain)
     if t is not None:
       if ret is None:
         return t
@@ -122,41 +110,18 @@ class KayTranslations(TranslationsBase):
   gettext = TranslationsBase.ugettext
   ngettext = TranslationsBase.ungettext
 
-  def __init__(self, fileobj=None, locale=None):
-    self.client_keys = set()
-    self.locale = locale
-    TranslationsBase.__init__(self, fileobj=fileobj)
-
   @classmethod
-  def load(cls, path, locale=None, domain='messages',
-           gettext_lookup=True):
+  def load_wrapped(cls, path, locale=None, domain='messages'):
     """Load the translations from the given path."""
-    locale = Locale.parse(locale)
-    catalog = find_catalog(path, domain, locale, gettext_lookup)
-    if catalog:
-      return KayTranslations(fileobj=open(catalog), locale=locale)
-    return KayNullTranslations(locale=locale)
+    ret = KayTranslations.load(path, locale, domain)
+    ret.lang = locale
+    return ret
 
   def merge(self, other):
     self._catalog.update(other._catalog)
 
   def __nonzero__(self):
     return bool(self._catalog)
-
-class KayNullTranslations(NullTranslations):
-
-    def __init__(self, fileobj=None, locale=None):
-        NullTranslations.__init__(self, fileobj)
-        self.locale = locale
-        self.client_keys = set()
-
-    def merge(self, translations):
-        """Update the translations with others."""
-        self.add_fallback(translations)
-        self.client_keys.update(translations.client_keys)
-
-    def __nonzero__(self):
-        return bool(self._fallback)
 
 
 def get_translations():
