@@ -26,26 +26,27 @@ from babel.messages.extract import extract_from_dir
 from babel.messages.pofile import write_po
 
 KEYWORDS = {
-    '_': None,
-    'gettext': None,
-    'ngettext': (1, 2),
-    'lazy_gettext': None,
-    'lazy_ngettext': (1, 2)
+  '_': None,
+  'gettext': None,
+  'ngettext': (1, 2),
+  'lazy_gettext': None,
+  'lazy_ngettext': (1, 2)
 }
 BUGS_ADDRESS = 'tmatsuo@candit.jp'
 COPYRIGHT = 'Takashi Matsuo'
 METHODS = [
-    ('**.py', 'python'),
-    ('**.html', 'jinja2.ext:babel_extract'),
-    ('**.js', 'javascript'),
+  ('**.py', 'python'),
+  ('**/templates/**.html', 'jinja2.ext:babel_extract'),
+  ('**.js', 'javascript'),
+  ('**/templates_compiled/**.*', 'ignore'),
 ]
 COMMENT_TAGS = ['_']
 
 
 def strip_path(filename, base):
-    filename = path.normpath(path.join(base, filename))
-    return filename[len(path.commonprefix([
-        filename, path.dirname(base)])):].lstrip(path.sep)
+  filename = path.normpath(path.join(base, filename))
+  return filename[len(path.commonprefix([
+    filename, path.dirname(base)])):].lstrip(path.sep)
 
 
 def main():
