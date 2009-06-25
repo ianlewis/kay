@@ -28,7 +28,8 @@ from UserDict import DictMixin
 
 try:
   from google.appengine.api import memcache
-except ImportError:
+  memcache.get("test")
+except (ImportError, AssertionError):
   from kay.misc import NullMemcache
   memcache = NullMemcache()
 
