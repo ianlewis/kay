@@ -67,7 +67,7 @@ def raise_on_dev():
 
 
 def get_request():
-  return local.request
+  return getattr(local, 'request', None)
 
 
 def url_for(endpoint, **args):
