@@ -34,16 +34,10 @@ from werkzeug import Request
 
 from kay.utils import local
 from kay.utils import forms
-from kay.utils.forms.modelform import ModelForm
 from kay.utils.forms import ValidationError
-from kay.tests.models import TestModel
+from kay.tests.models import TestModel, TestModelForm
 
 from base import GAETestBase
-
-class TestModelForm(ModelForm):
-  csrf_protected = False
-  class Meta():
-    model = TestModel
 
 class ModelFormTest(GAETestBase):
   def setUp(self):
@@ -92,7 +86,6 @@ class ModelFormTest(GAETestBase):
     # or with(If you have FileField):
     # f.validate(request.form, request.files)
     self.assertEqual(f.validate(params), False)
-
     f.reset()
     params = {"number": "12",
               "data_field": "data string longer than 20 characters",
@@ -130,7 +123,9 @@ class TestForm(forms.Form):
                                  required=True,
                                  query=TestModel.all().filter('is_active =', True),
                                  option_name='data_field')
-  
+  string_list_field = forms.LineSeparated(forms.TextField(),
+                                          "string list field", required=True)
+
   def context_validate(self, data):
     if data['password'] != data['password_again']:
       raise ValidationError(u'The two passwords must be the same')
@@ -155,6 +150,7 @@ class FormTest(GAETestBase):
       'username': 'hoge',
       'password': 'fugafuga',
       'password_again': 'fugafuga',
+      'string_list_field': 'hoge',
       'model_field': str(TestModel.all().get().key())
     }
     result = f.validate(params)

@@ -10,6 +10,7 @@ Models for Kay tests.
 from google.appengine.ext import db
 
 from kay.utils.forms import ValidationError
+from kay.utils.forms.modelform import ModelForm
 
 def CreateMaxLengthValidator(length):
   def MaxLengthValidator(val):
@@ -25,3 +26,11 @@ class TestModel(db.Model):
                                  validator=CreateMaxLengthValidator(20))
   is_active = db.BooleanProperty(required=True)
   string_list_field = db.StringListProperty(required=True)
+
+class TestModelForm(ModelForm):
+  csrf_protected = False
+  class Meta():
+    model = TestModel
+  def __init__(self, instance=None, initial=None):
+    super(TestModelForm, self).__init__(instance, initial)
+    self.string_list_field.min_size = 1

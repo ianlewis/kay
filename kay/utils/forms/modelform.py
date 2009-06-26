@@ -382,7 +382,7 @@ class StringListProperty(db.StringListProperty):
     This defaults to a Textarea widget with a blank initial value.
     """
     defaults = {'field': forms.TextField(), 'form_class': forms.LineSeparated,
-	        'min_size': 0}
+                'min_size': 0}
     defaults.update(kwargs)
     return super(StringListProperty, self).get_form_field(**defaults)
 
@@ -590,12 +590,10 @@ class ModelFormMetaclass(forms.FormMeta):
       for name, field in model_fields.iteritems():
         prop = props.get(name)
         if prop:
-          def convert_for_property_field(value, prop=prop,
-                                       old_convert=field.convert):
-            value = old_convert(value)
+          def check_for_property_field(form, value, prop=prop):
             property_clean(prop, value)
-            return value
-          field.convert = convert_for_property_field
+            return True
+          field.validators.append(check_for_property_field)
     else:
       attrs['_base_fields'] = declared_fields
     # corresponds with form not rendered
