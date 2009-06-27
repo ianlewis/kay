@@ -62,6 +62,30 @@ Quick Start
 There is a sample urls.py in the file hello/urls.py as a comment. You
 have to add 'hello' to the INSTALLED_APPS tupple in the settings.py.
 
+* urls.py
+
+.. code-block:: python
+
+  from hello import urls as hello_urls
+
+  def make_url():
+    return Map([
+      Submount('/hello', hello_urls.make_rules())
+    ])
+
+  all_views = {
+  }
+
+  all_views.update(hello_urls.all_views)
+
+* settings.py
+
+.. code-block:: python
+
+  INSTALLED_APPS = (
+    'kay.sessions',
+    'hello'
+  )
 
 * Run your application
 

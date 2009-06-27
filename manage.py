@@ -27,17 +27,23 @@ from kay.management.appcfg import (
   do_appcfg, do_appcfg_passthru_argv,
 )
 from kay.management.bulkloader import do_bulkloader_passthru_argv
+from kay.management.test import runtest_passthru_argv
 
 action_shell = shell
 action_rshell = rshell
 action_startapp = startapp
 
 if __name__ == '__main__':
-  if sys.argv[1] == "runserver":
+  if len(sys.argv) == 1:
+    sys.argv.append("--help")
+    script.run()
+  elif sys.argv[1] == "runserver":
     runserver_passthru_argv()
   elif sys.argv[1] == "appcfg":
     do_appcfg_passthru_argv()
   elif sys.argv[1] == "bulkloader":
     do_bulkloader_passthru_argv()
+  elif sys.argv[1] == "test":
+    runtest_passthru_argv()
   else:
     script.run()
