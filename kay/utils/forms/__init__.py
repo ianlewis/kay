@@ -1302,6 +1302,35 @@ class TextField(Field):
     """Validate if the string is not empty."""
     return bool(value)
 
+class RegexField(TextField):
+  messages = dict(invalid=lazy_gettext(u"The value is invalid."))
+  def __init__(self, regex, *args, **kwargs):
+    super(RegexField, self).__init__(*args, **kwargs)
+    if isinstance(regex, basestring):
+      regex = re.compile(regex)
+    self.regex = regex
+
+  def convert(self, value):
+    value = super(RegexField, self).convert(value)
+    if value == u"":
+      return value
+    if not self.regex.search(value):
+      raise ValidationError(self.messages["invalid"])
+    return value
+
+email_re = re.compile(
+  r"(^[-!#$%&'*+/=?^_`{}|~0-9A-Z]+(\.[-!#$%&'*+/=?^_`{}|~0-9A-Z]+)*"
+  r'|^"([\001-\010\013\014\016-\037!#-\[\]-\177]|\\[\001-011\013\014\016-\177])*"'
+  r')@(?:[A-Z0-9]+(?:-*[A-Z0-9]+)*\.)+[A-Z]{2,6}$', re.IGNORECASE)
+
+class EmailField(RegexField):
+  messages = {
+    'invalid': lazy_gettext(u'Enter a valid e-mail address.'),
+  }
+
+  def __init__(self, *args, **kwargs):
+    RegexField.__init__(self, email_re, *args, **kwargs)
+
 
 class DateTimeField(Field):
   """Field for datetime objects.
