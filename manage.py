@@ -33,7 +33,10 @@ action_rshell = rshell
 action_startapp = startapp
 
 if __name__ == '__main__':
-  if sys.argv[1] == "runserver":
+  if len(sys.argv) == 1:
+    sys.argv.append("--help")
+    script.run()
+  elif sys.argv[1] == "runserver":
     runserver_passthru_argv()
   elif sys.argv[1] == "appcfg":
     do_appcfg_passthru_argv()
