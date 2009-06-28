@@ -41,4 +41,137 @@ Let's consider a form to implement "contact me" functionality.
     cc_myself = forms.BooleanField(required=False)
 
 A form is composed of Field objects. In this case, our form has four
-fields: subject, message, sender and cc_myself. 
+fields: subject, message, sender and cc_myself. TextField, EmailField
+and BooleanField are just three of the available field types; a full
+list can be found in the document titled 'Form Field'.
+
+If your form is going to be used to directly add or edit an AppEngine
+Datastore model, you can use a ModelForm to avoid duplicating your
+model description.
+
+Using a form in a view
+----------------------
+
+The standard pattern for processing a form in a view looks like this:
+
+.. code-block:: python
+
+  def contact(request):
+    form = ContactForm()
+    if request.method == "POST":
+      if form.validate(request.form):
+	# process the data
+	# ...
+	return redirect("/thanks/")
+    return render_to_response("myapp/contact.html", {"form": form.as_widget()})
+
+There are three code paths here:
+
+1. If the form has not been submitted, a form instance of ContactForm
+   is created and the widget instance is passed to the template.
+
+2. If the form has been submitted, the data is validated using
+   form.validate(request.form). If the submitted data is valid, it is
+   processed and the user is re-directed to a "/thanks/" page.
+
+3. If the submitted data is invalid, the widget instance created using
+   form.as_widget() is passed to the template.
+
+Processing the data form a form
+-------------------------------
+
+Once form.validate() returns True, you can process the form submission
+safely in the knowledge that it confirms to the validation rules
+defined by your form. While you could access request.form directly at
+this point, it is better to access form.data or access the data in
+following style: form["subject"], form["message"] or
+form["sender"]. This data has not only been validated but will also be
+converted into the relevant Python types for you. In the above
+example, cc_myself will be a boolean value. Likewise, fields such as
+IntegerField and FloatField convert values to a Python int and float
+respectively.
+
+Extending the above example, here's how the form data could be processed:
+
+.. code-block:: python
+
+  if form.validate(request.form):
+    recipients = ["info@example.com"]
+    if form["cc_myself"]:
+      recipients.append(form["sender"])
+    from google.appengine.api import mail
+    mail.send_mail(sender=form["sender"], to=recipients,
+                   subject=form["subject"], body=form["message"])
+    return redirect("/thanks/")
+
+Displaying a form using a template
+----------------------------------
+
+Form widgets are very easy to render. In the above example, we passed
+our ContactForms's widget representation to the template using the
+context variable form. Here's a simple example template:
+
+.. code-block:: html
+
+  <body>
+    {{ form()|safe }}
+  </body>
+
+Widgets are callable, and if you call it, you can get the rendered
+HTML form. The result is already HTML escaped, so you need to append
+a safe filter after it. Here's the output for our example template:
+
+.. code-block:: html
+
+  <form action="" method="post">
+    <div style="display: none">
+      <input type="hidden" name="_csrf_token" value="c345asdf.........">
+    </div>
+    <dl>
+      <dt><label for="f_subject">Subject</label></dt>
+      <dd><input type="text" id="f_subject" value="" name="subject"></dd>
+      <dt><label for="f_message">Message</label></dt>
+      <dd><input type="text" id="f_message" value="" name="message"></dd>
+      <dt><label for="f_sender">Sender</label></dt>
+      <dd><input type="text" id="f_sender" value="" name="sender"></dd>
+      <dt><label for="f_cc_myself">Cc myself</label></dt>
+      <dd><input type="checkbox" id="f_cc_myself" name="cc_myself"></dd>
+    </dl>
+    <div class="actions"><input type="submit" value="submit"></div>
+  </form>
+
+Customizing the form template
+-----------------------------
+
+If the default generated HTML is not to your taste, you can completely
+customize the way a form is presented using 'call' tag of jinja2. When
+you use 'call' tag, you need to put your form's contents(including
+submit buttons) between {% call form() %} and {% endcall %}.
+
+.. code-block:: html
+
+  <body>
+  {% call form() %}
+    <div class="fieldWrapper">
+      {{ form.subject.errors()|safe }}
+      {{ form.subject.label()|safe }}
+      {{ form.subject.render()|safe }}
+    </div>
+    <div class="fieldWrapper">
+      {{ form.message.errors()|safe }}
+      {{ form.message.label()|safe }}
+      {{ form.message.render()|safe }}
+    </div>
+    <div class="fieldWrapper">
+      {{ form.sender.errors()|safe }}
+      {{ form.sender.label()|safe }}
+      {{ form.sender.render()|safe }}
+    </div>
+    <div class="fieldWrapper">
+      {{ form.cc_myself.errors()|safe }}
+      {{ form.cc_myself.label()|safe }}
+      {{ form.cc_myself.render()|safe }}
+    </div>
+    {{ form.default_actions()|safe }}
+  {% endcall %}
+  </body>
