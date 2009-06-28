@@ -137,7 +137,7 @@ class Property(db.Property):
     """
     defaults = {'required': self.required}
     if self.verbose_name is None:
-      defaults['label'] = self.name.capitalize().replace('_', ' ')+":"
+      defaults['label'] = self.name.capitalize().replace('_', ' ')
     else:
       defaults['label'] = self.verbose_name
     if self.choices:

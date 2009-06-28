@@ -2001,7 +2001,7 @@ class Form(object):
     self.reset()
     for name, field in self._root_field.fields.iteritems():
       if field.label is None:
-        field.label = name.capitalize().replace("_", " ")+":"
+        field.label = name.capitalize().replace("_", " ")
 
   def __getitem__(self, key):
     return self.data[key]
