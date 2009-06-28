@@ -574,7 +574,8 @@ class ModelFormMetaclass(forms.FormMeta):
           continue
         if opts.exclude and name in opts.exclude:
           continue
-        form_field = prop.get_form_field(help_text=opts.help_texts.get(name, None))
+        form_field = prop.get_form_field(
+          help_text=opts.help_texts.get(name, None))
         if form_field is not None:
           model_fields[name] = form_field
 

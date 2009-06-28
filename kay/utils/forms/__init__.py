@@ -1999,6 +1999,9 @@ class Form(object):
 
     self._root_field = _bind(self.__class__._root_field, self, {})
     self.reset()
+    for name, field in self._root_field.fields.iteritems():
+      if field.label is None:
+        field.label = name.capitalize().replace("_", " ")
 
   def __getitem__(self, key):
     return self.data[key]
