@@ -146,16 +146,16 @@ Customizing the form template
 If the default generated HTML is not to your taste, you can completely
 customize the way a form is presented using 'call' tag of jinja2. When
 you use 'call' tag, you need to put your form's contents(including
-submit buttons) between {% call form() %} and {% endcall %}.
+submit buttons) between {% call form() %} and {% endcall %}. Here's an
+example of how to customize the representation of our form.
 
 .. code-block:: html
 
   <body>
   {% call form() %}
     <div class="fieldWrapper">
-      {{ form.subject.errors()|safe }}
-      {{ form.subject.label()|safe }}
-      {{ form.subject.render()|safe }}
+      {{ form.subject.label(class_="myLabel")|safe }}
+      {{ form.subject()|safe }}
     </div>
     <div class="fieldWrapper">
       {{ form.message.errors()|safe }}
@@ -163,15 +163,96 @@ submit buttons) between {% call form() %} and {% endcall %}.
       {{ form.message.render()|safe }}
     </div>
     <div class="fieldWrapper">
-      {{ form.sender.errors()|safe }}
       {{ form.sender.label()|safe }}
       {{ form.sender.render()|safe }}
+      {% if form.message.errors %}
+	<span class="errors">
+	  {% for error in form.message.errors %}
+	    {{ error }}&nbsp;
+	  {% endfor %}
+	</span>
+      {% endif %}
     </div>
     <div class="fieldWrapper">
-      {{ form.cc_myself.errors()|safe }}
       {{ form.cc_myself.label()|safe }}
       {{ form.cc_myself.render()|safe }}
+      {{ form.cc_myself.errors(class_="myErrors")|safe }}
     </div>
     {{ form.default_actions()|safe }}
   {% endcall %}
   </body>
+
+The example above shows four different ways to display one field
+widget. You can access each field through the root widget's
+attribute. Let's take a look in turn.
+
+1. First example
+
+.. code-block:: html
+
+    <div class="fieldWrapper">
+      {{ form.subject.label(class_="myLabel")|safe }}
+      {{ form.subject()|safe }}
+    </div>
+
+This code renders the label of the subject field in "myLabel"
+class. The word "class" is reserved, so you need to add an underscore
+to avoid error in order to specify the class. The subject field widget
+is also callable, and if you call it, you can get HTML for both of the
+input field and error messages at a time.
+
+2. Second example
+
+.. code-block:: html
+
+    <div class="fieldWrapper">
+      {{ form.message.errors()|safe }}
+      {{ form.message.label()|safe }}
+      {{ form.message.render()|safe }}
+    </div>
+
+The second example shows you how to separate HTMLs of input field and
+error messages. If you call render() method instead of just call the
+field widget, you only get the HTML of input field. So in most cases,
+you need to put codes that displays error messages. In this example,
+you will get this HTML for error messages:
+
+.. code-block:: html
+
+  <ul class="errors"><li>This field is required.</li></ul>
+
+What if you don't like <ul> tags?
+
+3. Third example
+
+.. code-block:: html
+
+    <div class="fieldWrapper">
+      {{ form.sender.label()|safe }}
+      {{ form.sender.render()|safe }}
+      {% if form.message.errors %}
+	<span class="errors">
+	  {% for error in form.message.errors %}
+	    {{ error }}&nbsp;
+	  {% endfor %}
+	</span>
+      {% endif %}
+    </div>
+
+The third example shows you how to iterate over error messages. Isn't
+is easy?
+
+4. Forth example
+
+.. code-block:: html
+
+    <div class="fieldWrapper">
+      {{ form.cc_myself.label()|safe }}
+      {{ form.cc_myself.render()|safe }}
+      {{ form.cc_myself.errors(class_="myErrors")|safe }}
+    </div>
+
+The last example show you how to specify class on error
+messages. Actually, you can specify any attribute on any renderable
+widget by passing keyword argument on rendering.
+
