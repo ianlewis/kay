@@ -137,7 +137,7 @@ class Property(db.Property):
     """
     defaults = {'required': self.required}
     if self.verbose_name is None:
-      defaults['label'] = self.name.capitalize().replace('_', ' ')
+      defaults['label'] = self.name.capitalize().replace('_', ' ')+":"
     else:
       defaults['label'] = self.verbose_name
     if self.choices:
@@ -574,7 +574,8 @@ class ModelFormMetaclass(forms.FormMeta):
           continue
         if opts.exclude and name in opts.exclude:
           continue
-        form_field = prop.get_form_field(help_text=opts.help_texts.get(name, None))
+        form_field = prop.get_form_field(
+          help_text=opts.help_texts.get(name, None))
         if form_field is not None:
           model_fields[name] = form_field
 
