@@ -1,0 +1,360 @@
+%PDF-1.3
+%“Œ‹ž ReportLab Generated PDF document http://www.reportlab.com
+% 'BasicFonts': class PDFDictionary 
+1 0 obj
+% The standard fonts dictionary
+<< /F1 2 0 R
+ /F2 3 0 R
+ /F3 4 0 R >>
+endobj
+% 'F1': class PDFType1Font 
+2 0 obj
+% Font Helvetica
+<< /BaseFont /Helvetica
+ /Encoding /WinAnsiEncoding
+ /Name /F1
+ /Subtype /Type1
+ /Type /Font >>
+endobj
+% 'F2': class PDFType1Font 
+3 0 obj
+% Font Helvetica-Bold
+<< /BaseFont /Helvetica-Bold
+ /Encoding /WinAnsiEncoding
+ /Name /F2
+ /Subtype /Type1
+ /Type /Font >>
+endobj
+% 'F3': class PDFType1Font 
+4 0 obj
+% Font Courier
+<< /BaseFont /Courier
+ /Encoding /WinAnsiEncoding
+ /Name /F3
+ /Subtype /Type1
+ /Type /Font >>
+endobj
+% 'Page1': class PDFPage 
+5 0 obj
+% Page dictionary
+<< /Contents 14 0 R
+ /MediaBox [ 0
+ 0
+ 595.2756
+ 841.8898 ]
+ /Parent 13 0 R
+ /Resources << /Font 1 0 R
+ /ProcSet [ /PDF
+ /Text
+ /ImageB
+ /ImageC
+ /ImageI ] >>
+ /Rotate 0
+ /Trans <<  >>
+ /Type /Page >>
+endobj
+% 'R6': class PDFCatalog 
+6 0 obj
+% Document Root
+<< /Outlines 8 0 R
+ /PageMode /UseNone
+ /Pages 13 0 R
+ /Type /Catalog >>
+endobj
+% 'R7': class PDFInfo 
+7 0 obj
+<< /Author ()
+ /CreationDate (D:20090629163251-09'00')
+ /Keywords ()
+ /Producer (ReportLab http://www.reportlab.com)
+ /Subject (\(unspecified\))
+ /Title (TODO) >>
+endobj
+% 'R8': class PDFOutlines 
+8 0 obj
+<< /Count 4
+ /First 9 0 R
+ /Last 12 0 R
+ /Type /Outlines >>
+endobj
+% 'Outline.0': class OutlineEntryObject 
+9 0 obj
+<< /Dest [ 5 0 R
+ /Fit ]
+ /Next 10 0 R
+ /Parent 8 0 R
+ /Title (kay) >>
+endobj
+% 'Outline.1': class OutlineEntryObject 
+10 0 obj
+<< /Dest [ 5 0 R
+ /Fit ]
+ /Next 11 0 R
+ /Parent 8 0 R
+ /Prev 9 0 R
+ /Title (kay.utils.forms) >>
+endobj
+% 'Outline.2': class OutlineEntryObject 
+11 0 obj
+<< /Dest [ 5 0 R
+ /Fit ]
+ /Next 12 0 R
+ /Parent 8 0 R
+ /Prev 10 0 R
+ /Title (kay.sessions) >>
+endobj
+% 'Outline.3': class OutlineEntryObject 
+12 0 obj
+<< /Dest [ 5 0 R
+ /Fit ]
+ /Parent 8 0 R
+ /Prev 11 0 R
+ /Title (kay.auth) >>
+endobj
+% 'R13': class PDFPages 
+13 0 obj
+% page tree
+<< /Count 1
+ /Kids [ 5 0 R ]
+ /Type /Pages >>
+endobj
+% 'R14': class PDFStream 
+14 0 obj
+% page stream
+<< /Length 4534 >>
+stream
+1 0 0 1 0 0 cm BT /F1 12 Tf 14.4 TL ET
+q
+1 0 0 1 62.69291 779.1969 cm
+Q
+q
+1 0 0 1 62.69291 755.1969 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 9.64 Tm /F2 20 Tf 24 TL 206.0549 0 Td (TODO) Tj T* -206.0549 0 Td ET
+Q
+Q
+q
+1 0 0 1 62.69291 745.1969 cm
+Q
+q
+1 0 0 1 62.69291 745.1969 cm
+Q
+q
+1 0 0 1 62.69291 712.1969 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 8.435 Tm /F2 17.5 Tf 21 TL (kay) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 704.1969 cm
+Q
+q
+1 0 0 1 62.69291 688.1969 cm
+q
+BT 1 0 0 1 12 4.82 Tm /F1 10 Tf 12 TL 0 0 0 rg (\177) Tj ET
+0 0 0 rg
+BT 1 0 0 1 24 4.82 Tm /F1 10 Tf 12 TL (Write documentations about forms, middlewares, jinja2 howtos, etc..) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 672.1969 cm
+q
+BT 1 0 0 1 12 4.82 Tm /F1 10 Tf 12 TL 0 0 0 rg (\177) Tj ET
+0 0 0 rg
+BT 1 0 0 1 24 4.82 Tm /F1 10 Tf 12 TL (Re-implement i18n helper commands on manage.py.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 656.1969 cm
+q
+BT 1 0 0 1 12 4.82 Tm /F1 10 Tf 12 TL 0 0 0 rg (\177) Tj ET
+0 0 0 rg
+BT 1 0 0 1 24 4.82 Tm /F1 10 Tf 12 TL (Change the url of paste capability in the werkzeug debugger.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 640.1969 cm
+q
+BT 1 0 0 1 12 4.82 Tm /F1 10 Tf 12 TL 0 0 0 rg (\177) Tj ET
+0 0 0 rg
+BT 1 0 0 1 24 4.82 Tm /F1 10 Tf 12 TL (Implement start-project script doing as follows:) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 534.9969 cm
+q
+q
+1 0 0 1 0 0 cm
+q
+1 0 0 1 6.6 6.6 cm
+q
+.662745 .662745 .662745 RG
+.5 w
+.960784 .960784 .862745 rg
+n -6 -6 468.6898 96 re B*
+Q
+q
+0 0 0 rg
+BT 1 0 0 1 0 77.71 Tm /F3 10 Tf 12 TL ($ mkdir yourproject) Tj T* ($ cd yourproject) Tj T* ($ ln -s ../kay/kay .) Tj T* ($ ln -s ../kay/manage.py .) Tj T* ($ cp ../kay/settings.py.sample ./settings.py) Tj T* ($ cp ../kay/app.yaml.sample ./app.yaml) Tj T* ($ cp ../kay/urls.py .) Tj T* ET
+Q
+Q
+Q
+Q
+Q
+q
+1 0 0 1 62.69291 526.9969 cm
+Q
+q
+1 0 0 1 62.69291 526.9969 cm
+Q
+q
+1 0 0 1 62.69291 493.9969 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 8.435 Tm /F2 17.5 Tf 21 TL (kay.utils.forms) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 485.9969 cm
+Q
+q
+1 0 0 1 62.69291 469.9969 cm
+q
+BT 1 0 0 1 12 4.82 Tm /F1 10 Tf 12 TL 0 0 0 rg (\177) Tj ET
+0 0 0 rg
+BT 1 0 0 1 24 4.82 Tm /F1 10 Tf 12 TL (Make widgets can have media\(javascript, css\)) Tj T* ET
+Q
+Q
+q
+1 0 0 1 82.69291 467.9969 cm
+Q
+q
+1 0 0 1 82.69291 451.9969 cm
+q
+BT 1 0 0 1 12 4.82 Tm /F1 10 Tf 12 TL 0 0 0 rg (\177) Tj ET
+0 0 0 rg
+BT 1 0 0 1 24 4.82 Tm /F1 10 Tf 12 TL (AjaxModelField) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 449.9969 cm
+Q
+q
+1 0 0 1 62.69291 433.9969 cm
+q
+BT 1 0 0 1 12 4.82 Tm /F1 10 Tf 12 TL 0 0 0 rg (\177) Tj ET
+0 0 0 rg
+BT 1 0 0 1 24 4.82 Tm /F1 10 Tf 12 TL (Implementation of ModelField.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 82.69291 431.9969 cm
+Q
+q
+1 0 0 1 82.69291 415.9969 cm
+q
+BT 1 0 0 1 12 4.82 Tm /F1 10 Tf 12 TL 0 0 0 rg (\177) Tj ET
+0 0 0 rg
+BT 1 0 0 1 24 4.82 Tm /F1 10 Tf 12 TL (Cache the choices automatically) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 415.9969 cm
+Q
+q
+1 0 0 1 62.69291 415.9969 cm
+Q
+q
+1 0 0 1 62.69291 382.9969 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 8.435 Tm /F2 17.5 Tf 21 TL (kay.sessions) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 374.9969 cm
+Q
+q
+1 0 0 1 62.69291 358.9969 cm
+q
+BT 1 0 0 1 12 4.82 Tm /F1 10 Tf 12 TL 0 0 0 rg (\177) Tj ET
+0 0 0 rg
+BT 1 0 0 1 24 4.82 Tm /F1 10 Tf 12 TL (Retry when GAESessionStore.save fails cos' its important to keep users' session data.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 358.9969 cm
+Q
+q
+1 0 0 1 62.69291 358.9969 cm
+Q
+q
+1 0 0 1 62.69291 325.9969 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 8.435 Tm /F2 17.5 Tf 21 TL (kay.auth) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 317.9969 cm
+Q
+q
+1 0 0 1 62.69291 301.9969 cm
+q
+BT 1 0 0 1 12 4.82 Tm /F1 10 Tf 12 TL 0 0 0 rg (\177) Tj ET
+0 0 0 rg
+BT 1 0 0 1 24 4.82 Tm /F1 10 Tf 12 TL (Another authentication backend other than Google's auth.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 82.69291 299.9969 cm
+Q
+q
+1 0 0 1 82.69291 259.9969 cm
+q
+BT 1 0 0 1 12 28.82 Tm /F1 10 Tf 12 TL 0 0 0 rg (\177) Tj ET
+0 0 0 rg
+BT 1 0 0 1 24 28.82 Tm /F1 10 Tf 12 TL 1.119318 Tw (When using apps domain, we cannot use https on our domain. We have to use appspot.com) Tj T* 0 Tw .284987 Tw (domain for SSL. So there will be the problem that Kay can not handle the cookies from our own) Tj T* 0 Tw (domain.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 82.69291 231.9969 cm
+q
+0 0 0 rg
+BT 1 0 0 1 24 16.82 Tm /F1 10 Tf 12 TL 2.19152 Tw (To handle this situation, parhaps we can generate random string internally for carrying the) Tj T* 0 Tw (session values from the domain to the other domain.) Tj T* ET
+Q
+Q
+ 
+endstream
+
+endobj
+xref
+0 15
+0000000000 65535 f
+0000000113 00000 n
+0000000233 00000 n
+0000000398 00000 n
+0000000573 00000 n
+0000000732 00000 n
+0000001011 00000 n
+0000001146 00000 n
+0000001360 00000 n
+0000001483 00000 n
+0000001618 00000 n
+0000001780 00000 n
+0000001940 00000 n
+0000002065 00000 n
+0000002172 00000 n
+trailer
+<< /ID 
+ % ReportLab generated PDF document -- digest (http://www.reportlab.com) 
+ [(\020\204\376;\367.\263\303Wg\215mo\010v\034) (\020\204\376;\367.\263\303Wg\215mo\010v\034)] 
+
+ /Info 7 0 R
+ /Root 6 0 R
+ /Size 15 >>
+startxref
+6780
+%%EOF

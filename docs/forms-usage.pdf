@@ -1,0 +1,1000 @@
+%PDF-1.3
+%“Œ‹ž ReportLab Generated PDF document http://www.reportlab.com
+% 'BasicFonts': class PDFDictionary 
+1 0 obj
+% The standard fonts dictionary
+<< /F1 2 0 R
+ /F2 3 0 R
+ /F3 4 0 R >>
+endobj
+% 'F1': class PDFType1Font 
+2 0 obj
+% Font Helvetica
+<< /BaseFont /Helvetica
+ /Encoding /WinAnsiEncoding
+ /Name /F1
+ /Subtype /Type1
+ /Type /Font >>
+endobj
+% 'F2': class PDFType1Font 
+3 0 obj
+% Font Helvetica-Bold
+<< /BaseFont /Helvetica-Bold
+ /Encoding /WinAnsiEncoding
+ /Name /F2
+ /Subtype /Type1
+ /Type /Font >>
+endobj
+% 'F3': class PDFType1Font 
+4 0 obj
+% Font Courier
+<< /BaseFont /Courier
+ /Encoding /WinAnsiEncoding
+ /Name /F3
+ /Subtype /Type1
+ /Type /Font >>
+endobj
+% 'Page1': class PDFPage 
+5 0 obj
+% Page dictionary
+<< /Contents 22 0 R
+ /MediaBox [ 0
+ 0
+ 595.2756
+ 841.8898 ]
+ /Parent 21 0 R
+ /Resources << /Font 1 0 R
+ /ProcSet [ /PDF
+ /Text
+ /ImageB
+ /ImageC
+ /ImageI ] >>
+ /Rotate 0
+ /Trans <<  >>
+ /Type /Page >>
+endobj
+% 'Page2': class PDFPage 
+6 0 obj
+% Page dictionary
+<< /Contents 23 0 R
+ /MediaBox [ 0
+ 0
+ 595.2756
+ 841.8898 ]
+ /Parent 21 0 R
+ /Resources << /Font 1 0 R
+ /ProcSet [ /PDF
+ /Text
+ /ImageB
+ /ImageC
+ /ImageI ] >>
+ /Rotate 0
+ /Trans <<  >>
+ /Type /Page >>
+endobj
+% 'Page3': class PDFPage 
+7 0 obj
+% Page dictionary
+<< /Contents 24 0 R
+ /MediaBox [ 0
+ 0
+ 595.2756
+ 841.8898 ]
+ /Parent 21 0 R
+ /Resources << /Font 1 0 R
+ /ProcSet [ /PDF
+ /Text
+ /ImageB
+ /ImageC
+ /ImageI ] >>
+ /Rotate 0
+ /Trans <<  >>
+ /Type /Page >>
+endobj
+% 'Page4': class PDFPage 
+8 0 obj
+% Page dictionary
+<< /Contents 25 0 R
+ /MediaBox [ 0
+ 0
+ 595.2756
+ 841.8898 ]
+ /Parent 21 0 R
+ /Resources << /Font 1 0 R
+ /ProcSet [ /PDF
+ /Text
+ /ImageB
+ /ImageC
+ /ImageI ] >>
+ /Rotate 0
+ /Trans <<  >>
+ /Type /Page >>
+endobj
+% 'Page5': class PDFPage 
+9 0 obj
+% Page dictionary
+<< /Contents 26 0 R
+ /MediaBox [ 0
+ 0
+ 595.2756
+ 841.8898 ]
+ /Parent 21 0 R
+ /Resources << /Font 1 0 R
+ /ProcSet [ /PDF
+ /Text
+ /ImageB
+ /ImageC
+ /ImageI ] >>
+ /Rotate 0
+ /Trans <<  >>
+ /Type /Page >>
+endobj
+% 'R10': class PDFCatalog 
+10 0 obj
+% Document Root
+<< /Outlines 12 0 R
+ /PageMode /UseNone
+ /Pages 21 0 R
+ /Type /Catalog >>
+endobj
+% 'R11': class PDFInfo 
+11 0 obj
+<< /Author ()
+ /CreationDate (D:20090629161222-09'00')
+ /Keywords ()
+ /Producer (ReportLab http://www.reportlab.com)
+ /Subject (\(unspecified\))
+ /Title (Kay forms manual) >>
+endobj
+% 'R12': class PDFOutlines 
+12 0 obj
+<< /Count 8
+ /First 13 0 R
+ /Last 20 0 R
+ /Type /Outlines >>
+endobj
+% 'Outline.0': class OutlineEntryObject 
+13 0 obj
+<< /Dest [ 5 0 R
+ /Fit ]
+ /Next 14 0 R
+ /Parent 12 0 R
+ /Title (Overview) >>
+endobj
+% 'Outline.1': class OutlineEntryObject 
+14 0 obj
+<< /Dest [ 5 0 R
+ /Fit ]
+ /Next 15 0 R
+ /Parent 12 0 R
+ /Prev 13 0 R
+ /Title (Your First Form) >>
+endobj
+% 'Outline.2': class OutlineEntryObject 
+15 0 obj
+<< /Dest [ 5 0 R
+ /Fit ]
+ /Next 16 0 R
+ /Parent 12 0 R
+ /Prev 14 0 R
+ /Title (Using a form in a view) >>
+endobj
+% 'Outline.3': class OutlineEntryObject 
+16 0 obj
+<< /Dest [ 6 0 R
+ /Fit ]
+ /Next 17 0 R
+ /Parent 12 0 R
+ /Prev 15 0 R
+ /Title (Processing the data form a form) >>
+endobj
+% 'Outline.4': class OutlineEntryObject 
+17 0 obj
+<< /Dest [ 6 0 R
+ /Fit ]
+ /Next 18 0 R
+ /Parent 12 0 R
+ /Prev 16 0 R
+ /Title (Displaying a form using a template) >>
+endobj
+% 'Outline.5': class OutlineEntryObject 
+18 0 obj
+<< /Dest [ 6 0 R
+ /Fit ]
+ /Next 19 0 R
+ /Parent 12 0 R
+ /Prev 17 0 R
+ /Title (Customizing the form template) >>
+endobj
+% 'Outline.6': class OutlineEntryObject 
+19 0 obj
+<< /Dest [ 8 0 R
+ /Fit ]
+ /Next 20 0 R
+ /Parent 12 0 R
+ /Prev 18 0 R
+ /Title (Handling file upload) >>
+endobj
+% 'Outline.7': class OutlineEntryObject 
+20 0 obj
+<< /Dest [ 9 0 R
+ /Fit ]
+ /Parent 12 0 R
+ /Prev 19 0 R
+ /Title (Customizing form validation) >>
+endobj
+% 'R21': class PDFPages 
+21 0 obj
+% page tree
+<< /Count 5
+ /Kids [ 5 0 R
+ 6 0 R
+ 7 0 R
+ 8 0 R
+ 9 0 R ]
+ /Type /Pages >>
+endobj
+% 'R22': class PDFStream 
+22 0 obj
+% page stream
+<< /Length 7324 >>
+stream
+1 0 0 1 0 0 cm BT /F1 12 Tf 14.4 TL ET
+q
+1 0 0 1 62.69291 779.1969 cm
+Q
+q
+1 0 0 1 62.69291 755.1969 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 9.64 Tm /F2 20 Tf 24 TL 148.2549 0 Td (Kay forms manual) Tj T* -148.2549 0 Td ET
+Q
+Q
+q
+1 0 0 1 62.69291 745.1969 cm
+Q
+q
+1 0 0 1 62.69291 745.1969 cm
+Q
+q
+1 0 0 1 62.69291 712.1969 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 8.435 Tm /F2 17.5 Tf 21 TL (Overview) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 682.1969 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 16.82 Tm /F1 10 Tf 12 TL .314651 Tw (Kay has a utility for form handling. It is placed on kay.utils.forms, and kay.utils.forms.modelform. Here are) Tj T* 0 Tw (conceptual elements for understanding Kay's form utilities.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 680.1969 cm
+Q
+q
+1 0 0 1 62.69291 664.1969 cm
+q
+BT 1 0 0 1 12 4.82 Tm /F1 10 Tf 12 TL 0 0 0 rg (\177) Tj ET
+0 0 0 rg
+BT 1 0 0 1 24 4.82 Tm /F1 10 Tf 12 TL (Widget) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 636.1969 cm
+q
+BT 1 0 0 1 24 16.82 Tm .37936 Tw 12 TL /F1 10 Tf 0 0 0 rg (A class that corresponds to HTML representation of a field, or even a form, e.g. <) Tj (input type=) Tj (") Tj (text) Tj (") Tj (>) Tj (,) Tj T* 0 Tw (<) Tj (textarea) Tj (> or <) Tj (form) Tj (>) Tj (...) Tj (<) Tj (/form) Tj (>) Tj (. This class handles rendering HTML.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 620.1969 cm
+q
+BT 1 0 0 1 12 4.82 Tm /F1 10 Tf 12 TL 0 0 0 rg (\177) Tj ET
+0 0 0 rg
+BT 1 0 0 1 24 4.82 Tm /F1 10 Tf 12 TL (Field) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 592.1969 cm
+q
+0 0 0 rg
+BT 1 0 0 1 24 16.82 Tm /F1 10 Tf 12 TL .56332 Tw (A class that is responsible for doing validation, e.g. an FloatField that makes sure its data is a valid) Tj T* 0 Tw (float value.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 576.1969 cm
+q
+BT 1 0 0 1 12 4.82 Tm /F1 10 Tf 12 TL 0 0 0 rg (\177) Tj ET
+0 0 0 rg
+BT 1 0 0 1 24 4.82 Tm /F1 10 Tf 12 TL (Form) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 560.1969 cm
+q
+0 0 0 rg
+BT 1 0 0 1 24 4.82 Tm /F1 10 Tf 12 TL (A collection of fields that knows how to validate itself and convert itself to a widget.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 560.1969 cm
+Q
+q
+1 0 0 1 62.69291 560.1969 cm
+Q
+q
+1 0 0 1 62.69291 527.1969 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 8.435 Tm /F2 17.5 Tf 21 TL (Your First Form) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 509.1969 cm
+q
+BT 1 0 0 1 0 4.82 Tm 12 TL /F1 10 Tf 0 0 0 rg (Let's consider a form to implement ") Tj (contact me) Tj (" functionality.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 403.9969 cm
+q
+q
+1 0 0 1 0 0 cm
+q
+1 0 0 1 6.6 6.6 cm
+q
+.662745 .662745 .662745 RG
+.5 w
+.960784 .960784 .862745 rg
+n -6 -6 468.6898 96 re B*
+Q
+q
+BT 1 0 0 1 0 77.71 Tm 12 TL /F3 10 Tf .666667 .133333 1 rg (from) Tj 0 0 0 rg ( ) Tj 0 0 1 rg (kay.utils) Tj 0 0 0 rg ( ) Tj .666667 .133333 1 rg (import) Tj 0 0 0 rg ( ) Tj (forms) Tj  T*  T* .666667 .133333 1 rg (class) Tj 0 0 0 rg ( ) Tj 0 0 1 rg (ContactForm) Tj 0 0 0 rg (\() Tj (forms) Tj .4 .4 .4 rg (.) Tj 0 0 0 rg (Form) Tj (\):) Tj  T* (  ) Tj (subject) Tj ( ) Tj .4 .4 .4 rg (=) Tj 0 0 0 rg ( ) Tj (forms) Tj .4 .4 .4 rg (.) Tj 0 0 0 rg (TextField) Tj (\() Tj (required) Tj .4 .4 .4 rg (=) Tj .666667 .133333 1 rg (True) Tj 0 0 0 rg (,) Tj ( ) Tj (max_length) Tj .4 .4 .4 rg (=) Tj (100) Tj 0 0 0 rg (\)) Tj  T* (  ) Tj (message) Tj ( ) Tj .4 .4 .4 rg (=) Tj 0 0 0 rg ( ) Tj (forms) Tj .4 .4 .4 rg (.) Tj 0 0 0 rg (TextField) Tj (\() Tj (required) Tj .4 .4 .4 rg (=) Tj .666667 .133333 1 rg (True) Tj 0 0 0 rg (\)) Tj  T* (  ) Tj (sender) Tj ( ) Tj .4 .4 .4 rg (=) Tj 0 0 0 rg ( ) Tj (forms) Tj .4 .4 .4 rg (.) Tj 0 0 0 rg (EmailField) Tj (\() Tj (required) Tj .4 .4 .4 rg (=) Tj .666667 .133333 1 rg (True) Tj 0 0 0 rg (\)) Tj  T* (  ) Tj (cc_myself) Tj ( ) Tj .4 .4 .4 rg (=) Tj 0 0 0 rg ( ) Tj (forms) Tj .4 .4 .4 rg (.) Tj 0 0 0 rg (BooleanField) Tj (\() Tj (required) Tj .4 .4 .4 rg (=) Tj .666667 .133333 1 rg (False) Tj 0 0 0 rg (\)) Tj T* ET
+Q
+Q
+Q
+Q
+Q
+q
+1 0 0 1 62.69291 359.9969 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 28.82 Tm /F1 10 Tf 12 TL .476654 Tw (A form is composed of Field objects. In this case, our form has four fields: subject, message, sender and) Tj T* 0 Tw .39811 Tw (cc_myself. TextField, EmailField and BooleanField are just three of the available field types; a full list can) Tj T* 0 Tw (be found in the document titled 'Form Field'.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 329.9969 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 16.82 Tm /F1 10 Tf 12 TL 1.371988 Tw (If your form is going to be used to directly add or edit an AppEngine Datastore model, you can use a) Tj T* 0 Tw (ModelForm to avoid duplicating your model description.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 329.9969 cm
+Q
+q
+1 0 0 1 62.69291 329.9969 cm
+Q
+q
+1 0 0 1 62.69291 296.9969 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 8.435 Tm /F2 17.5 Tf 21 TL (Using a form in a view) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 278.9969 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 4.82 Tm /F1 10 Tf 12 TL (The standard pattern for processing a form in a view looks like this:) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 163.0171 cm
+q
+q
+.988825 0 0 .988825 0 0 cm
+q
+1 0 0 1 6.6 6.674587 cm
+q
+.662745 .662745 .662745 RG
+.5 w
+.960784 .960784 .862745 rg
+n -6 -6 474 108 re B*
+Q
+q
+BT 1 0 0 1 0 89.71 Tm 12 TL /F3 10 Tf .666667 .133333 1 rg (def) Tj 0 0 0 rg ( ) Tj 0 .627451 0 rg (contact) Tj 0 0 0 rg (\() Tj (request) Tj (\):) Tj  T* (  ) Tj (form) Tj ( ) Tj .4 .4 .4 rg (=) Tj 0 0 0 rg ( ) Tj (ContactForm) Tj (\(\)) Tj  T* (  ) Tj .666667 .133333 1 rg (if) Tj 0 0 0 rg ( ) Tj (request) Tj .4 .4 .4 rg (.) Tj 0 0 0 rg (method) Tj ( ) Tj .4 .4 .4 rg (==) Tj 0 0 0 rg ( ) Tj .733333 .266667 .266667 rg (") Tj (POST) Tj (") Tj 0 0 0 rg (:) Tj  T* (    ) Tj .666667 .133333 1 rg (if) Tj 0 0 0 rg ( ) Tj (form) Tj .4 .4 .4 rg (.) Tj 0 0 0 rg (validate) Tj (\() Tj (request) Tj .4 .4 .4 rg (.) Tj 0 0 0 rg (form) Tj (\):) Tj  T* (      ) Tj 0 .533333 0 rg (# process the data) Tj 0 0 0 rg  T* (      ) Tj 0 .533333 0 rg (# ...) Tj 0 0 0 rg  T* (      ) Tj .666667 .133333 1 rg (return) Tj 0 0 0 rg ( ) Tj (redirect) Tj (\() Tj .733333 .266667 .266667 rg (") Tj (/thanks/) Tj (") Tj 0 0 0 rg (\)) Tj  T* (  ) Tj .666667 .133333 1 rg (return) Tj 0 0 0 rg ( ) Tj (render_to_response) Tj (\() Tj .733333 .266667 .266667 rg (") Tj (myapp/contact.html) Tj (") Tj 0 0 0 rg (,) Tj ( ) Tj ({) Tj .733333 .266667 .266667 rg (") Tj (form) Tj (") Tj 0 0 0 rg (:) Tj ( ) Tj (form) Tj .4 .4 .4 rg (.) Tj 0 0 0 rg (as_widget) Tj (\(\)}\)) Tj T* ET
+Q
+Q
+Q
+Q
+Q
+q
+1 0 0 1 62.69291 143.0171 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 4.82 Tm /F1 10 Tf 12 TL (There are three code paths here:) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 141.0171 cm
+Q
+q
+1 0 0 1 62.69291 113.0171 cm
+q
+BT 1 0 0 1 12 16.82 Tm /F1 10 Tf 12 TL 0 0 0 rg (1.) Tj ET
+0 0 0 rg
+BT 1 0 0 1 24 16.82 Tm /F1 10 Tf 12 TL 2.34 0 Td 2.014985 Tw (If the form has not been submitted, a form instance of ContactForm is created and the widget) Tj T* 0 Tw -2.34 0 Td (instance is passed to the template.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 85.01713 cm
+q
+BT 1 0 0 1 12 16.82 Tm /F1 10 Tf 12 TL 0 0 0 rg (2.) Tj ET
+BT 1 0 0 1 24 16.82 Tm 2.34 0 Td 2.82229 Tw 12 TL /F1 10 Tf 0 0 0 rg (If the form has been submitted, the data is validated using form.validate\(request.form\). If the) Tj T* 0 Tw -2.34 0 Td (submitted data is valid, it is processed and the user is re-directed to a ") Tj (/thanks/) Tj (" page.) Tj T* ET
+Q
+Q
+ 
+endstream
+
+endobj
+% 'R23': class PDFStream 
+23 0 obj
+% page stream
+<< /Length 8988 >>
+stream
+1 0 0 1 0 0 cm BT /F1 12 Tf 14.4 TL ET
+q
+1 0 0 1 62.69291 755.1969 cm
+q
+BT 1 0 0 1 12 16.82 Tm /F1 10 Tf 12 TL 0 0 0 rg (3.) Tj ET
+0 0 0 rg
+BT 1 0 0 1 24 16.82 Tm /F1 10 Tf 12 TL 2.34 0 Td .519318 Tw (If the submitted data is invalid, the widget instance created using form.as_widget\(\) is passed to the) Tj T* 0 Tw -2.34 0 Td (template.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 755.1969 cm
+Q
+q
+1 0 0 1 62.69291 755.1969 cm
+Q
+q
+1 0 0 1 62.69291 722.1969 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 8.435 Tm /F2 17.5 Tf 21 TL (Processing the data form a form) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 644.1969 cm
+q
+BT 1 0 0 1 0 64.82 Tm 1.165984 Tw 12 TL /F1 10 Tf 0 0 0 rg (Once form.validate\(\) returns True, you can process the form submission safely in the knowledge that it) Tj T* 0 Tw .50311 Tw (confirms to the validation rules defined by your form. While you could access request.form directly at this) Tj T* 0 Tw .033318 Tw (point, it is better to access form.data or access the data in following style: form[) Tj (") Tj (subject) Tj (") Tj (], form[) Tj (") Tj (message) Tj (") Tj (]) Tj T* 0 Tw .052339 Tw (or form[) Tj (") Tj (sender) Tj (") Tj (]. This data has not only been validated but will also be converted into the relevant Python) Tj T* 0 Tw 2.967485 Tw (types for you. In the above example, cc_myself will be a boolean value. Likewise, fields such as) Tj T* 0 Tw (IntegerField and FloatField convert values to a Python int and float respectively.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 626.1969 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 4.82 Tm /F1 10 Tf 12 TL (Extending the above example, here's how the form data could be processed:) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 508.9969 cm
+q
+q
+1 0 0 1 0 0 cm
+q
+1 0 0 1 6.6 6.6 cm
+q
+.662745 .662745 .662745 RG
+.5 w
+.960784 .960784 .862745 rg
+n -6 -6 468.6898 108 re B*
+Q
+q
+BT 1 0 0 1 0 89.71 Tm 12 TL /F3 10 Tf .666667 .133333 1 rg (if) Tj 0 0 0 rg ( ) Tj (form) Tj .4 .4 .4 rg (.) Tj 0 0 0 rg (validate) Tj (\() Tj (request) Tj .4 .4 .4 rg (.) Tj 0 0 0 rg (form) Tj (\):) Tj  T* (  ) Tj (recipients) Tj ( ) Tj .4 .4 .4 rg (=) Tj 0 0 0 rg ( ) Tj ([) Tj .733333 .266667 .266667 rg (") Tj (info@example.com) Tj (") Tj 0 0 0 rg (]) Tj  T* (  ) Tj .666667 .133333 1 rg (if) Tj 0 0 0 rg ( ) Tj (form) Tj ([) Tj .733333 .266667 .266667 rg (") Tj (cc_myself) Tj (") Tj 0 0 0 rg (]:) Tj  T* (    ) Tj (recipients) Tj .4 .4 .4 rg (.) Tj 0 0 0 rg (append) Tj (\() Tj (form) Tj ([) Tj .733333 .266667 .266667 rg (") Tj (sender) Tj (") Tj 0 0 0 rg (]\)) Tj  T* (  ) Tj .666667 .133333 1 rg (from) Tj 0 0 0 rg ( ) Tj 0 0 1 rg (google.appengine.api) Tj 0 0 0 rg ( ) Tj .666667 .133333 1 rg (import) Tj 0 0 0 rg ( ) Tj (mail) Tj  T* (  ) Tj (mail) Tj .4 .4 .4 rg (.) Tj 0 0 0 rg (send_mail) Tj (\() Tj (sender) Tj .4 .4 .4 rg (=) Tj 0 0 0 rg (form) Tj ([) Tj .733333 .266667 .266667 rg (") Tj (sender) Tj (") Tj 0 0 0 rg (],) Tj ( ) Tj (to) Tj .4 .4 .4 rg (=) Tj 0 0 0 rg (recipients) Tj (,) Tj  T* (                 ) Tj (subject) Tj .4 .4 .4 rg (=) Tj 0 0 0 rg (form) Tj ([) Tj .733333 .266667 .266667 rg (") Tj (subject) Tj (") Tj 0 0 0 rg (],) Tj ( ) Tj (body) Tj .4 .4 .4 rg (=) Tj 0 0 0 rg (form) Tj ([) Tj .733333 .266667 .266667 rg (") Tj (message) Tj (") Tj 0 0 0 rg (]\)) Tj  T* (  ) Tj .666667 .133333 1 rg (return) Tj 0 0 0 rg ( ) Tj (redirect) Tj (\() Tj .733333 .266667 .266667 rg (") Tj (/thanks/) Tj (") Tj 0 0 0 rg (\)) Tj T* ET
+Q
+Q
+Q
+Q
+Q
+q
+1 0 0 1 62.69291 500.9969 cm
+Q
+q
+1 0 0 1 62.69291 500.9969 cm
+Q
+q
+1 0 0 1 62.69291 467.9969 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 8.435 Tm /F2 17.5 Tf 21 TL (Displaying a form using a template) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 437.9969 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 16.82 Tm /F1 10 Tf 12 TL 1.890651 Tw (Form widgets are very easy to render. In the above example, we passed our ContactForms's widget) Tj T* 0 Tw (representation to the template using the context variable form. Here's a simple example template:) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 380.7969 cm
+q
+q
+1 0 0 1 0 0 cm
+q
+1 0 0 1 6.6 6.6 cm
+q
+.662745 .662745 .662745 RG
+.5 w
+.960784 .960784 .862745 rg
+n -6 -6 468.6898 48 re B*
+Q
+q
+BT 1 0 0 1 0 29.71 Tm 12 TL /F3 10 Tf 0 .501961 0 rg (<) Tj (body) Tj (>) Tj 0 0 0 rg  T* (  {{ form\(\)|safe }}) Tj T* 0 .501961 0 rg (<) Tj (/body) Tj (>) Tj T* ET
+Q
+Q
+Q
+Q
+Q
+q
+1 0 0 1 62.69291 348.7969 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 16.82 Tm /F1 10 Tf 12 TL .540514 Tw (Widgets are callable, and if you call it, you can get the rendered HTML form. The result is already HTML) Tj T* 0 Tw (escaped, so you need to append a safe filter after it. Here's the output for our example template:) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 135.5969 cm
+q
+q
+1 0 0 1 0 0 cm
+q
+1 0 0 1 6.6 6.6 cm
+q
+.662745 .662745 .662745 RG
+.5 w
+.960784 .960784 .862745 rg
+n -6 -6 468.6898 204 re B*
+Q
+q
+BT 1 0 0 1 0 185.71 Tm 12 TL /F3 10 Tf 0 .501961 0 rg (<) Tj (form) Tj 0 0 0 rg ( ) Tj .733333 .266667 .266667 rg (action=) Tj (") Tj (") Tj 0 0 0 rg ( ) Tj .733333 .266667 .266667 rg (method=) Tj (") Tj (post) Tj (") Tj 0 .501961 0 rg (>) Tj 0 0 0 rg  T* (  ) Tj 0 .501961 0 rg (<) Tj (div) Tj 0 0 0 rg ( ) Tj .733333 .266667 .266667 rg (style=) Tj (") Tj (display: none) Tj (") Tj 0 .501961 0 rg (>) Tj 0 0 0 rg  T* (    ) Tj 0 .501961 0 rg (<) Tj (input) Tj 0 0 0 rg ( ) Tj .733333 .266667 .266667 rg (type=) Tj (") Tj (hidden) Tj (") Tj 0 0 0 rg ( ) Tj .733333 .266667 .266667 rg (name=) Tj (") Tj (_csrf_token) Tj (") Tj 0 0 0 rg ( ) Tj .733333 .266667 .266667 rg (value=) Tj (") Tj (c345asdf.........) Tj (") Tj 0 .501961 0 rg (>) Tj 0 0 0 rg  T* (  ) Tj 0 .501961 0 rg (<) Tj (/div) Tj (>) Tj 0 0 0 rg  T* (  ) Tj 0 .501961 0 rg (<) Tj (dl) Tj (>) Tj 0 0 0 rg  T* (    ) Tj 0 .501961 0 rg (<) Tj (dt) Tj (>) Tj (<) Tj (label) Tj 0 0 0 rg ( ) Tj .733333 .266667 .266667 rg (for=) Tj (") Tj (f_subject) Tj (") Tj 0 .501961 0 rg (>) Tj 0 0 0 rg (Subject) Tj 0 .501961 0 rg (<) Tj (/label) Tj (>) Tj (<) Tj (/dt) Tj (>) Tj 0 0 0 rg  T* (    ) Tj 0 .501961 0 rg (<) Tj (dd) Tj (>) Tj (<) Tj (input) Tj 0 0 0 rg ( ) Tj .733333 .266667 .266667 rg (type=) Tj (") Tj (text) Tj (") Tj 0 0 0 rg ( ) Tj .733333 .266667 .266667 rg (id=) Tj (") Tj (f_subject) Tj (") Tj 0 0 0 rg ( ) Tj .733333 .266667 .266667 rg (value=) Tj (") Tj (") Tj 0 0 0 rg ( ) Tj .733333 .266667 .266667 rg (name=) Tj (") Tj (subject) Tj (") Tj 0 .501961 0 rg (>) Tj (<) Tj (/dd) Tj (>) Tj 0 0 0 rg  T* (    ) Tj 0 .501961 0 rg (<) Tj (dt) Tj (>) Tj (<) Tj (label) Tj 0 0 0 rg ( ) Tj .733333 .266667 .266667 rg (for=) Tj (") Tj (f_message) Tj (") Tj 0 .501961 0 rg (>) Tj 0 0 0 rg (Message) Tj 0 .501961 0 rg (<) Tj (/label) Tj (>) Tj (<) Tj (/dt) Tj (>) Tj 0 0 0 rg  T* (    ) Tj 0 .501961 0 rg (<) Tj (dd) Tj (>) Tj (<) Tj (input) Tj 0 0 0 rg ( ) Tj .733333 .266667 .266667 rg (type=) Tj (") Tj (text) Tj (") Tj 0 0 0 rg ( ) Tj .733333 .266667 .266667 rg (id=) Tj (") Tj (f_message) Tj (") Tj 0 0 0 rg ( ) Tj .733333 .266667 .266667 rg (value=) Tj (") Tj (") Tj 0 0 0 rg ( ) Tj .733333 .266667 .266667 rg (name=) Tj (") Tj (message) Tj (") Tj 0 .501961 0 rg (>) Tj (<) Tj (/dd) Tj (>) Tj 0 0 0 rg  T* (    ) Tj 0 .501961 0 rg (<) Tj (dt) Tj (>) Tj (<) Tj (label) Tj 0 0 0 rg ( ) Tj .733333 .266667 .266667 rg (for=) Tj (") Tj (f_sender) Tj (") Tj 0 .501961 0 rg (>) Tj 0 0 0 rg (Sender) Tj 0 .501961 0 rg (<) Tj (/label) Tj (>) Tj (<) Tj (/dt) Tj (>) Tj 0 0 0 rg  T* (    ) Tj 0 .501961 0 rg (<) Tj (dd) Tj (>) Tj (<) Tj (input) Tj 0 0 0 rg ( ) Tj .733333 .266667 .266667 rg (type=) Tj (") Tj (text) Tj (") Tj 0 0 0 rg ( ) Tj .733333 .266667 .266667 rg (id=) Tj (") Tj (f_sender) Tj (") Tj 0 0 0 rg ( ) Tj .733333 .266667 .266667 rg (value=) Tj (") Tj (") Tj 0 0 0 rg ( ) Tj .733333 .266667 .266667 rg (name=) Tj (") Tj (sender) Tj (") Tj 0 .501961 0 rg (>) Tj (<) Tj (/dd) Tj (>) Tj 0 0 0 rg  T* (    ) Tj 0 .501961 0 rg (<) Tj (dt) Tj (>) Tj (<) Tj (label) Tj 0 0 0 rg ( ) Tj .733333 .266667 .266667 rg (for=) Tj (") Tj (f_cc_myself) Tj (") Tj 0 .501961 0 rg (>) Tj 0 0 0 rg (Cc myself) Tj 0 .501961 0 rg (<) Tj (/label) Tj (>) Tj (<) Tj (/dt) Tj (>) Tj 0 0 0 rg  T* (    ) Tj 0 .501961 0 rg (<) Tj (dd) Tj (>) Tj (<) Tj (input) Tj 0 0 0 rg ( ) Tj .733333 .266667 .266667 rg (type=) Tj (") Tj (checkbox) Tj (") Tj 0 0 0 rg ( ) Tj .733333 .266667 .266667 rg (id=) Tj (") Tj (f_cc_myself) Tj (") Tj 0 0 0 rg ( ) Tj .733333 .266667 .266667 rg (name=) Tj (") Tj (cc_myself) Tj (") Tj 0 .501961 0 rg (>) Tj (<) Tj (/dd) Tj (>) Tj 0 0 0 rg  T* (  ) Tj 0 .501961 0 rg (<) Tj (/dl) Tj (>) Tj 0 0 0 rg  T* (  ) Tj 0 .501961 0 rg (<) Tj (div) Tj 0 0 0 rg ( ) Tj .733333 .266667 .266667 rg (class=) Tj (") Tj (actions) Tj (") Tj 0 .501961 0 rg (>) Tj (<) Tj (input) Tj 0 0 0 rg ( ) Tj .733333 .266667 .266667 rg (type=) Tj (") Tj (submit) Tj (") Tj 0 0 0 rg ( ) Tj .733333 .266667 .266667 rg (value=) Tj (") Tj (submit) Tj (") Tj 0 .501961 0 rg (>) Tj (<) Tj (/div) Tj (>) Tj 0 0 0 rg  T* 0 .501961 0 rg (<) Tj (/form) Tj (>) Tj T* ET
+Q
+Q
+Q
+Q
+Q
+q
+1 0 0 1 62.69291 127.5969 cm
+Q
+q
+1 0 0 1 62.69291 127.5969 cm
+Q
+ 
+endstream
+
+endobj
+% 'R24': class PDFStream 
+24 0 obj
+% page stream
+<< /Length 5308 >>
+stream
+1 0 0 1 0 0 cm BT /F1 12 Tf 14.4 TL ET
+q
+1 0 0 1 62.69291 758.1969 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 8.435 Tm /F2 17.5 Tf 21 TL (Customizing the form template) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 704.1969 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 40.82 Tm /F1 10 Tf 12 TL 1.95832 Tw (If the default generated HTML is not to your taste, you can completely customize the way a form is) Tj T* 0 Tw .333516 Tw (presented using 'call' tag of jinja2. When you use 'call' tag, you need to put your form's contents\(including) Tj T* 0 Tw .184987 Tw (submit buttons\) between {% call form\(\) %} and {% endcall %}. Here's an example of how to customize the) Tj T* 0 Tw (representation of our form.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 322.9969 cm
+q
+q
+1 0 0 1 0 0 cm
+q
+1 0 0 1 6.6 6.6 cm
+q
+.662745 .662745 .662745 RG
+.5 w
+.960784 .960784 .862745 rg
+n -6 -6 468.6898 372 re B*
+Q
+q
+BT 1 0 0 1 0 353.71 Tm 12 TL /F3 10 Tf 0 .501961 0 rg (<) Tj (body) Tj (>) Tj 0 0 0 rg  T* ({% call form\(\) %}) Tj T* (  ) Tj 0 .501961 0 rg (<) Tj (div) Tj 0 0 0 rg ( ) Tj .733333 .266667 .266667 rg (class=) Tj (") Tj (fieldWrapper) Tj (") Tj 0 .501961 0 rg (>) Tj 0 0 0 rg  T* (    {{ form.subject.label\(class_=) Tj (") Tj (myLabel) Tj (") Tj (\)|safe }}) Tj T* (    {{ form.subject\(\)|safe }}) Tj T* (  ) Tj 0 .501961 0 rg (<) Tj (/div) Tj (>) Tj 0 0 0 rg  T* (  ) Tj 0 .501961 0 rg (<) Tj (div) Tj 0 0 0 rg ( ) Tj .733333 .266667 .266667 rg (class=) Tj (") Tj (fieldWrapper) Tj (") Tj 0 .501961 0 rg (>) Tj 0 0 0 rg  T* (    {{ form.message.errors\(\)|safe }}) Tj T* (    {{ form.message.label\(\)|safe }}) Tj T* (    {{ form.message.render\(\)|safe }}) Tj T* (  ) Tj 0 .501961 0 rg (<) Tj (/div) Tj (>) Tj 0 0 0 rg  T* (  ) Tj 0 .501961 0 rg (<) Tj (div) Tj 0 0 0 rg ( ) Tj .733333 .266667 .266667 rg (class=) Tj (") Tj (fieldWrapper) Tj (") Tj 0 .501961 0 rg (>) Tj 0 0 0 rg  T* (    {{ form.sender.label\(\)|safe }}) Tj T* (    {{ form.sender.render\(\)|safe }}) Tj T* (    {% if form.message.errors %}) Tj T* (      ) Tj 0 .501961 0 rg (<) Tj (span) Tj 0 0 0 rg ( ) Tj .733333 .266667 .266667 rg (class=) Tj (") Tj (errors) Tj (") Tj 0 .501961 0 rg (>) Tj 0 0 0 rg  T* (        {% for error in form.message.errors %}) Tj T* (          {{ error }}) Tj .6 .6 .6 rg (&) Tj (nbsp;) Tj 0 0 0 rg  T* (        {% endfor %}) Tj T* (      ) Tj 0 .501961 0 rg (<) Tj (/span) Tj (>) Tj 0 0 0 rg  T* (    {% endif %}) Tj T* (  ) Tj 0 .501961 0 rg (<) Tj (/div) Tj (>) Tj 0 0 0 rg  T* (  ) Tj 0 .501961 0 rg (<) Tj (div) Tj 0 0 0 rg ( ) Tj .733333 .266667 .266667 rg (class=) Tj (") Tj (fieldWrapper) Tj (") Tj 0 .501961 0 rg (>) Tj 0 0 0 rg  T* (    {{ form.cc_myself.label\(\)|safe }}) Tj T* (    {{ form.cc_myself.render\(\)|safe }}) Tj T* (    {{ form.cc_myself.errors\(class_=) Tj (") Tj (myErrors) Tj (") Tj (\)|safe }}) Tj T* (  ) Tj 0 .501961 0 rg (<) Tj (/div) Tj (>) Tj 0 0 0 rg  T* (  {{ form.default_actions\(\)|safe }}) Tj T* ({% endcall %}) Tj T* 0 .501961 0 rg (<) Tj (/body) Tj (>) Tj T* ET
+Q
+Q
+Q
+Q
+Q
+q
+1 0 0 1 62.69291 290.9969 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 16.82 Tm /F1 10 Tf 12 TL 1.716235 Tw (The example above shows four different ways to display one field widget. You can access each field) Tj T* 0 Tw (through the root widget's attribute. Let's take a look in turn.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 288.9969 cm
+Q
+q
+1 0 0 1 62.69291 272.9969 cm
+q
+BT 1 0 0 1 12 4.82 Tm /F1 10 Tf 12 TL 0 0 0 rg (1.) Tj ET
+0 0 0 rg
+BT 1 0 0 1 24 4.82 Tm /F1 10 Tf 12 TL 2.34 0 Td (First example) Tj T* -2.34 0 Td ET
+Q
+Q
+q
+1 0 0 1 62.69291 203.7969 cm
+q
+q
+1 0 0 1 0 0 cm
+q
+1 0 0 1 6.6 6.6 cm
+q
+.662745 .662745 .662745 RG
+.5 w
+.960784 .960784 .862745 rg
+n -6 -6 468.6898 60 re B*
+Q
+q
+BT 1 0 0 1 0 41.71 Tm 12 TL /F3 10 Tf 0 .501961 0 rg (<) Tj (div) Tj 0 0 0 rg ( ) Tj .733333 .266667 .266667 rg (class=) Tj (") Tj (fieldWrapper) Tj (") Tj 0 .501961 0 rg (>) Tj 0 0 0 rg  T* (  {{ form.subject.label\(class_=) Tj (") Tj (myLabel) Tj (") Tj (\)|safe }}) Tj T* (  {{ form.subject\(\)|safe }}) Tj T* 0 .501961 0 rg (<) Tj (/div) Tj (>) Tj T* ET
+Q
+Q
+Q
+Q
+Q
+q
+1 0 0 1 62.69291 159.7969 cm
+q
+BT 1 0 0 1 0 28.82 Tm .861654 Tw 12 TL /F1 10 Tf 0 0 0 rg (This code renders the label of the subject field in ") Tj (myLabel) Tj (" class. The word ") Tj (class) Tj (" is reserved, so you) Tj T* 0 Tw 1.240514 Tw (need to add an underscore to avoid error in order to specify the class. The subject field widget is also) Tj T* 0 Tw (callable, and if you call it, you can get HTML for both of the input field and error messages at a time.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 157.7969 cm
+Q
+q
+1 0 0 1 62.69291 141.7969 cm
+q
+BT 1 0 0 1 12 4.82 Tm /F1 10 Tf 12 TL 0 0 0 rg (2.) Tj ET
+0 0 0 rg
+BT 1 0 0 1 24 4.82 Tm /F1 10 Tf 12 TL 2.34 0 Td (Second example) Tj T* -2.34 0 Td ET
+Q
+Q
+q
+1 0 0 1 62.69291 72.59685 cm
+q
+q
+1 0 0 1 0 0 cm
+q
+1 0 0 1 6.6 6.6 cm
+q
+.662745 .662745 .662745 RG
+.5 w
+.960784 .960784 .862745 rg
+n -6 -6 468.6898 60 re B*
+Q
+q
+BT 1 0 0 1 0 41.71 Tm 12 TL /F3 10 Tf 0 .501961 0 rg (<) Tj (div) Tj 0 0 0 rg ( ) Tj .733333 .266667 .266667 rg (class=) Tj (") Tj (fieldWrapper) Tj (") Tj 0 .501961 0 rg (>) Tj 0 0 0 rg  T* (  {{ form.message.errors\(\)|safe }}) Tj T* (  {{ form.message.label\(\)|safe }}) Tj T* (  {{ form.message.render\(\)|safe }}) Tj T* ET
+Q
+Q
+Q
+Q
+Q
+ 
+endstream
+
+endobj
+% 'R25': class PDFStream 
+25 0 obj
+% page stream
+<< /Length 6297 >>
+stream
+1 0 0 1 0 0 cm BT /F1 12 Tf 14.4 TL ET
+q
+1 0 0 1 62.69291 753.9969 cm
+q
+q
+1 0 0 1 0 0 cm
+q
+1 0 0 1 6.6 6.6 cm
+q
+.662745 .662745 .662745 RG
+.5 w
+.960784 .960784 .862745 rg
+n -6 -6 468.6898 24 re B*
+Q
+q
+BT 1 0 0 1 0 5.71 Tm 12 TL /F3 10 Tf 0 .501961 0 rg (<) Tj (/div) Tj (>) Tj T* ET
+Q
+Q
+Q
+Q
+Q
+q
+1 0 0 1 62.69291 697.9969 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 40.82 Tm /F1 10 Tf 12 TL 1.289398 Tw (The second example shows you how to separate HTMLs of input field and error messages. If you call) Tj T* 0 Tw 1.62104 Tw (render\(\) method instead of just call the field widget, you only get the HTML of input field. So in most) Tj T* 0 Tw .847765 Tw (cases, you need to put codes for displaying error messages. In this example, you will get this HTML for) Tj T* 0 Tw (error messages:) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 664.7969 cm
+q
+q
+1 0 0 1 0 0 cm
+q
+1 0 0 1 6.6 6.6 cm
+q
+.662745 .662745 .662745 RG
+.5 w
+.960784 .960784 .862745 rg
+n -6 -6 468.6898 24 re B*
+Q
+q
+BT 1 0 0 1 0 5.71 Tm 12 TL /F3 10 Tf 0 .501961 0 rg (<) Tj (ul) Tj 0 0 0 rg ( ) Tj .733333 .266667 .266667 rg (class=) Tj (") Tj (errors) Tj (") Tj 0 .501961 0 rg (>) Tj (<) Tj (li) Tj (>) Tj 0 0 0 rg (This field is required.) Tj 0 .501961 0 rg (<) Tj (/li) Tj (>) Tj (<) Tj (/ul) Tj (>) Tj T* ET
+Q
+Q
+Q
+Q
+Q
+q
+1 0 0 1 62.69291 644.7969 cm
+q
+BT 1 0 0 1 0 4.82 Tm 12 TL /F1 10 Tf 0 0 0 rg (What if you don't like <) Tj (ul) Tj (> tags?) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 642.7969 cm
+Q
+q
+1 0 0 1 62.69291 626.7969 cm
+q
+BT 1 0 0 1 12 4.82 Tm /F1 10 Tf 12 TL 0 0 0 rg (3.) Tj ET
+0 0 0 rg
+BT 1 0 0 1 24 4.82 Tm /F1 10 Tf 12 TL 2.34 0 Td (Third example) Tj T* -2.34 0 Td ET
+Q
+Q
+q
+1 0 0 1 62.69291 473.5969 cm
+q
+q
+1 0 0 1 0 0 cm
+q
+1 0 0 1 6.6 6.6 cm
+q
+.662745 .662745 .662745 RG
+.5 w
+.960784 .960784 .862745 rg
+n -6 -6 468.6898 144 re B*
+Q
+q
+BT 1 0 0 1 0 125.71 Tm 12 TL /F3 10 Tf 0 .501961 0 rg (<) Tj (div) Tj 0 0 0 rg ( ) Tj .733333 .266667 .266667 rg (class=) Tj (") Tj (fieldWrapper) Tj (") Tj 0 .501961 0 rg (>) Tj 0 0 0 rg  T* (  {{ form.sender.label\(\)|safe }}) Tj T* (  {{ form.sender.render\(\)|safe }}) Tj T* (  {% if form.message.errors %}) Tj T* (    ) Tj 0 .501961 0 rg (<) Tj (span) Tj 0 0 0 rg ( ) Tj .733333 .266667 .266667 rg (class=) Tj (") Tj (errors) Tj (") Tj 0 .501961 0 rg (>) Tj 0 0 0 rg  T* (      {% for error in form.message.errors %}) Tj T* (        {{ error }}) Tj .6 .6 .6 rg (&) Tj (nbsp;) Tj 0 0 0 rg  T* (      {% endfor %}) Tj T* (    ) Tj 0 .501961 0 rg (<) Tj (/span) Tj (>) Tj 0 0 0 rg  T* (  {% endif %}) Tj T* 0 .501961 0 rg (<) Tj (/div) Tj (>) Tj T* ET
+Q
+Q
+Q
+Q
+Q
+q
+1 0 0 1 62.69291 453.5969 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 4.82 Tm /F1 10 Tf 12 TL (The third example shows you how to iterate over error messages. Isn't is easy?) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 451.5969 cm
+Q
+q
+1 0 0 1 62.69291 435.5969 cm
+q
+BT 1 0 0 1 12 4.82 Tm /F1 10 Tf 12 TL 0 0 0 rg (4.) Tj ET
+0 0 0 rg
+BT 1 0 0 1 24 4.82 Tm /F1 10 Tf 12 TL 2.34 0 Td (Forth example) Tj T* -2.34 0 Td ET
+Q
+Q
+q
+1 0 0 1 62.69291 354.3969 cm
+q
+q
+1 0 0 1 0 0 cm
+q
+1 0 0 1 6.6 6.6 cm
+q
+.662745 .662745 .662745 RG
+.5 w
+.960784 .960784 .862745 rg
+n -6 -6 468.6898 72 re B*
+Q
+q
+BT 1 0 0 1 0 53.71 Tm 12 TL /F3 10 Tf 0 .501961 0 rg (<) Tj (div) Tj 0 0 0 rg ( ) Tj .733333 .266667 .266667 rg (class=) Tj (") Tj (fieldWrapper) Tj (") Tj 0 .501961 0 rg (>) Tj 0 0 0 rg  T* (  {{ form.cc_myself.label\(\)|safe }}) Tj T* (  {{ form.cc_myself.render\(\)|safe }}) Tj T* (  {{ form.cc_myself.errors\(class_=) Tj (") Tj (myErrors) Tj (") Tj (\)|safe }}) Tj T* 0 .501961 0 rg (<) Tj (/div) Tj (>) Tj T* ET
+Q
+Q
+Q
+Q
+Q
+q
+1 0 0 1 62.69291 322.3969 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 16.82 Tm /F1 10 Tf 12 TL 2.308735 Tw (The last example show you how to specify class on error messages. Actually, you can specify any) Tj T* 0 Tw (attribute on any renderable widget by passing keyword argument on rendering.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 322.3969 cm
+Q
+q
+1 0 0 1 62.69291 322.3969 cm
+Q
+q
+1 0 0 1 62.69291 289.3969 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 8.435 Tm /F2 17.5 Tf 21 TL (Handling file upload) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 247.3969 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 28.82 Tm /F1 10 Tf 12 TL 2.723984 Tw (If your form contains FileField or Field class drived from it, the widget automatically rendered with) Tj T* 0 Tw 1.806235 Tw (necessary attribute in its form tag. You need to pass request.files as well as request.form. Here's an) Tj T* 0 Tw (example that shows you how to handle file upload.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 82.19685 cm
+q
+q
+1 0 0 1 0 0 cm
+q
+1 0 0 1 6.6 6.6 cm
+q
+.662745 .662745 .662745 RG
+.5 w
+.960784 .960784 .862745 rg
+n -6 -6 468.6898 156 re B*
+Q
+q
+BT 1 0 0 1 0 137.71 Tm 12 TL /F3 10 Tf 0 .533333 0 rg (# forms.py) Tj 0 0 0 rg  T* .666667 .133333 1 rg (class) Tj 0 0 0 rg ( ) Tj 0 0 1 rg (UploadForm) Tj 0 0 0 rg (\() Tj (forms) Tj .4 .4 .4 rg (.) Tj 0 0 0 rg (Form) Tj (\):) Tj  T* (  ) Tj (comment) Tj ( ) Tj .4 .4 .4 rg (=) Tj 0 0 0 rg ( ) Tj (forms) Tj .4 .4 .4 rg (.) Tj 0 0 0 rg (TextField) Tj (\() Tj (required) Tj .4 .4 .4 rg (=) Tj .666667 .133333 1 rg (True) Tj 0 0 0 rg (\)) Tj  T* (  ) Tj (upload_file) Tj ( ) Tj .4 .4 .4 rg (=) Tj 0 0 0 rg ( ) Tj (forms) Tj .4 .4 .4 rg (.) Tj 0 0 0 rg (FileField) Tj (\() Tj (required) Tj .4 .4 .4 rg (=) Tj .666667 .133333 1 rg (True) Tj 0 0 0 rg (\)) Tj  T*  T* 0 .533333 0 rg (# views.py) Tj 0 0 0 rg  T* (form) Tj ( ) Tj .4 .4 .4 rg (=) Tj 0 0 0 rg ( ) Tj (UploadForm) Tj (\(\)) Tj  T* .666667 .133333 1 rg (if) Tj 0 0 0 rg ( ) Tj (request) Tj .4 .4 .4 rg (.) Tj 0 0 0 rg (method) Tj ( ) Tj .4 .4 .4 rg (==) Tj 0 0 0 rg ( ) Tj .733333 .266667 .266667 rg (") Tj (POST) Tj (") Tj 0 0 0 rg (:) Tj  T* (  ) Tj .666667 .133333 1 rg (if) Tj 0 0 0 rg ( ) Tj (form) Tj .4 .4 .4 rg (.) Tj 0 0 0 rg (validate) Tj (\() Tj (request) Tj .4 .4 .4 rg (.) Tj 0 0 0 rg (form) Tj (,) Tj ( ) Tj (request) Tj .4 .4 .4 rg (.) Tj 0 0 0 rg (files) Tj (\):) Tj  T* (    ) Tj 0 .533333 0 rg (# process the data) Tj 0 0 0 rg  T* (    ) Tj 0 .533333 0 rg (# ...) Tj 0 0 0 rg  T* (    ) Tj .666667 .133333 1 rg (return) Tj 0 0 0 rg ( ) Tj (redirect) Tj (\() Tj .733333 .266667 .266667 rg (") Tj (/thanks) Tj (") Tj 0 0 0 rg (\)) Tj T* ET
+Q
+Q
+Q
+Q
+Q
+q
+1 0 0 1 62.69291 74.19685 cm
+Q
+ 
+endstream
+
+endobj
+% 'R26': class PDFStream 
+26 0 obj
+% page stream
+<< /Length 5722 >>
+stream
+1 0 0 1 0 0 cm BT /F1 12 Tf 14.4 TL ET
+q
+1 0 0 1 62.69291 779.1969 cm
+Q
+q
+1 0 0 1 62.69291 758.1969 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 8.435 Tm /F2 17.5 Tf 21 TL (Customizing form validation) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 704.1969 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 40.82 Tm /F1 10 Tf 12 TL .497126 Tw (To put validation method on particular field, you can define a method named 'validate_FIELDNAME'. e.g.) Tj T* 0 Tw 1.655318 Tw (To check if a value submitted as 'password' field is stronger enough, you can set 'validate_password') Tj T* 0 Tw 2.41186 Tw (method in the class definition of the Form. If validation fails, you need to raise ValidationError with) Tj T* 0 Tw (appropriate error message.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 686.1969 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 4.82 Tm /F1 10 Tf 12 TL (Here's an example:) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 544.9969 cm
+q
+q
+1 0 0 1 0 0 cm
+q
+1 0 0 1 6.6 6.6 cm
+q
+.662745 .662745 .662745 RG
+.5 w
+.960784 .960784 .862745 rg
+n -6 -6 468.6898 132 re B*
+Q
+q
+BT 1 0 0 1 0 113.71 Tm 12 TL /F3 10 Tf .666667 .133333 1 rg (from) Tj 0 0 0 rg ( ) Tj 0 0 1 rg (kay.utils) Tj 0 0 0 rg ( ) Tj .666667 .133333 1 rg (import) Tj 0 0 0 rg ( ) Tj (forms) Tj  T* .666667 .133333 1 rg (from) Tj 0 0 0 rg ( ) Tj 0 0 1 rg (kay.utils.validators) Tj 0 0 0 rg ( ) Tj .666667 .133333 1 rg (import) Tj 0 0 0 rg ( ) Tj (ValidationError) Tj  T*  T* .666667 .133333 1 rg (class) Tj 0 0 0 rg ( ) Tj 0 0 1 rg (RegisterForm) Tj 0 0 0 rg (\() Tj (forms) Tj .4 .4 .4 rg (.) Tj 0 0 0 rg (Form) Tj (\):) Tj  T* (  ) Tj (username) Tj ( ) Tj .4 .4 .4 rg (=) Tj 0 0 0 rg ( ) Tj (forms) Tj .4 .4 .4 rg (.) Tj 0 0 0 rg (TextField) Tj (\() Tj (required) Tj .4 .4 .4 rg (=) Tj .666667 .133333 1 rg (True) Tj 0 0 0 rg (\)) Tj  T* (  ) Tj (password) Tj ( ) Tj .4 .4 .4 rg (=) Tj 0 0 0 rg ( ) Tj (forms) Tj .4 .4 .4 rg (.) Tj 0 0 0 rg (TextField) Tj (\() Tj (required) Tj .4 .4 .4 rg (=) Tj .666667 .133333 1 rg (True) Tj 0 0 0 rg (,) Tj ( ) Tj (widget) Tj .4 .4 .4 rg (=) Tj 0 0 0 rg (forms) Tj .4 .4 .4 rg (.) Tj 0 0 0 rg (PasswordInput) Tj (\)) Tj  T*  T* (  ) Tj .666667 .133333 1 rg (def) Tj 0 0 0 rg ( ) Tj 0 .627451 0 rg (validate_password) Tj 0 0 0 rg (\() Tj .666667 .133333 1 rg (self) Tj 0 0 0 rg (,) Tj ( ) Tj (value) Tj (\):) Tj  T* (    ) Tj .666667 .133333 1 rg (if) Tj 0 0 0 rg ( ) Tj .666667 .133333 1 rg (not) Tj 0 0 0 rg ( ) Tj (stronger_enough) Tj (\() Tj (value) Tj (\):) Tj  T* (      ) Tj .666667 .133333 1 rg (raise) Tj 0 0 0 rg ( ) Tj (ValidationError) Tj (\() Tj .733333 .266667 .266667 rg (u) Tj (") Tj (The password you specified is too week.) Tj (") Tj 0 0 0 rg (\)) Tj T* ET
+Q
+Q
+Q
+Q
+Q
+q
+1 0 0 1 62.69291 512.9969 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 16.82 Tm /F1 10 Tf 12 TL .598876 Tw (What if adding a field for password confirmation? To do that, you have to check the values among plural) Tj T* 0 Tw (fields, creating the method named 'context_validate'. Here's an example:) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 318.6613 cm
+q
+q
+.96447 0 0 .96447 0 0 cm
+q
+1 0 0 1 6.6 6.843137 cm
+q
+.662745 .662745 .662745 RG
+.5 w
+.960784 .960784 .862745 rg
+n -6 -6 486 192 re B*
+Q
+q
+BT 1 0 0 1 0 173.71 Tm 12 TL /F3 10 Tf .666667 .133333 1 rg (from) Tj 0 0 0 rg ( ) Tj 0 0 1 rg (kay.utils) Tj 0 0 0 rg ( ) Tj .666667 .133333 1 rg (import) Tj 0 0 0 rg ( ) Tj (forms) Tj  T* .666667 .133333 1 rg (from) Tj 0 0 0 rg ( ) Tj 0 0 1 rg (kay.utils.validators) Tj 0 0 0 rg ( ) Tj .666667 .133333 1 rg (import) Tj 0 0 0 rg ( ) Tj (ValidationError) Tj  T*  T* .666667 .133333 1 rg (class) Tj 0 0 0 rg ( ) Tj 0 0 1 rg (RegisterForm) Tj 0 0 0 rg (\() Tj (forms) Tj .4 .4 .4 rg (.) Tj 0 0 0 rg (Form) Tj (\):) Tj  T* (  ) Tj (username) Tj ( ) Tj .4 .4 .4 rg (=) Tj 0 0 0 rg ( ) Tj (forms) Tj .4 .4 .4 rg (.) Tj 0 0 0 rg (TextField) Tj (\() Tj (required) Tj .4 .4 .4 rg (=) Tj .666667 .133333 1 rg (True) Tj 0 0 0 rg (\)) Tj  T* (  ) Tj (password) Tj ( ) Tj .4 .4 .4 rg (=) Tj 0 0 0 rg ( ) Tj (forms) Tj .4 .4 .4 rg (.) Tj 0 0 0 rg (TextField) Tj (\() Tj (required) Tj .4 .4 .4 rg (=) Tj .666667 .133333 1 rg (True) Tj 0 0 0 rg (,) Tj ( ) Tj (widget) Tj .4 .4 .4 rg (=) Tj 0 0 0 rg (forms) Tj .4 .4 .4 rg (.) Tj 0 0 0 rg (PasswordInput) Tj (\)) Tj  T* (  ) Tj (password_confirm) Tj ( ) Tj .4 .4 .4 rg (=) Tj 0 0 0 rg ( ) Tj (forms) Tj .4 .4 .4 rg (.) Tj 0 0 0 rg (TextField) Tj (\() Tj (required) Tj .4 .4 .4 rg (=) Tj .666667 .133333 1 rg (True) Tj 0 0 0 rg (,) Tj ( ) Tj (widget) Tj .4 .4 .4 rg (=) Tj 0 0 0 rg (forms) Tj .4 .4 .4 rg (.) Tj 0 0 0 rg (PasswordInput) Tj (\)) Tj  T*  T* (  ) Tj .666667 .133333 1 rg (def) Tj 0 0 0 rg ( ) Tj 0 .627451 0 rg (validate_password) Tj 0 0 0 rg (\() Tj .666667 .133333 1 rg (self) Tj 0 0 0 rg (,) Tj ( ) Tj (value) Tj (\):) Tj  T* (    ) Tj .666667 .133333 1 rg (if) Tj 0 0 0 rg ( ) Tj .666667 .133333 1 rg (not) Tj 0 0 0 rg ( ) Tj (stronger_enough) Tj (\() Tj (value) Tj (\):) Tj  T* (      ) Tj .666667 .133333 1 rg (raise) Tj 0 0 0 rg ( ) Tj (ValidationError) Tj (\() Tj .733333 .266667 .266667 rg (u) Tj (") Tj (The password you specified is too week.) Tj (") Tj 0 0 0 rg (\)) Tj  T*  T* (  ) Tj .666667 .133333 1 rg (def) Tj 0 0 0 rg ( ) Tj 0 .627451 0 rg (context_validate) Tj 0 0 0 rg (\() Tj .666667 .133333 1 rg (self) Tj 0 0 0 rg (,) Tj ( ) Tj (data) Tj (\):) Tj  T* (    ) Tj .666667 .133333 1 rg (if) Tj 0 0 0 rg ( ) Tj (data) Tj ([) Tj .733333 .266667 .266667 rg ('password') Tj 0 0 0 rg (]) Tj ( ) Tj .4 .4 .4 rg (!=) Tj 0 0 0 rg ( ) Tj (data) Tj ([) Tj .733333 .266667 .266667 rg ('password_confirm') Tj 0 0 0 rg (]:) Tj  T* (      ) Tj .666667 .133333 1 rg (raise) Tj 0 0 0 rg ( ) Tj (ValidationError) Tj (\() Tj .733333 .266667 .266667 rg (u) Tj (") Tj (The passwords don't match.) Tj (") Tj 0 0 0 rg (\)) Tj T* ET
+Q
+Q
+Q
+Q
+Q
+ 
+endstream
+
+endobj
+xref
+0 27
+0000000000 65535 f
+0000000113 00000 n
+0000000233 00000 n
+0000000398 00000 n
+0000000573 00000 n
+0000000732 00000 n
+0000001011 00000 n
+0000001290 00000 n
+0000001569 00000 n
+0000001848 00000 n
+0000002128 00000 n
+0000002266 00000 n
+0000002494 00000 n
+0000002619 00000 n
+0000002761 00000 n
+0000002925 00000 n
+0000003096 00000 n
+0000003276 00000 n
+0000003459 00000 n
+0000003637 00000 n
+0000003806 00000 n
+0000003951 00000 n
+0000004090 00000 n
+0000011515 00000 n
+0000020604 00000 n
+0000026013 00000 n
+0000032411 00000 n
+trailer
+<< /ID 
+ % ReportLab generated PDF document -- digest (http://www.reportlab.com) 
+ [(e00\024DA\264Rr\212\243\023x,;\250) (e00\024DA\264Rr\212\243\023x,;\250)] 
+
+ /Info 11 0 R
+ /Root 10 0 R
+ /Size 27 >>
+startxref
+38207
+%%EOF

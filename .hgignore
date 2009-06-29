@@ -3,7 +3,6 @@ syntax: glob
 *.swp
 *.tmp
 *~
-*.pdf
 .DS_Store
 app.yaml
 settings.py

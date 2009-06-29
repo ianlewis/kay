@@ -1,0 +1,927 @@
+%PDF-1.3
+%“Œ‹ž ReportLab Generated PDF document http://www.reportlab.com
+% 'BasicFonts': class PDFDictionary 
+1 0 obj
+% The standard fonts dictionary
+<< /F1 2 0 R
+ /F2 3 0 R
+ /F3 4 0 R
+ /F4 6 0 R >>
+endobj
+% 'F1': class PDFType1Font 
+2 0 obj
+% Font Helvetica
+<< /BaseFont /Helvetica
+ /Encoding /WinAnsiEncoding
+ /Name /F1
+ /Subtype /Type1
+ /Type /Font >>
+endobj
+% 'F2': class PDFType1Font 
+3 0 obj
+% Font Helvetica-Bold
+<< /BaseFont /Helvetica-Bold
+ /Encoding /WinAnsiEncoding
+ /Name /F2
+ /Subtype /Type1
+ /Type /Font >>
+endobj
+% 'F3': class PDFType1Font 
+4 0 obj
+% Font Courier
+<< /BaseFont /Courier
+ /Encoding /WinAnsiEncoding
+ /Name /F3
+ /Subtype /Type1
+ /Type /Font >>
+endobj
+% 'Page1': class PDFPage 
+5 0 obj
+% Page dictionary
+<< /Contents 24 0 R
+ /MediaBox [ 0
+ 0
+ 595.2756
+ 841.8898 ]
+ /Parent 23 0 R
+ /Resources << /Font 1 0 R
+ /ProcSet [ /PDF
+ /Text
+ /ImageB
+ /ImageC
+ /ImageI ] >>
+ /Rotate 0
+ /Trans <<  >>
+ /Type /Page >>
+endobj
+% 'F4': class PDFType1Font 
+6 0 obj
+% Font Helvetica-Oblique
+<< /BaseFont /Helvetica-Oblique
+ /Encoding /WinAnsiEncoding
+ /Name /F4
+ /Subtype /Type1
+ /Type /Font >>
+endobj
+% 'Page2': class PDFPage 
+7 0 obj
+% Page dictionary
+<< /Contents 25 0 R
+ /MediaBox [ 0
+ 0
+ 595.2756
+ 841.8898 ]
+ /Parent 23 0 R
+ /Resources << /Font 1 0 R
+ /ProcSet [ /PDF
+ /Text
+ /ImageB
+ /ImageC
+ /ImageI ] >>
+ /Rotate 0
+ /Trans <<  >>
+ /Type /Page >>
+endobj
+% 'Annot.NUMBER1': class PDFDictionary 
+8 0 obj
+<< /A << /S /URI
+ /Type /Action
+ /URI (http://groups.google.com/group/kay-users) >>
+ /Border [ 0
+ 0
+ 0 ]
+ /Rect [ 273.4329
+ 310.1669
+ 457.9629
+ 322.1669 ]
+ /Subtype /Link
+ /Type /Annot >>
+endobj
+% 'Annot.NUMBER2': class PDFDictionary 
+9 0 obj
+<< /A << /S /URI
+ /Type /Action
+ /URI (mailto:tmatsuo@candit.jp) >>
+ /Border [ 0
+ 0
+ 0 ]
+ /Rect [ 334.8529
+ 294.1669
+ 417.8129
+ 306.1669 ]
+ /Subtype /Link
+ /Type /Annot >>
+endobj
+% 'Annot.NUMBER3': class PDFDictionary 
+10 0 obj
+<< /A << /S /URI
+ /Type /Action
+ /URI (http://code.google.com/p/kay-framework/) >>
+ /Border [ 0
+ 0
+ 0 ]
+ /Rect [ 131.7129
+ 278.1669
+ 312.3429
+ 290.1669 ]
+ /Subtype /Link
+ /Type /Annot >>
+endobj
+% 'Page3': class PDFPage 
+11 0 obj
+% Page dictionary
+<< /Annots [ 8 0 R
+ 9 0 R
+ 10 0 R ]
+ /Contents 26 0 R
+ /MediaBox [ 0
+ 0
+ 595.2756
+ 841.8898 ]
+ /Parent 23 0 R
+ /Resources << /Font 1 0 R
+ /ProcSet [ /PDF
+ /Text
+ /ImageB
+ /ImageC
+ /ImageI ] >>
+ /Rotate 0
+ /Trans <<  >>
+ /Type /Page >>
+endobj
+% 'R12': class PDFCatalog 
+12 0 obj
+% Document Root
+<< /Outlines 14 0 R
+ /PageMode /UseNone
+ /Pages 23 0 R
+ /Type /Catalog >>
+endobj
+% 'R13': class PDFInfo 
+13 0 obj
+<< /Author ()
+ /CreationDate (D:20090629163116-09'00')
+ /Keywords ()
+ /Producer (ReportLab http://www.reportlab.com)
+ /Subject (\(unspecified\))
+ /Title (Kay Framework) >>
+endobj
+% 'R14': class PDFOutlines 
+14 0 obj
+<< /Count 8
+ /First 15 0 R
+ /Last 22 0 R
+ /Type /Outlines >>
+endobj
+% 'Outline.0': class OutlineEntryObject 
+15 0 obj
+<< /Dest [ 5 0 R
+ /Fit ]
+ /Next 16 0 R
+ /Parent 14 0 R
+ /Title (What's this) >>
+endobj
+% 'Outline.1': class OutlineEntryObject 
+16 0 obj
+<< /Dest [ 5 0 R
+ /Fit ]
+ /Next 17 0 R
+ /Parent 14 0 R
+ /Prev 15 0 R
+ /Title (The software that Kay bundles) >>
+endobj
+% 'Outline.2': class OutlineEntryObject 
+17 0 obj
+<< /Dest [ 5 0 R
+ /Fit ]
+ /Next 18 0 R
+ /Parent 14 0 R
+ /Prev 16 0 R
+ /Title (Dependencies) >>
+endobj
+% 'Outline.3': class OutlineEntryObject 
+18 0 obj
+<< /Dest [ 5 0 R
+ /Fit ]
+ /Next 19 0 R
+ /Parent 14 0 R
+ /Prev 17 0 R
+ /Title (Quick Start) >>
+endobj
+% 'Outline.4': class OutlineEntryObject 
+19 0 obj
+<< /Dest [ 7 0 R
+ /Fit ]
+ /Next 20 0 R
+ /Parent 14 0 R
+ /Prev 18 0 R
+ /Title (Shell tools) >>
+endobj
+% 'Outline.5': class OutlineEntryObject 
+20 0 obj
+<< /Dest [ 7 0 R
+ /Fit ]
+ /Next 21 0 R
+ /Parent 14 0 R
+ /Prev 19 0 R
+ /Title (Datastore) >>
+endobj
+% 'Outline.6': class OutlineEntryObject 
+21 0 obj
+<< /Dest [ 7 0 R
+ /Fit ]
+ /Next 22 0 R
+ /Parent 14 0 R
+ /Prev 20 0 R
+ /Title (Forms) >>
+endobj
+% 'Outline.7': class OutlineEntryObject 
+22 0 obj
+<< /Dest [ 11 0 R
+ /Fit ]
+ /Parent 14 0 R
+ /Prev 21 0 R
+ /Title (Questions and Bug Report) >>
+endobj
+% 'R23': class PDFPages 
+23 0 obj
+% page tree
+<< /Count 3
+ /Kids [ 5 0 R
+ 7 0 R
+ 11 0 R ]
+ /Type /Pages >>
+endobj
+% 'R24': class PDFStream 
+24 0 obj
+% page stream
+<< /Length 5471 >>
+stream
+1 0 0 1 0 0 cm BT /F1 12 Tf 14.4 TL ET
+q
+1 0 0 1 62.69291 779.1969 cm
+Q
+q
+1 0 0 1 62.69291 755.1969 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 9.64 Tm /F2 20 Tf 24 TL 160.4749 0 Td (Kay Framework) Tj T* -160.4749 0 Td ET
+Q
+Q
+q
+1 0 0 1 62.69291 745.1969 cm
+Q
+q
+1 0 0 1 62.69291 745.1969 cm
+Q
+q
+1 0 0 1 62.69291 712.1969 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 8.435 Tm /F2 17.5 Tf 21 TL (What's this) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 658.1969 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 40.82 Tm /F1 10 Tf 12 TL .340574 Tw (Kay is a web framework completely specialising on Google App Engine. But basic design is based on the) Tj T* 0 Tw .36229 Tw (Django framework, like middleware, settings and pluggable application, etc. Kay uses Werkzeug as lower) Tj T* 0 Tw 1.984597 Tw (level framework, uses Jinja2 as template engine, uses babel for handling language translations. This) Tj T* 0 Tw (software is distributed under BSD license. See LICENSE for the details.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 658.1969 cm
+Q
+q
+1 0 0 1 62.69291 658.1969 cm
+Q
+q
+1 0 0 1 62.69291 625.1969 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 8.435 Tm /F2 17.5 Tf 21 TL (The software that Kay bundles) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 617.1969 cm
+Q
+q
+1 0 0 1 62.69291 601.1969 cm
+q
+BT 1 0 0 1 12 4.82 Tm /F1 10 Tf 12 TL 0 0 0 rg (\177) Tj ET
+0 0 0 rg
+BT 1 0 0 1 24 4.82 Tm /F1 10 Tf 12 TL (babel) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 585.1969 cm
+q
+BT 1 0 0 1 12 4.82 Tm /F1 10 Tf 12 TL 0 0 0 rg (\177) Tj ET
+0 0 0 rg
+BT 1 0 0 1 24 4.82 Tm /F1 10 Tf 12 TL (jinja2) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 569.1969 cm
+q
+BT 1 0 0 1 12 4.82 Tm /F1 10 Tf 12 TL 0 0 0 rg (\177) Tj ET
+0 0 0 rg
+BT 1 0 0 1 24 4.82 Tm /F1 10 Tf 12 TL (simplejson) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 553.1969 cm
+q
+BT 1 0 0 1 12 4.82 Tm /F1 10 Tf 12 TL 0 0 0 rg (\177) Tj ET
+0 0 0 rg
+BT 1 0 0 1 24 4.82 Tm /F1 10 Tf 12 TL (werkzeug) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 537.1969 cm
+q
+BT 1 0 0 1 12 4.82 Tm /F1 10 Tf 12 TL 0 0 0 rg (\177) Tj ET
+0 0 0 rg
+BT 1 0 0 1 24 4.82 Tm /F1 10 Tf 12 TL (pytz) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 537.1969 cm
+Q
+q
+1 0 0 1 62.69291 537.1969 cm
+Q
+q
+1 0 0 1 62.69291 504.1969 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 8.435 Tm /F2 17.5 Tf 21 TL (Dependencies) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 496.1969 cm
+Q
+q
+1 0 0 1 62.69291 480.1969 cm
+q
+BT 1 0 0 1 12 4.82 Tm /F1 10 Tf 12 TL 0 0 0 rg (\177) Tj ET
+0 0 0 rg
+BT 1 0 0 1 24 4.82 Tm /F1 10 Tf 12 TL (Google App Engine SDK) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 452.1969 cm
+q
+0 0 0 rg
+BT 1 0 0 1 24 16.82 Tm /F1 10 Tf 12 TL .255868 Tw (If you installed zip version of the SDK\(most unix style operation system users are so\), don't forget to) Tj T* 0 Tw (create a symlink pointed to the real SDK at /usr/local/google_appengine.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 418.9969 cm
+q
+q
+1 0 0 1 0 0 cm
+q
+1 0 0 1 6.6 6.6 cm
+q
+.662745 .662745 .662745 RG
+.5 w
+.960784 .960784 .862745 rg
+n -6 -6 468.6898 24 re B*
+Q
+q
+0 0 0 rg
+BT 1 0 0 1 0 5.71 Tm /F3 10 Tf 12 TL ($ sudo ln -s /some/whare/google_appengine /usr/local/google_appengine) Tj T* ET
+Q
+Q
+Q
+Q
+Q
+q
+1 0 0 1 62.69291 410.9969 cm
+Q
+q
+1 0 0 1 62.69291 410.9969 cm
+Q
+q
+1 0 0 1 62.69291 377.9969 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 8.435 Tm /F2 17.5 Tf 21 TL (Quick Start) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 369.9969 cm
+Q
+q
+1 0 0 1 62.69291 353.9969 cm
+q
+BT 1 0 0 1 12 4.82 Tm /F1 10 Tf 12 TL 0 0 0 rg (\177) Tj ET
+0 0 0 rg
+BT 1 0 0 1 24 4.82 Tm /F1 10 Tf 12 TL (First, make symlynk of kay directory inside your project directry, copy settings files.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 236.7969 cm
+q
+q
+1 0 0 1 0 0 cm
+q
+1 0 0 1 6.6 6.6 cm
+q
+.662745 .662745 .662745 RG
+.5 w
+.960784 .960784 .862745 rg
+n -6 -6 468.6898 108 re B*
+Q
+q
+0 0 0 rg
+BT 1 0 0 1 0 89.71 Tm /F3 10 Tf 12 TL ($ hg clone http://bitbucket.org/tmatsuo/kay/) Tj T* ($ mkdir yourproject) Tj T* ($ cd yourproject) Tj T* ($ ln -s ../kay/kay .) Tj T* ($ cp ../kay/manage.py .) Tj T* ($ cp ../kay/urls.py .) Tj T* ($ cp ../kay/settings.py.sample settings.py) Tj T* ($ cp ../kay/app.yaml.sample app.yaml) Tj T* ET
+Q
+Q
+Q
+Q
+Q
+q
+1 0 0 1 62.69291 226.7969 cm
+Q
+q
+1 0 0 1 62.69291 210.7969 cm
+q
+BT 1 0 0 1 12 4.82 Tm /F1 10 Tf 12 TL 0 0 0 rg (\177) Tj ET
+0 0 0 rg
+BT 1 0 0 1 24 4.82 Tm /F1 10 Tf 12 TL (Second, you can create your first application with following command.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 153.5969 cm
+q
+q
+1 0 0 1 0 0 cm
+q
+1 0 0 1 6.6 6.6 cm
+q
+.662745 .662745 .662745 RG
+.5 w
+.960784 .960784 .862745 rg
+n -6 -6 468.6898 48 re B*
+Q
+q
+0 0 0 rg
+BT 1 0 0 1 0 29.71 Tm /F3 10 Tf 12 TL ($ python manage.py startapp hello) Tj T* ($ vi urls.py) Tj T* ($ vi settings.py) Tj T* ET
+Q
+Q
+Q
+Q
+Q
+q
+1 0 0 1 62.69291 121.5969 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 16.82 Tm /F1 10 Tf 12 TL 3.320542 Tw (There is a sample urls.py in the file hello/urls.py as a comment. You have to add 'hello' to the) Tj T* 0 Tw (INSTALLED_APPS tupple in the settings.py.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 119.5969 cm
+Q
+q
+1 0 0 1 62.69291 103.5969 cm
+q
+BT 1 0 0 1 12 4.82 Tm /F1 10 Tf 12 TL 0 0 0 rg (\177) Tj ET
+0 0 0 rg
+BT 1 0 0 1 24 4.82 Tm /F1 10 Tf 12 TL (Run your application) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 70.39685 cm
+q
+q
+1 0 0 1 0 0 cm
+q
+1 0 0 1 6.6 6.6 cm
+q
+.662745 .662745 .662745 RG
+.5 w
+.960784 .960784 .862745 rg
+n -6 -6 468.6898 24 re B*
+Q
+q
+0 0 0 rg
+BT 1 0 0 1 0 5.71 Tm /F3 10 Tf 12 TL ($ python manage.py runserver) Tj T* ET
+Q
+Q
+Q
+Q
+Q
+ 
+endstream
+
+endobj
+% 'R25': class PDFStream 
+25 0 obj
+% page stream
+<< /Length 5730 >>
+stream
+1 0 0 1 0 0 cm BT /F1 12 Tf 14.4 TL ET
+q
+1 0 0 1 62.69291 777.1969 cm
+Q
+q
+1 0 0 1 62.69291 761.1969 cm
+q
+BT 1 0 0 1 12 4.82 Tm /F1 10 Tf 12 TL 0 0 0 rg (\177) Tj ET
+0 0 0 rg
+BT 1 0 0 1 24 4.82 Tm /F1 10 Tf 12 TL (Upload your application) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 727.9969 cm
+q
+q
+1 0 0 1 0 0 cm
+q
+1 0 0 1 6.6 6.6 cm
+q
+.662745 .662745 .662745 RG
+.5 w
+.960784 .960784 .862745 rg
+n -6 -6 468.6898 24 re B*
+Q
+q
+0 0 0 rg
+BT 1 0 0 1 0 5.71 Tm /F3 10 Tf 12 TL ($ python manage.py appcfg update) Tj T* ET
+Q
+Q
+Q
+Q
+Q
+q
+1 0 0 1 62.69291 717.9969 cm
+Q
+q
+1 0 0 1 62.69291 701.9969 cm
+q
+BT 1 0 0 1 12 4.82 Tm /F1 10 Tf 12 TL 0 0 0 rg (\177) Tj ET
+0 0 0 rg
+BT 1 0 0 1 24 4.82 Tm /F1 10 Tf 12 TL (You can handle i18n like following.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 632.7969 cm
+q
+q
+1 0 0 1 0 0 cm
+q
+1 0 0 1 6.6 6.6 cm
+q
+.662745 .662745 .662745 RG
+.5 w
+.960784 .960784 .862745 rg
+n -6 -6 468.6898 60 re B*
+Q
+q
+0 0 0 rg
+BT 1 0 0 1 0 41.71 Tm /F3 10 Tf 12 TL ($ ../kay/scripts/extract-messages hello) Tj T* ($ ../kay/scripts/add-translation --app hello ja) Tj T* ($ vi hello/i18n/ja/LC_MESSAGES/messages.po) Tj T* ($ ../kay/scripts/compile-translations hello) Tj T* ET
+Q
+Q
+Q
+Q
+Q
+q
+1 0 0 1 62.69291 612.7969 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 4.82 Tm /F1 10 Tf 12 TL (You can also merge newly added catalogue into your translations as follows.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 543.5969 cm
+q
+q
+1 0 0 1 0 0 cm
+q
+1 0 0 1 6.6 6.6 cm
+q
+.662745 .662745 .662745 RG
+.5 w
+.960784 .960784 .862745 rg
+n -6 -6 468.6898 60 re B*
+Q
+q
+0 0 0 rg
+BT 1 0 0 1 0 41.71 Tm /F3 10 Tf 12 TL ($ ../kay/scripts/extract-messages hello) Tj T* ($ ../kay/scripts/update-translation -l ja hello) Tj T* ($ vi hello/i18n/ja/LC_MESSAGES/messages.po) Tj T* ($ ../kay/scripts/compile-translations hello) Tj T* ET
+Q
+Q
+Q
+Q
+Q
+q
+1 0 0 1 62.69291 535.5969 cm
+Q
+q
+1 0 0 1 62.69291 535.5969 cm
+Q
+q
+1 0 0 1 62.69291 502.5969 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 8.435 Tm /F2 17.5 Tf 21 TL (Shell tools) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 494.5969 cm
+Q
+q
+1 0 0 1 62.69291 466.5969 cm
+q
+BT 1 0 0 1 12 16.82 Tm /F1 10 Tf 12 TL 0 0 0 rg (\177) Tj ET
+BT 1 0 0 1 24 16.82 Tm .564983 Tw 12 TL /F1 10 Tf 0 0 0 rg (Invoking ) Tj /F4 10 Tf (python manage.py shell ) Tj /F1 10 Tf (gives you python \(or ipython if available\) console session with the) Tj T* 0 Tw (same DatastoreFileStub settings of local dev server.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 448.5969 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 4.82 Tm /F2 10 Tf 12 TL (Note:) Tj T* ET
+Q
+Q
+q
+1 0 0 1 82.69291 406.5969 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 28.82 Tm /F1 10 Tf 12 TL 1.224104 Tw (The local dev server reads datastore data file only on startup. So, the dev server will never notice) Tj T* 0 Tw .052651 Tw (about the datastore operation on your console session. You must restart your dev server for reflecting) Tj T* 0 Tw (the result of the console sessions.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 404.5969 cm
+Q
+q
+1 0 0 1 62.69291 376.5969 cm
+q
+BT 1 0 0 1 12 16.82 Tm /F1 10 Tf 12 TL 0 0 0 rg (\177) Tj ET
+BT 1 0 0 1 24 16.82 Tm .008555 Tw 12 TL /F1 10 Tf 0 0 0 rg (Invoking ) Tj /F4 10 Tf (python manage.py rshell ) Tj /F1 10 Tf (is the same as above except for using RemoteDatastore stub. You) Tj T* 0 Tw (can access the data on the production server.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 358.5969 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 4.82 Tm /F2 10 Tf 12 TL (Note:) Tj T* ET
+Q
+Q
+q
+1 0 0 1 82.69291 340.5969 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 4.82 Tm /F1 10 Tf 12 TL (Be careful when use this feature.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 340.5969 cm
+Q
+q
+1 0 0 1 62.69291 340.5969 cm
+Q
+q
+1 0 0 1 62.69291 307.5969 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 8.435 Tm /F2 17.5 Tf 21 TL (Datastore) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 299.5969 cm
+Q
+q
+1 0 0 1 62.69291 271.5969 cm
+q
+BT 1 0 0 1 12 16.82 Tm /F1 10 Tf 12 TL 0 0 0 rg (\177) Tj ET
+0 0 0 rg
+BT 1 0 0 1 24 16.82 Tm /F1 10 Tf 12 TL .009984 Tw (You must use GAE models directly. You can use kay.utils.forms for form handling. You can construct) Tj T* 0 Tw (a form automatically from the model definition with kay.utils.forms.modelform.ModelForm.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 243.5969 cm
+q
+0 0 0 rg
+BT 1 0 0 1 24 16.82 Tm /F1 10 Tf 12 TL 5.011647 Tw (Unfortunately, for now, there is no documentation about forms package yet. Please see) Tj T* 0 Tw (kay.tests.formtest for examples. Sorry for the inconvinience.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 203.5969 cm
+q
+BT 1 0 0 1 12 28.82 Tm /F1 10 Tf 12 TL 0 0 0 rg (\177) Tj ET
+0 0 0 rg
+BT 1 0 0 1 24 28.82 Tm /F1 10 Tf 12 TL 1.035697 Tw (By default, db.Model.kind\(\) returns \('model's app name' + _ + 'model name'\).lower\(\). So when you) Tj T* 0 Tw .723059 Tw (see the management console, there will be 'appname_modelname' style kind names . Please don't) Tj T* 0 Tw (be surprised with those names.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 175.5969 cm
+q
+0 0 0 rg
+BT 1 0 0 1 24 16.82 Tm /F1 10 Tf 12 TL 4.257251 Tw (You can change this behaviour by settings ADD_APP_PREFIX_TO_KIND to False in your) Tj T* 0 Tw (settings.py.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 175.5969 cm
+Q
+q
+1 0 0 1 62.69291 175.5969 cm
+Q
+q
+1 0 0 1 62.69291 142.5969 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 8.435 Tm /F2 17.5 Tf 21 TL (Forms) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 134.5969 cm
+Q
+q
+1 0 0 1 62.69291 106.5969 cm
+q
+BT 1 0 0 1 12 16.82 Tm /F1 10 Tf 12 TL 0 0 0 rg (\177) Tj ET
+0 0 0 rg
+BT 1 0 0 1 24 16.82 Tm /F1 10 Tf 12 TL 1.678555 Tw (To define form class, you can define a class that extends kay.utils.forms.Form. For example the) Tj T* 0 Tw (code bellow will give you the form contains two text fields with different validators.) Tj T* ET
+Q
+Q
+ 
+endstream
+
+endobj
+% 'R26': class PDFStream 
+26 0 obj
+% page stream
+<< /Length 5417 >>
+stream
+1 0 0 1 0 0 cm BT /F1 12 Tf 14.4 TL ET
+q
+1 0 0 1 62.69291 717.9969 cm
+q
+q
+1 0 0 1 0 0 cm
+q
+1 0 0 1 6.6 6.6 cm
+q
+.662745 .662745 .662745 RG
+.5 w
+.960784 .960784 .862745 rg
+n -6 -6 468.6898 60 re B*
+Q
+q
+BT 1 0 0 1 0 41.71 Tm 12 TL /F3 10 Tf .666667 .133333 1 rg (from) Tj 0 0 0 rg ( ) Tj 0 0 1 rg (kay.utils.forms) Tj 0 0 0 rg ( ) Tj .666667 .133333 1 rg (import) Tj 0 0 0 rg ( ) Tj (Form) Tj  T* .666667 .133333 1 rg (class) Tj 0 0 0 rg ( ) Tj 0 0 1 rg (PersonForm) Tj 0 0 0 rg (\() Tj (Form) Tj (\):) Tj  T* (  ) Tj (name) Tj ( ) Tj .4 .4 .4 rg (=) Tj 0 0 0 rg ( ) Tj (TextField) Tj (\() Tj (required) Tj .4 .4 .4 rg (=) Tj .666667 .133333 1 rg (True) Tj 0 0 0 rg (\)) Tj  T* (  ) Tj (age) Tj ( ) Tj .4 .4 .4 rg (=) Tj 0 0 0 rg ( ) Tj (IntegerField) Tj (\(\)) Tj T* ET
+Q
+Q
+Q
+Q
+Q
+q
+1 0 0 1 62.69291 697.9969 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 4.82 Tm /F1 10 Tf 12 TL (You can use this form in your view like following.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 568.7969 cm
+q
+q
+1 0 0 1 0 0 cm
+q
+1 0 0 1 6.6 6.6 cm
+q
+.662745 .662745 .662745 RG
+.5 w
+.960784 .960784 .862745 rg
+n -6 -6 468.6898 120 re B*
+Q
+q
+BT 1 0 0 1 0 101.71 Tm 12 TL /F3 10 Tf .666667 .133333 1 rg (from) Tj 0 0 0 rg ( ) Tj 0 0 1 rg (forms) Tj 0 0 0 rg ( ) Tj .666667 .133333 1 rg (import) Tj 0 0 0 rg ( ) Tj (PersonForm) Tj  T* (form) Tj ( ) Tj .4 .4 .4 rg (=) Tj 0 0 0 rg ( ) Tj (PersonForm) Tj (\(\)) Tj  T* .666667 .133333 1 rg (if) Tj 0 0 0 rg ( ) Tj (request) Tj .4 .4 .4 rg (.) Tj 0 0 0 rg (method) Tj ( ) Tj .4 .4 .4 rg (==) Tj 0 0 0 rg ( ) Tj .733333 .266667 .266667 rg ('POST') Tj 0 0 0 rg  T* (  ) Tj .666667 .133333 1 rg (if) Tj 0 0 0 rg ( ) Tj (form) Tj .4 .4 .4 rg (.) Tj 0 0 0 rg (validate) Tj (\() Tj (request) Tj .4 .4 .4 rg (.) Tj 0 0 0 rg (form) Tj (,) Tj ( ) Tj (request) Tj .4 .4 .4 rg (.) Tj 0 0 0 rg (files) Tj (\):) Tj  T* (    ) Tj (name) Tj ( ) Tj .4 .4 .4 rg (=) Tj 0 0 0 rg ( ) Tj (form) Tj ([) Tj .733333 .266667 .266667 rg ('name') Tj 0 0 0 rg (]) Tj  T* (    ) Tj (age) Tj ( ) Tj .4 .4 .4 rg (=) Tj 0 0 0 rg ( ) Tj (form) Tj ([) Tj .733333 .266667 .266667 rg ('age') Tj 0 0 0 rg (]) Tj  T* (    ) Tj (do) Tj ( ) Tj (something) Tj ( ) Tj .666667 .133333 1 rg (with) Tj 0 0 0 rg ( ) Tj (valid) Tj ( ) Tj (form) Tj ( ) Tj .4 .4 .4 rg (...) Tj 0 0 0 rg  T* (  ) Tj .666667 .133333 1 rg (else) Tj 0 0 0 rg (:) Tj  T* (    ) Tj (do) Tj ( ) Tj (something) Tj ( ) Tj .666667 .133333 1 rg (with) Tj 0 0 0 rg ( ) Tj (invalid) Tj ( ) Tj (form) Tj ( ) Tj .4 .4 .4 rg (...) Tj T* ET
+Q
+Q
+Q
+Q
+Q
+q
+1 0 0 1 62.69291 558.7969 cm
+Q
+q
+1 0 0 1 62.69291 542.7969 cm
+q
+BT 1 0 0 1 12 4.82 Tm /F1 10 Tf 12 TL 0 0 0 rg (\177) Tj ET
+0 0 0 rg
+BT 1 0 0 1 24 4.82 Tm /F1 10 Tf 12 TL (You can also use ModelForm to create a form automatically from Model class.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 389.5969 cm
+q
+q
+1 0 0 1 0 0 cm
+q
+1 0 0 1 6.6 6.6 cm
+q
+.662745 .662745 .662745 RG
+.5 w
+.960784 .960784 .862745 rg
+n -6 -6 468.6898 144 re B*
+Q
+q
+BT 1 0 0 1 0 125.71 Tm 12 TL /F3 10 Tf .666667 .133333 1 rg (from) Tj 0 0 0 rg ( ) Tj 0 0 1 rg (google.appengine.ext) Tj 0 0 0 rg ( ) Tj .666667 .133333 1 rg (import) Tj 0 0 0 rg ( ) Tj (db) Tj  T*  T* .666667 .133333 1 rg (class) Tj 0 0 0 rg ( ) Tj 0 0 1 rg (MyModel) Tj 0 0 0 rg (\() Tj (db) Tj .4 .4 .4 rg (.) Tj 0 0 0 rg (Model) Tj (\):) Tj  T* (  ) Tj (name) Tj ( ) Tj .4 .4 .4 rg (=) Tj 0 0 0 rg ( ) Tj (db) Tj .4 .4 .4 rg (.) Tj 0 0 0 rg (StringProperty) Tj (\() Tj (required) Tj .4 .4 .4 rg (=) Tj .666667 .133333 1 rg (True) Tj 0 0 0 rg (\)) Tj  T* (  ) Tj (age) Tj ( ) Tj .4 .4 .4 rg (=) Tj 0 0 0 rg ( ) Tj (db) Tj .4 .4 .4 rg (.) Tj 0 0 0 rg (IntegerProperty) Tj (\(\)) Tj  T*  T* .666667 .133333 1 rg (from) Tj 0 0 0 rg ( ) Tj 0 0 1 rg (kay.utils.forms.modelform) Tj 0 0 0 rg ( ) Tj .666667 .133333 1 rg (import) Tj 0 0 0 rg ( ) Tj (ModelForm) Tj  T*  T* .666667 .133333 1 rg (class) Tj 0 0 0 rg ( ) Tj 0 0 1 rg (MyForm) Tj 0 0 0 rg (\() Tj (ModelForm) Tj (\):) Tj  T* (  ) Tj .666667 .133333 1 rg (class) Tj 0 0 0 rg ( ) Tj 0 0 1 rg (Meta) Tj 0 0 0 rg (:) Tj  T* (    ) Tj (model) Tj ( ) Tj .4 .4 .4 rg (=) Tj 0 0 0 rg ( ) Tj (MyModel) Tj T* ET
+Q
+Q
+Q
+Q
+Q
+q
+1 0 0 1 62.69291 379.5969 cm
+Q
+q
+1 0 0 1 62.69291 363.5969 cm
+q
+BT 1 0 0 1 12 4.82 Tm /F1 10 Tf 12 TL 0 0 0 rg (\177) Tj ET
+0 0 0 rg
+BT 1 0 0 1 24 4.82 Tm /F1 10 Tf 12 TL (For more details about forms, please refer to the docs/forms-usage.rst.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 363.5969 cm
+Q
+q
+1 0 0 1 62.69291 363.5969 cm
+Q
+q
+1 0 0 1 62.69291 330.5969 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 8.435 Tm /F2 17.5 Tf 21 TL (Questions and Bug Report) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 322.5969 cm
+Q
+q
+1 0 0 1 62.69291 306.5969 cm
+q
+BT 1 0 0 1 12 4.82 Tm /F1 10 Tf 12 TL 0 0 0 rg (\177) Tj ET
+BT 1 0 0 1 24 4.82 Tm 12 TL /F1 10 Tf 0 0 0 rg (Please visit Kay framework google group. ) Tj 0 0 .501961 rg (http://groups.google.com/group/kay-users) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 290.5969 cm
+q
+BT 1 0 0 1 12 4.82 Tm /F1 10 Tf 12 TL 0 0 0 rg (\177) Tj ET
+BT 1 0 0 1 24 4.82 Tm 12 TL /F1 10 Tf 0 0 0 rg (Or, contact the project leader directly. Takashi Matsuo <) Tj 0 0 .501961 rg (tmatsuo@candit.jp) Tj 0 0 0 rg (>) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 274.5969 cm
+q
+BT 1 0 0 1 12 4.82 Tm /F1 10 Tf 12 TL 0 0 0 rg (\177) Tj ET
+BT 1 0 0 1 24 4.82 Tm 12 TL /F1 10 Tf 0 0 0 rg (Code site ) Tj 0 0 .501961 rg (http://code.google.com/p/kay-framework/) Tj T* ET
+Q
+Q
+ 
+endstream
+
+endobj
+xref
+0 27
+0000000000 65535 f
+0000000113 00000 n
+0000000245 00000 n
+0000000410 00000 n
+0000000585 00000 n
+0000000744 00000 n
+0000001025 00000 n
+0000001204 00000 n
+0000001497 00000 n
+0000001755 00000 n
+0000001997 00000 n
+0000002241 00000 n
+0000002559 00000 n
+0000002697 00000 n
+0000002922 00000 n
+0000003047 00000 n
+0000003192 00000 n
+0000003370 00000 n
+0000003531 00000 n
+0000003691 00000 n
+0000003851 00000 n
+0000004009 00000 n
+0000004163 00000 n
+0000004306 00000 n
+0000004430 00000 n
+0000010002 00000 n
+0000015833 00000 n
+trailer
+<< /ID 
+ % ReportLab generated PDF document -- digest (http://www.reportlab.com) 
+ [(\264\303@&\234\256I\013\323<\204qH\355\224\024) (\264\303@&\234\256I\013\323<\204qH\355\224\024)] 
+
+ /Info 13 0 R
+ /Root 12 0 R
+ /Size 27 >>
+startxref
+21324
+%%EOF
