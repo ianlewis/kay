@@ -20,9 +20,10 @@ from google.appengine.api import urlfetch_stub
 from google.appengine.api.memcache import memcache_stub
 from google.appengine.api import user_service_stub
 
-import kay
-from werkzeug import Request
+from werkzeug import BaseResponse, Client, Request
 
+import kay
+from kay.app import get_application
 from kay.utils import local
 from kay.utils import forms
 from kay.utils.forms import ValidationError
@@ -39,7 +40,7 @@ class GAETestBase(unittest.TestCase):
     env['wsgi.multithread']  = False
     env['wsgi.multiprocess'] = True
     return env
-    
+
   def setUp(self):
     apiproxy_stub_map.apiproxy = apiproxy_stub_map.APIProxyStubMap()
     stub = datastore_file_stub.DatastoreFileStub('test','/dev/null',
@@ -51,3 +52,12 @@ class GAETestBase(unittest.TestCase):
 
     apiproxy_stub_map.apiproxy.RegisterStub(
       'memcache', memcache_stub.MemcacheServiceStub())
+
+class TestCase(unittest.TestCase):
+
+  def setUp(self):
+    self.client = Client(get_application(), BaseResponse)
+    self.c = self.client
+
+  def tearDown(self):
+    pass
