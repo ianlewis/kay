@@ -68,7 +68,11 @@ def setup_stub():
 
 def runtest(target='', verbosity=0):
   suite = unittest.TestSuite()
-  if not target:
+  if target:
+    tests_mod = import_module("%s.tests" % target)
+    suite.addTest(unittest.defaultTestLoader.loadTestsFromModule(
+        tests_mod))
+  else:
     for app_name in settings.INSTALLED_APPS:
       try:
         tests_mod = import_module("%s.tests" % app_name)
@@ -77,10 +81,6 @@ def runtest(target='', verbosity=0):
       else:
         suite.addTest(unittest.defaultTestLoader.loadTestsFromModule(
             tests_mod))
-  else:
-    import kay.tests
-    suite.addTest(unittest.defaultTestLoader.loadTestsFromModule(
-        kay.tests))
   unittest.TextTestRunner(verbosity=verbosity).run(suite)
 
 def runtest_passthru_argv(target='',verbosity=("v", 0)):
