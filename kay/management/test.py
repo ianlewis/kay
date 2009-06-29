@@ -26,110 +26,63 @@ import os
 import sys
 import unittest
 
-from google.appengine.tools import dev_appserver_main
-from google.appengine.tools.dev_appserver_main import *
+g_path = "/usr/local/google_appengine"
+extra_path = [
+  os.path.abspath(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))),
+  g_path,
+  os.path.join(g_path, 'lib', 'antlr3'),
+  os.path.join(g_path, 'lib', 'webob'),
+  os.path.join(g_path, 'lib', 'django'),
+  os.path.join(g_path, 'lib', 'yaml', 'lib'),
+]
+sys.path = extra_path + sys.path
+APP_ID = u'test'
+os.environ['APPLICATION_ID'] = APP_ID
+
+from google.appengine.ext import db
+import kay
+kay.setup()
+
+from google.appengine.api import apiproxy_stub_map
+from google.appengine.api import datastore_file_stub
+from google.appengine.api import mail_stub
+from google.appengine.api import urlfetch_stub
+from google.appengine.api.memcache import memcache_stub
+from google.appengine.api import user_service_stub
 
 from kay.conf import settings
-from kay.misc import get_datastore_paths
 
-def passthru_argv():
-  progname = sys.argv[0]
-  args = []
-  # hack __main__ so --help in dev_appserver_main works OK.
-  sys.modules['__main__'] = dev_appserver_main
-  args.extend(sys.argv[2:])
+def setup_stub():
+  apiproxy_stub_map.apiproxy = apiproxy_stub_map.APIProxyStubMap()
+  stub = datastore_file_stub.DatastoreFileStub('test','/dev/null',
+                                               '/dev/null')
+  apiproxy_stub_map.apiproxy.RegisterStub('datastore_v3', stub)
 
-  p = get_datastore_paths()
-  if not "--datastore_path" in args:
-    args.extend(["--datastore_path", p[0]])
-  if not "--history_path" in args:
-    args.extend(["--history_path", p[1]])
-  # Append the current working directory to the arguments.
-  #dev_appserver_main.main([progname] + args + [os.getcwdu()])
-  return [progname] + args + [os.getcwdu()]
+  apiproxy_stub_map.apiproxy.RegisterStub(
+    'user', user_service_stub.UserServiceStub())
 
-def setup_stub(argv):
-  args, option_dict = ParseArguments(argv)
+  apiproxy_stub_map.apiproxy.RegisterStub(
+    'memcache', memcache_stub.MemcacheServiceStub())
 
-  if len(args) != 1:
-    print >>sys.stderr, 'Invalid arguments'
-    PrintUsageExit(1)
 
-  root_path = args[0]
-  for suffix in ('yaml', 'yml'):
-    path = os.path.join(root_path, 'app.%s' % suffix)
-    if os.path.exists(path):
-      api_version = SetPaths(path)
-      break
-  else:
-    logging.error("Application configuration file not found in %s" % root_path)
-    return 1
-
-  SetGlobals()
-  dev_appserver.API_VERSION = api_version
-
-  if '_DEFAULT_ENV_AUTH_DOMAIN' in option_dict:
-    auth_domain = option_dict['_DEFAULT_ENV_AUTH_DOMAIN']
-    dev_appserver.DEFAULT_ENV['AUTH_DOMAIN'] = auth_domain
-  if '_ENABLE_LOGGING' in option_dict:
-    enable_logging = option_dict['_ENABLE_LOGGING']
-    dev_appserver.HardenedModulesHook.ENABLE_LOGGING = enable_logging
-
-  log_level = option_dict[ARG_LOG_LEVEL]
-  port = option_dict[ARG_PORT]
-  datastore_path = option_dict[ARG_DATASTORE_PATH]
-  login_url = option_dict[ARG_LOGIN_URL]
-  template_dir = option_dict[ARG_TEMPLATE_DIR]
-  serve_address = option_dict[ARG_ADDRESS]
-  require_indexes = option_dict[ARG_REQUIRE_INDEXES]
-  allow_skipped_files = option_dict[ARG_ALLOW_SKIPPED_FILES]
-  static_caching = option_dict[ARG_STATIC_CACHING]
-
-  option_dict['root_path'] = os.path.realpath(root_path)
-
-  logging.basicConfig(
-    level=log_level,
-    format='%(levelname)-8s %(asctime)s %(filename)s:%(lineno)s] %(message)s')
-
-  config = None
-  try:
-    config, matcher = dev_appserver.LoadAppConfig(root_path, {})
-  except yaml_errors.EventListenerError, e:
-    logging.error('Fatal error when loading application configuration:\n' +
-                  str(e))
-    return 1
-  except dev_appserver.InvalidAppConfigError, e:
-    logging.error('Application configuration file invalid:\n%s', e)
-    return 1
-
-  if option_dict[ARG_ADMIN_CONSOLE_SERVER] != '':
-    server = MakeRpcServer(option_dict)
-    update_check = appcfg.UpdateCheck(server, config)
-    update_check.CheckSupportedVersion()
-    if update_check.AllowedToCheckForUpdates():
-      update_check.CheckForUpdates()
-
-  try:
-    dev_appserver.SetupStubs(config.application, **option_dict)
-  except:
-    exc_type, exc_value, exc_traceback = sys.exc_info()
-    logging.error(str(exc_type) + ': ' + str(exc_value))
-    logging.debug(''.join(traceback.format_exception(
-          exc_type, exc_value, exc_traceback)))
-    return 1
-
-def runtest():
+def runtest(target='', verbosity=0):
   suite = unittest.TestSuite()
-  for app_name in settings.INSTALLED_APPS:
-    try:
-      tests_mod = __import__("%s.tests" % app_name, fromlist=[app_name])
-    except ImportError:
-      pass
-    else:
-      suite.addTest(unittest.defaultTestLoader.loadTestsFromModule(tests_mod))
-  unittest.TextTestRunner().run(suite)
+  if not target:
+    for app_name in settings.INSTALLED_APPS:
+      try:
+        tests_mod = __import__("%s.tests" % app_name, fromlist=[app_name])
+      except ImportError:
+        pass
+      else:
+        suite.addTest(unittest.defaultTestLoader.loadTestsFromModule(
+            tests_mod))
+  else:
+    import kay.tests
+    suite.addTest(unittest.defaultTestLoader.loadTestsFromModule(
+        kay.tests))
+  unittest.TextTestRunner(verbosity=verbosity).run(suite)
 
-def runtest_passthru_argv():
-  setup_stub(passthru_argv())
-  runtest()
+def runtest_passthru_argv(target='',verbosity=("v", 0)):
+  setup_stub()
+  runtest(target, verbosity)
 

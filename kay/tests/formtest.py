@@ -37,9 +37,9 @@ from kay.utils import forms
 from kay.utils.forms import ValidationError
 from kay.tests.models import TestModel, TestModelForm
 
-from base import GAETestBase
+from base import get_env
 
-class ModelFormTest(GAETestBase):
+class ModelFormTest(unittest.TestCase):
   def setUp(self):
     super(ModelFormTest, self).setUp()
     entries = TestModel.all().fetch(100)
@@ -48,7 +48,7 @@ class ModelFormTest(GAETestBase):
   def test_modify(self):
     """Test for modifying existing entity with ModelForm."""
     os.environ['REQUEST_METHOD'] = 'POST'
-    local.request = Request(self.get_env())
+    local.request = Request(get_env())
 
     # first create a new entity
     f = TestModelForm()
@@ -78,7 +78,7 @@ class ModelFormTest(GAETestBase):
   def test_form(self):
     """Form validation test with ModelForm."""
     os.environ['REQUEST_METHOD'] = 'POST'
-    local.request = Request(self.get_env())
+    local.request = Request(get_env())
     f = TestModelForm()
     params = {"number": "12"}
     # In your view, you can validate the form data with:
@@ -130,7 +130,7 @@ class TestForm(forms.Form):
     if data['password'] != data['password_again']:
       raise ValidationError(u'The two passwords must be the same')
 
-class FormTest(GAETestBase):
+class FormTest(unittest.TestCase):
   def setUp(self):
     super(FormTest, self).setUp()
     if TestModel.all().count() == 0:
@@ -142,7 +142,7 @@ class FormTest(GAETestBase):
   def test_form(self):
     """Form validation test with context_validate."""
     os.environ['REQUEST_METHOD'] = 'POST'
-    local.request = Request(self.get_env())
+    local.request = Request(get_env())
     f = TestForm()
     params = {'username': 'hoge'}
     self.assertEqual(f.validate(params), False)
@@ -169,11 +169,11 @@ class TestForm2(forms.Form):
   float_field = forms.FloatField("float", min_value=5.5, max_value=99.9)
   number_field = forms.NumberField("number", min_value=5.5, max_value=99.9)
 
-class NumberFieldTest(GAETestBase):
+class NumberFieldTest(unittest.TestCase):
   def setUp(self):
     super(NumberFieldTest, self).setUp()
     os.environ['REQUEST_METHOD'] = 'POST'
-    local.request = Request(self.get_env())
+    local.request = Request(get_env())
 
   def test_validate(self):
     """Float value validation test."""
