@@ -39,10 +39,10 @@ sys.path = extra_path + sys.path
 APP_ID = u'test'
 os.environ['APPLICATION_ID'] = APP_ID
 
-from google.appengine.ext import db
 import kay
 kay.setup()
 
+from google.appengine.ext import db
 from google.appengine.api import apiproxy_stub_map
 from google.appengine.api import datastore_file_stub
 from google.appengine.api import mail_stub
@@ -51,6 +51,7 @@ from google.appengine.api.memcache import memcache_stub
 from google.appengine.api import user_service_stub
 
 from kay.conf import settings
+from kay.utils.importlib import import_module
 
 def setup_stub():
   apiproxy_stub_map.apiproxy = apiproxy_stub_map.APIProxyStubMap()
@@ -70,9 +71,9 @@ def runtest(target='', verbosity=0):
   if not target:
     for app_name in settings.INSTALLED_APPS:
       try:
-        tests_mod = __import__("%s.tests" % app_name, fromlist=[app_name])
+        tests_mod = import_module("%s.tests" % app_name)
       except ImportError:
-        pass
+        logging.debug("Loading module %s.tests failed." % app_name)
       else:
         suite.addTest(unittest.defaultTestLoader.loadTestsFromModule(
             tests_mod))
