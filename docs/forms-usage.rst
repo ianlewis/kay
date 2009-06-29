@@ -214,7 +214,7 @@ input field and error messages at a time.
 The second example shows you how to separate HTMLs of input field and
 error messages. If you call render() method instead of just call the
 field widget, you only get the HTML of input field. So in most cases,
-you need to put codes that displays error messages. In this example,
+you need to put codes for displaying error messages. In this example,
 you will get this HTML for error messages:
 
 .. code-block:: html
@@ -255,4 +255,76 @@ is easy?
 The last example show you how to specify class on error
 messages. Actually, you can specify any attribute on any renderable
 widget by passing keyword argument on rendering.
+
+
+Handling file upload
+--------------------
+
+If your form contains FileField or Field class drived from it, the
+widget automatically rendered with necessary attribute in its form
+tag. You need to pass request.files as well as request.form. Here's an
+example that shows you how to handle file upload.
+
+.. code-block:: python
+
+  # forms.py
+  class UploadForm(forms.Form):
+    comment = forms.TextField(required=True)
+    upload_file = forms.FileField(required=True)
+
+  # views.py
+  form = UploadForm()
+  if request.method == "POST":
+    if form.validate(request.form, request.files):
+      # process the data
+      # ...
+      return redirect("/thanks")
+
+
+Customizing form validation
+---------------------------
+
+To put validation method on particular field, you can define a method
+named 'validate_FIELDNAME'. e.g. To check if a value submitted as
+'password' field is stronger enough, you can set 'validate_password'
+method in the class definition of the Form. If validation fails, you
+need to raise ValidationError with appropriate error message.
+
+Here's an example:
+
+.. code-block:: python
+
+  from kay.utils import forms
+  from kay.utils.validators import ValidationError
+
+  class RegisterForm(forms.Form):
+    username = forms.TextField(required=True)
+    password = forms.TextField(required=True, widget=forms.PasswordInput)
+
+    def validate_password(self, value):
+      if not stronger_enough(value):
+	raise ValidationError(u"The password you specified is too week.")
+
+What if adding a field for password confirmation? To do that, you have
+to check the values among plural fields, creating the method named
+'context_validate'. Here's an example:
+
+.. code-block:: python
+
+  from kay.utils import forms
+  from kay.utils.validators import ValidationError
+
+  class RegisterForm(forms.Form):
+    username = forms.TextField(required=True)
+    password = forms.TextField(required=True, widget=forms.PasswordInput)
+    password_confirm = forms.TextField(required=True, widget=forms.PasswordInput)
+
+    def validate_password(self, value):
+      if not stronger_enough(value):
+	raise ValidationError(u"The password you specified is too week.")
+
+    def context_validate(self, data):
+      if data['password'] != data['password_confirm']:
+	raise ValidationError(u"The passwords don't match.")
+
 
