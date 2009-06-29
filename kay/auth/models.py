@@ -56,3 +56,6 @@ class AnonymousUser(object):
 
   def is_authenticated(self):
     return False
+
+  def key(self):
+    return None
