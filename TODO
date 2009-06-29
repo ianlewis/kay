@@ -5,6 +5,8 @@ TODO
 kay
 ----
 
+* Mechanism for plugging application more easily.
+
 * Write documentations about forms, middlewares, jinja2 howtos, etc..
 
 * Re-implement i18n helper commands on manage.py.
@@ -37,6 +39,9 @@ kay.utils.forms
 
 kay.sessions
 ------------
+
+* Capability to configure some particular URLs not to use
+  SessionMiddleware.
 
 * Retry when GAESessionStore.save fails cos' its important to keep
   users' session data.
