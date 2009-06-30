@@ -26,6 +26,12 @@ import sys
 
 from kay.misc import get_datastore_paths
 
+def args_have_option(args, option):
+  for arg in args:
+    if arg.startswith(option):
+      return True
+  return False
+
 def runserver_passthru_argv():
   from google.appengine.tools import dev_appserver_main
   progname = sys.argv[0]
@@ -35,9 +41,9 @@ def runserver_passthru_argv():
   args.extend(sys.argv[2:])
 
   p = get_datastore_paths()
-  if not "--datastore_path" in args:
+  if not args_have_option(args, "--datastore_path"):
     args.extend(["--datastore_path", p[0]])
-  if not "--history_path" in args:
+  if not args_have_option(args, "--history_path"):
     args.extend(["--history_path", p[1]])
   # Append the current working directory to the arguments.
   dev_appserver_main.main([progname] + args + [os.getcwdu()])
