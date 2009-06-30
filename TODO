@@ -7,6 +7,8 @@ kay
 
 * Mechanism for plugging application more easily.
 
+ * We need a way to add some stuff to jinja2 filters and globals
+
 * Write documentations about forms, middlewares, jinja2 howtos, etc..
 
 * Re-implement i18n helper commands on manage.py.

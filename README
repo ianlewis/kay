@@ -46,10 +46,10 @@ Quick Start
    $ mkdir yourproject
    $ cd yourproject
    $ ln -s ../kay/kay .
-   $ cp ../kay/manage.py .
+   $ ln -s ../kay/manage.py .
    $ cp ../kay/urls.py .
-   $ cp ../kay/settings.py.sample settings.py
-   $ cp ../kay/app.yaml.sample app.yaml
+   $ cp ../kay/settings.py .
+   $ cp ../kay/app.yaml .
 
 * Second, you can create your first application with following command.
 

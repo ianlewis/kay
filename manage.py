@@ -27,12 +27,14 @@ from kay.management.appcfg import (
   do_appcfg, do_appcfg_passthru_argv,
 )
 from kay.management.bulkloader import do_bulkloader_passthru_argv
-from kay.management.test import runtest_passthru_argv
+from kay.management.test import do_runtest
+from kay.management.preparse_bundle import do_preparse_bundle
 
 action_shell = shell
 action_rshell = rshell
 action_startapp = startapp
-action_test = runtest_passthru_argv
+action_test = do_runtest
+action_preparse_bundle = do_preparse_bundle
 
 if __name__ == '__main__':
   if len(sys.argv) == 1:

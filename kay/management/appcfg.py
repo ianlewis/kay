@@ -11,7 +11,13 @@ import os
 import sys
 from os import listdir, path, mkdir
 
-from kay.utils.filters import nl2br
+import kay
+import kay.app
+from kay.utils import local
+from kay.utils.jinja2utils.compiler import compile_dir
+from kay.utils.importlib import import_module
+
+# TODO: corresponds with SUBMOUNT_APP feature
 
 def find_template_dir(target_path):
   ret = []
@@ -28,6 +34,24 @@ def find_template_dir(target_path):
       continue
   return ret
 
+
+def compile_app_templates(app):
+  app.init_jinja2_environ()
+  env = local.jinja2_env
+  target_dirs = list(app.app_settings.TEMPLATE_DIRS)
+  for app in app.app_settings.INSTALLED_APPS:
+    if app.startswith("kay"):
+      continue
+    mod = import_module(app)
+    target_dirs.extend(find_template_dir(os.path.dirname(mod.__file__)))
+  for dir in target_dirs:
+    dest = dir.replace("templates", "templates_compiled")
+    if not path.isdir(dest):
+      mkdir(dest)
+    print "Now compiling templates in %s to %s." % (dir, dest)
+    compile_dir(env, dir, dest)
+
+
 def do_appcfg_passthru_argv():
   from google.appengine.tools import appcfg
   progname = sys.argv[0]
@@ -36,17 +60,12 @@ def do_appcfg_passthru_argv():
     sys.exit(1)
   if sys.argv[2] == 'update':
     print "Compiling templates..."
-    import kay
-    from jinja2 import Environment
-    from kay.utils.jinja2utils.compiler import compile_dir
-    env = Environment(extensions=['jinja2.ext.i18n'])
-    env.filters['nl2br'] = nl2br
-    for dir in find_template_dir(kay.PROJECT_DIR):
-      dest = dir.replace("templates", "templates_compiled")
-      if not path.isdir(dest):
-        mkdir(dest)
-      print "Now compiling templates in %s to %s." % (dir, dest)
-      compile_dir(env, dir, dest)
+    app = kay.app.get_application()
+    compile_app_templates(app.app) # pass KayApp instance
+    for key, submount_app in app.mounts.iteritems():
+      if key == "/_kay":
+        continue
+      compile_app_templates(submount_app)
     print "Finished compiling templates..."
   sys.modules['__main__'] = appcfg
   

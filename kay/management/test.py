@@ -83,7 +83,7 @@ def runtest(target='', verbosity=0):
             tests_mod))
   unittest.TextTestRunner(verbosity=verbosity).run(suite)
 
-def runtest_passthru_argv(target='',verbosity=("v", 0)):
+def do_runtest(target='',verbosity=("v", 0)):
   setup_stub()
   runtest(target, verbosity)
 
