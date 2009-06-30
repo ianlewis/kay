@@ -10,15 +10,6 @@ Kay session middleware.
 import base64
 import datetime
 import cPickle as pickle
-try:
-  import hashlib
-  md5_constructor = hashlib.md5
-  sha_constructor = hashlib.sha1
-except ImportError:
-  import md5
-  md5_constructor = md5.new
-  import sha
-  sha_constructor = sha.new
 
 from werkzeug.contrib import sessions
 from werkzeug.exceptions import HTTPException
@@ -69,17 +60,12 @@ class GAESessionStore(sessions.SessionStore):
   def encode(self, session):
     "Returns the given session instance pickled and encoded as a string."
     pickled = pickle.dumps(session, pickle.HIGHEST_PROTOCOL)
-    pickled_md5 = md5_constructor(pickled + settings.SECRET_KEY).hexdigest()
-    return base64.encodestring(pickled + pickled_md5)
+    return base64.encodestring(pickled)
 
   def decode(self, session_data):
     encoded_data = base64.decodestring(session_data)
-    pickled, tamper_check = encoded_data[:-32], encoded_data[-32:]
-    if md5_constructor(pickled + settings.SECRET_KEY).hexdigest() != \
-          tamper_check:
-      raise SuspiciousOperation("User tampered with session cookie.")
     try:
-      return pickle.loads(pickled)
+      return pickle.loads(encoded_data)
     # Unpickling can cause a variety of exceptions. If something happens,
     # just return an empty dictionary (an empty session).
     except:
