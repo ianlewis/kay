@@ -34,6 +34,12 @@ COPYRIGHT = 'Takashi Matsuo'
 METHODS = [
   ('**.py', 'python'),
   ('**/templates/**.html', 'jinja2.ext:babel_extract'),
+  ('**.js', 'ignore'),
+  ('**/templates_compiled/**.*', 'ignore'),
+]
+JSMETHODS = [
+  ('**.py', 'ignore'),
+  ('**/templates/**.html', 'ignore'),
   ('**.js', 'javascript'),
   ('**/templates_compiled/**.*', 'ignore'),
 ]
@@ -46,15 +52,23 @@ def strip_path(filename, base):
     filename, path.dirname(base)])):].lstrip(path.sep)
 
 
-def do_extract_messages(target=''):
+def do_extract_messages(target='',domain=('d', 'messages')):
+  if not domain in ('messages', 'jsmessages'):
+    print 'invalid domain.'
+    sys.exit(1)
   if not target:
     print 'Extracting core strings'
     root = kay.KAY_DIR
   else:
     root = path.abspath(target)
     if not path.isdir(root):
-      parser.error('source folder missing')
+      print 'source folder missing'
+      sys.exit(1)
     print 'Extracting from', root
+  if domain == 'messages':
+    methods = METHODS
+  else:
+    methods = JSMETHODS
 
   catalog = Catalog(msgid_bugs_address=BUGS_ADDRESS,
                     copyright_holder=COPYRIGHT, charset='utf-8')
@@ -63,7 +77,7 @@ def do_extract_messages(target=''):
     if method != 'ignore':
       print strip_path(filename, root)
 
-  extracted = extract_from_dir(root, METHODS, {}, KEYWORDS,
+  extracted = extract_from_dir(root, methods, {}, KEYWORDS,
                                COMMENT_TAGS, callback=callback,
                                strip_comment_tags=True)
 
@@ -75,7 +89,7 @@ def do_extract_messages(target=''):
   if not path.isdir(output_path):
     makedirs(output_path)
 
-  f = file(path.join(output_path, 'messages.pot'), 'w')
+  f = file(path.join(output_path, domain+'.pot'), 'w')
   try:
     write_po(f, catalog, width=79)
   finally:

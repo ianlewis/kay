@@ -26,18 +26,19 @@ from babel.messages import Catalog
 from babel.messages.pofile import read_po, write_po
 from babel.util import LOCALTZ
 
+domains = ['messages', 'jsmessages']
 
-def do_add_translations(app=("a", ""), lang=("l", "")):
+def do_add_translations(app=("a", ""), lang=("l", ""), force=("f", False)):
   try:
     locale = Locale.parse(lang)
   except (UnknownLocaleError, ValueError), e:
     print "You must specify lang."
     sys.exit()
   if app:
-    add_translations(locale, join(app, 'i18n'))
+    add_translations(locale, join(app, 'i18n'), force)
   else:
     i18n_dir = join(kay.KAY_DIR, 'i18n')
-    add_translations(locale, i18n_dir)
+    add_translations(locale, i18n_dir, force)
 
 
 def create_from_pot(locale, path):
@@ -54,22 +55,25 @@ def create_from_pot(locale, path):
   return catalog
 
 
-def write_catalog(catalog, folder):
+def write_catalog(catalog, folder, domain, force):
   target = join(folder, str(catalog.locale), 'LC_MESSAGES')
   if not isdir(target):
     makedirs(target)
-  f = file(join(target, 'messages.po'), 'w')
+  filename = join(target, domain+'.po')
+  if isfile(filename) and not force:
+    print "%s already exists, skipped." % filename
+    return
+  print "Creating %s." % filename
+  f = file(filename, 'w')
   try:
     write_po(f, catalog, width=79)
   finally:
     f.close()
 
 
-def add_translations(locale, i18n_dir):
-  pot_file = join(i18n_dir, 'messages.pot')
-  if isfile(pot_file):
-    print "%s already exists." % pot_file
-    sys.exit(1)
-  catalog = create_from_pot(locale, pot_file)
-  write_catalog(catalog, i18n_dir)
+def add_translations(locale, i18n_dir, force):
+  for domain in domains:
+    pot_file = join(i18n_dir, domain+'.pot')
+    catalog = create_from_pot(locale, pot_file)
+    write_catalog(catalog, i18n_dir, domain, force)
   print 'Created catalog for %s' % locale

@@ -24,6 +24,8 @@ from optparse import OptionParser
 from babel.messages.pofile import read_po
 from babel.messages.mofile import write_mo
 
+domains = ['messages', 'jsmessages']
+
 def is_untranslated(obj):
   if not obj:
     return True
@@ -46,19 +48,20 @@ def do_compile_translations(app=("a", "")):
       sys.exit(1)
     print 'Compiling', root
 
-  for lang in listdir(root):
-    folder = path.join(root, lang)
-    translations = path.join(folder, 'LC_MESSAGES', 'messages.po')
+  for domain in domains:
+    for lang in listdir(root):
+      folder = path.join(root, lang)
+      translations = path.join(folder, 'LC_MESSAGES', domain+'.po')
 
-    if path.isfile(translations):
-      mo_file = open(translations.replace('.po', '.mo'), 'wb')
-      print 'Compiling %r ' % lang,
-      f = file(translations)
-      try:
-        catalog = read_po(f, locale=lang)
-      finally:
-        f.close()
-      # Write standard catalog
-      write_mo(mo_file, catalog)
-      mo_file.close()
+      if path.isfile(translations):
+        mo_file = open(translations.replace('.po', '.mo'), 'wb')
+        print 'Compiling %r ' % lang,
+        f = file(translations)
+        try:
+          catalog = read_po(f, locale=lang)
+        finally:
+          f.close()
+        # Write standard catalog
+        write_mo(mo_file, catalog)
+        mo_file.close()
   print 'All done.'
