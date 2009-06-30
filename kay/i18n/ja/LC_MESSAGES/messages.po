@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version:  kay-1.0\n"
 "Report-Msgid-Bugs-To: tmatsuo@candit.jp\n"
 "POT-Creation-Date: 2009-05-15 14:07+0900\n"
-"PO-Revision-Date: 2009-05-21 04:52+0900\n"
+"PO-Revision-Date: 2009-06-30 14:54+0900\n"
 "Last-Translator: Takashi Matsuo <tmatsuo@candit.jp>\n"
 "Language-Team: Takashi Matsuo <tmatsuo@candit.jp>\n"
 "Plural-Forms: nplurals=1; plural=0\n"
@@ -17,51 +17,55 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 0.9.4\n"
 
-#: kay/i18n/__init__.py:295
+#: kay/i18n/__init__.py:301
 msgid "now"
 msgstr "現在"
 
-#: kay/utils/validators.py:79
+#: kay/management/app_template/views.py:26
+msgid "Hello"
+msgstr "こんにちは"
+
+#: kay/utils/validators.py:83
 msgid "You have to enter a valid e-mail address."
 msgstr "正しい電子メールアドレスを入力してください。"
 
-#: kay/utils/validators.py:100
+#: kay/utils/validators.py:104
 msgid "You have to enter a valid URL."
 msgstr "正しいURLを入力してください。"
 
-#: kay/utils/validators.py:118
+#: kay/utils/validators.py:122
 msgid "The slug is too long"
 msgstr "slug が長過ぎます。"
 
-#: kay/utils/validators.py:120
+#: kay/utils/validators.py:124
 msgid "The slug must not start with a slash"
 msgstr "slug はスラッシュで始める事は出来ません。"
 
-#: kay/utils/validators.py:138 kay/utils/validators.py:141
+#: kay/utils/validators.py:142 kay/utils/validators.py:145
 msgid "You have to enter a valid net address."
 msgstr "正しいネットワークアドレスを入力してください。"
 
-#: kay/utils/validators.py:143
+#: kay/utils/validators.py:147
 msgid "The port has to be numeric"
 msgstr "ポート番号は数字で入力してください。"
 
-#: kay/utils/validators.py:151
+#: kay/utils/validators.py:155
 msgid "Invalid character, < or > are not allowed."
 msgstr "不正な文字です。< と > は使えません。"
 
-#: kay/utils/validators.py:153
+#: kay/utils/validators.py:157
 msgid "URL prefix must not be a sole slash."
 msgstr "URL prefix はスラッシュだけでは駄目です。"
 
-#: kay/utils/validators.py:156
+#: kay/utils/validators.py:160
 msgid "URL prefix must start with a slash."
 msgstr "URL prefix はスラッシュで始めてください。"
 
-#: kay/utils/validators.py:158
+#: kay/utils/validators.py:162
 msgid "URL prefix must not end with a slash."
 msgstr "URL prefix はスラッシュで終る事ができません。"
 
-#: kay/utils/validators.py:167
+#: kay/utils/validators.py:171
 msgid "The text must not be empty."
 msgstr "何らかのテキストを入力してください。"
 
@@ -77,17 +81,17 @@ msgstr "サブミット"
 msgid "This field is required."
 msgstr "このフィールドは必須です。"
 
-#: kay/utils/forms/__init__.py:1115
+#: kay/utils/forms/__init__.py:1113
 msgid "Invalid security token submitted."
 msgstr "不正なセキュリティトークンが検出されました。"
 
-#: kay/utils/forms/__init__.py:1168 kay/utils/forms/__init__.py:1579
+#: kay/utils/forms/__init__.py:1168 kay/utils/forms/__init__.py:1601
 #, python-format
 msgid "Please provide at least %d item."
 msgid_plural "Please provide at least %d items."
 msgstr[0] "少なくともアイテムが %d 個必要です。"
 
-#: kay/utils/forms/__init__.py:1175 kay/utils/forms/__init__.py:1586
+#: kay/utils/forms/__init__.py:1175 kay/utils/forms/__init__.py:1608
 #, python-format
 msgid "Please provide no more than %d item."
 msgid_plural "Please provide no more than %d items."
@@ -105,66 +109,78 @@ msgid "Please enter no more than %d character."
 msgid_plural "Please enter no more than %d characters."
 msgstr[0] "%d 文字以内で入力してください。"
 
-#: kay/utils/forms/__init__.py:1319
+#: kay/utils/forms/__init__.py:1306
+msgid "The value is invalid."
+msgstr "この値は不正です。"
+
+#: kay/utils/forms/__init__.py:1328
+msgid "Enter a valid e-mail address."
+msgstr "正しい電子メールアドレスを入力してください。"
+
+#: kay/utils/forms/__init__.py:1348
 msgid "Please enter a valid date."
 msgstr "有効な日付を入力してください。"
 
-#: kay/utils/forms/__init__.py:1358
+#: kay/utils/forms/__init__.py:1387
 msgid "The selected entity does not exist, or is not allowed to select."
 msgstr "選択されたエンティティは存在しないか、選択する事ができません。"
 
-#: kay/utils/forms/__init__.py:1443
+#: kay/utils/forms/__init__.py:1465
 msgid "Invalid value."
 msgstr "不正な値です。"
 
-#: kay/utils/forms/__init__.py:1444
+#: kay/utils/forms/__init__.py:1466
 msgid "Key does not exist."
 msgstr "キーが存在しません。"
 
-#: kay/utils/forms/__init__.py:1514
+#: kay/utils/forms/__init__.py:1536
 msgid "Please enter a valid choice."
 msgstr "有効な選択肢を選んでください。"
 
-#: kay/utils/forms/__init__.py:1573
+#: kay/utils/forms/__init__.py:1595
 #, python-format
 msgid "“%s” is not a valid choice"
 msgstr "“%s” は有効な選択肢ではありません。"
 
-#: kay/utils/forms/__init__.py:1619
+#: kay/utils/forms/__init__.py:1641
 msgid "Please enter a number."
 msgstr "数字を入力してください。"
 
-#: kay/utils/forms/__init__.py:1645
+#: kay/utils/forms/__init__.py:1667
 #, python-format
 msgid "Ensure this value is greater than or equal to %s."
 msgstr "この値は %s 以上を入力してください。"
 
-#: kay/utils/forms/__init__.py:1651
+#: kay/utils/forms/__init__.py:1673
 #, python-format
 msgid "Ensure this value is less than or equal to %s."
 msgstr "この値は %s 以下を入力してください。"
 
-#: kay/utils/forms/__init__.py:1684
+#: kay/utils/forms/__init__.py:1706
 msgid "Please enter a whole number."
 msgstr "整数を入力してください。"
 
-#: kay/utils/forms/__init__.py:1710
+#: kay/utils/forms/__init__.py:1732
 msgid "Please enter a float number."
 msgstr "浮動小数点数を入力してください。"
 
-#: kay/utils/forms/__init__.py:1729
+#: kay/utils/forms/__init__.py:1751
 msgid "Please select a file to upload."
 msgstr "アップロードするファイルを選択してください。"
 
-#: kay/utils/forms/__init__.py:1732
+#: kay/utils/forms/__init__.py:1754
 msgid "File must not empty."
 msgstr "ファイルは空でした。中身のあるファイルをアップロードしてください。"
 
-#: kay/utils/forms/__init__.py:1751
+#: kay/utils/forms/__init__.py:1776
 msgid "True"
 msgstr "はい"
 
-#: kay/utils/forms/__init__.py:1752
+#: kay/utils/forms/__init__.py:1777
 msgid "False"
 msgstr "いいえ"
+
+#: kay/utils/forms/__init__.py:1788
+msgid "Please select True or False."
+msgstr "TrueかFalseを選択してください。"
 

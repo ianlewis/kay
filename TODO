@@ -9,9 +9,9 @@ kay
 
  * We need a way to add some stuff to jinja2 filters and globals
 
-* Write documentations about forms, middlewares, jinja2 howtos, etc..
+* Implement process_view and process_exception of midleware classes.
 
-* Re-implement i18n helper commands on manage.py.
+* Write documentations about middlewares, jinja2 howtos, etc..
 
 * Change the url of paste capability in the werkzeug debugger.
 

@@ -38,7 +38,8 @@ def find_template_dir(target_path):
 def compile_app_templates(app):
   app.init_jinja2_environ()
   env = local.jinja2_env
-  target_dirs = list(app.app_settings.TEMPLATE_DIRS)
+  target_dirs = [dir for dir in app.app_settings.TEMPLATE_DIRS\
+                   if os.path.isdir(dir)]
   for app in app.app_settings.INSTALLED_APPS:
     if app.startswith("kay"):
       continue

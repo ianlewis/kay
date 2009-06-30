@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-Add new Translation
-~~~~~~~~~~~~~~~~~~~
+Kay add_translations management script.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This script adds a new translation to Kay or Kay application.
 
@@ -12,16 +12,14 @@ This script adds a new translation to Kay or Kay application.
 
 This file originally derives from Zine Project.
 """
+
 from os import makedirs, path
 from os.path import dirname, join, realpath, pardir, isdir, isfile
 import sys
 
-sys.path.insert(0, path.abspath(path.dirname(path.dirname(__file__))))
-
 import kay
 kay.setup_syspath()
 
-from optparse import OptionParser
 from datetime import datetime
 from babel import Locale, UnknownLocaleError
 from babel.messages import Catalog
@@ -29,25 +27,17 @@ from babel.messages.pofile import read_po, write_po
 from babel.util import LOCALTZ
 
 
-def main():
-  global parser
-  parser = OptionParser(usage='%prog [options] language')
-  parser.add_option('--app', dest='app', help='Create the '
-                    'translation for this application.  This '
-                    'has to be the full path to the application package.')
-  options, args = parser.parse_args()
-  if len(args) != 1:
-    parser.error('incorrect number of arguments')
-
+def do_add_translations(app=("a", ""), lang=("l", "")):
   try:
-    locale = Locale.parse(args[0])
-  except UnknownLocaleError, e:
-    parser.error(str(e))
-
-  if options.app is None:
-    create_kay_lang(locale)
+    locale = Locale.parse(lang)
+  except (UnknownLocaleError, ValueError), e:
+    print "You must specify lang."
+    sys.exit()
+  if app:
+    add_translations(locale, join(app, 'i18n'))
   else:
-    create_app_lang(locale, options.app)
+    i18n_dir = join(kay.KAY_DIR, 'i18n')
+    add_translations(locale, i18n_dir)
 
 
 def create_from_pot(locale, path):
@@ -75,18 +65,11 @@ def write_catalog(catalog, folder):
     f.close()
 
 
-def create_kay_lang(locale):
-  catalog = create_from_pot(locale, join(kaydir, 'i18n', 'messages.pot'))
-  write_catalog(catalog, join(kaydir, 'i18n'))
+def add_translations(locale, i18n_dir):
+  pot_file = join(i18n_dir, 'messages.pot')
+  if isfile(pot_file):
+    print "%s already exists." % pot_file
+    sys.exit(1)
+  catalog = create_from_pot(locale, pot_file)
+  write_catalog(catalog, i18n_dir)
   print 'Created catalog for %s' % locale
-
-
-def create_app_lang(locale, path):
-  catalog = create_from_pot(locale, join(path, 'i18n', 'messages.pot'))
-  write_catalog(catalog, join(path, 'i18n'))
-  print 'Created catalog for %s' % locale
-
-
-if __name__ == '__main__':
-    main()
-

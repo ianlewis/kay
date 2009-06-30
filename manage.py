@@ -29,12 +29,20 @@ from kay.management.appcfg import (
 from kay.management.bulkloader import do_bulkloader_passthru_argv
 from kay.management.test import do_runtest
 from kay.management.preparse_bundle import do_preparse_bundle
+from kay.management.extract_messages import do_extract_messages
+from kay.management.add_translations import do_add_translations
+from kay.management.update_translations import do_update_translations
+from kay.management.compile_translations import do_compile_translations
 
 action_shell = shell
 action_rshell = rshell
 action_startapp = startapp
 action_test = do_runtest
 action_preparse_bundle = do_preparse_bundle
+action_extract_messages = do_extract_messages
+action_add_translations = do_add_translations
+action_update_translations = do_update_translations
+action_compile_translations = do_compile_translations
 
 if __name__ == '__main__':
   if len(sys.argv) == 1:

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: tmatsuo@candit.jp\n"
-"POT-Creation-Date: 2009-05-21 04:58+0900\n"
+"POT-Creation-Date: 2009-06-30 14:45+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,51 +17,55 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 0.9.4\n"
 
-#: kay/i18n/__init__.py:295
+#: kay/i18n/__init__.py:301
 msgid "now"
 msgstr ""
 
-#: kay/utils/validators.py:79
+#: kay/management/app_template/views.py:26
+msgid "Hello"
+msgstr ""
+
+#: kay/utils/validators.py:83
 msgid "You have to enter a valid e-mail address."
 msgstr ""
 
-#: kay/utils/validators.py:100
+#: kay/utils/validators.py:104
 msgid "You have to enter a valid URL."
 msgstr ""
 
-#: kay/utils/validators.py:118
+#: kay/utils/validators.py:122
 msgid "The slug is too long"
 msgstr ""
 
-#: kay/utils/validators.py:120
+#: kay/utils/validators.py:124
 msgid "The slug must not start with a slash"
 msgstr ""
 
-#: kay/utils/validators.py:138 kay/utils/validators.py:141
+#: kay/utils/validators.py:142 kay/utils/validators.py:145
 msgid "You have to enter a valid net address."
 msgstr ""
 
-#: kay/utils/validators.py:143
+#: kay/utils/validators.py:147
 msgid "The port has to be numeric"
 msgstr ""
 
-#: kay/utils/validators.py:151
+#: kay/utils/validators.py:155
 msgid "Invalid character, < or > are not allowed."
 msgstr ""
 
-#: kay/utils/validators.py:153
+#: kay/utils/validators.py:157
 msgid "URL prefix must not be a sole slash."
 msgstr ""
 
-#: kay/utils/validators.py:156
+#: kay/utils/validators.py:160
 msgid "URL prefix must start with a slash."
 msgstr ""
 
-#: kay/utils/validators.py:158
+#: kay/utils/validators.py:162
 msgid "URL prefix must not end with a slash."
 msgstr ""
 
-#: kay/utils/validators.py:167
+#: kay/utils/validators.py:171
 msgid "The text must not be empty."
 msgstr ""
 
@@ -77,18 +81,18 @@ msgstr ""
 msgid "This field is required."
 msgstr ""
 
-#: kay/utils/forms/__init__.py:1115
+#: kay/utils/forms/__init__.py:1113
 msgid "Invalid security token submitted."
 msgstr ""
 
-#: kay/utils/forms/__init__.py:1168 kay/utils/forms/__init__.py:1579
+#: kay/utils/forms/__init__.py:1168 kay/utils/forms/__init__.py:1601
 #, python-format
 msgid "Please provide at least %d item."
 msgid_plural "Please provide at least %d items."
 msgstr[0] ""
 msgstr[1] ""
 
-#: kay/utils/forms/__init__.py:1175 kay/utils/forms/__init__.py:1586
+#: kay/utils/forms/__init__.py:1175 kay/utils/forms/__init__.py:1608
 #, python-format
 msgid "Please provide no more than %d item."
 msgid_plural "Please provide no more than %d items."
@@ -109,66 +113,78 @@ msgid_plural "Please enter no more than %d characters."
 msgstr[0] ""
 msgstr[1] ""
 
-#: kay/utils/forms/__init__.py:1319
+#: kay/utils/forms/__init__.py:1306
+msgid "The value is invalid."
+msgstr ""
+
+#: kay/utils/forms/__init__.py:1328
+msgid "Enter a valid e-mail address."
+msgstr ""
+
+#: kay/utils/forms/__init__.py:1348
 msgid "Please enter a valid date."
 msgstr ""
 
-#: kay/utils/forms/__init__.py:1358
+#: kay/utils/forms/__init__.py:1387
 msgid "The selected entity does not exist, or is not allowed to select."
 msgstr ""
 
-#: kay/utils/forms/__init__.py:1443
+#: kay/utils/forms/__init__.py:1465
 msgid "Invalid value."
 msgstr ""
 
-#: kay/utils/forms/__init__.py:1444
+#: kay/utils/forms/__init__.py:1466
 msgid "Key does not exist."
 msgstr ""
 
-#: kay/utils/forms/__init__.py:1514
+#: kay/utils/forms/__init__.py:1536
 msgid "Please enter a valid choice."
 msgstr ""
 
-#: kay/utils/forms/__init__.py:1573
+#: kay/utils/forms/__init__.py:1595
 #, python-format
 msgid "“%s” is not a valid choice"
 msgstr ""
 
-#: kay/utils/forms/__init__.py:1619
+#: kay/utils/forms/__init__.py:1641
 msgid "Please enter a number."
 msgstr ""
 
-#: kay/utils/forms/__init__.py:1645
+#: kay/utils/forms/__init__.py:1667
 #, python-format
 msgid "Ensure this value is greater than or equal to %s."
 msgstr ""
 
-#: kay/utils/forms/__init__.py:1651
+#: kay/utils/forms/__init__.py:1673
 #, python-format
 msgid "Ensure this value is less than or equal to %s."
 msgstr ""
 
-#: kay/utils/forms/__init__.py:1684
+#: kay/utils/forms/__init__.py:1706
 msgid "Please enter a whole number."
 msgstr ""
 
-#: kay/utils/forms/__init__.py:1710
+#: kay/utils/forms/__init__.py:1732
 msgid "Please enter a float number."
 msgstr ""
 
-#: kay/utils/forms/__init__.py:1729
+#: kay/utils/forms/__init__.py:1751
 msgid "Please select a file to upload."
 msgstr ""
 
-#: kay/utils/forms/__init__.py:1732
+#: kay/utils/forms/__init__.py:1754
 msgid "File must not empty."
 msgstr ""
 
-#: kay/utils/forms/__init__.py:1751
+#: kay/utils/forms/__init__.py:1776
 msgid "True"
 msgstr ""
 
-#: kay/utils/forms/__init__.py:1752
+#: kay/utils/forms/__init__.py:1777
 msgid "False"
+msgstr ""
+
+#: kay/utils/forms/__init__.py:1788
+msgid "Please select True or False."
 msgstr ""
 

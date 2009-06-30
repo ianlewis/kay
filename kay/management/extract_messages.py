@@ -15,12 +15,9 @@ This file originally derives from Zine Project.
 from os import path, makedirs
 import sys
 
-sys.path.insert(0, path.abspath(path.dirname(path.dirname(__file__))))
-
 import kay
 kay.setup_syspath()
 
-from optparse import OptionParser
 from babel.messages import Catalog
 from babel.messages.extract import extract_from_dir
 from babel.messages.pofile import write_po
@@ -49,20 +46,15 @@ def strip_path(filename, base):
     filename, path.dirname(base)])):].lstrip(path.sep)
 
 
-def main():
-  global parser
-  parser = OptionParser(usage='%prog [path]')
-  options, args = parser.parse_args()
-  if not args:
+def do_extract_messages(target=''):
+  if not target:
     print 'Extracting core strings'
-    root = path.abspath(path.join(path.dirname(path.dirname(__file__)),'kay'))
-  elif len(args) == 1:
-    root = path.join(path.abspath(args[0]))
+    root = kay.KAY_DIR
+  else:
+    root = path.abspath(target)
     if not path.isdir(root):
       parser.error('source folder missing')
     print 'Extracting from', root
-  else:
-    parser.error('incorrent number of arguments')
 
   catalog = Catalog(msgid_bugs_address=BUGS_ADDRESS,
                     copyright_holder=COPYRIGHT, charset='utf-8')
@@ -90,7 +82,3 @@ def main():
     f.close()
 
   print 'All done.'
-
-
-if __name__ == '__main__':
-    main()
