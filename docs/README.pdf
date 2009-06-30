@@ -179,7 +179,7 @@ endobj
 % 'R14': class PDFInfo 
 14 0 obj
 << /Author ()
- /CreationDate (D:20090630113125-09'00')
+ /CreationDate (D:20090630145935-09'00')
  /Keywords ()
  /Producer (ReportLab http://www.reportlab.com)
  /Subject (\(unspecified\))
@@ -518,7 +518,7 @@ endobj
 % 'R26': class PDFStream 
 26 0 obj
 % page stream
-<< /Length 5574 >>
+<< /Length 5583 >>
 stream
 1 0 0 1 0 0 cm BT /F1 12 Tf 14.4 TL ET
 q
@@ -662,7 +662,7 @@ n -6 -6 468.6898 60 re B*
 Q
 q
 0 0 0 rg
-BT 1 0 0 1 0 41.71 Tm /F3 10 Tf 12 TL ($ ../kay/scripts/extract-messages hello) Tj T* ($ ../kay/scripts/add-translation --app hello ja) Tj T* ($ vi hello/i18n/ja/LC_MESSAGES/messages.po) Tj T* ($ ../kay/scripts/compile-translations hello) Tj T* ET
+BT 1 0 0 1 0 41.71 Tm /F3 10 Tf 12 TL ($ python manage.py extract_messages hello) Tj T* ($ python manage.py add_translation hello -l ja) Tj T* ($ vi hello/i18n/ja/LC_MESSAGES/messages.po) Tj T* ($ python manage.py compile_translations hello) Tj T* ET
 Q
 Q
 Q
@@ -690,7 +690,7 @@ n -6 -6 468.6898 60 re B*
 Q
 q
 0 0 0 rg
-BT 1 0 0 1 0 41.71 Tm /F3 10 Tf 12 TL ($ ../kay/scripts/extract-messages hello) Tj T* ($ ../kay/scripts/update-translation -l ja hello) Tj T* ($ vi hello/i18n/ja/LC_MESSAGES/messages.po) Tj T* ($ ../kay/scripts/compile-translations hello) Tj T* ET
+BT 1 0 0 1 0 41.71 Tm /F3 10 Tf 12 TL ($ python manage.py extract_messages hello) Tj T* ($ python manage.py update_translation hello -l ja) Tj T* ($ vi hello/i18n/ja/LC_MESSAGES/messages.po) Tj T* ($ python manage.py compile_translations hello) Tj T* ET
 Q
 Q
 Q
@@ -1006,16 +1006,16 @@ xref
 0000004586 00000 n
 0000004718 00000 n
 0000009970 00000 n
-0000015645 00000 n
-0000022599 00000 n
+0000015654 00000 n
+0000022608 00000 n
 trailer
 << /ID 
  % ReportLab generated PDF document -- digest (http://www.reportlab.com) 
- [(q\315\212\327\256 wLE\033\251W\001\335\367[) (q\315\212\327\256 wLE\033\251W\001\335\367[)] 
+ [(\235\021\234;\230\374\254\307j\361\355\357\)\251L\225) (\235\021\234;\230\374\254\307j\361\355\357\)\251L\225)] 
 
  /Info 14 0 R
  /Root 13 0 R
  /Size 29 >>
 startxref
-23652
+23661
 %%EOF
