@@ -5,11 +5,13 @@ TODO
 kay
 ----
 
+* i18n.js handler
+
 * Mechanism for plugging application more easily.
 
  * We need a way to add some stuff to jinja2 filters and globals
 
-* Implement process_view and process_exception of midleware classes.
+* Implementation for handling process_view of midleware classes.
 
 * Write documentations about middlewares, jinja2 howtos, etc..
 
@@ -41,9 +43,6 @@ kay.utils.forms
 
 kay.sessions
 ------------
-
-* Capability to configure some particular URLs not to use
-  SessionMiddleware.
 
 * Retry when GAESessionStore.save fails cos' its important to keep
   users' session data.

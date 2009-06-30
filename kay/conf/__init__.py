@@ -120,4 +120,14 @@ class Settings(object):
   def get_all_members(self):
     return dir(self)
 
-settings = LazySettings()
+_settings = LazySettings()
+
+class SettingsProxy(object):
+  def __getattr__(self, name):
+    from kay.utils import local
+    try:
+      return getattr(local.app.app_settings, name)
+    except AttributeError:
+      return getattr(_settings, name)
+
+settings = SettingsProxy()

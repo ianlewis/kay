@@ -30,15 +30,15 @@ from kay import (
 )
 from kay.utils.filters import nl2br
 
-from kay.conf import settings, LazySettings
+from kay.conf import settings, _settings, LazySettings
 
 translations_cache = {}
 
 def get_application():
-  application = KayApp(settings)
+  application = KayApp(_settings)
   internal_app = InternalApp()
   submount_apps = {'/_kay': internal_app}
-  for app_name in settings.SUBMOUNT_APPS:
+  for app_name in _settings.SUBMOUNT_APPS:
     app = KayApp(LazySettings('%s.settings' % app_name))
     submount_apps['/%s' % app_name] = app
   application = DispatcherMiddleware(application, submount_apps)
@@ -244,7 +244,7 @@ class KayApp(object):
       except Exception, e:
         request_repr = "Request repr() unavailable"
       message = "%s\n\n%s" % (self._get_traceback(exc_info), request_repr)
-      if local.app.app_settings.DEBUG:
+      if settings.DEBUG:
         return Response(message)
       else:
         mail.mail_admins(subject, message, fail_silently=True)

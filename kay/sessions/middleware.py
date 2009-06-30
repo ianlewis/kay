@@ -75,7 +75,8 @@ class GAESessionStore(sessions.SessionStore):
   def decode(self, session_data):
     encoded_data = base64.decodestring(session_data)
     pickled, tamper_check = encoded_data[:-32], encoded_data[-32:]
-    if md5_constructor(pickled + settings.SECRET_KEY).hexdigest() != tamper_check:
+    if md5_constructor(pickled + settings.SECRET_KEY).hexdigest() != \
+          tamper_check:
       raise SuspiciousOperation("User tampered with session cookie.")
     try:
       return pickle.loads(pickled)
@@ -89,8 +90,11 @@ class SessionMiddleware(object):
 
   def __init__(self):
     self.session_store = GAESessionStore()
+    self.ignore_session_url_prefix = settings.IGNORE_SESSION_URL_PREFIX
 
   def process_request(self, request):
+    if request.path.startswith("/"+self.ignore_session_url_prefix):
+      return
     sid = request.cookies.get(settings.COOKIE_NAME)
     if sid is None:
       request.session = self.session_store.new()
@@ -99,6 +103,8 @@ class SessionMiddleware(object):
     return None
 
   def process_response(self, request, response):
+    if request.path.startswith("/"+self.ignore_session_url_prefix):
+      return response
     if request.session.should_save:
       self.session_store.save(request.session)
       if not isinstance(response, HTTPException):
