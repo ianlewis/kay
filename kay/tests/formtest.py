@@ -13,16 +13,6 @@ import os
 import unittest
 import logging
 
-g_path = "/usr/local/google_appengine"
-extra_path = [
-  os.path.abspath(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))),
-  g_path,
-  os.path.join(g_path, 'lib', 'antlr3'),
-  os.path.join(g_path, 'lib', 'webob'),
-  os.path.join(g_path, 'lib', 'django'),
-  os.path.join(g_path, 'lib', 'yaml', 'lib'),
-]
-sys.path = extra_path + sys.path
 APP_ID = u'test'
 os.environ['APPLICATION_ID'] = APP_ID
 

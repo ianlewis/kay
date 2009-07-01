@@ -34,7 +34,7 @@ def args_have_option(args, option):
 
 def runserver_passthru_argv():
   from google.appengine.tools import dev_appserver_main
-  progname = sys.argv[0]
+  progname = sys.argv[1]
   args = []
   # hack __main__ so --help in dev_appserver_main works OK.
   sys.modules['__main__'] = dev_appserver_main    
