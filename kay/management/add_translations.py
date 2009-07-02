@@ -45,7 +45,8 @@ def create_from_pot(locale, path):
   try:
     f = file(path)
   except IOError, e:
-    parser.error(str(e))
+    print "Cant open file. Skipped %s." % path
+    return None
   try:
     catalog = read_po(f, locale=locale)
   finally:
@@ -75,5 +76,6 @@ def add_translations(locale, i18n_dir, force):
   for domain in domains:
     pot_file = join(i18n_dir, domain+'.pot')
     catalog = create_from_pot(locale, pot_file)
-    write_catalog(catalog, i18n_dir, domain, force)
+    if catalog:
+      write_catalog(catalog, i18n_dir, domain, force)
   print 'Created catalog for %s' % locale

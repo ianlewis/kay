@@ -27,13 +27,14 @@ KEYWORDS = {
   'gettext': None,
   'ngettext': (1, 2),
   'lazy_gettext': None,
-  'lazy_ngettext': (1, 2)
+  'lazy_ngettext': (1, 2),
 }
 BUGS_ADDRESS = 'tmatsuo@candit.jp'
 COPYRIGHT = 'Takashi Matsuo'
 METHODS = [
   ('**.py', 'python'),
-  ('**/templates/**.html', 'jinja2.ext:babel_extract'),
+  ('**/templates/*~', 'ignore'),
+  ('**/templates/**.*', 'jinja2.ext:babel_extract'),
   ('**.js', 'ignore'),
   ('**/templates_compiled/**.*', 'ignore'),
 ]

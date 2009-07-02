@@ -5,8 +5,6 @@ TODO
 kay
 ----
 
-* i18n.js handler
-
 * Mechanism for plugging application more easily.
 
  * We need a way to add some stuff to jinja2 filters and globals
@@ -25,8 +23,8 @@ kay
    $ cd yourproject
    $ ln -s ../kay/kay .
    $ ln -s ../kay/manage.py .
-   $ cp ../kay/settings.py.sample ./settings.py
-   $ cp ../kay/app.yaml.sample ./app.yaml
+   $ cp ../kay/settings.py ./settings.py
+   $ cp ../kay/app.yaml ./app.yaml
    $ cp ../kay/urls.py .
 
 

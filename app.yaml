@@ -49,7 +49,7 @@ handlers:
 - url: /remote_api
   script: $PYTHON_LIB/google/appengine/ext/remote_api/handler.py
   login: admin
-  secure: always
+  secure: optional
 
 - url: /.*
   script: kay/main.py
