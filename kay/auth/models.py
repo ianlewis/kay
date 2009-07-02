@@ -7,7 +7,6 @@ Kay authentication models.
 :license: BSD, see LICENSE for more details.
 """
 
-import pytz
 from google.appengine.ext import db
 
 from kay.conf import settings
@@ -23,11 +22,6 @@ class User(db.Model):
 
   created = db.DateTimeProperty(auto_now_add=True)
   last_login = db.DateTimeProperty(auto_now=True)
-
-  #TODO: Is this really needed here? 
-  tz = db.StringProperty(choices=pytz.all_timezones, required=True,
-                         default=settings.DEFAULT_TIMEZONE,
-                         indexed=False)
 
   def __unicode__(self):
     return unicode(self.email)
