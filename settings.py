@@ -38,3 +38,4 @@ MIDDLEWARE_CLASSES = (
   'kay.sessions.middleware.SessionMiddleware',
   'kay.auth.middleware.GoogleAuthenticationMiddleware',
 )
+AUTH_USER_MODEL = 'kay.auth.models.GoogleUser'
