@@ -49,7 +49,7 @@ def compile_file(env, src_path, dst_path, encoding='utf-8', base_dir=''):
   dst_file.close()
 
 
-def compile_dir(env, src_path, dst_path, pattern=r'^.*\.html$',
+def compile_dir(env, src_path, dst_path, pattern=r'^.*\..*[^~]$',
                 encoding='utf-8', base_dir=None):
   """Compiles a directory of Jinja2 templates to python code.
   Params:

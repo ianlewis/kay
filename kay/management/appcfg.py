@@ -47,7 +47,17 @@ def compile_app_templates(app):
     target_dirs.extend(find_template_dir(os.path.dirname(mod.__file__)))
   for dir in target_dirs:
     dest = dir.replace("templates", "templates_compiled")
-    if not path.isdir(dest):
+    if path.isdir(dest):
+      for d, subdirs, files in os.walk(dest):
+        for f in files:
+          compiled_filename = "%s/%s" % (d, f)
+          orig_filename = compiled_filename.replace("templates_compiled",
+                                                    "templates")
+          if not path.isfile(orig_filename):
+            os.unlink(compiled_filename)
+            print "%s does not exist. So, '%s' is removed." % (
+              orig_filename, compiled_filename)
+    else:
       mkdir(dest)
     print "Now compiling templates in %s to %s." % (dir, dest)
     compile_dir(env, dir, dest)
