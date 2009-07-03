@@ -20,6 +20,8 @@ from werkzeug import Response
 from jinja2 import (
   Environment, Undefined,
 )
+from werkzeug.routing import Submount
+
 
 import kay
 from kay.utils import local, local_manager
@@ -68,14 +70,26 @@ class KayApp(object):
         self._view_middleware = self._exception_middleware = None
 
   def init_url_map(self):
-    # Stopped to use try..except here because it's bad to conceal the
-    # cause.
+
     mod = import_module(self.app_settings.ROOT_URL_MODULE)
 
     make_url = getattr(mod, 'make_url')
     all_views = getattr(mod, 'all_views')
     self.views = all_views
     self.url_map = make_url()
+    for app in self.app_settings.INSTALLED_APPS:
+      try:
+        url_mod = import_module("%s.urls" % app)
+      except ImportError:
+        logging.warning("Failed to import app '%s.urls', skipped." % app)
+        continue
+      mountpoint = self.app_settings.APP_MOUNT_POINTS.get(app, "/%s" % app)
+      make_rules = getattr(url_mod, 'make_rules')
+      if make_rules:
+        self.url_map.add(Submount(mountpoint, make_rules()))
+      all_views = getattr(url_mod, 'all_views')
+      if all_views:
+        self.views.update(all_views)
     
   def init_jinja2_environ(self):
     """
@@ -101,7 +115,7 @@ class KayApp(object):
       try:
         mod = import_module(app)
       except ImportError:
-        logging.warning("Failed to import app '%s', skipped.")
+        logging.warning("Failed to import app '%s', skipped." % app)
         continue
       try:
         app_key = getattr(mod, 'template_loader_key')

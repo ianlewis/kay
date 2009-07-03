@@ -34,6 +34,9 @@ INSTALLED_APPS = (
   'kay.sessions',
 )
 
+APP_MOUNT_POINTS = {
+}
+
 MIDDLEWARE_CLASSES = (
   'kay.sessions.middleware.SessionMiddleware',
   'kay.auth.middleware.GoogleAuthenticationMiddleware',

@@ -37,6 +37,9 @@ DEFAULT_LANG = 'en'
 INSTALLED_APPS = (
 )
 
+APP_MOUNT_POINTS = {
+}
+
 CONTEXT_PROCESSORS = (
   'kay.context_processors.request',
   'kay.context_processors.url_functions',
