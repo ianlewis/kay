@@ -23,6 +23,7 @@ action_rshell = rshell
 action_startapp = startapp
 action_test = do_runtest
 action_preparse_bundle = do_preparse_bundle
+action_preparse_apps = do_preparse_apps
 action_extract_messages = do_extract_messages
 action_add_translations = do_add_translations
 action_update_translations = do_update_translations
