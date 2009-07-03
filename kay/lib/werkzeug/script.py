@@ -117,7 +117,7 @@ def run(namespace=None, action_prefix='action_', args=None):
     long_options = []
     formatstring = ''
     func, doc, arg_def = actions[args.pop(0)]
-    if getattr(func, 'passthru'):
+    if getattr(func, 'passthru', None):
       return func()
     for idx, (arg, shortcut, default, option_type) in enumerate(arg_def):
         real_arg = arg.replace('-', '_')
