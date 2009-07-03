@@ -33,6 +33,9 @@ def find_template_dir(target_path):
   return ret
 
 def do_preparse_bundle():
+  """
+  Pre-Compile all the templates in Kay itself.
+  """
   print "Compiling bundled templates..."
   app = kay.app.get_application()
   app.app.init_jinja2_environ()

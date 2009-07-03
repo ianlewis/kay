@@ -74,6 +74,9 @@ def runtest(target='', verbosity=0):
   unittest.TextTestRunner(verbosity=verbosity).run(suite)
 
 def do_runtest(target='',verbosity=("v", 0)):
+  """
+  Run test for installed applications.
+  """
   setup_stub()
   runtest(target, verbosity)
 

@@ -29,6 +29,9 @@ from babel.util import LOCALTZ
 domains = ['messages', 'jsmessages']
 
 def do_add_translations(app=("a", ""), lang=("l", ""), force=("f", False)):
+  """
+  Add new translations for specified language.
+  """
   try:
     locale = Locale.parse(lang)
   except (UnknownLocaleError, ValueError), e:

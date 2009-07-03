@@ -54,6 +54,9 @@ def strip_path(filename, base):
 
 
 def do_extract_messages(target='',domain=('d', 'messages')):
+  """
+  Extract messages and create pot file.
+  """
   if not domain in ('messages', 'jsmessages'):
     print 'invalid domain.'
     sys.exit(1)

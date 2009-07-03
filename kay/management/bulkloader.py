@@ -13,6 +13,10 @@ import sys
 from shell import get_all_models_as_dict
 
 def do_bulkloader_passthru_argv():
+  """
+  Execute bulkloader script with appropriate parameters. For more
+  details, please invoke 'python manage.py bulkloader --help'.
+  """
   from google.appengine.tools import bulkloader
   progname = sys.argv[0]
   sys.modules['__main__'] = bulkloader
@@ -29,3 +33,5 @@ def do_bulkloader_passthru_argv():
     else:
       args.append(arg)
   sys.exit(bulkloader.main(args))
+
+do_bulkloader_passthru_argv.passthru = True

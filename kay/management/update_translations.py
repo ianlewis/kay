@@ -26,6 +26,9 @@ domains = ['messages', 'jsmessages']
 
 def do_update_translations(app=("a", ""), lang=("l", ""),
                            statistics=("s", False)):
+  """
+  Update existing translations with updated pot files.
+  """
   if not app:
     print 'Updating core strings'
     root = path.join(kay.KAY_DIR, 'i18n')
