@@ -1,0 +1,91 @@
+==================
+Kay i18n mechanism
+==================
+
+Overview
+--------
+
+Kay has a almost full stack i18n feature including extracting messages
+from the source, adding new language to your app, updating and
+compiling the message catalogs and a handlers for javascript gettext
+implementation.
+
+Marking your messages
+---------------------
+
+You can mark your messages for translation in python code like: 
+
+.. code-block:: python
+
+  from kay.i18n import gettext as _
+  _('Hello')
+
+You can mark your messages for translation in templates like: 
+
+.. code-block:: html
+
+  <p>{{ _('Hello') }}</p>
+  <p>{% trans %}Hello{% endtrans %}
+
+Extracting messages
+-------------------
+
+You can extract the messages from 'myapp' application and create the
+template file like:
+
+.. code-block:: console
+
+   $ python manage.py extract_messages myapp
+
+The 'extract_messages' subcommand accepts optional '--domain'
+parameter. The value for this parameter must be 'messages' or
+'jsmessages'.
+
+
+Adding translations
+-------------------
+
+You can add new Japanese translations from the template like:
+
+.. code-block:: console
+
+  $ python manage.py add_translation myapp -l ja
+
+Updating messages
+-----------------
+
+You can update your translations with updated translation template
+like:
+
+.. code-block:: console
+
+   $ python manage.py update_translations myapp -l ja
+
+
+Compiling messages
+------------------
+
+You can compile all of your translations under 'myapp' application
+like:
+
+.. code-block:: console
+
+  $ python manage.py compile_translations myapp
+
+
+Javascript handler
+------------------
+
+You can define a handler for pseudo javascript gettext like:
+
+  from kay.views.i18n import javascript_catalog
+
+  return Map([
+    Rule('/_i18n.js', endpoint='i18n_js',
+         defaults={'packages':('myapp','kay')}),
+  ])
+
+  all_views = {
+    'i18n_js': javascript_catalog,
+  }
+
