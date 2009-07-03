@@ -30,12 +30,16 @@ def do_update_translations(app=("a", ""), lang=("l", ""),
   Update existing translations with updated pot files.
   """
   if not app:
+    print 'Please specify app.'
+    sys.exit(1)
+  elif app == 'kay':
     print 'Updating core strings'
     root = path.join(kay.KAY_DIR, 'i18n')
   else:
     root = path.join(app, 'i18n')
     if not path.isdir(root):
-      parser.error('source folder missing')
+      print ('source folder missing')
+      sys.exit(1)
     print 'Updating', root
 
   for domain in domains:
@@ -44,8 +48,11 @@ def do_update_translations(app=("a", ""), lang=("l", ""),
       if not path.exists(filepath):
         print ("unknown locale. %s not found." % filepath)
         sys.exit(1)
-
-    f = file(path.join(root, domain+'.pot'))
+    try:
+      f = file(path.join(root, domain+'.pot'))
+    except IOError:
+      print 'Can not open file: %s, skipped.' % path.join(root, domain+'.pot')
+      continue
     try:
       template = read_po(f)
     finally:

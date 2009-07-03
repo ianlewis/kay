@@ -36,12 +36,15 @@ def do_add_translations(app=("a", ""), lang=("l", ""), force=("f", False)):
     locale = Locale.parse(lang)
   except (UnknownLocaleError, ValueError), e:
     print "You must specify lang."
-    sys.exit()
-  if app:
-    add_translations(locale, join(app, 'i18n'), force)
-  else:
+    sys.exit(1)
+  if not app:
+    print "Please specify app."
+    sys.exit(1)
+  elif app == 'kay':
     i18n_dir = join(kay.KAY_DIR, 'i18n')
     add_translations(locale, i18n_dir, force)
+  else:
+    add_translations(locale, join(app, 'i18n'), force)
 
 
 def create_from_pot(locale, path):

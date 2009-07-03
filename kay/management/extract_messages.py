@@ -53,7 +53,7 @@ def strip_path(filename, base):
     filename, path.dirname(base)])):].lstrip(path.sep)
 
 
-def do_extract_messages(target='',domain=('d', 'messages')):
+def do_extract_messages(target=('t', ''), domain=('d', 'messages')):
   """
   Extract messages and create pot file.
   """
@@ -61,6 +61,9 @@ def do_extract_messages(target='',domain=('d', 'messages')):
     print 'invalid domain.'
     sys.exit(1)
   if not target:
+    print 'Please specify target.'
+    sys.exit(1)
+  elif target == 'kay':
     print 'Extracting core strings'
     root = kay.KAY_DIR
   else:

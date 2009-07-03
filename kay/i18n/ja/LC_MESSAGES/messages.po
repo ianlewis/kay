@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version:  kay-1.0\n"
 "Report-Msgid-Bugs-To: tmatsuo@candit.jp\n"
 "POT-Creation-Date: 2009-05-15 14:07+0900\n"
-"PO-Revision-Date: 2009-06-30 14:54+0900\n"
+"PO-Revision-Date: 2009-07-04 08:26+0900\n"
 "Last-Translator: Takashi Matsuo <tmatsuo@candit.jp>\n"
 "Language-Team: Takashi Matsuo <tmatsuo@candit.jp>\n"
 "Plural-Forms: nplurals=1; plural=0\n"
@@ -75,7 +75,7 @@ msgstr "選択肢がありません。"
 
 #: kay/utils/forms/__init__.py:789
 msgid "Submit"
-msgstr "サブミット"
+msgstr "送信"
 
 #: kay/utils/forms/__init__.py:942
 msgid "This field is required."

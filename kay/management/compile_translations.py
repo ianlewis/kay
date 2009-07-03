@@ -42,6 +42,9 @@ def do_compile_translations(app=("a", "")):
   Compiling all the templates in specified application.
   """
   if not app:
+    print 'Please specify app.'
+    sys.exit(1)
+  elif app == 'kay':
     print 'Compiling builtin languages'
     root = path.join(kay.KAY_DIR, 'i18n')
   else:

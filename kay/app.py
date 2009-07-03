@@ -84,10 +84,10 @@ class KayApp(object):
         logging.warning("Failed to import app '%s.urls', skipped." % app)
         continue
       mountpoint = self.app_settings.APP_MOUNT_POINTS.get(app, "/%s" % app)
-      make_rules = getattr(url_mod, 'make_rules')
+      make_rules = getattr(url_mod, 'make_rules', None)
       if make_rules:
         self.url_map.add(Submount(mountpoint, make_rules()))
-      all_views = getattr(url_mod, 'all_views')
+      all_views = getattr(url_mod, 'all_views', None)
       if all_views:
         self.views.update(all_views)
     
