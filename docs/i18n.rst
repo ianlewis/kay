@@ -78,6 +78,8 @@ Javascript handler
 
 You can define a handler for pseudo javascript gettext like:
 
+.. code-block:: python
+
   from kay.views.i18n import javascript_catalog
 
   return Map([
