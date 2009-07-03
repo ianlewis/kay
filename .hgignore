@@ -3,6 +3,7 @@ syntax: glob
 *.swp
 *.tmp
 *~
+*.pdf
 .DS_Store
 
 syntax: regexp
