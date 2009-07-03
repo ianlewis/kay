@@ -36,15 +36,16 @@ handlers:
 - url: /favicon.ico
   static_files: favicon.ico
   upload: favicon.ico
+  secure: optional
 
 - url: /media
   static_dir: media
-  login: required
   secure: optional
 
 - url: /_kay/.*
   script: kay/main.py
   login: admin
+  secure: optional
 
 - url: /remote_api
   script: $PYTHON_LIB/google/appengine/ext/remote_api/handler.py
