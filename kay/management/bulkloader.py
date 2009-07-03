@@ -23,7 +23,7 @@ def do_bulkloader_passthru_argv():
   models = get_all_models_as_dict()
   args = []
   for arg in sys.argv[1:]:
-    if arg.startswith("--kind"):
+    if arg.startswith("--kind="):
       kind = arg[7:]
       model = models.get(kind, None)
       if model is None:
