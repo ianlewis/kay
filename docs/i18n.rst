@@ -8,19 +8,24 @@ Overview
 Kay has a almost full stack i18n feature including extracting messages
 from the source, adding new language to your app, updating and
 compiling the message catalogs and a handlers for javascript gettext
-implementation.
+implementation. This feature is basicaly based on the jinja2's i18n
+feature, so it is a good idea to refer to jinja2's documentation
+hosted at:
+
+  http://jinja.pocoo.org/2/documentation/
 
 Marking your messages
 ---------------------
 
-You can mark your messages for translation in python code like: 
+You can mark your messages for translation in python code as
+following:
 
 .. code-block:: python
 
   from kay.i18n import gettext as _
   _('Hello')
 
-You can mark your messages for translation in templates like: 
+You can mark your messages for translation in templates as following:
 
 .. code-block:: html
 
@@ -31,7 +36,7 @@ Extracting messages
 -------------------
 
 You can extract the messages from 'myapp' application and create the
-template file like:
+template file as following:
 
 .. code-block:: console
 
@@ -54,8 +59,8 @@ You can add new Japanese translations from the template like:
 Updating messages
 -----------------
 
-You can update your translations with updated translation template
-like:
+You can update your translations with updated translation template as
+following:
 
 .. code-block:: console
 
@@ -65,8 +70,8 @@ like:
 Compiling messages
 ------------------
 
-You can compile all of your translations under 'myapp' application
-like:
+You can compile all of your translations under 'myapp' application as
+following:
 
 .. code-block:: console
 
@@ -76,7 +81,7 @@ like:
 Javascript handler
 ------------------
 
-You can define a handler for pseudo javascript gettext like:
+You can define a handler for pseudo javascript gettext as following:
 
 .. code-block:: python
 
