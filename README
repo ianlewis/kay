@@ -60,7 +60,9 @@ Quick Start
    $ vi settings.py
 
 There is a sample urls.py in the file hello/urls.py as a comment. You
-have to add 'hello' to the INSTALLED_APPS tupple in the settings.py.
+have to add 'hello' to the INSTALLED_APPS tupple in the
+settings.py. For the details of how to define urls and views for your
+application, please refer to docs/urlmapping.rst.
 
 * urls.py
 
@@ -101,7 +103,8 @@ have to add 'hello' to the INSTALLED_APPS tupple in the settings.py.
   $ python manage.py appcfg update
 
 
-* You can handle i18n like following.
+* You can handle i18n like following. For the details of i18n, please
+  refer to docs/i18n.rst.
 
 .. code-block:: console
 
@@ -126,7 +129,8 @@ Shell tools
 
 * Invoking `python manage.py shell` gives you python (or ipython if
   available) console session with the same DatastoreFileStub settings
-  of local dev server.
+  of local dev server. For the details of manage.py commands, please
+  refer to docs/manage_py.rst.
 
 **Note:**
 
@@ -141,7 +145,7 @@ Shell tools
 
 **Note:**
   
-  Be careful when use this feature.
+  Please be careful when you use this feature.
 
 
 Datastore
@@ -149,11 +153,8 @@ Datastore
 
 * You must use GAE models directly. You can use kay.utils.forms for
   form handling. You can construct a form automatically from the model
-  definition with kay.utils.forms.modelform.ModelForm.
-
-  Unfortunately, for now, there is no documentation about forms
-  package yet. Please see kay.tests.formtest for examples. Sorry for
-  the inconvinience.
+  definition with kay.utils.forms.modelform.ModelForm. For the details
+  of how to use forms, please refer to docs/forms-usage.rst.
 
 * By default, db.Model.kind() returns ('model's app name' + _ + 'model
   name').lower(). So when you see the management console, there will
@@ -210,8 +211,21 @@ You can use this form in your view like following.
       class Meta:
         model = MyModel
 
-* For more details about forms, please refer to the docs/forms-usage.rst.
-  
+Manuals
+-------
+
+* URL Mapping
+  docs/urlmapping.rst
+
+* Form manual
+  docs/forms-usage.rst
+
+* i18n
+  docs/i18n.rst
+
+* Management script
+  docs/manage_py.rst
+
 
 Questions and Bug Report
 ------------------------
@@ -224,3 +238,5 @@ Questions and Bug Report
 
 * Code site
   http://code.google.com/p/kay-framework/
+
+Have fun!
