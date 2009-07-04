@@ -56,31 +56,13 @@ Quick Start
 .. code-block:: console
 
    $ python manage.py startapp hello
-   $ vi urls.py
    $ vi settings.py
 
-There is a sample urls.py in the file hello/urls.py as a comment. You
-have to add 'hello' to the INSTALLED_APPS tupple in the
+You have to add 'hello' to the INSTALLED_APPS tupple in the
 settings.py. For the details of how to define urls and views for your
 application, please refer to docs/urlmapping.rst.
 
-* urls.py
-
-.. code-block:: python
-
-  from hello import urls as hello_urls
-
-  def make_url():
-    return Map([
-      Submount('/hello', hello_urls.make_rules())
-    ])
-
-  all_views = {
-  }
-
-  all_views.update(hello_urls.all_views)
-
-* settings.py
+ * settings.py
 
 .. code-block:: python
 
@@ -95,6 +77,9 @@ application, please refer to docs/urlmapping.rst.
 
   $ python manage.py runserver
 
+
+You can access your first application on the url:
+  http://localhost:8080/hello/
 
 * Upload your application
 
