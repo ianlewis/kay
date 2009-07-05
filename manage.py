@@ -21,6 +21,7 @@ from kay.management import *
 action_shell = shell
 action_rshell = rshell
 action_startapp = startapp
+action_startproject = startproject
 action_test = do_runtest
 action_preparse_bundle = do_preparse_bundle
 action_preparse_apps = do_preparse_apps

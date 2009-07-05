@@ -24,19 +24,19 @@ from babel.messages.pofile import write_po, read_po
 
 domains = ['messages', 'jsmessages']
 
-def do_update_translations(app=("a", ""), lang=("l", ""),
+def do_update_translations(target=("t", ""), lang=("l", ""),
                            statistics=("s", False)):
   """
   Update existing translations with updated pot files.
   """
-  if not app:
-    print 'Please specify app.'
+  if not target:
+    print 'Please specify target.'
     sys.exit(1)
-  elif app == 'kay':
+  elif target == 'kay':
     print 'Updating core strings'
     root = path.join(kay.KAY_DIR, 'i18n')
   else:
-    root = path.join(app, 'i18n')
+    root = path.join(target, 'i18n')
     if not path.isdir(root):
       print ('source folder missing')
       sys.exit(1)

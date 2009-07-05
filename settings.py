@@ -20,7 +20,6 @@ COOKIE_NAME = 'KAY_SID'
 ADD_APP_PREFIX_TO_KIND = True
 
 ADMINS = (
-  ['Takashi Matsuo', 'tmatsuo@shehas.net'],
 )
 
 TEMPLATE_DIRS = (

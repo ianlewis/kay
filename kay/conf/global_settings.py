@@ -25,7 +25,6 @@ ADD_APP_PREFIX_TO_KIND = True
 ROOT_URL_MODULE = 'urls'
 
 ADMINS = (
-  ['Admin', 'admin@example.com'],
 )
 
 TEMPLATE_DIRS = (
