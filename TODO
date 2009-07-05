@@ -15,18 +15,6 @@ kay
 
 * Change the url of paste capability in the werkzeug debugger.
 
-* Implement start-project script doing as follows:
-
-.. code-block:: console
-
-   $ mkdir yourproject
-   $ cd yourproject
-   $ ln -s ../kay/kay .
-   $ ln -s ../kay/manage.py .
-   $ cp ../kay/settings.py ./settings.py
-   $ cp ../kay/app.yaml ./app.yaml
-   $ cp ../kay/urls.py .
-
 
 kay.utils.forms
 ----------------
@@ -38,6 +26,7 @@ kay.utils.forms
 * Implementation of ModelField.
 
  * Cache the choices automatically
+
 
 kay.sessions
 ------------

@@ -38,18 +38,13 @@ Quick Start
 -----------
 
 * First, make symlynk of kay directory inside your project directry,
-  copy settings files.
+  copy settings files by invoking management script.
 
 .. code-block:: console
 
    $ hg clone http://bitbucket.org/tmatsuo/kay/
-   $ mkdir yourproject
-   $ cd yourproject
-   $ ln -s ../kay/kay .
-   $ ln -s ../kay/manage.py .
-   $ cp ../kay/urls.py .
-   $ cp ../kay/settings.py .
-   $ cp ../kay/app.yaml .
+   $ python kay/manage.py startproject myproject
+   $ cd myproject
 
 * Second, you can create your first application with following command.
 
