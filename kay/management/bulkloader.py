@@ -10,6 +10,7 @@ Kay bulkload management command.
 import os
 import sys
 
+from kay.management.utils import print_usage_exit
 from shell import get_all_models_as_dict
 
 def do_bulkloader_passthru_argv():
@@ -19,7 +20,6 @@ def do_bulkloader_passthru_argv():
   """
   from google.appengine.tools import bulkloader
   progname = sys.argv[0]
-  sys.modules['__main__'] = bulkloader
   models = get_all_models_as_dict()
   args = []
   for arg in sys.argv[1:]:
@@ -32,6 +32,12 @@ def do_bulkloader_passthru_argv():
       args.append("--kind=%s" % model.kind())
     else:
       args.append(arg)
+  if '--help' in args:
+    print bulkloader.__doc__ % {'arg0': "manage.py bulkloader"}
+    sys.stdout.flush()
+    sys.stderr.flush()
+    sys.exit(0)
+    
   sys.exit(bulkloader.main(args))
 
 do_bulkloader_passthru_argv.passthru = True

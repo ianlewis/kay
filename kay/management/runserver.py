@@ -38,10 +38,8 @@ def runserver_passthru_argv():
   please invoke 'python manage.py runserver --help'.
   """
   from google.appengine.tools import dev_appserver_main
-  progname = sys.argv[1]
+  progname = "manage.py runserver"
   args = []
-  # hack __main__ so --help in dev_appserver_main works OK.
-  sys.modules['__main__'] = dev_appserver_main    
   args.extend(sys.argv[2:])
 
   p = get_datastore_paths()
@@ -50,6 +48,13 @@ def runserver_passthru_argv():
   if not args_have_option(args, "--history_path"):
     args.extend(["--history_path", p[1]])
   # Append the current working directory to the arguments.
+  if "-h" in args or "--help" in args:
+    render_dict = dev_appserver_main.DEFAULT_ARGS.copy()
+    render_dict['script'] = "manage.py runserver"
+    print dev_appserver_main.__doc__ % render_dict
+    sys.stdout.flush()
+    sys.exit(0)
+    
   dev_appserver_main.main([progname] + args + [os.getcwdu()])
 
 runserver_passthru_argv.passthru = True

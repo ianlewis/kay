@@ -9,7 +9,9 @@ Kay appcfg management command.
 
 import os
 import sys
+import logging
 from os import listdir, path, mkdir
+import optparse
 
 import kay
 import kay.app
@@ -18,6 +20,10 @@ from kay.utils.jinja2utils.compiler import compile_dir
 from kay.utils.importlib import import_module
 from kay.management.preparse import do_preparse_apps
 
+class HookedOptionParser(optparse.OptionParser):
+  def get_prog_name(self):
+    return "manage.py appcfg"
+  
 def do_appcfg_passthru_argv():
   """
   Execute appcfg.py with specified parameters. For more details,
@@ -30,18 +36,28 @@ def do_appcfg_passthru_argv():
     sys.exit(1)
   if sys.argv[2] == 'update':
     do_preparse_apps()
-  sys.modules['__main__'] = appcfg
   
   args = sys.argv[2:]
-  if "--help" in args:
+  if "--help" in args or "help" in args:
     args = [progname] + args
   else:
     args = [progname] + args + [os.getcwdu()]
-  appcfg.main(args)
+  
+  logging.basicConfig(format=('%(asctime)s %(levelname)s %(filename)s:'
+                              '%(lineno)s %(message)s '))
+  try:
+    app = appcfg.AppCfgApp(args, parser_class=HookedOptionParser)
+    result = app.Run()
+    if result:
+      sys.exit(result)
+  except KeyboardInterrupt:
+    StatusUpdate('Interrupted.')
+    sys.exit(1)
   from kay.conf import settings
   if settings.PROFILE and sys.argv[2] == 'update':
     print '--------------------------\n' \
         'WARNING: PROFILER ENABLED!\n' \
         '--------------------------'
+
     
 do_appcfg_passthru_argv.passthru = True
