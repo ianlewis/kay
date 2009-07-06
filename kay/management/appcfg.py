@@ -19,6 +19,7 @@ from kay.utils import local
 from kay.utils.jinja2utils.compiler import compile_dir
 from kay.utils.importlib import import_module
 from kay.management.preparse import do_preparse_apps
+from shell import get_all_models_as_dict
 
 class HookedOptionParser(optparse.OptionParser):
   def get_prog_name(self):
@@ -37,7 +38,19 @@ def do_appcfg_passthru_argv():
   if sys.argv[2] == 'update':
     do_preparse_apps()
   
-  args = sys.argv[2:]
+  models = get_all_models_as_dict()
+  args = []
+  for arg in sys.argv[2:]:
+    if arg.startswith("--kind="):
+      kind = arg[7:]
+      model = models.get(kind, None)
+      if model is None:
+        print "Invalid kind: %s." % kind
+        sys.exit(1)
+      args.append("--kind=%s" % model.kind())
+    else:
+      args.append(arg)
+
   if "--help" in args or "help" in args:
     args = [progname] + args
   else:
