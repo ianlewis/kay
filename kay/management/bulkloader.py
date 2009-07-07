@@ -10,7 +10,6 @@ Kay bulkload management command.
 import os
 import sys
 
-from kay.management.utils import print_usage_exit
 from shell import get_all_models_as_dict
 
 def do_bulkloader_passthru_argv():
