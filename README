@@ -89,7 +89,7 @@ You can access your first application on the url:
 .. code-block:: console
 
    $ python manage.py extract_messages hello
-   $ python manage.py add_translation hello -l ja
+   $ python manage.py add_translations hello -l ja
    $ vi hello/i18n/ja/LC_MESSAGES/messages.po
    $ python manage.py compile_translations hello
 
@@ -99,7 +99,7 @@ follows.
 .. code-block:: console
 
    $ python manage.py extract_messages hello
-   $ python manage.py update_translation hello -l ja
+   $ python manage.py update_translations hello -l ja
    $ vi hello/i18n/ja/LC_MESSAGES/messages.po
    $ python manage.py compile_translations hello
 

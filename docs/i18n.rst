@@ -54,7 +54,7 @@ You can add new Japanese translations from the template like:
 
 .. code-block:: console
 
-  $ python manage.py add_translation myapp -l ja
+  $ python manage.py add_translations myapp -l ja
 
 Updating messages
 -----------------
