@@ -18,10 +18,11 @@ from kay.app import get_application
 from kay.utils.handlers import KayHandler
 from kay.conf import settings
 
-_debugged_application = None
+application = get_application()
+debugged_application = None
 
 def real_main():
-  application = get_application()
+  global application
   if settings.DEBUG:
     logging.getLogger().setLevel(logging.DEBUG)
     if 'SERVER_SOFTWARE' in os.environ and \
@@ -36,12 +37,12 @@ def real_main():
     
       # wrap the application
       from werkzeug import DebuggedApplication
-      global _debugged_application
-      if _debugged_application is None:
-        _debugged_application = application = DebuggedApplication(application,
-                                                                  evalex=True)
+      global debugged_application
+      if debugged_application is None:
+        debugged_application = application = DebuggedApplication(application,
+                                                                 evalex=True)
       else:
-        application = _debugged_application
+        application = debugged_application
   else:
     logging.getLogger().setLevel(logging.INFO)
   KayHandler().run(application)
