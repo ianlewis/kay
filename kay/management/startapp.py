@@ -46,7 +46,10 @@ def startproject(proj_name=''):
     try:
       os.symlink(src, dest)
     except:
-      shutil.copyfile(src, dest)
+      try:
+        shutil.copytree(src, dest)
+      except:
+        shutil.copyfile(src, dest)
   for path in copy_paths:
     src = os.path.join(kay.PROJECT_DIR, path)
     dest = os.path.join(top_dir, path)
