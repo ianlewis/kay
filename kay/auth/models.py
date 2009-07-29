@@ -39,8 +39,7 @@ class GoogleUser(User):
   is_admin = db.BooleanProperty(required=True, default=False)
 
 class AnonymousUser(object):
-  __slots__ = ('tz')
-  tz = settings.DEFAULT_TIMEZONE
+  __slots__ = ()
 
   def __unicode__(self):
     return "AnonymousUser"

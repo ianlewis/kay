@@ -1377,11 +1377,11 @@ class DateTimeField(Field):
 class ModelField(Field):
   """A field that queries for a model.
 
-  The first argument is the name of the model. If the key is not
-  given (None) the primary key is assumed. You can also specify
-  query parameter on init. It forces query based validation.  You
-  can override query by giving query_dict named parameter to form's
-  __init__ method.
+  The first argument is the name of the model. If the key is not given
+  (None) the primary key is assumed. You can also specify query
+  parameter on init. It forces query based validation.  You can
+  override query by giving query named parameter to form's __init__
+  method.
 
   """
   messages = dict(not_found=lazy_gettext(
@@ -1401,8 +1401,10 @@ class ModelField(Field):
     self.on_not_found = on_not_found
     self.query = query or self.model.all()
     self.option_name = option_name
+    self.__choices = None
 
   def convert(self, value):
+    import copy
     if isinstance(value, self.model):
       return value
     if not value:
@@ -1410,11 +1412,11 @@ class ModelField(Field):
         raise ValidationError(self.messages['required'])
       return None
     value = self._coerce_value(value)
-
+    tmp_query = copy.deepcopy(self.query)
     if self.key is None:
-      query = self.query.filter("__key__ =", db.Key(value))
+      query = tmp_query.filter("__key__ =", db.Key(value))
     else:
-      query = self.query.filter("%s =" % self.key, value)
+      query = tmp_query.filter("%s =" % self.key, value)
     rv = query.get()
 
     if rv is None:
@@ -1445,11 +1447,24 @@ class ModelField(Field):
     except AttributeError:
       return entry.__repr__()
 
+  def _create_choices(self):
+    self.__choices = [("", u"----")] + \
+        [(e.key(), escape(self._get_option_name(e)))
+         for e in self.query.fetch(1000)]
+
+  def _get_choices(self):
+    if self.__choices is None:
+      self._create_choices()
+    return self.__choices
+
+  def _set_choices(self, choices):
+    self.__choices = choices
+
+  choices = property(_get_choices, _set_choices)
+
   def set_query(self, query):
     self.query = query
-    self.choices = [("", u"----")] + \
-        [(e.key(), escape(self._get_option_name(e)))
-         for e in query.fetch(1000)]
+    self._create_choices()
 
 
 class HiddenModelField(ModelField):
