@@ -13,9 +13,9 @@ from google.appengine.ext import db
 post_save_hooks = {}
 
 
-def register_post_save_hook(func, sender):
+def register_post_save_hook(func, model):
   global post_save_hooks
-  kind = sender.kind()
+  kind = model.kind()
   func_list = post_save_hooks.get(kind, None)
   if func_list is None:
     func_list = []
