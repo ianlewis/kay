@@ -280,6 +280,7 @@ class KayApp(object):
     kay.setup_syspath()
     if _settings.USE_DB_HOOK:
       from google.appengine.api import apiproxy_stub_map
+      apiproxy_stub_map.apiproxy.GetPostCallHooks().Clear()
       apiproxy_stub_map.apiproxy.GetPostCallHooks().Append(
         'db_hook', db_hook, 'datastore_v3')
     local.app = self
