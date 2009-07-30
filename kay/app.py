@@ -22,7 +22,6 @@ from jinja2 import (
 )
 from werkzeug.routing import Submount
 
-
 import kay
 from kay.utils import local, local_manager
 from kay.utils.importlib import import_module
@@ -35,6 +34,16 @@ from kay.utils.filters import nl2br
 from kay.conf import settings, _settings, LazySettings
 
 translations_cache = {}
+
+def model_name_from_key(key):
+  return key.path().element_list()[0].type()
+    
+def db_hook(service, call, request, response):
+  if call == 'Put':
+    from kay.utils.db_hook import execute_hooks
+    for key, entity in zip(response.key_list(), request.entity_list()):
+      kind = model_name_from_key(key)
+      execute_hooks(kind, key, entity)
 
 def get_application():
   application = KayApp(_settings)
@@ -269,6 +278,10 @@ class KayApp(object):
 
   def __call__(self, environ, start_response):
     kay.setup_syspath()
+    if _settings.USE_DB_HOOK:
+      from google.appengine.api import apiproxy_stub_map
+      apiproxy_stub_map.apiproxy.GetPostCallHooks().Append(
+        'db_hook', db_hook, 'datastore_v3')
     local.app = self
     local.request = request = Request(environ)
     if self.url_map is None:
