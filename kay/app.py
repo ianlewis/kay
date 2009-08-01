@@ -167,7 +167,7 @@ class KayApp(object):
       self.active_translations = translations
       local.jinja2_env.install_gettext_translations(translations)
     else:
-      from gettext import NullTranslations
+      from kay.i18n import KayNullTranslations
       self.active_translations = NullTranslations()
       local.jinja2_env.install_null_translations()
 
