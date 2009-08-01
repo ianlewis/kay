@@ -150,20 +150,23 @@ Datastore
   beforehands somewhere in your code. I recommend you to do this in
   appname/__init__.py because Kay always load this file on startup as
   long as appname is on your INSTALLED_APPS. Here is an example for
-  registering a hook that just logs dumpped represantation of the
-  saved entry.
+  registering a hook that logs dumpped represantation of the saved
+  entry and whether this operation is creating a new entity or
+  updating an existing entity.
 
 .. code-block:: python
 
   import logging
 
-  from kay.utils.db_hook import register_post_save_hook
+  from kay.utils import db_hook
+  from kay.utils.db_hook import put_type
 
   from hoge.models import Entry
 
-  def log_instance(entity):
+  def log_instance(entity, put_type_id):
     from kay.utils.repr import dump
     logging.info(dump(entity))
+    logging.info("put_type: %s" % put_type.get_name(put_type_id))
 
   register_post_save_hook(log_instance, Entry)
 
