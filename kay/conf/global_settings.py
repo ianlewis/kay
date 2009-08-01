@@ -53,3 +53,4 @@ MIDDLEWARE_CLASSES = (
 )
 
 AUTH_USER_MODEL = 'kay.auth.models.GoogleUser'
+USE_DB_HOOK = False

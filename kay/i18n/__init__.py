@@ -82,10 +82,9 @@ def load_translations(locale):
   a `UnknownLocaleError` is raised.
   """
   domain = "messages"
-  ret = KayTranslations.load_wrapped(utils.get_kay_locale_path(),
-                             locale, domain)
+  ret = KayTranslations.load(utils.get_kay_locale_path(), locale, domain)
   def _merge(path):
-    t = KayTranslations.load_wrapped(path, locale, domain)
+    t = KayTranslations.load(path, locale, domain)
     if t is not None:
       if ret is None:
         return t
@@ -110,18 +109,43 @@ class KayTranslations(TranslationsBase):
   gettext = TranslationsBase.ugettext
   ngettext = TranslationsBase.ungettext
 
+  def __init__(self, fileobj=None, locale=None):
+    self.lang = locale
+    self._catalog = {}
+    TranslationsBase.__init__(self, fileobj=fileobj)
+
   @classmethod
-  def load_wrapped(cls, path, locale=None, domain='messages'):
+  def load(cls, path, locale=None, domain='messages'):
     """Load the translations from the given path."""
-    ret = KayTranslations.load(path, locale, domain)
-    ret.lang = locale
-    return ret
+    catalog = os.path.join(path, str(Locale.parse(locale)), 'LC_MESSAGES',
+                           domain + '.mo')
+    if os.path.isfile(catalog):
+      return KayTranslations(fileobj=open(catalog), locale=locale)
+    else:
+      return KayTranslations(fileobj=None, locale=locale)
 
   def merge(self, other):
     self._catalog.update(other._catalog)
 
   def __nonzero__(self):
     return bool(self._catalog)
+
+
+class KayNullTranslations(NullTranslations):
+  gettext = NullTranslations.ugettext
+  ngettext = NullTranslations.ungettext
+
+  def __init__(self, fileobj=None, locale=None):
+    NullTranslations.__init__(self, fileobj)
+    self.lang = locale
+    self._catalog = {}
+
+  def merge(self, translations):
+    """Update the translations with others."""
+    self.add_fallback(translations)
+
+  def __nonzero__(self):
+    return bool(self._fallback)
 
 
 def get_translations():
