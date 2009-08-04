@@ -24,6 +24,16 @@ def register_post_save_hook(func, model):
   func_list.append(func)
   post_save_hooks[kind] = func_list
 
+def get_created_datetime(entity):
+  for key, prop in entity.fields().iteritems():
+    if hasattr(prop, 'auto_now_add') and prop.auto_now_add:
+      return getattr(entity, key)
+
+def get_updated_datetime(entity):
+  for key, prop in entity.fields().iteritems():
+    if hasattr(prop, 'auto_now') and prop.auto_now:
+      return getattr(entity, key)  
+
 def execute_hooks(kind, key, entity):
   put_type_id = put_type.UNKOWN
   func_list = post_save_hooks.get(kind, None)
@@ -39,16 +49,18 @@ def execute_hooks(kind, key, entity):
     e = datastore.Entity._FromPb(entity)
     instance = db.class_for_kind(kind).from_entity(e)
     if has_name:
-      if hasattr(instance, "created"):
+      created = get_created_datetime(instance)
+      updated = get_updated_datetime(instance)
+      if created:
         import datetime
         threshold = datetime.timedelta(0,0,1000)
-        if hasattr(instance, "updated"):
-          if abs(instance.created - instance.updated) < threshold:
+        if updated:
+          if abs(created - updated) < threshold:
             put_type_id = put_type.MAYBE_NEWLY_CREATED
           else:
             put_type_id = put_type.MAYBE_UPDATED
         else:
-          if (datetime.datetime.now() - instance.created) < threshold:
+          if (datetime.datetime.now() - created) < threshold:
             put_type_id = put_type.MAYBE_NEWLY_CREATED
           else:
             put_type_id = put_type.MAYBE_UPDATED
