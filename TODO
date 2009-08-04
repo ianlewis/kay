@@ -5,16 +5,11 @@ TODO
 kay
 ----
 
-* Mechanism for plugging application more easily.
-
- * We need a way to add some stuff to jinja2 filters and globals
-
 * Implementation for handling process_view of midleware classes.
 
 * Write documentations about middlewares, jinja2 howtos, etc..
 
 * Change the url of paste capability in the werkzeug debugger.
-
 
 kay.utils.forms
 ----------------
@@ -22,10 +17,6 @@ kay.utils.forms
 * Make widgets can have media(javascript, css)
 
  * AjaxModelField
-
-* Implementation of ModelField.
-
- * Cache the choices automatically
 
 
 kay.sessions
@@ -38,7 +29,7 @@ kay.sessions
 kay.auth
 ---------------
 
-* Another authentication backend other than Google's auth.
+* An authentication backend other than Google's auth.
 
  * When using apps domain, we cannot use https on our domain. We have
    to use appspot.com domain for SSL. So there will be the problem
