@@ -1,0 +1,188 @@
+# Chinese translations for .
+# Copyright (C) 2009 Takashi Matsuo
+# This file is distributed under the same license as the  project.
+# TsungWei Hu <marr.tw AT gmail.com>, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version:  kay-0.0.0\n"
+"Report-Msgid-Bugs-To: tmatsuo@candit.jp\n"
+"POT-Creation-Date: 2009-05-15 14:07+0900\n"
+"PO-Revision-Date: 2009-08-05 15:08+0900\n"
+"Last-Translator: TsungWei Hu <marr.tw AT gmail.com>\n"
+"Language-Team: Takashi Matsuo <tmatsuo@candit.jp>\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 0.9.4\n"
+
+#: kay/i18n/__init__.py:301
+msgid "now"
+msgstr "現在"
+
+#: kay/management/app_template/views.py:26
+msgid "Hello"
+msgstr "你好嗎"
+
+#: kay/utils/validators.py:83
+msgid "You have to enter a valid e-mail address."
+msgstr "你必須輸入正確的電子郵件地址。"
+
+#: kay/utils/validators.py:104
+msgid "You have to enter a valid URL."
+msgstr "你必須輸入正確的網址。"
+
+#: kay/utils/validators.py:122
+msgid "The slug is too long"
+msgstr "slug 過長。"
+
+#: kay/utils/validators.py:124
+msgid "The slug must not start with a slash"
+msgstr "slug 開頭必須是斜線符號。"
+
+#: kay/utils/validators.py:142 kay/utils/validators.py:145
+msgid "You have to enter a valid net address."
+msgstr "你必須輸入正確的網路位址。"
+
+#: kay/utils/validators.py:147
+msgid "The port has to be numeric"
+msgstr "埠號必須是數字。"
+
+#: kay/utils/validators.py:155
+msgid "Invalid character, < or > are not allowed."
+msgstr "不正確 < 或 > 不允許使用的字元。"
+
+#: kay/utils/validators.py:157
+msgid "URL prefix must not be a sole slash."
+msgstr "URL prefix 不可以僅是斜線符號。"
+
+#: kay/utils/validators.py:160
+msgid "URL prefix must start with a slash."
+msgstr "URL prefix 開頭必須是斜線符號。"
+
+#: kay/utils/validators.py:162
+msgid "URL prefix must not end with a slash."
+msgstr "URL prefix 結尾不可以是斜線符號。"
+
+#: kay/utils/validators.py:171
+msgid "The text must not be empty."
+msgstr "本文不可以是空白。"
+
+#: kay/utils/forms/__init__.py:689
+msgid "No choices."
+msgstr "沒有選擇。"
+
+#: kay/utils/forms/__init__.py:789
+msgid "Submit"
+msgstr "送出"
+
+#: kay/utils/forms/__init__.py:942
+msgid "This field is required."
+msgstr "本欄位必填。"
+
+#: kay/utils/forms/__init__.py:1113
+msgid "Invalid security token submitted."
+msgstr "送出非法的安全記號。"
+
+#: kay/utils/forms/__init__.py:1168 kay/utils/forms/__init__.py:1601
+#, python-format
+msgid "Please provide at least %d item."
+msgid_plural "Please provide at least %d items."
+msgstr[0] "請至少提供 %d 個必要項目。"
+
+#: kay/utils/forms/__init__.py:1175 kay/utils/forms/__init__.py:1608
+#, python-format
+msgid "Please provide no more than %d item."
+msgid_plural "Please provide no more than %d items."
+msgstr[0] "請提供 %d 個以內的必要項目。"
+
+#: kay/utils/forms/__init__.py:1288
+#, python-format
+msgid "Please enter at least %d character."
+msgid_plural "Please enter at least %d characters."
+msgstr[0] "請輸入至少 %d 個字以上的文字。"
+
+#: kay/utils/forms/__init__.py:1295
+#, python-format
+msgid "Please enter no more than %d character."
+msgid_plural "Please enter no more than %d characters."
+msgstr[0] "請輸入 %d 個字以內的文字。"
+
+#: kay/utils/forms/__init__.py:1306
+msgid "The value is invalid."
+msgstr ""
+
+#: kay/utils/forms/__init__.py:1328
+#, fuzzy
+msgid "Enter a valid e-mail address."
+msgstr "你必須輸入正確的電子郵件地址。"
+
+#: kay/utils/forms/__init__.py:1348
+msgid "Please enter a valid date."
+msgstr "請輸入正確的日期。"
+
+#: kay/utils/forms/__init__.py:1387
+msgid "The selected entity does not exist, or is not allowed to select."
+msgstr "選擇項目並不存在，或不允許被選擇。"
+
+#: kay/utils/forms/__init__.py:1465
+msgid "Invalid value."
+msgstr "不正確的屬性值。"
+
+#: kay/utils/forms/__init__.py:1466
+msgid "Key does not exist."
+msgstr "鍵並不存在。"
+
+#: kay/utils/forms/__init__.py:1536
+msgid "Please enter a valid choice."
+msgstr "請輸入正確的選擇。"
+
+#: kay/utils/forms/__init__.py:1595
+#, python-format
+msgid "“%s” is not a valid choice"
+msgstr "“%s” 不是正確的選項。"
+
+#: kay/utils/forms/__init__.py:1641
+msgid "Please enter a number."
+msgstr "請輸入一個數字。"
+
+#: kay/utils/forms/__init__.py:1667
+#, python-format
+msgid "Ensure this value is greater than or equal to %s."
+msgstr "確保這個數值大於或等於 %s 。"
+
+#: kay/utils/forms/__init__.py:1673
+#, python-format
+msgid "Ensure this value is less than or equal to %s."
+msgstr "確保這個數值小於或等於 %s 。"
+
+#: kay/utils/forms/__init__.py:1706
+msgid "Please enter a whole number."
+msgstr "請輸入一個整數。"
+
+#: kay/utils/forms/__init__.py:1732
+msgid "Please enter a float number."
+msgstr "請輸入一個浮點數。"
+
+#: kay/utils/forms/__init__.py:1751
+msgid "Please select a file to upload."
+msgstr "請選擇要上傳的檔案。"
+
+#: kay/utils/forms/__init__.py:1754
+msgid "File must not empty."
+msgstr "檔案不能是空的。"
+
+#: kay/utils/forms/__init__.py:1776
+msgid "True"
+msgstr "真"
+
+#: kay/utils/forms/__init__.py:1777
+msgid "False"
+msgstr "假"
+
+#: kay/utils/forms/__init__.py:1788
+#, fuzzy
+msgid "Please select True or False."
+msgstr "請選擇要上傳的檔案。"
+
