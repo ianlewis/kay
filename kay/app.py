@@ -224,7 +224,12 @@ class KayApp(object):
 
     self.init_jinja2_environ()
     lang = (request.accept_languages.best or 
-            self.app_settings.DEFAULT_LANG).split('-')[0].lower()
+            self.app_settings.DEFAULT_LANG)
+    pos = lang.find('-')
+    if pos >= 0:
+      lang = lang[:pos].lower()+'_'+lang[pos+1:].upper()
+    else:
+      lang = lang.lower()
     self.init_lang(lang)
 
     try:
