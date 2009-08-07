@@ -113,6 +113,9 @@ class KayTranslations(TranslationsBase):
     self.lang = locale
     self._catalog = {}
     TranslationsBase.__init__(self, fileobj=fileobj)
+    if not hasattr(self, "plural"):
+      self.plural = lambda n: int(n != 1)
+
 
   @classmethod
   def load(cls, path, locale=None, domain='messages'):
