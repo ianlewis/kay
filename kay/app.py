@@ -11,11 +11,12 @@ import sys
 import os
 import logging
 
-from werkzeug import Request, ClosingIterator
+from werkzeug import (
+  Request, ClosingIterator, DispatcherMiddleware,
+)
 from werkzeug.exceptions import (
   HTTPException, InternalServerError, NotFound
 )
-from werkzeug.utils import DispatcherMiddleware
 from werkzeug import Response
 from jinja2 import (
   Environment, Undefined,

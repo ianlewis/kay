@@ -23,23 +23,34 @@
 import tempfile
 import urlparse
 from datetime import datetime, timedelta
+
 from werkzeug.http import HTTP_STATUS_CODES, \
      parse_accept_header, parse_cache_control_header, parse_etags, \
      parse_date, generate_etag, is_resource_modified, unquote_etag, \
      quote_etag, parse_set_header, parse_authorization_header, \
      parse_www_authenticate_header, remove_entity_headers, \
-     default_stream_factory, parse_options_header, \
-     dump_options_header
+     parse_options_header, dump_options_header
+from werkzeug.urls import url_decode
+from werkzeug.formparser import parse_form_data, default_stream_factory
 from werkzeug.utils import cached_property, environ_property, \
-     get_current_url, url_encode, run_wsgi_app, get_host, \
      cookie_date, parse_cookie, dump_cookie, http_date, escape, \
-     header_property, parse_form_data, get_content_type, url_decode
+     header_property, get_content_type
+from werkzeug.wsgi import get_current_url, get_host
 from werkzeug.datastructures import MultiDict, CombinedMultiDict, Headers, \
      EnvironHeaders, ImmutableMultiDict, ImmutableTypeConversionDict, \
      ImmutableList, MIMEAccept, CharsetAccept, LanguageAccept, \
      ResponseCacheControl, RequestCacheControl, CallbackDict
 from werkzeug._internal import _empty_stream, _decode_unicode, \
      _patch_wrapper
+
+
+def _run_wsgi_app(*args):
+    """This function replaces itself to ensure that the test module is not
+    imported unless required.  DO NOT USE!
+    """
+    global _run_wsgi_app
+    from werkzeug.test import run_wsgi_app as _run_wsgi_app
+    return _run_wsgi_app(*args)
 
 
 class BaseRequest(object):
@@ -87,6 +98,9 @@ class BaseRequest(object):
        data.
     """
 
+    # this class is public
+    __module__ = 'werkzeug'
+
     #: the charset for the request, defaults to utf-8
     charset = 'utf-8'
 
@@ -123,7 +137,31 @@ class BaseRequest(object):
         if populate_request and not shallow:
             self.environ['werkzeug.request'] = self
         self.shallow = shallow
-        self._data_stream = None
+
+    def __repr__(self):
+        # make sure the __repr__ even works if the request was created
+        # from an invalid WSGI environment.  If we display the request
+        # in a debug session we don't want the repr to blow up.
+        args = []
+        try:
+            args.append("'%s'" % self.url)
+            args.append('[%s]' % self.method)
+        except:
+            args.append('(invalid WSGI environ)')
+
+        return '<%s %s>' % (
+            self.__class__.__name__,
+            ' '.join(args)
+        )
+
+    @property
+    def url_charset(self):
+        """The charset that is assumed for URLs.  Defaults to the value
+        of :attr:`charset`.
+
+        .. versionadded:: 0.6
+        """
+        return self.charset
 
     @classmethod
     def from_values(cls, *args, **kwargs):
@@ -145,14 +183,6 @@ class BaseRequest(object):
         """
         from werkzeug.test import EnvironBuilder
         charset = kwargs.pop('charset', cls.charset)
-        environ = kwargs.pop('environ', None)
-        if environ is not None:
-            from warnings import DeprecationWarning
-            warn(DeprecationWarning('The environ parameter to from_values'
-                                    ' is now called environ_overrides for'
-                                    ' consistency with EnvironBuilder'),
-                 stacklevel=2)
-            kwargs['environ_overrides'] = environ
         builder = EnvironBuilder(*args, **kwargs)
         try:
             return builder.get_request(cls)
@@ -210,38 +240,60 @@ class BaseRequest(object):
 
     def _load_form_data(self):
         """Method used internally to retrieve submitted data.  After calling
-        this sets `_form` and `_files` on the request object to multi dicts
+        this sets `form` and `files` on the request object to multi dicts
         filled with the incoming form data.  As a matter of fact the input
         stream will be empty afterwards.
 
         :internal:
         """
-        if self._data_stream is None:
-            if self.shallow:
-                raise RuntimeError('A shallow request tried to consume '
-                                   'form data.  If you really want to do '
-                                   'that, set `shallow` to False.')
-            if self.environ['REQUEST_METHOD'] in ('POST', 'PUT'):
+        # abort early if we have already consumed the stream
+        if 'stream' in self.__dict__:
+            return
+        if self.shallow:
+            raise RuntimeError('A shallow request tried to consume '
+                               'form data.  If you really want to do '
+                               'that, set `shallow` to False.')
+        data = None
+        if self.environ['REQUEST_METHOD'] in ('POST', 'PUT'):
+            try:
                 data = parse_form_data(self.environ, self._get_file_stream,
                                        self.charset, self.encoding_errors,
                                        self.max_form_memory_size,
                                        self.max_content_length,
-                                       cls=ImmutableMultiDict)
-            else:
-                data = (_empty_stream, ImmutableMultiDict(),
-                        ImmutableMultiDict())
-            self._data_stream, self._form, self._files = data
+                                       cls=ImmutableMultiDict,
+                                       silent=False)
+            except ValueError, e:
+                self._form_parsing_failed(e)
+        if data is None:
+            data = (_empty_stream, ImmutableMultiDict(),
+                    ImmutableMultiDict())
 
-    @property
+        # inject the values into the instance dict so that we bypass
+        # our cached_property non-data descriptor.
+        d = self.__dict__
+        d['stream'], d['form'], d['files'] = data
+
+    def _form_parsing_failed(self, error):
+        """Called if parsing of form data failed.  This is currently only
+        invoked for failed multipart uploads.  By default this method does
+        nothing.
+
+        :param error: a `ValueError` object with a message why the
+                      parsing failed.
+
+        .. versionadded:: 0.5.1
+        """
+
+    @cached_property
     def stream(self):
         """The parsed stream if the submitted data was not multipart or
-        urlencoded form data.  This stream is the stream left by the CGI
-        module after parsing.  This is *not* the WSGI input stream but
+        urlencoded form data.  This stream is the stream left by the form data
+        parser module after parsing.  This is *not* the WSGI input stream but
         a wrapper around it that ensures the caller does not accidentally
         read past `Content-Length`.
         """
         self._load_form_data()
-        return self._data_stream
+        return self.stream
 
     input_stream = environ_property('wsgi.input', 'The WSGI input stream.\n'
         'In general it\'s a bad idea to use this one because you can easily '
@@ -250,8 +302,8 @@ class BaseRequest(object):
     @cached_property
     def args(self):
         """The parsed URL parameters as :class:`ImmutableMultiDict`."""
-        return url_decode(self.environ.get('QUERY_STRING', ''), self.charset,
-                          errors=self.encoding_errors,
+        return url_decode(self.environ.get('QUERY_STRING', ''),
+                          self.url_charset, errors=self.encoding_errors,
                           cls=ImmutableMultiDict)
 
     @cached_property
@@ -265,21 +317,21 @@ class BaseRequest(object):
         """
         return self.stream.read()
 
-    @property
+    @cached_property
     def form(self):
         """Form parameters.  Currently it's not guaranteed that the
         :class:`ImmutableMultiDict` returned by this function is ordered in
         the same way as the submitted form data.
         """
         self._load_form_data()
-        return self._form
+        return self.form
 
     @cached_property
     def values(self):
         """Combined multi dict for :attr:`args` and :attr:`form`."""
         return CombinedMultiDict([self.args, self.form])
 
-    @property
+    @cached_property
     def files(self):
         """:class:`MultiDict` object containing all uploaded files.  Each key in
         :attr:`files` is the name from the ``<input type="file" name="">``.  Each
@@ -293,7 +345,7 @@ class BaseRequest(object):
         details about the used data structure.
         """
         self._load_form_data()
-        return self._files
+        return self.files
 
     @cached_property
     def cookies(self):
@@ -315,13 +367,13 @@ class BaseRequest(object):
         even if the URL root is accessed.
         """
         path = '/' + (self.environ.get('PATH_INFO') or '').lstrip('/')
-        return _decode_unicode(path, self.charset, self.encoding_errors)
+        return _decode_unicode(path, self.url_charset, self.encoding_errors)
 
     @cached_property
     def script_root(self):
         """The root path of the script without the trailing slash."""
         path = (self.environ.get('SCRIPT_NAME') or '').rstrip('/')
-        return _decode_unicode(path, self.charset, self.encoding_errors)
+        return _decode_unicode(path, self.url_charset, self.encoding_errors)
 
     @cached_property
     def url(self):
@@ -464,8 +516,17 @@ class BaseResponse(object):
                                unchanged (see :func:`wrap_file` for more
                                details.)
     """
+
+    # this class is public
+    __module__ = 'werkzeug'
+
+    #: the charset of the response.
     charset = 'utf-8'
+
+    #: the default status if none is provided.
     default_status = 200
+
+    #: the default mimetype if none is provided.
     default_mimetype = 'text/plain'
 
     def __init__(self, response=None, status=None, headers=None,
@@ -476,14 +537,15 @@ class BaseResponse(object):
             self.response = [response]
         else:
             self.response = iter(response)
-        if not headers:
-            self.headers = Headers()
-        elif isinstance(headers, Headers):
+        if isinstance(headers, Headers):
             self.headers = headers
+        elif not headers:
+            self.headers = Headers()
         else:
             self.headers = Headers(headers)
+
         if content_type is None:
-            if mimetype is None and 'Content-Type' not in self.headers:
+            if mimetype is None and 'content-type' not in self.headers:
                 mimetype = self.default_mimetype
             if mimetype is not None:
                 mimetype = get_content_type(mimetype, self.charset)
@@ -497,6 +559,17 @@ class BaseResponse(object):
         else:
             self.status = status
         self.direct_passthrough = direct_passthrough
+
+    def __repr__(self):
+        if isinstance(self.response, (list, tuple)):
+            body_info = '%d bytes' % sum(map(len, self.iter_encoded()))
+        else:
+            body_info = self.is_streamed and 'streamed' or 'likely-streamed'
+        return '<%s %s [%s]>' % (
+            self.__class__.__name__,
+            body_info,
+            self.status
+        )
 
     @classmethod
     def force_type(cls, response, environ=None):
@@ -531,7 +604,7 @@ class BaseResponse(object):
             if environ is None:
                 raise TypeError('cannot convert WSGI application into '
                                 'response objects without an environ')
-            response = BaseResponse(*run_wsgi_app(response, environ))
+            response = BaseResponse(*_run_wsgi_app(response, environ))
         response.__class__ = cls
         return response
 
@@ -549,7 +622,7 @@ class BaseResponse(object):
         :param buffered: set to `True` to enforce buffering.
         :return: a response object.
         """
-        return cls(*run_wsgi_app(app, environ, buffered))
+        return cls(*_run_wsgi_app(app, environ, buffered))
 
     def _get_status_code(self):
         try:
@@ -586,7 +659,7 @@ class BaseResponse(object):
         of this method is used as application iterator except if
         :attr:`direct_passthrough` was activated.
         """
-        charset = charset or self.charset or 'ascii'
+        charset = charset or self.charset
         for item in self.response:
             if isinstance(item, unicode):
                 yield item.encode(charset)
@@ -629,9 +702,10 @@ class BaseResponse(object):
 
     @property
     def header_list(self):
-        """This returns the headers in the target charset as list.  It's used
-        in __call__ to get the headers for the response.
-        """
+        # XXX: deprecated
+        from warnings import warn
+        warn(DeprecationWarning('header_list is deprecated'),
+             stacklevel=2)
         return self.headers.to_list(self.charset)
 
     @property
@@ -650,24 +724,6 @@ class BaseResponse(object):
             return False
         return True
 
-    def fix_headers(self, environ):
-        """This is automatically called right before the response is started
-        and should fix common mistakes in headers.  For example location
-        headers are joined with the root URL here.
-
-        :param environ: the WSGI environment of the request to be used for
-                        the applied fixes.
-        """
-        if 'Location' in self.headers:
-            self.headers['Location'] = urlparse.urljoin(
-                get_current_url(environ, root_only=True),
-                self.headers['Location']
-            )
-        if 100 <= self.status_code < 200 or self.status_code == 204:
-            self.headers['Content-Length'] = 0
-        elif self.status_code == 304:
-            remove_entity_headers(self.headers)
-
     def close(self):
         """Close the wrapped response if possible."""
         if hasattr(self.response, 'close'):
@@ -679,26 +735,105 @@ class BaseResponse(object):
         """
         BaseResponse.data.__get__(self)
 
+    def fix_headers(self, environ):
+        # XXX: deprecated
+        from warnings import warn
+        warn(DeprecationWarning('called into deprecated fix_headers baseclass '
+                                'method.  Use get_wsgi_headers instead.'),
+             stacklevel=2)
+        self.headers[:] = self.get_wsgi_headers(environ)
+
+    def get_wsgi_headers(self, environ):
+        """This is automatically called right before the response is started
+        and returns headers modified for the given environment.  It returns a
+        copy of the headers from the response with some modifications applied
+        if necessary.
+
+        For example the location header (if present) is joined with the root
+        URL of the environment.  Also the content length is automatically set
+        to zero here for certain status codes.
+
+        .. versionchanged:: 0.6
+           Previously that function was called `fix_headers` and modified
+           the response object in place.
+
+        :param environ: the WSGI environment of the request.
+        :return: returns a new :class:`Headers` object.
+        """
+        headers = Headers(self.headers)
+        location = headers.get('location')
+        if location is not None:
+            headers['Location'] = urlparse.urljoin(
+                get_current_url(environ, root_only=True),
+                location
+            )
+        if 100 <= self.status_code < 200 or self.status_code == 204:
+            headers['Content-Length'] = '0'
+        elif self.status_code == 304:
+            remove_entity_headers(headers)
+        return headers
+
+    def get_app_iter(self, environ):
+        """Returns the application iterator for the given environ.  Depending
+        on the request method and the current status code the return value
+        might be an empty response rather than the one from the response.
+
+        If the request method is `HEAD` or the status code is in a range
+        where the HTTP specification requires an empty response, an empty
+        iterable is returned.
+
+        .. versionadded:: 0.6
+
+        :param environ: the WSGI environment of the request.
+        :return: a response iterable.
+        """
+        if environ['REQUEST_METHOD'] == 'HEAD' or \
+           100 <= self.status_code < 200 or self.status_code in (204, 304):
+            return ()
+        if self.direct_passthrough:
+            return self.response
+        return self.iter_encoded()
+
+    def get_wsgi_response(self, environ):
+        """Returns the final WSGI response as tuple.  The first item in
+        the tuple is the application iterator, the second the status and
+        the first the list of headers.  The response returned is created
+        specially for the given environment.  For example if the request
+        method in the WSGI environment is ``'HEAD'`` the response will
+        be empty and only the headers and status code will be present.
+
+        .. versionadded:: 0.6
+
+        :param environ: the WSGI environment of the request.
+        :return: an ``(app_iter, status, headers)`` tuple.
+        """
+        # XXX: code for backwards compatibility with custom fix_headers
+        # methods.
+        if self.fix_headers.func_code is not \
+           BaseResponse.fix_headers.func_code:
+            from warnings import warn
+            warn(DeprecationWarning('fix_headers changed behavior in 0.6 '
+                                    'and is now called get_wsgi_headers. '
+                                    'See documentation for more details.'),
+                 stacklevel=2)
+            self.fix_headers(environ)
+            headers = self.headers
+        else:
+            headers = self.get_wsgi_headers(environ)
+        app_iter = self.get_app_iter(environ)
+        return app_iter, self.status, headers.to_list(self.charset)
+
     def __call__(self, environ, start_response):
         """Process this response as WSGI application.
 
         :param environ: the WSGI environment.
         :param start_response: the response callable provided by the WSGI
                                server.
+        :return: an application iterator
         """
-        self.fix_headers(environ)
-        if environ['REQUEST_METHOD'] == 'HEAD':
-            resp = ()
-        elif 100 <= self.status_code < 200 or self.status_code in (204, 304):
-            # no response for 204/304.  the headers are adapted accordingly
-            # by fix_headers()
-            resp = ()
-        elif self.direct_passthrough:
-            resp = self.response
-        else:
-            resp = self.iter_encoded()
-        start_response(self.status, self.header_list)
-        return resp
+        app_iter, status, headers = self.get_wsgi_response(environ)
+        start_response(status, headers)
+        return app_iter
 
 
 class AcceptMixin(object):
@@ -706,6 +841,9 @@ class AcceptMixin(object):
     get all the HTTP accept headers as :class:`Accept` objects (or subclasses
     thereof).
     """
+
+    # this class is public
+    __module__ = 'werkzeug'
 
     @cached_property
     def accept_mimetypes(self):
@@ -748,6 +886,9 @@ class ETagRequestMixin(object):
     only provides access to etags but also to the cache control header.
     """
 
+    # this class is public
+    __module__ = 'werkzeug'
+
     @cached_property
     def cache_control(self):
         """A :class:`RequestCacheControl` object for the incoming cache control
@@ -784,10 +925,8 @@ class UserAgentMixin(object):
     object.
     """
 
-    # this class actually belongs to a different module.  For more details
-    # have a look at `werkzeug.useragents`.  On the bottom of that module is
-    # a small comment that explains it.
-    __module__ = 'werkzeug.useragents'
+    # this class is public
+    __module__ = 'werkzeug'
 
     @cached_property
     def user_agent(self):
@@ -801,6 +940,9 @@ class AuthorizationMixin(object):
     of the `Authorization` header as :class:`Authorization` object.
     """
 
+    # this class is public
+    __module__ = 'werkzeug'
+
     @cached_property
     def authorization(self):
         """The `Authorization` object in parsed form."""
@@ -813,6 +955,9 @@ class ETagResponseMixin(object):
     handling.  This mixin requires an object with at least a `headers`
     object that implements a dict like interface similar to :class:`Headers`.
     """
+
+    # this class is public
+    __module__ = 'werkzeug'
 
     @property
     def cache_control(self):
@@ -930,6 +1075,9 @@ class ResponseStreamMixin(object):
     a write-only interface to the response iterable.
     """
 
+    # this class is public
+    __module__ = 'werkzeug'
+
     @cached_property
     def stream(self):
         """The response iterable as write-only stream."""
@@ -943,6 +1091,9 @@ class CommonRequestDescriptorsMixin(object):
 
     .. versionadded:: 0.5
     """
+
+    # this class is public
+    __module__ = 'werkzeug'
 
     content_type = environ_property('CONTENT_TYPE', doc='''
          The Content-Type entity-header field indicates the media type of
@@ -1008,6 +1159,9 @@ class CommonResponseDescriptorsMixin(object):
     mix this class in will automatically get descriptors for a couple of
     HTTP headers with automatic type conversion.
     """
+
+    # this class is public
+    __module__ = 'werkzeug'
 
     def _get_mimetype(self):
         ct = self.headers.get('content-type')
@@ -1144,6 +1298,9 @@ class CommonResponseDescriptorsMixin(object):
 class WWWAuthenticateMixin(object):
     """Adds a :attr:`www_authenticate` property to a response object."""
 
+    # this class is public
+    __module__ = 'werkzeug'
+
     @property
     def www_authenticate(self):
         """The `WWW-Authenticate` header in a parsed form."""
@@ -1168,6 +1325,9 @@ class Request(BaseRequest, AcceptMixin, ETagRequestMixin,
     - :class:`CommonRequestDescriptorsMixin` for common headers
     """
 
+    # this class is public
+    __module__ = 'werkzeug'
+
 
 class Response(BaseResponse, ETagResponseMixin, ResponseStreamMixin,
                CommonResponseDescriptorsMixin,
@@ -1179,3 +1339,6 @@ class Response(BaseResponse, ETagResponseMixin, ResponseStreamMixin,
     - :class:`CommonResponseDescriptorsMixin` for various HTTP descriptors
     - :class:`WWWAuthenticateMixin` for HTTP authentication support
     """
+
+    # this class is public
+    __module__ = 'werkzeug'

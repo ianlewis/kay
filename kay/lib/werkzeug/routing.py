@@ -100,7 +100,8 @@ import re
 from urlparse import urljoin
 from itertools import izip
 
-from werkzeug.utils import url_encode, url_quote, redirect, format_string
+from werkzeug.urls import url_encode, url_quote
+from werkzeug.utils import redirect, format_string
 from werkzeug.exceptions import HTTPException, NotFound, MethodNotAllowed
 
 
@@ -1041,15 +1042,15 @@ class Map(object):
                    in (('https', '443'), ('http', '80')):
                     server_name += ':' + environ['SERVER_PORT']
         elif subdomain is None:
-            cur_server_name = environ.get('HTTP_HOST',
-                environ['SERVER_NAME']).split(':', 1)[0].split('.')
+            wsgi_server_name = environ.get('HTTP_HOST', environ['SERVER_NAME'])
+            cur_server_name = wsgi_server_name.split(':', 1)[0].split('.')
             real_server_name = server_name.split(':', 1)[0].split('.')
             offset = -len(real_server_name)
             if cur_server_name[offset:] != real_server_name:
                 raise ValueError('the server name provided (%r) does not '
                                  'match the server name from the WSGI '
                                  'environment (%r)' %
-                                 (environ['SERVER_NAME'], server_name))
+                                 (server_name, wsgi_server_name))
             subdomain = '.'.join(filter(None, cur_server_name[:offset]))
         return Map.bind(self, server_name, environ.get('SCRIPT_NAME'),
                         subdomain, environ['wsgi.url_scheme'],
@@ -1088,7 +1089,7 @@ class MapAdapter(object):
         """Does the complete dispatching process.  `view_func` is called with
         the endpoint and a dict with the values for the view.  It should
         look up the view function, call it, and return a response object
-        or WSGI application.  http exceptions are not catched by default
+        or WSGI application.  http exceptions are not caught by default
         so that applications can display nicer error messages by just
         catching them by hand.  If you want to stick with the default
         error messages you can pass it ``catch_http_exceptions=True`` and
@@ -1137,7 +1138,7 @@ class MapAdapter(object):
                 return e
             raise
 
-    def match(self, path_info=None, method=None):
+    def match(self, path_info=None, method=None, return_rule=False):
         """The usage is simple: you just pass the match method the current
         path info as well as the method (which defaults to `GET`).  The
         following things can then happen:
@@ -1159,7 +1160,8 @@ class MapAdapter(object):
           similar to all other subclasses of `HTTPException`.
 
         - you get a tuple in the form ``(endpoint, arguments)`` when there is
-          a match.
+          a match (unless `return_rule` is True, in which case you get a tuple
+          in the form ``(rule, arguments)``)
 
         If the path info is not passed to the match method the default path
         info of the map is used (defaults to the root URL if not defined
@@ -1173,7 +1175,7 @@ class MapAdapter(object):
 
         >>> m = Map([
         ...     Rule('/', endpoint='index'),
-        ...     Rule('/downloads/', endpoint='downloads/index'), 
+        ...     Rule('/downloads/', endpoint='downloads/index'),
         ...     Rule('/downloads/<int:id>', endpoint='downloads/show')
         ... ])
         >>> urls = m.bind("example.com", "/")
@@ -1197,6 +1199,11 @@ class MapAdapter(object):
                           path info specified on binding.
         :param method: the HTTP method used for matching.  Overrides the
                        method specified on binding.
+        :param return_rule: return the rule that matched instead of just the
+                            endpoint (defaults to `False`).
+
+        .. versionadded:: 0.6
+            `return_rule` was added.
         """
         self.map.update()
         if path_info is None:
@@ -1250,7 +1257,10 @@ class MapAdapter(object):
                     self.server_name,
                     self.script_name
                 ), redirect_url)))
-            return rule.endpoint, rv
+            if return_rule:
+                return rule, rv
+            else:
+                return rule.endpoint, rv
         if have_match_for:
             raise MethodNotAllowed(valid_methods=list(have_match_for))
         raise NotFound()
@@ -1284,7 +1294,7 @@ class MapAdapter(object):
 
         >>> m = Map([
         ...     Rule('/', endpoint='index'),
-        ...     Rule('/downloads/', endpoint='downloads/index'), 
+        ...     Rule('/downloads/', endpoint='downloads/index'),
         ...     Rule('/downloads/<int:id>', endpoint='downloads/show')
         ... ])
         >>> urls = m.bind("example.com", "/")
