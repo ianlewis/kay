@@ -5,7 +5,7 @@ TODO
 kay
 ----
 
-* Implementation for handling process_view of midleware classes.
+* Implementation for handling process_view of middleware classes.
 
 * Write documentations about middlewares, jinja2 howtos, etc..
 
@@ -27,7 +27,7 @@ kay.sessions
 
 
 kay.auth
----------------
+--------
 
 * An authentication backend other than Google's auth.
 
