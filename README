@@ -144,10 +144,10 @@ Datastore
   You can change this behaviour by settings ADD_APP_PREFIX_TO_KIND to
   False in your settings.py.
 
-* Experimental db_hook feature is now available on tmatsuo branch. To
-  use this feature, you have to set USE_DB_HOOK to True in your top
-  level settings.py file. Also you have to register your hooks
-  beforehands somewhere in your code. I recommend you to do this in
+* Experimental db_hook feature is now available on repository. To use
+  this feature, you have to set USE_DB_HOOK to True in your top level
+  settings.py file. Also you have to register your hooks beforehands
+  somewhere in your code. I recommend you to do this in
   appname/__init__.py because Kay always load this file on startup as
   long as appname is on your INSTALLED_APPS. Here is an example for
   registering a hook that logs dumpped represantation of the saved
