@@ -22,13 +22,13 @@ def startproject(proj_name=''):
     sys.stderr.write("proj_name required.\n")
     sys.exit(1)
   directory = os.getcwd()
-  if not re.search(r'^[_a-zA-Z]\w*$', proj_name):
+  if not re.search(r'^[a-zA-Z][a-zA-Z0-9\-]*$', proj_name):
     # If it's not a valid directory name.
     # Provide a smart error message, depending on the error.
-    if not re.search(r'^[_a-zA-Z]', proj_name):
-      message = 'make sure the name begins with a letter or underscore'
+    if not re.search(r'^[a-zA-Z]', proj_name):
+      message = 'make sure the name begins with a letter'
     else:
-      message = 'use only numbers, letters and underscores'
+      message = 'use only numbers, letters and dashes'
     sys.stderr.write("%r is not a valid project name. Please %s.\n" %
                      (proj_name, message))
     sys.exit(1)
