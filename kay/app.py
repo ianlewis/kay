@@ -45,6 +45,13 @@ def db_hook(service, call, request, response):
     for key, entity in zip(response.key_list(), request.entity_list()):
       kind = model_name_from_key(key)
       execute_hooks(kind, key, entity)
+  elif call == 'Commit':
+    from kay.utils.db_hook import execute_reserved_hooks
+    execute_reserved_hooks()
+  elif call == 'Rollback':
+    from kay.utils.db_hook import clear_reserved_hooks
+    clear_reserved_hooks()
+    
 
 def get_application():
   application = KayApp(_settings)
