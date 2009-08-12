@@ -98,26 +98,33 @@ def url_for(endpoint, **args):
   return rv
 
 
+def create_auth_url(url, action):
+  # TODO: Change implementation according to auth backend settings.
+  if url is None:
+    url = local.request.url
+  method_name = 'create_%s_url' % action
+  if 'kay.auth.middleware.GoogleAuthenticationMiddleware' in \
+        settings.MIDDLEWARE_CLASSES:
+    from google.appengine.api import users
+    method = getattr(users, method_name)
+  elif 'kay.auth.middleware.AuthenticationMiddleware' in \
+        settings.MIDDLEWARE_CLASSES:
+    method = getattr(local.app.auth_backend, method_name)
+  return method(url)
+      
+
 def create_logout_url(url=None):
   """
   An utility function for jinja2.
   """
-  # TODO: Change implementation according to auth backend settings.
-  from google.appengine.api import users
-  if url is None:
-    url = local.request.url
-  return users.create_logout_url(url)
-
+  return create_auth_url(url, 'logout')
+    
 
 def create_login_url(url=None):
   """
   An utility function for jinja2.
   """
-  # TODO: Change implementation according to auth backend settings.
-  from google.appengine.api import users
-  if url is None:
-    url = local.request.url
-  return users.create_login_url(url)
+  return create_auth_url(url, 'login')
 
 
 def reverse(endpoint, _external=False, method='GET', **values):

@@ -14,10 +14,6 @@
     `KeyboardInterrupt` error.  While the latter is easy to solve the first
     one can be a pain in the ass in some situations.
 
-    Because of that Werkzeug ships a small wrapper over `wsgiref` that spawns
-    the WSGI application in a subprocess and automatically reloads the
-    application if a module was changed.
-
     The easiest way is creating a small ``start-myproject.py`` that runs the
     application::
 
@@ -35,8 +31,6 @@
     For bigger applications you should consider using `werkzeug.script`
     instead of a simple start file.
 
-    .. _wsgiref: http://cheeseshop.python.org/pypi/wsgiref
-
 
     :copyright: (c) 2009 by the Werkzeug Team, see AUTHORS for more details.
     :license: BSD, see LICENSE for more details.
@@ -53,25 +47,30 @@ from itertools import chain
 from SocketServer import ThreadingMixIn, ForkingMixIn
 from BaseHTTPServer import HTTPServer, BaseHTTPRequestHandler
 
-from werkzeug import __version__ as version
+import werkzeug
 from werkzeug._internal import _log
-from werkzeug.utils import responder
 from werkzeug.exceptions import InternalServerError
 
 
-class BaseRequestHandler(BaseHTTPRequestHandler, object):
-    server_version = 'Werkzeug/' + version
+class WSGIRequestHandler(BaseHTTPRequestHandler, object):
+    """A request handler that implements WSGI dispatching."""
+
+    @property
+    def server_version(self):
+        return 'Werkzeug/' + werkzeug.__version__
 
     def make_environ(self):
         path_info, query = urlparse(self.path)[2::2]
+        url_scheme = self.server.ssl_context is None and 'http' or 'https'
         environ = {
             'wsgi.version':         (1, 0),
-            'wsgi.url_scheme':      'http',
+            'wsgi.url_scheme':      url_scheme,
             'wsgi.input':           self.rfile,
             'wsgi.errors':          sys.stderr,
             'wsgi.multithread':     self.server.multithread,
             'wsgi.multiprocess':    self.server.multiprocess,
             'wsgi.run_once':        False,
+            'SERVER_SOFTWARE':      self.server_version,
             'REQUEST_METHOD':       self.command,
             'SCRIPT_NAME':          '',
             'PATH_INFO':            unquote(path_info),
@@ -167,7 +166,17 @@ class BaseRequestHandler(BaseHTTPRequestHandler, object):
             self.server.log('error', 'Error on request:\n%s',
                             traceback.plaintext)
 
-    def connection_dropped(self, error, environ):
+    def handle(self):
+        """Handles a request ignoring dropped connections."""
+        try:
+            return BaseHTTPRequestHandler.handle(self)
+        except (socket.error, socket.timeout), e:
+            self.connection_dropped(e)
+        except:
+            if self.server.ssl_context is None or not is_ssl_error():
+                raise
+
+    def connection_dropped(self, error, environ=None):
         """Called if the connection was closed by the client.  By default
         nothing happens.
         """
@@ -196,17 +205,86 @@ class BaseRequestHandler(BaseHTTPRequestHandler, object):
         return self.client_address[0]
 
 
-class BaseWSGIServer(HTTPServer):
+#: backwards compatible name if someone is subclassing it
+BaseRequestHandler = WSGIRequestHandler
+
+
+def generate_adhoc_ssl_context():
+    """Generates an adhoc SSL context for the development server."""
+    from random import random
+    from OpenSSL import crypto, SSL
+
+    cert = crypto.X509()
+    cert.set_serial_number(int(random() * sys.maxint))
+    cert.gmtime_adj_notBefore(0)
+    cert.gmtime_adj_notAfter(60 * 60 * 24 * 365)
+
+    subject = cert.get_subject()
+    subject.CN = '*'
+    subject.O = 'Dummy Certificate'
+
+    issuer = cert.get_issuer()
+    issuer.CN = 'Untrusted Authority'
+    issuer.O = 'Self-Signed'
+
+    pkey = crypto.PKey()
+    pkey.generate_key(crypto.TYPE_RSA, 768)
+    cert.set_pubkey(pkey)
+    cert.sign(pkey, 'md5')
+
+    ctx = SSL.Context(SSL.SSLv23_METHOD)
+    ctx.use_privatekey(pkey)
+    ctx.use_certificate(cert)
+
+    return ctx
+
+
+def is_ssl_error(error=None):
+    """Checks if the given error (or the current one) is an SSL error."""
+    if error is None:
+        error = sys.exc_info()[1]
+    from OpenSSL import SSL
+    return isinstance(error, SSL.Error)
+
+
+class _SSLConnectionFix(object):
+    """Wrapper around SSL connection to provide a working makefile()."""
+
+    def __init__(self, con):
+        self._con = con
+
+    def makefile(self, mode, bufsize):
+        return socket._fileobject(self._con, mode, bufsize)
+
+    def __getattr__(self, attrib):
+        return getattr(self._con, attrib)
+
+
+class BaseWSGIServer(HTTPServer, object):
+    """Simple single-threaded, single-process WSGI server."""
     multithread = False
     multiprocess = False
 
     def __init__(self, host, port, app, handler=None,
-                 passthrough_errors=False):
+                 passthrough_errors=False, ssl_context=None):
         if handler is None:
-            handler = BaseRequestHandler
+            handler = WSGIRequestHandler
         HTTPServer.__init__(self, (host, int(port)), handler)
         self.app = app
         self.passthrough_errors = passthrough_errors
+
+        if ssl_context is not None:
+            try:
+                from OpenSSL import tsafe
+            except ImportError:
+                raise TypeError('SSL is not available if the OpenSSL '
+                                'library is not installed.')
+            if ssl_context == 'adhoc':
+                ssl_context = generate_adhoc_ssl_context()
+            self.socket = tsafe.Connection(ssl_context, self.socket)
+            self.ssl_context = ssl_context
+        else:
+            self.ssl_context = None
 
     def log(self, type, message, *args):
         _log(type, message, *args)
@@ -223,23 +301,32 @@ class BaseWSGIServer(HTTPServer):
         else:
             return HTTPServer.handle_error(self, request, client_address)
 
+    def get_request(self):
+        con, info = self.socket.accept()
+        if self.ssl_context is not None:
+            con = _SSLConnectionFix(con)
+        return con, info
+
 
 class ThreadedWSGIServer(ThreadingMixIn, BaseWSGIServer):
+    """A WSGI server that does threading."""
     multithread = True
 
 
 class ForkingWSGIServer(ForkingMixIn, BaseWSGIServer):
+    """A WSGI server that does forking."""
     multiprocess = True
 
     def __init__(self, host, port, app, processes=40, handler=None,
-                 passthrough_errors=False):
+                 passthrough_errors=False, ssl_context=None):
         BaseWSGIServer.__init__(self, host, port, app, handler,
-                                passthrough_errors)
+                                passthrough_errors, ssl_context)
         self.max_children = processes
 
 
 def make_server(host, port, app=None, threaded=False, processes=1,
-                request_handler=None, passthrough_errors=False):
+                request_handler=None, passthrough_errors=False,
+                ssl_context=None):
     """Create a new server instance that is either threaded, or forks
     or just processes one request after another.
     """
@@ -248,13 +335,13 @@ def make_server(host, port, app=None, threaded=False, processes=1,
                          "multi process server.")
     elif threaded:
         return ThreadedWSGIServer(host, port, app, request_handler,
-                                  passthrough_errors)
+                                  passthrough_errors, ssl_context)
     elif processes > 1:
         return ForkingWSGIServer(host, port, app, processes, request_handler,
-                                 passthrough_errors)
+                                 passthrough_errors, ssl_context)
     else:
         return BaseWSGIServer(host, port, app, request_handler,
-                              passthrough_errors)
+                              passthrough_errors, ssl_context)
 
 
 def reloader_loop(extra_files=None, interval=1):
@@ -270,9 +357,11 @@ def reloader_loop(extra_files=None, interval=1):
         for module in sys.modules.values():
             filename = getattr(module, '__file__', None)
             if filename:
+                old = None
                 while not os.path.isfile(filename):
+                    old = filename
                     filename = os.path.dirname(filename)
-                    if not filename:
+                    if filename == old:
                         break
                 else:
                     if filename[-4:] in ('.pyc', '.pyo'):
@@ -329,7 +418,7 @@ def run_simple(hostname, port, application, use_reloader=False,
                use_debugger=False, use_evalex=True,
                extra_files=None, reloader_interval=1, threaded=False,
                processes=1, request_handler=None, static_files=None,
-               passthrough_errors=False):
+               passthrough_errors=False, ssl_context=None):
     """Start an application using wsgiref and with an optional reloader.  This
     wraps `wsgiref` to fix the wrong default reporting of the multithreaded
     WSGI variable and adds optional multithreading and fork support.
@@ -337,6 +426,9 @@ def run_simple(hostname, port, application, use_reloader=False,
     .. versionadded:: 0.5
        `static_files` was added to simplify serving of static files as well
        as `passthrough_errors`.
+
+    .. versionadded:: 0.6
+       support for SSL was added.
 
     :param hostname: The host for the application.  eg: ``'localhost'``
     :param port: The port for the server.  eg: ``8080``
@@ -364,6 +456,9 @@ def run_simple(hostname, port, application, use_reloader=False,
     :param passthrough_errors: set this to `True` to disable the error catching.
                                This means that the server will die on errors but
                                it can be useful to hook debuggers in (pdb etc.)
+    :param ssl_context: an SSL context for the connction, 'adhoc' if the server
+                        should automatically create one, or `None` to disable
+                        SSL (which is the default).
     """
     if use_debugger:
         from werkzeug.debug import DebuggedApplication
@@ -375,14 +470,14 @@ def run_simple(hostname, port, application, use_reloader=False,
     def inner():
         make_server(hostname, port, application, threaded,
                     processes, request_handler,
-                    passthrough_errors).serve_forever()
+                    passthrough_errors, ssl_context).serve_forever()
 
     if os.environ.get('WERKZEUG_RUN_MAIN') != 'true':
         display_hostname = hostname or '127.0.0.1'
         _log('info', ' * Running on http://%s:%d/', display_hostname, port)
     if use_reloader:
         # Create and destroy a socket so that any exceptions are raised before
-        # we spawn a separate Python interpreter and loose this ability.
+        # we spawn a separate Python interpreter and lose this ability.
         test_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         test_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         test_socket.bind((hostname, port))

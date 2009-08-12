@@ -118,7 +118,7 @@ def run(namespace=None, action_prefix='action_', args=None):
     formatstring = ''
     func, doc, arg_def = actions[args.pop(0)]
     if getattr(func, 'passthru', None):
-      return func()
+        return func()
     for idx, (arg, shortcut, default, option_type) in enumerate(arg_def):
         real_arg = arg.replace('-', '_')
         converter = converters[option_type]
@@ -296,5 +296,6 @@ def make_runserver(app_factory, hostname='localhost', port=5000,
         from werkzeug.serving import run_simple
         app = app_factory()
         run_simple(hostname, port, app, reloader, debugger, evalex,
-                   extra_files, 1, threaded, processes, static_files)
+                   extra_files, 1, threaded, processes,
+                   static_files=static_files)
     return action

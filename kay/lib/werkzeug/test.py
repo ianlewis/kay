@@ -21,10 +21,10 @@ from urllib2 import Request as U2Request
 
 from werkzeug._internal import _empty_stream
 from werkzeug.wrappers import BaseRequest
-from werkzeug.utils import create_environ, run_wsgi_app, get_current_url, \
-     url_encode, url_decode, FileStorage, get_host
+from werkzeug.urls import url_encode
+from werkzeug.wsgi import get_host, get_current_url
 from werkzeug.datastructures import FileMultiDict, MultiDict, \
-     CombinedMultiDict, Headers
+     CombinedMultiDict, Headers, FileStorage
 
 
 def stream_encode_multipart(values, use_tempfile=True, threshold=1024 * 500,
@@ -91,7 +91,6 @@ def stream_encode_multipart(values, use_tempfile=True, threshold=1024 * 500,
 
     length = int(_closure[0].tell())
     _closure[0].seek(0)
-    _closure[0].seek(0)
     return _closure[0], length, boundary
 
 
@@ -121,8 +120,9 @@ class _TestCookieHeaders(object):
 
     def getheaders(self, name):
         headers = []
+        name = name.lower()
         for k, v in self.headers:
-            if k == name:
+            if k.lower() == name:
                 headers.append(v)
         return headers
 
@@ -235,6 +235,9 @@ class EnvironBuilder(object):
     :param environ_overrides: an optional dict of environment overrides.
     :param charset: the charset used to encode unicode data.
     """
+
+    # this class is public
+    __module__ = 'werkzeug'
 
     #: the server protocol to use.  defaults to HTTP/1.1
     server_protocol = 'HTTP/1.1'
@@ -548,6 +551,13 @@ class EnvironBuilder(object):
         return cls(self.get_environ())
 
 
+class ClientRedirectError(Exception):
+    """
+    If a redirect loop is detected when using follow_redirects=True with
+    the :cls:`Client`, then this exception is raised.
+    """
+
+
 class Client(object):
     """This class allows to send requests to a wrapped application.
 
@@ -571,6 +581,9 @@ class Client(object):
        builtin cookie support.
     """
 
+    # this class is public
+    __module__ = 'werkzeug'
+
     def __init__(self, application, response_wrapper=None, use_cookies=True):
         self.application = application
         if response_wrapper is None:
@@ -580,6 +593,7 @@ class Client(object):
             self.cookie_jar = _TestCookieJar()
         else:
             self.cookie_jar = None
+        self.redirect_client = None
 
     def open(self, *args, **kwargs):
         """Takes the same arguments as the :class:`EnvironBuilder` class with
@@ -632,29 +646,40 @@ class Client(object):
         redirect_chain = []
         status_code = int(rv[1].split(None, 1)[0])
         while status_code in (301, 302, 303, 305, 307) and follow_redirects:
+            if not self.redirect_client:
+                # assume that we're not using the user defined response wrapper
+                # so that we don't need any ugly hacks to get the status
+                # code from the response.
+                self.redirect_client = Client(self.application)
+                self.redirect_client.cookie_jar = self.cookie_jar
+
             redirect = dict(rv[2])['Location']
-            host = get_host(create_environ('/', redirect))
+            scheme, netloc, script_root, qs, anchor = urlparse.urlsplit(redirect)
+            base_url = urlparse.urlunsplit((scheme, netloc, '', '', '')).rstrip('/') + '/'
+            host = get_host(create_environ('/', base_url, query_string=qs)).split(':', 1)[0]
             if get_host(environ).split(':', 1)[0] != host:
                 raise RuntimeError('%r does not support redirect to '
                                    'external targets' % self.__class__)
 
-            scheme, netloc, script_root, qs, anchor = urlparse.urlsplit(redirect)
             redirect_chain.append((redirect, status_code))
 
-            kwargs.update({
-                'base_url':         urlparse.urlunsplit((scheme, host,
-                                    script_root, '', '')).rstrip('/') + '/',
+            # the redirect request should be a new request, and not be based on
+            # the old request
+            redirect_kwargs = {}
+            redirect_kwargs.update({
+                'path':             script_root,
+                'base_url':         base_url,
                 'query_string':     qs,
-                'as_tuple':         as_tuple,
+                'as_tuple':         True,
                 'buffered':         buffered,
-                'follow_redirects': False
+                'follow_redirects': False,
             })
-            rv = self.open(*args, **kwargs)
+            environ, rv = self.redirect_client.open(**redirect_kwargs)
             status_code = int(rv[1].split(None, 1)[0])
 
             # Prevent loops
             if redirect_chain[-1] in redirect_chain[0:-1]:
-                break
+                raise ClientRedirectError("loop detected")
 
         response = self.response_wrapper(*rv)
         if as_tuple:

@@ -52,5 +52,6 @@ MIDDLEWARE_CLASSES = (
   'kay.auth.middleware.GoogleAuthenticationMiddleware',
 )
 
+AUTH_USER_BACKEND = 'kay.auth.backend.DatastoreBackend'
 AUTH_USER_MODEL = 'kay.auth.models.GoogleUser'
 USE_DB_HOOK = False

@@ -76,6 +76,14 @@ HTTP_STATUS_CODES = {
 }
 
 
+def public(obj=None):
+    """Marks a function or class as publically available.  Do not call
+    functions that are not public.
+    """
+    obj.__module__ = 'werkzeug'
+    return obj
+
+
 class _Missing(object):
 
     def __repr__(self):
@@ -237,6 +245,21 @@ def _dump_date(d, delim):
     )
 
 
+_timegm = None
+def _date_to_unix(arg):
+    """Converts a timetuple, integer or datetime object into the seconds from
+    epoch in utc.
+    """
+    global _timegm
+    if isinstance(arg, datetime):
+        arg = arg.utctimetuple()
+    elif isinstance(arg, (int, long, float)):
+        return int(arg)
+    if _timegm is None:
+        from calendar import timegm as _timegm
+    return _timegm(arg)
+
+
 class _ExtendedMorsel(Morsel):
     _reserved = {'httponly': 'HttpOnly'}
     _reserved.update(Morsel._reserved)
@@ -316,6 +339,7 @@ class _DictAccessorProperty(object):
         )
 
 
+@public
 def _easteregg(app):
     """Like the name says.  But who knows how it works?"""
     gyver = '\n'.join([x + (77 - len(x)) * ' ' for x in '''

@@ -10,6 +10,8 @@ Kay utils.db_hook module.
 from google.appengine.api import datastore
 from google.appengine.ext import db
 
+from kay.utils import local
+
 import put_type
 
 post_save_hooks = {}
@@ -64,5 +66,26 @@ def execute_hooks(kind, key, entity):
             put_type_id = put_type.MAYBE_NEWLY_CREATED
           else:
             put_type_id = put_type.MAYBE_UPDATED
-    for func in func_list:
-      func(instance, put_type_id)
+    if datastore._CurrentTransactionKey():
+      # This operation is inside the transaction. So, we reserve the
+      # func_list and parameters for later execution.
+      tmp_list = getattr(local, '_reserved_hooks', None)
+      if tmp_list is None:
+        tmp_list = []
+      tmp_list.append((func_list, instance, put_type_id))
+      local._reserved_hooks = tmp_list
+    else:
+      for func in func_list:
+        func(instance, put_type_id)
+
+def clear_reserved_hooks():
+  tmp_list = getattr(local, '_reserved_hooks', None)
+  if tmp_list is not None:
+    local._reserved_hooks = []
+
+def execute_reserved_hooks():
+  tmp_list = getattr(local, '_reserved_hooks', None)
+  if tmp_list is not None:
+    for func_list, instance, put_type_id in tmp_list:
+      for func in func_list:
+        func(instance, put_type_id)

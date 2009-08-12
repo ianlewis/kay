@@ -11,11 +11,12 @@ import sys
 import os
 import logging
 
-from werkzeug import Request, ClosingIterator
+from werkzeug import (
+  Request, ClosingIterator, DispatcherMiddleware,
+)
 from werkzeug.exceptions import (
   HTTPException, InternalServerError, NotFound
 )
-from werkzeug.utils import DispatcherMiddleware
 from werkzeug import Response
 from jinja2 import (
   Environment, Undefined,
@@ -44,6 +45,13 @@ def db_hook(service, call, request, response):
     for key, entity in zip(response.key_list(), request.entity_list()):
       kind = model_name_from_key(key)
       execute_hooks(kind, key, entity)
+  elif call == 'Commit':
+    from kay.utils.db_hook import execute_reserved_hooks
+    execute_reserved_hooks()
+  elif call == 'Rollback':
+    from kay.utils.db_hook import clear_reserved_hooks
+    clear_reserved_hooks()
+    
 
 def get_application():
   application = KayApp(_settings)
@@ -77,6 +85,7 @@ class KayApp(object):
     self.views = None
     self._request_middleware = self._response_middleware = \
         self._view_middleware = self._exception_middleware = None
+    self.auth_backend = None
 
   def init_url_map(self):
 
@@ -99,6 +108,28 @@ class KayApp(object):
       all_views = getattr(url_mod, 'all_views', None)
       if all_views:
         self.views.update(all_views)
+    if 'kay.auth.middleware.AuthenticationMiddleware' in \
+          settings.MIDDLEWARE_CLASSES:
+      try:
+        dot = settings.AUTH_USER_BACKEND.rindex('.')
+      except ValueError:
+        raise exceptions.ImproperlyConfigured, \
+            'Error importing auth backend %s: "%s"' % \
+            (settings.AUTH_USER_BACKEND, e)
+      backend_module, backend_classname = settings.AUTH_USER_BACKEND[:dot], \
+          settings.AUTH_USER_BACKEND[dot+1:]
+      try:
+        mod = import_module(backend_module)
+      except ImportError, e:
+        raise ImproperlyConfigured, \
+            'Error importing auth backend %s: "%s"' % (backend_module, e)
+      try:
+        klass = getattr(mod, backend_classname)
+      except AttributeError:
+        raise ImproperlyConfigured, \
+            'Auth backend module "%s" does not define a "%s" class' % \
+            (backend_module, backend_classname)
+      self.auth_backend = klass()
     
   def init_jinja2_environ(self):
     """

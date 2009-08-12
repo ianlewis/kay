@@ -52,10 +52,13 @@ class DebuggedApplication(object):
                                to `True`.
     """
 
+    # this class is public
+    __module__ = 'werkzeug'
+
     def __init__(self, app, evalex=False, request_key='werkzeug.request',
                  console_path='/console', console_init_func=None,
                  show_hidden_frames=False):
-        if console_init_func:
+        if not console_init_func:
             console_init_func = dict
         self.app = app
         self.evalex = evalex
@@ -95,7 +98,7 @@ class DebuggedApplication(object):
                 # more, better log something into the error log and fall
                 # back gracefully.
                 environ['wsgi.errors'].write(
-                    'Debugging middleware catched exception in streamed '
+                    'Debugging middleware caught exception in streamed '
                     'response at a point where response headers were already '
                     'sent.\n')
             else:
