@@ -48,7 +48,7 @@ def db_hook(service, call, request, response):
   elif call == 'Commit':
     from kay.utils.db_hook import execute_reserved_hooks
     execute_reserved_hooks()
-  elif call == 'Rollback':
+  elif call == 'Rollback' or call == 'BeginTransaction':
     from kay.utils.db_hook import clear_reserved_hooks
     clear_reserved_hooks()
     
