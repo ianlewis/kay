@@ -94,7 +94,8 @@ def url_for(endpoint, **args):
   rv = local.url_adapter.build(endpoint, args,
                                force_external=external)
   if anchor is not None:
-    rv += '#' + url_quote(anchor)
+    import urllib2
+    rv += '#' + urllib2.quote(anchor)
   return rv
 
 
