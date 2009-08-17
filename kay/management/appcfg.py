@@ -35,7 +35,7 @@ def do_appcfg_passthru_argv():
   if len(sys.argv) < 3:
     sys.stderr.write('action required.\n')
     sys.exit(1)
-  if sys.argv[2] == 'update':
+  if 'update' in sys.argv:
     do_preparse_apps()
   
   models = get_all_models_as_dict()
@@ -67,7 +67,7 @@ def do_appcfg_passthru_argv():
     StatusUpdate('Interrupted.')
     sys.exit(1)
   from kay.conf import settings
-  if settings.PROFILE and sys.argv[2] == 'update':
+  if settings.PROFILE and 'update' in sys.argv:
     print '--------------------------\n' \
         'WARNING: PROFILER ENABLED!\n' \
         '--------------------------'
