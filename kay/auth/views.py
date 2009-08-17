@@ -10,6 +10,9 @@ Kay authentication views.
 from werkzeug import (
   unescape, redirect, Response,
 )
+from werkzeug.urls import (
+  url_quote, url_unquote, url_encode,
+)
 
 from kay.utils import (
   local, render_to_response, url_for,
@@ -21,22 +24,20 @@ from forms import LoginForm
 def post_session(request):
   if request.method == "GET":
     from models import TemporarySession
-    import urllib2
     s = TemporarySession.get_by_key_name(request.values.get("session_id"))
     if s is not None:
       s.delete()
       import datetime
       allowed_datetime = datetime.datetime.now() - \
-          datetime.timedelta(seconds=10)
+          datetime.timedelta(seconds=10) # TODO: remove magic number
       if s.created > allowed_datetime:
         local.request.session['_user'] = s.user
-        return redirect(urllib2.unquote(request.values.get('next')))
+        return redirect(url_unquote(request.values.get('next')))
   return Response("Error")
     
 
 def login(request):
-  import urllib2
-  next = urllib2.unquote(request.values.get("next"))
+  next = url_unquote(request.values.get("next"))
   owned_domain_hack = request.values.get("owned_domain_hack")
   message = ""
   form = LoginForm()
@@ -46,11 +47,11 @@ def login(request):
                                             password=form.data['password'])
       if result:
         if owned_domain_hack == 'True':
-          original_host_url = urllib2.unquote(
+          original_host_url = url_unquote(
             request.values.get("original_host_url"))
           url = original_host_url[:-1] + url_for("auth/post_session")
-          url += '?session_id=' + result.key().name() + '&next='+ \
-              urllib2.quote(next, safe='')
+          url += '?' + url_encode({'session_id': result.key().name(),
+                                   'next': next})
           return redirect(url)
         else:
           return redirect(next)
@@ -63,5 +64,4 @@ def login(request):
 def logout(request):
   next = request.values.get("next")
   local.app.auth_backend.logout()
-  import urllib2
-  return redirect(urllib2.unquote(next))
+  return redirect(url_unquote(next))

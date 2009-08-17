@@ -9,6 +9,8 @@ Kay authentication backends.
 
 import urllib2
 
+from werkzeug.urls import url_quote
+
 from kay.exceptions import ImproperlyConfigured
 from kay.conf import settings
 from kay.utils import (
@@ -27,10 +29,10 @@ class DatastoreBackend(object):
       return AnonymousUser()
 
   def create_login_url(self, url):
-    return url_for("auth/login", next=urllib2.quote(url,safe=''))
+    return url_for("auth/login", next=url_quote(url,safe=''))
 
   def create_logout_url(self, url):
-    return url_for("auth/logout", next=urllib2.quote(url,safe=''))
+    return url_for("auth/logout", next=url_quote(url,safe=''))
 
   def logout(self):
     try:
@@ -79,9 +81,9 @@ class DatastoreBackendWithOwnedDomainHack(DatastoreBackend):
     import os
     hostname = get_appid() + '.appspot.com'
     url = url_for("auth/login",
-                  next=urllib2.quote(url,safe=''),
-                  original_host_url=urllib2.quote(local.request.host_url,
-                                                  safe=''),
+                  next=url_quote(url,safe=''),
+                  original_host_url=url_quote(local.request.host_url,
+                                              safe=''),
                   owned_domain_hack=True)
     if 'SERVER_SOFTWARE' in os.environ and \
           os.environ['SERVER_SOFTWARE'].startswith('Dev'):

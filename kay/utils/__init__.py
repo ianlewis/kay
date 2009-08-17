@@ -18,6 +18,7 @@ from werkzeug import (
   Local, LocalManager, Response
 )
 from werkzeug.exceptions import NotFound
+from werkzeug.urls import url_quote
 from pytz import timezone, UTC
 
 from kay.conf import settings
@@ -94,8 +95,7 @@ def url_for(endpoint, **args):
   rv = local.url_adapter.build(endpoint, args,
                                force_external=external)
   if anchor is not None:
-    import urllib2
-    rv += '#' + urllib2.quote(anchor)
+    rv += '#' + url_quote(anchor)
   return rv
 
 
