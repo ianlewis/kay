@@ -76,6 +76,13 @@ class NullUndefined(Undefined):
     logging.debug("The variable '%s' undefined." % self._undefined_name)
     return u''
 
+def get_app_tailname(app):
+  dot = app.rfind('.')
+  if dot >= 0:
+    return app[dot+1:]
+  else:
+    return app
+  
 
 class KayApp(object):
 
@@ -101,7 +108,8 @@ class KayApp(object):
       except ImportError:
         logging.warning("Failed to import app '%s.urls', skipped." % app)
         continue
-      mountpoint = self.app_settings.APP_MOUNT_POINTS.get(app, "/%s" % app)
+      mountpoint = self.app_settings.APP_MOUNT_POINTS.get(
+        app, "/%s" % get_app_tailname(app))
       make_rules = getattr(url_mod, 'make_rules', None)
       if make_rules:
         self.url_map.add(Submount(mountpoint, make_rules()))
@@ -160,7 +168,7 @@ class KayApp(object):
       try:
         app_key = getattr(mod, 'template_loader_key')
       except AttributeError:
-        app_key = app
+        app_key = get_app_tailname(app)
       per_app_loaders[app_key] = FileSystemLoader(
         os.path.join(os.path.dirname(mod.__file__), template_dirname))
     loader = PrefixLoader(per_app_loaders)  

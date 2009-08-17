@@ -7,10 +7,6 @@ Kay auth application.
 :license: BSD, see LICENSE for more details.
 """
 
-from kay.auth.models import AnonymousUser
-
-def get_user(request):
-  return AnonymousUser()
 
 def process_context(request):
   return {'user': request.user}

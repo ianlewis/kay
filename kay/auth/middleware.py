@@ -11,13 +11,12 @@ from kay import auth
 from kay.exceptions import ImproperlyConfigured
 from kay.conf import settings
 from kay.utils.importlib import import_module
-
+from kay.utils import local
 
 class LazyUser(object):
   def __get__(self, request, obj_type=None):
     if not hasattr(request, '_cached_user'):
-      from kay.auth import get_user
-      request._cached_user = get_user(request)
+      request._cached_user = local.app.auth_backend.get_user(request)
     return request._cached_user
 
 

@@ -10,13 +10,14 @@ Kay authentication models.
 from google.appengine.ext import db
 
 from kay.conf import settings
+from kay.utils import crypto
 
 class User(db.Model):
   """
   Basic user type that can be used with other login
   schemes other than Google logins
   """
-  email = db.EmailProperty(required=True)
+  email = db.EmailProperty()
   first_name = db.StringProperty(required=False)
   last_name = db.StringProperty(required=False)
 
@@ -31,6 +32,31 @@ class User(db.Model):
 
   def is_authenticated(self):
     return True
+
+class DatastoreUser(User):
+  """
+  Use DatastoreUser.get_key_name(user_name) as key_name for this model.
+  """
+  user_name = db.StringProperty(required=True)
+  password = db.StringProperty(required=True)
+
+  def __unicode__(self):
+    return unicode(self.user_name)
+
+  @classmethod
+  def get_key_name(cls, user_name):
+    return 'u:%s' % user_name
+
+  @classmethod
+  def get_by_user_name(cls, user_name):
+    return cls.get_by_key_name(cls.get_key_name(user_name))
+
+  def check_password(self, raw_password):
+    return crypto.check_pwhash(self.password, raw_password)
+
+  def set_password(self, raw_password):
+    self.password = crypto.gen_pwhash(raw_password)
+    return self.put()
 
 class GoogleUser(User):
   """

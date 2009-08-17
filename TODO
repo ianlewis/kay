@@ -31,6 +31,8 @@ kay.auth
 
 * An authentication backend other than Google's auth.
 
+ * A capability for customizing html templates.
+
  * When using apps domain, we cannot use https on our domain. We have
    to use appspot.com domain for SSL. So there will be the problem
    that Kay can not handle the cookies from our own domain.
