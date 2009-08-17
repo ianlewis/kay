@@ -24,9 +24,13 @@ def post_session(request):
     import urllib2
     s = TemporarySession.get_by_key_name(request.values.get("session_id"))
     if s is not None:
-      local.request.session['_user'] = s.user
       s.delete()
-      return redirect(urllib2.unquote(request.values.get('next')))
+      import datetime
+      allowed_datetime = datetime.datetime.now() - \
+          datetime.timedelta(seconds=10)
+      if s.created > allowed_datetime:
+        local.request.session['_user'] = s.user
+        return redirect(urllib2.unquote(request.values.get('next')))
   return Response("Error")
     
 
