@@ -16,6 +16,7 @@ from kay.utils import (
 )
 from kay.auth.models import AnonymousUser
 from kay.utils.importlib import import_module
+from kay.misc import get_appid
 
 class DatastoreBackend(object):
   
@@ -36,6 +37,10 @@ class DatastoreBackend(object):
       del local.request.session['_user']
     except:
       pass
+
+  def store_user(self, user):
+    local.request.session['_user'] = user
+    return True
 
   def login(self, user_name, password):
     try:
@@ -60,6 +65,26 @@ class DatastoreBackend(object):
     if user is None:
       return False
     if user.check_password(password):
-      local.request.session['_user'] = user
-      return True
+      return self.store_user(user)
     return False
+
+class DatastoreBackendWithOwnedDomainHack(DatastoreBackend):
+
+  def store_user(self, user):
+    from models import TemporarySession
+    session = TemporarySession.get_new_session(user)
+    return session
+
+  def create_login_url(self, url):
+    import os
+    hostname = get_appid() + '.appspot.com'
+    url = url_for("auth/login",
+                  next=urllib2.quote(url,safe=''),
+                  original_host_url=urllib2.quote(local.request.host_url,
+                                                  safe=''),
+                  owned_domain_hack=True)
+    if 'SERVER_SOFTWARE' in os.environ and \
+          os.environ['SERVER_SOFTWARE'].startswith('Dev'):
+      return url
+    else:
+      return "https://%s%s" % (hostname, url)

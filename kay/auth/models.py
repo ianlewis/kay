@@ -78,3 +78,29 @@ class AnonymousUser(object):
 
   def key(self):
     return None
+
+class TemporarySession(db.Model):
+  """
+  Set an unique id as key_name.
+  """
+  user = db.ReferenceProperty(required=True)
+  created = db.DateTimeProperty(auto_now_add=True)
+  last_login = db.DateTimeProperty(auto_now=True)
+
+  @classmethod
+  def get_key_name(cls, uuid):
+    return 's:%s' % uuid
+
+  @classmethod
+  def get_new_session(cls, user):
+    from kay.utils import crypto
+    def txn():
+      uuid = crypto.new_iid()
+      session = cls.get_by_key_name(cls.get_key_name(uuid))
+      while session is not None:
+        uuid = crypto.new_iid()
+        session = cls.get_by_key_name(cls.get_key_name(uuid))
+      session = cls(key_name=cls.get_key_name(uuid), user=user)
+      session.put()
+      return session
+    return db.run_in_transaction(txn)
