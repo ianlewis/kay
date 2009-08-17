@@ -9,6 +9,7 @@ Kay authentication backends.
 
 import urllib2
 
+from google.appengine.ext import db
 from werkzeug.urls import url_quote
 
 from kay.exceptions import ImproperlyConfigured
@@ -24,7 +25,7 @@ class DatastoreBackend(object):
   
   def get_user(self, request):
     if request.session.has_key('_user'):
-      return request.session['_user']
+      return db.get(request.session['_user'])
     else:
       return AnonymousUser()
 
@@ -41,7 +42,7 @@ class DatastoreBackend(object):
       pass
 
   def store_user(self, user):
-    local.request.session['_user'] = user
+    local.request.session['_user'] = user.key()
     return True
 
   def login(self, user_name, password):

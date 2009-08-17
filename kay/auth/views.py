@@ -24,14 +24,15 @@ from forms import LoginForm
 def post_session(request):
   if request.method == "GET":
     from models import TemporarySession
-    s = TemporarySession.get_by_key_name(request.values.get("session_id"))
-    if s is not None:
-      s.delete()
+    temporary_session = TemporarySession.get_by_key_name(
+      request.values.get("session_id"))
+    if temporary_session is not None:
+      temporary_session.delete()
       import datetime
       allowed_datetime = datetime.datetime.now() - \
           datetime.timedelta(seconds=10) # TODO: remove magic number
-      if s.created > allowed_datetime:
-        local.request.session['_user'] = s.user
+      if temporary_session.created > allowed_datetime:
+        local.request.session['_user'] = temporary_session.user.key()
         return redirect(url_unquote(request.values.get('next')))
   return Response("Error")
     
