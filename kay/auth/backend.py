@@ -7,8 +7,6 @@ Kay authentication backends.
 :license: BSD, see LICENSE for more details.
 """
 
-import urllib2
-
 from google.appengine.ext import db
 from werkzeug.urls import url_quote_plus
 
