@@ -11,6 +11,9 @@ kay
 
 * Change the url of paste capability in the werkzeug debugger.
 
+* Handle CapabilityDisabledError more gracefully.
+
+
 kay.utils.forms
 ----------------
 
@@ -26,5 +29,7 @@ kay.sessions
   users' session data.
 
 kay.auth
+--------
 
 * Refactoring
+
