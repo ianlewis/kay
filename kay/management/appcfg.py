@@ -50,8 +50,10 @@ def do_appcfg_passthru_argv():
       args.append("--kind=%s" % model.kind())
     else:
       args.append(arg)
+      if arg == "request_logs":
+        args.append(os.getcwdu())
 
-  if "--help" in args or "help" in args:
+  if "--help" in args or "help" in args or "request_logs" in args:
     args = [progname] + args
   else:
     args = [progname] + args + [os.getcwdu()]
