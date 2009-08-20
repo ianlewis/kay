@@ -1,0 +1,16 @@
+Copyright 2009 Takashi Matsuo
+All rights reserved.
+
+Kay framework - Release Notes
+
+Kay-0.1.0 - August 22, 2009
+===========================
+  - Added db_hook feature.
+  - Added zh_TW translations.
+  - Improved i18n mechanism.
+  - Implemented authentication backend.
+  - Fixed many bugs.
+
+Kay-0.0.0 - July 7, 2009
+========================
+  - First release.
