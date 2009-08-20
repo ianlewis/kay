@@ -90,9 +90,9 @@ middleware.
 
 For now, there is no any convenience method to create users into the
 datastore. Please keep in mind that you need to set user's password in
-a special format. You can use kay.utils.crypto.gen_pwhash function for
-this purpose. Here is the code to create new user in the datastore.
-You also need to use key_name for a performance reason.
+a special hashed format. You can use kay.utils.crypto.gen_pwhash
+function for this purpose. Here is the code to create new user in the
+datastore. You also need to use key_name for a performance reason.
 
 .. code-block:: python
 
