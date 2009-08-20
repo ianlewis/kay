@@ -233,6 +233,8 @@ Manuals
 * Management script
   docs/manage_py.rst
 
+* Using Authentication
+  docs/auth.rst
 
 Questions and Bug Report
 ------------------------

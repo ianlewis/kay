@@ -27,7 +27,7 @@ def login_required(func):
 
 def admin_required(func):
   def inner(request, *args, **kwargs):
-    if not users.is_current_user_admin():
+    if not request.user.is_admin:
       if request.user.is_anonymous():
         return redirect(create_login_url(request.url))
       else:

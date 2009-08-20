@@ -20,6 +20,7 @@ class User(db.Model):
   email = db.EmailProperty()
   first_name = db.StringProperty(required=False)
   last_name = db.StringProperty(required=False)
+  is_admin = db.BooleanProperty(required=True, default=False)
 
   created = db.DateTimeProperty(auto_now_add=True)
   last_login = db.DateTimeProperty(auto_now=True)
@@ -62,10 +63,12 @@ class GoogleUser(User):
   """
   Use User.user_id() as key_name for this model.
   """
-  is_admin = db.BooleanProperty(required=True, default=False)
+  pass
+
 
 class AnonymousUser(object):
-  __slots__ = ()
+  __slots__ = ('is_admin')
+  is_admin = False
 
   def __unicode__(self):
     return "AnonymousUser"
