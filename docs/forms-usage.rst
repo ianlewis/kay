@@ -195,8 +195,8 @@ attribute. Let's take a look in turn.
       {{ form.subject()|safe }}
     </div>
 
-This code renders the label of the subject field in "myLabel"
-class. The word "class" is reserved, so you need to add an underscore
+This code renders the label of the subject field in 'myLabel'
+class. The word 'class' is reserved, so you need to add an underscore
 to avoid error in order to specify the class. The subject field widget
 is also callable, and if you call it, you can get HTML for both of the
 input field and error messages at a time.
