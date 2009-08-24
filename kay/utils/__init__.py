@@ -31,6 +31,11 @@ _translations_cache = {}
 _default_translations = None
 _standard_context_processors = None
 
+def set_trace():
+  import pdb, sys
+  debugger = pdb.Pdb(stdin=sys.__stdin__, 
+                     stdout=sys.__stdout__)
+  debugger.set_trace(sys._getframe().f_back)
 
 def get_project_path():
   return os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
