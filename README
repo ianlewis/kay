@@ -36,6 +36,7 @@ Dependencies
 
 Manuals
 -------
+
 * quickstart
   docs/source/quickstart.rst
 
@@ -53,6 +54,15 @@ Manuals
 
 * Using Authentication
   docs/source/auth.rst
+
+Online documentation
+--------------------
+
+* English
+  http://kay-docs.shehas.net/
+
+* Japanese
+  http://kay-docs-jp.shehas.net/
 
 Questions and Bug Report
 ------------------------
