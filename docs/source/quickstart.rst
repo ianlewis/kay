@@ -75,9 +75,9 @@ follows.
 Shell tools
 -----------
 
-* Invoking `python manage.py shell` gives you python (or ipython if
-  available) bash session with the same DatastoreFileStub settings
-  of local dev server. For the details of manage.py commands, please
+* Invoking ``python manage.py shell`` gives you python (or ipython if
+  available) shell session with the same DatastoreFileStub settings of
+  local dev server. For the details of manage.py commands, please
   refer to :doc:`manage_py`.
 
 **Note:**
@@ -87,7 +87,7 @@ Shell tools
   your bash session. You must restart your dev server for
   reflecting the result of the bash sessions.
 
-* Invoking `python manage.py rshell` is the same as above except for
+* Invoking ``python manage.py rshell`` is the same as above except for
   using RemoteDatastore stub. You can access the data on the
   production server.
 

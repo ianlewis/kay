@@ -47,8 +47,8 @@ decorators just like:
     ...
     ...
 
-Using GoogleAuthenticationMiddleware
-------------------------------------
+Using google account authentication
+-----------------------------------
 
 By default, kay.auth.middleware.GoogleAuthenticationMiddleware is
 enabled. This middleware is for authentication using google account or
@@ -69,7 +69,7 @@ the name of your new class to AUTH_USER_MODEL settings directive.
   AUTH_USER_MODEL = 'kay.auth.models.GoogleUser'
 
 
-Using AuthenticationMiddleware
+Using datastore authentication
 ------------------------------
 
 To use this middleware, you need to set
@@ -91,8 +91,9 @@ middleware.
 For now, there is no any convenience method to create users into the
 datastore. Please keep in mind that you need to set user's password in
 a special hashed format. You can use kay.utils.crypto.gen_pwhash
-function for this purpose. Here is the code to create new user in the
-datastore. You also need to use key_name for a performance reason.
+function for this purpose. You also need to use key_name for a
+performance reason. Here is the code to create new user in the
+datastore.
 
 .. code-block:: python
 
@@ -106,7 +107,7 @@ datastore. You also need to use key_name for a performance reason.
                             user_name=user_name, password=gen_pwhash(password))
    new_user.put()
 
-Using DatastoreBackendWithOwnedDomainHack
------------------------------------------
+Using datastore authentication on an owned domain
+-------------------------------------------------
 
 TODO

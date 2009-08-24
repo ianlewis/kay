@@ -28,7 +28,7 @@ understanding Kay's form utilities.
 Your First Form
 ---------------
 
-Let's consider a form to implement "contact me" functionality.
+Let's consider a form to implement ``contact me`` functionality.
 
 .. code-block:: python
 
@@ -43,7 +43,7 @@ Let's consider a form to implement "contact me" functionality.
 A form is composed of Field objects. In this case, our form has four
 fields: subject, message, sender and cc_myself. TextField, EmailField
 and BooleanField are just three of the available field types; a full
-list can be found in the document titled 'Form Field'.
+list can be found in :doc:`form-fields`.
 
 If your form is going to be used to directly add or edit an AppEngine
 Datastore model, you can use a ModelForm to avoid duplicating your
@@ -72,7 +72,7 @@ There are three code paths here:
 
 2. If the form has been submitted, the data is validated using
    form.validate(request.form). If the submitted data is valid, it is
-   processed and the user is re-directed to a "/thanks/" page.
+   processed and the user is re-directed to a ``/thanks/`` page.
 
 3. If the submitted data is invalid, the widget instance created using
    form.as_widget() is passed to the template.
