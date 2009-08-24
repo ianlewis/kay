@@ -1,87 +1,76 @@
-==================
-Kay i18n mechanism
-==================
+====================
+Kay メッセージ国際化
+====================
 
-Overview
---------
+概要
+----
 
-Kay has a almost full stack i18n feature including extracting messages
-from the source, adding new language to your app, updating and
-compiling the message catalogs and a handlers for javascript gettext
-implementation. This feature is basicaly based on the jinja2's i18n
-feature, so it is a good idea to refer to jinja2's documentation
-hosted at:
+Kay はソースからのメッセージ抽出・アプリケーションに新規言語を追加する方法・メッセージカタログの更新とコンパイル・javascript の gettext 実装を含む、殆んど完全な国際化機構を持っています。この機能は基本的に jinja2 の国際化機構をベースとしているので、下記でホストされている jinja2 のドキュメントを参照するのは良いアイデアと言えるでしょう:
 
   http://jinja.pocoo.org/2/documentation/
 
-Marking your messages
----------------------
+メッセージのマーク
+------------------
 
-You can mark your messages for translation in python code as
-following:
+Python コード内では下記のようにしてメッセージをマークできます:
 
 .. code-block:: python
 
   from kay.i18n import gettext as _
   _('Hello')
 
-You can mark your messages for translation in templates as following:
+テンプレート内では下記のようにします:
 
 .. code-block:: html
 
   <p>{{ _('Hello') }}</p>
   <p>{% trans %}Hello{% endtrans %}
 
-Extracting messages
--------------------
 
-You can extract the messages from 'myapp' application and create the
-template file as following:
+メッセージの抽出
+----------------
+
+``myapp`` アプリケーションからメッセージを抽出し、カタログファイルの雛型を作成するには下記のようにします:
 
 .. code-block:: bash
 
    $ python manage.py extract_messages myapp
 
-The 'extract_messages' subcommand accepts optional '--domain'
-parameter. The value for this parameter must be 'messages' or
-'jsmessages'.
+``extract_messages`` サブコマンドはオプションの ``--domain`` パラメーターを受け付けます。この値は ``messages`` か ``jsmessages`` である必要があります。
 
+翻訳の追加
+----------
 
-Adding translations
--------------------
-
-You can add new Japanese translations from the template like:
+雛型から日本語の翻訳を追加するには下記のようにします:
 
 .. code-block:: bash
 
   $ python manage.py add_translations myapp -l ja
 
-Updating messages
------------------
+翻訳の更新
+----------
 
-You can update your translations with updated translation template as
-following:
+翻訳したファイルをアップデートされた雛型に追従させるには下記のようにします:
 
 .. code-block:: bash
 
    $ python manage.py update_translations myapp -l ja
 
 
-Compiling messages
-------------------
+メッセージのコンパイル
+----------------------
 
-You can compile all of your translations under 'myapp' application as
-following:
+``myapp`` アプリケーションの翻訳全てをコンパイルするには下記のようにします:
 
 .. code-block:: bash
 
   $ python manage.py compile_translations myapp
 
 
-Javascript handler
-------------------
+javascript ハンドラー
+---------------------
 
-You can define a handler for pseudo javascript gettext as following:
+javascript で gettext を使用するためのハンドラーは下記のように定義します:
 
 .. code-block:: python
 

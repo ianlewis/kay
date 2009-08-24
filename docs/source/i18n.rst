@@ -35,16 +35,16 @@ You can mark your messages for translation in templates as following:
 Extracting messages
 -------------------
 
-You can extract the messages from 'myapp' application and create the
-template file as following:
+You can extract the messages from ``myapp`` application and create the
+template catalog file as following:
 
 .. code-block:: bash
 
    $ python manage.py extract_messages myapp
 
-The 'extract_messages' subcommand accepts optional '--domain'
-parameter. The value for this parameter must be 'messages' or
-'jsmessages'.
+The ``extract_messages`` subcommand accepts optional ``--domain``
+parameter. The value for this parameter must be ``messages`` or
+``jsmessages``.
 
 
 Adding translations
@@ -70,8 +70,8 @@ following:
 Compiling messages
 ------------------
 
-You can compile all of your translations under 'myapp' application as
-following:
+You can compile all of your translations under ``myapp`` application
+as following:
 
 .. code-block:: bash
 
