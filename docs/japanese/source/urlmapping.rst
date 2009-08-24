@@ -1,42 +1,28 @@
-===============
-Kay URL Mapping
-===============
+==================
+Kay URL マッピング
+==================
 
-Overview
---------
+概要
+----
 
-For now, kay has one global url mapping and one global
-endpoint-to-view dictionary per project unless you use SUBMOUNT_APP
-feature. Kay automatically collects all the url rules and
-endpoint-to-view dictionaries from installed applications(according to
-the settings in the file settings.py), and put them into the global
-ones.
+現バージョンの Kay では ``SUBMOUNT_APP`` 機能を使わない限りは、プロジェクトにつき、ひとつのグローバルな url マッピングとひとつの endpoint-view の対応辞書を持ちます。Kay はこれらの値を、インストールされたアプリケーション( ``settings.py`` での設定によります)から自動的に収集し、グローバルな値として保持します。
 
-How does it work?
------------------
+どのように動作するか
+--------------------
 
-A newly created application by 'manage.py startapp' command already
-has a default urls.py in it. The urls.py has a function named
-'make_rules', which should return an instance of RuleFactory or Rule.
+``manage.py startapp`` コマンドにより作成されたアプリケーションには、デフォルトの ``urls.py`` が含まれています。この中には ``RuleFactory`` または ``Rule`` を返す ``make_rules`` 関数が用意されています。
 
-Kay just detects and import 'appname.urls' module, and merge this
-RuleFactory into the global one.
+Kay は ``appname.urls`` モジュールを検知すると、この ``RuleFactory`` をグローバルな url マッピングに組み込みます。
 
-This Rules will be mounted on the url '/appname' by default, you can
-customize the mount point by adding {'appname': '/mount_path'} style
-entry to the 'APP_MOUNT_POINTS' variable.
+このルールはデフォルトでは ``/appname`` にマウントされます。このマウントポイントは ``APP_MOUNT_POINTS`` へ ``{'appname': '/mount_path'}`` 形式で指定する事で変更できます。
 
-The default urls.py has a module level global dictionary named
-'all_views' as well. Kay will detects these dictionaries and update
-the global one with these dictionaries automatically.
+デフォルトの ``urls.py`` はモジュールグローバルな ``all_views`` という辞書があります。Kay はこの辞書も検知して自動的にグローバルな設定に組み込みます。
 
-Adding your view
+ビューを追加する
 ----------------
 
-To add your original view, you need to edit urls.py in your
-application directory. Let's say we have our application named
-'myapp', and we want to add our original view. The default urls.py has
-a 'index' view bound to the url '/myapp/'. Here is the default urls.py.
+独自のビューを追加するには、アプリケーションディレクトリ内の ``urls.py`` を編集する必要があります。
+``myapp`` というアプリケーションがあるとして、そこに独自のビューを追加したいとしましょう。デフォルトの ``urls.py`` には ``/myapp/`` という url に結びついた ``index`` ビューがあります。デフォルトの ``urls.py`` は下記のようになっています:
 
 .. code-block:: python
 
@@ -51,8 +37,7 @@ a 'index' view bound to the url '/myapp/'. Here is the default urls.py.
     'myapp/index': myapp.views.index,
   }
 
-Here is an example which adds 'index2' view bound to the url
-'/myapp/index2':
+下記の例では ``index2`` ビューを ``/myapp/index2`` という url に結び付けています:
 
 .. code-block:: python
 
@@ -69,7 +54,6 @@ Here is an example which adds 'index2' view bound to the url
     'myapp/index2': myapp.views.index2,
   }
 
-For the details of how to configure the url mappings, perhaps you can
-check werkzeug's manual hosted at following URL:
+これらの url マッピングをどのように編集するかについて更に詳しく知るには、下記の URL にホストされている werkzeug のマニュアルを見ると良いでしょう:
 
   http://werkzeug.pocoo.org/documentation/

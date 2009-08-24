@@ -15,28 +15,30 @@ ones.
 How does it work?
 -----------------
 
-A newly created application by 'manage.py startapp' command already
-has a default urls.py in it. The urls.py has a function named
-'make_rules', which should return an instance of RuleFactory or Rule.
+A newly created application by ``manage.py startapp`` command already
+has a default ``urls.py`` in it. The ``urls.py`` has a function named
+``make_rules``, which should return an instance of RuleFactory or
+Rule.
 
-Kay just detects and import 'appname.urls' module, and merge this
+Kay just detects and import ``appname.urls`` module, and merge this
 RuleFactory into the global one.
 
-This Rules will be mounted on the url '/appname' by default, you can
-customize the mount point by adding {'appname': '/mount_path'} style
-entry to the 'APP_MOUNT_POINTS' variable.
+This Rules will be mounted on the url ``/appname`` by default, you can
+customize the mount point by adding ``{'appname': '/mount_path'}``
+style entry to the ``APP_MOUNT_POINTS`` variable.
 
-The default urls.py has a module level global dictionary named
-'all_views' as well. Kay will detects these dictionaries and update
+The default ``urls.py`` has a module level global dictionary named
+``all_views`` as well. Kay will detects these dictionaries and update
 the global one with these dictionaries automatically.
 
 Adding your view
 ----------------
 
-To add your original view, you need to edit urls.py in your
+To add your original view, you need to edit ``urls.py`` in your
 application directory. Let's say we have our application named
-'myapp', and we want to add our original view. The default urls.py has
-a 'index' view bound to the url '/myapp/'. Here is the default urls.py.
+``myapp``, and we want to add our original view. The default
+``urls.py`` has a ``index`` view bound to the url ``/myapp/``. Here is
+the default ``urls.py``.
 
 .. code-block:: python
 
@@ -51,8 +53,8 @@ a 'index' view bound to the url '/myapp/'. Here is the default urls.py.
     'myapp/index': myapp.views.index,
   }
 
-Here is an example which adds 'index2' view bound to the url
-'/myapp/index2':
+Here is an example which adds ``index2`` view bound to the url
+``/myapp/index2``:
 
 .. code-block:: python
 

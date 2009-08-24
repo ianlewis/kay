@@ -64,11 +64,11 @@ Jinja2 preparsing
 
 Current version of Kay loads only preparsed jinja2 templates in GAE
 environment, so you have to preparse before deploying your
-application. The manage.py script automatically do this job, so you
-don't have to worry about it usually. If you use launcher on MacOSX,
-please keep in mind that just push ``deploy`` button on it won't care
-about preparsing jinja2 templates. In such a case, to preparse jinja2
-template, perhaps you can execute following command:
+application. The ``manage.py`` script automatically do this job, so
+you don't have to worry about it usually. If you use launcher on
+MacOSX, please keep in mind that just push ``deploy`` button on it
+won't care about preparsing jinja2 templates. In such a case, to
+preparse jinja2 template, perhaps you can execute following command:
 
 .. code-block:: bash
 
