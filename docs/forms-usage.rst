@@ -144,10 +144,11 @@ Customizing the form template
 -----------------------------
 
 If the default generated HTML is not to your taste, you can completely
-customize the way a form is presented using 'call' tag of jinja2. When
-you use 'call' tag, you need to put your form's contents(including
-submit buttons) between {% call form() %} and {% endcall %}. Here's an
-example of how to customize the representation of our form.
+customize the way a form is presented using ``call`` tag of
+jinja2. When you use ``call`` tag, you need to put your form's
+contents(including submit buttons) between {% call form() %} and {%
+endcall %}. Here's an example of how to customize the representation
+of our form.
 
 .. code-block:: html
 
@@ -195,11 +196,11 @@ attribute. Let's take a look in turn.
       {{ form.subject()|safe }}
     </div>
 
-This code renders the label of the subject field in 'myLabel'
-class. The word 'class' is reserved, so you need to add an underscore
-to avoid error in order to specify the class. The subject field widget
-is also callable, and if you call it, you can get HTML for both of the
-input field and error messages at a time.
+This code renders the label of the subject field in ``myLabel``
+class. The word ``class`` is reserved, so you need to add an
+underscore to avoid error in order to specify the class. The subject
+field widget is also callable, and if you call it, you can get HTML
+for both of the input field and error messages at a time.
 
 2. Second example
 
@@ -285,10 +286,11 @@ Customizing form validation
 ---------------------------
 
 To put validation method on particular field, you can define a method
-named 'validate_FIELDNAME'. e.g. To check if a value submitted as
-'password' field is stronger enough, you can set 'validate_password'
-method in the class definition of the Form. If validation fails, you
-need to raise ValidationError with appropriate error message.
+named ``validate_FIELDNAME``. e.g. To check if a value submitted as
+``password`` field is stronger enough, you can set
+``validate_password`` method in the class definition of the Form. If
+validation fails, you need to raise ValidationError with appropriate
+error message.
 
 Here's an example:
 
@@ -307,7 +309,7 @@ Here's an example:
 
 What if adding a field for password confirmation? To do that, you have
 to check the values among plural fields, creating the method named
-'context_validate'. Here's an example:
+``context_validate``. Here's an example:
 
 .. code-block:: python
 
