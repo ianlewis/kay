@@ -23,7 +23,7 @@ Let's start
 
 You have to add 'hello' to the INSTALLED_APPS tupple in the
 settings.py. For the details of how to define urls and views for your
-application, please refer to docs/urlmapping.rst.
+application, please refer to :doc:`urlmapping`.
 
  * settings.py
 
@@ -52,7 +52,7 @@ You can access your first application on the url:
 
 
 * You can handle i18n like following. For the details of i18n, please
-  refer to docs/i18n.rst.
+  refer to :doc:`i18n`.
 
 .. code-block:: bash
 
@@ -78,7 +78,7 @@ Shell tools
 * Invoking `python manage.py shell` gives you python (or ipython if
   available) bash session with the same DatastoreFileStub settings
   of local dev server. For the details of manage.py commands, please
-  refer to docs/manage_py.rst.
+  refer to :doc:`manage_py`.
 
 **Note:**
 
@@ -102,7 +102,7 @@ Datastore
 * You must use GAE models directly. You can use kay.utils.forms for
   form handling. You can construct a form automatically from the model
   definition with kay.utils.forms.modelform.ModelForm. For the details
-  of how to use forms, please refer to docs/forms-usage.rst.
+  of how to use forms, please refer to :doc:`forms-usage`.
 
 * By default, db.Model.kind() returns ('model's app name' + _ + 'model
   name').lower(). So when you see the management bash, there will
