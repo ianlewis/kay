@@ -1,13 +1,13 @@
-================
-Kay forms manual
-================
+===========
+Forms usage
+===========
 
 Overview
 --------
 
-Kay has a utility for form handling. It is placed on kay.utils.forms,
-and kay.utils.forms.modelform. Here are conceptual elements for
-understanding Kay's form utilities.
+Kay has a utility for form handling. It is placed on
+``kay.utils.forms`` and ``kay.utils.forms.modelform``. Here are
+conceptual elements for understanding Kay's form utilities.
 
 * Widget
 
@@ -17,8 +17,8 @@ understanding Kay's form utilities.
 
 * Field
 
-  A class that is responsible for doing validation, e.g. an FloatField
-  that makes sure its data is a valid float value.
+  A class that is responsible for doing validation, e.g. a
+  ``FloatField`` that makes sure its data is a valid float value.
 
 * Form
 
@@ -41,9 +41,10 @@ Let's consider a form to implement ``contact me`` functionality.
     cc_myself = forms.BooleanField(required=False)
 
 A form is composed of Field objects. In this case, our form has four
-fields: subject, message, sender and cc_myself. TextField, EmailField
-and BooleanField are just three of the available field types; a full
-list can be found in :doc:`form-fields`.
+fields: ``subject``, ``message``, ``sender`` and
+``cc_myself``. ``TextField``, ``EmailField`` and ``BooleanField`` are
+just three of the available field types; a full list can be found in
+:doc:`form-fields`.
 
 If your form is going to be used to directly add or edit an AppEngine
 Datastore model, you can use a ModelForm to avoid duplicating your
@@ -67,29 +68,31 @@ The standard pattern for processing a form in a view looks like this:
 
 There are three code paths here:
 
-1. If the form has not been submitted, a form instance of ContactForm
-   is created and the widget instance is passed to the template.
+1. If the form has not been submitted, a form instance of
+   ``ContactForm`` is created and the widget instance is passed to the
+   template.
 
 2. If the form has been submitted, the data is validated using
-   form.validate(request.form). If the submitted data is valid, it is
-   processed and the user is re-directed to a ``/thanks/`` page.
+   ``form.validate(request.form)``. If the submitted data is valid, it
+   is processed and the user is re-directed to a ``/thanks/`` page.
 
-3. If the submitted data is invalid, the widget instance created using
-   form.as_widget() is passed to the template.
+3. If the submitted data is invalid, the widget instance that conains
+   error messages is created using ``form.as_widget()`` and passed to
+   the template.
 
 Processing the data form a form
 -------------------------------
 
-Once form.validate() returns True, you can process the form submission
-safely in the knowledge that it confirms to the validation rules
-defined by your form. While you could access request.form directly at
-this point, it is better to access form.data or access the data in
-following style: form["subject"], form["message"] or
+Once ``form.validate()`` returns True, you can process the form
+submission safely in the knowledge that it confirms to the validation
+rules defined by your form. While you could access request.form
+directly at this point, it is better to access form.data or access the
+data in following style: form["subject"], form["message"] or
 form["sender"]. This data has not only been validated but will also be
 converted into the relevant Python types for you. In the above
-example, cc_myself will be a boolean value. Likewise, fields such as
-IntegerField and FloatField convert values to a Python int and float
-respectively.
+example, ``cc_myself`` will be a boolean value. Likewise, fields such
+as ``IntegerField`` and ``FloatField`` convert values to a Python int
+and float respectively.
 
 Extending the above example, here's how the form data could be processed:
 
@@ -196,11 +199,11 @@ attribute. Let's take a look in turn.
       {{ form.subject()|safe }}
     </div>
 
-This code renders the label of the subject field in ``myLabel``
+This code renders the label of the ``subject`` field in ``myLabel``
 class. The word ``class`` is reserved, so you need to add an
-underscore to avoid error in order to specify the class. The subject
-field widget is also callable, and if you call it, you can get HTML
-for both of the input field and error messages at a time.
+underscore to avoid error in order to specify the class. The
+``subject`` field widget is also callable, and if you call it, you can
+get HTML for both of the input field and error messages at a time.
 
 2. Second example
 
@@ -261,10 +264,11 @@ widget by passing keyword argument on rendering.
 Handling file upload
 --------------------
 
-If your form contains FileField or Field class drived from it, the
+If your form contains ``FileField`` or Field class drived from it, the
 widget automatically rendered with necessary attribute in its form
-tag. You need to pass request.files as well as request.form. Here's an
-example that shows you how to handle file upload.
+tag. You need to pass ``request.files`` as well as ``request.form`` to
+``validate()`` method. Here's an example that shows you how to handle
+file upload.
 
 .. code-block:: python
 

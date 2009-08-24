@@ -1,23 +1,18 @@
-====================
-Using authentication
-====================
+==========
+認証の設定
+==========
 
-Overview
---------
+概要
+----
 
-Google App Engine has a very nice default auth mechanism using google
-account or google apps account. You can use this capability with
-extensible manner with GoogleAuthenticationMiddleware. You can also
-use username and password information stored in the app engine
-datastore.
+Google App Engine には、良くできた認証機構が備わっています。この機構では Google Account か Google Apps Account をバックエンドとして利用します。
+Kay では ``GoogleAuthenticationMiddleware`` を使用する事でこの機能を拡張可能な形で利用する事ができます。また、データストアに保存したユーザー名とパスワードを認証に使用する事もできます。
 
-Helper functions and decorators
--------------------------------
+ヘルパ関数とデコレーター
+------------------------
 
-There are helper functions in kay.utils module: create_logout_url and
-create_login_url. These functions are automatically imported into
-templates' rendering context. So you can use these functions in your
-templates just like:
+``kay.utils`` モジュールには二つのヘルパ関数があります:
+``create_logout_url`` と ``create_login_url`` です。これらの関数はテンプレートをレンダリング際のコンテキストに自動的にインポートされます。従ってテンプレート内部では、下記のように使用する事ができます:
 
 .. code-block:: html
 
@@ -27,9 +22,8 @@ templates just like:
     Hello {{ request.user }}! <a href="{{ create_logout_url() }}">logout</a>
   {% endif %}
 
-There are decorators in kay.auth.decorators module: login_required and
-admin_required. You can decorate any view of yours with these
-decorators just like:
+``kay.auth.decorators`` モジュールには、二つのデコレーターがあります:
+``login_required`` と ``admin_required`` です。これらのデコレーターでビューを修飾するには下記のようにします:
 
 .. code-block:: python
 
@@ -47,19 +41,12 @@ decorators just like:
     ...
     ...
 
-Using google account authentication
------------------------------------
+Google Account 認証を使用する
+-----------------------------
 
-By default, kay.auth.middleware.GoogleAuthenticationMiddleware is
-enabled. This middleware is for authentication using google account or
-google apps account. If a user logs into your app first time, an
-information of the user is stored as GoogleUser entity (It's just a
-default setting, it is also customizable) in the GAE datastore. You
-can use this middleware without using session capability.
+``kay.auth.middleware.GoogleAuthenticationMiddleware`` がデフォルトで有効になっています。このミドルウェアは、Google Account か Google Apps Account を使用して認証するためのものです。ユーザーが初めてアプリケーションにログインした時、そのユーザーの情報が ``GoogleUser`` (デフォルトの設定です。これもカスタマイズ可能です)エンティティとしてデータストアに保存されます。このミドルウェアの使用には、セッション機能を必要としません。
 
-To customize user model, you need to define new class extended from
-kay.auth.models.GoogleUser, add any required properties to it, and set
-the name of your new class to AUTH_USER_MODEL settings directive.
+ユーザーモデルを変更するには、``kay.auth.models.GoogleUser`` を継承して必要なプロパティを追加したモデルを定義し、そのモデルのクラス名を ``AUTH_USER_MODEL`` に設定する必要があります。
 
 .. code-block:: python
 
@@ -69,16 +56,11 @@ the name of your new class to AUTH_USER_MODEL settings directive.
   AUTH_USER_MODEL = 'kay.auth.models.GoogleUser'
 
 
-Using datastore authentication
-------------------------------
+データストアを利用した認証
+--------------------------
 
-To use this middleware, you need to set
-'kay.auth.middleware.AuthenticationMiddleware' to MIDDLEWARE_CLASSES
-settings directive, and also need to set
-'kay.auth.models.DatastoreUser' (or a classname that is extended from
-it) to AUTH_USER_MODEL settings directive. AuthenticationMiddleware
-must be placed under SessionMiddleware that is mandatry for this
-middleware.
+このタイプの認証を使用するには ``kay.auth.middleware.AuthenticationMiddleware`` を ``MIDDLEWARE_CLASSES`` に設定し、また ``AUTH_USER_MODEL`` には ``kay.auth.models.DatastoreUser`` (又はそれを継承したクラス) を設定する必要があります。
+``AuthenticationMiddleware`` はこのミドルウェアの動作に必要な ``SessionMiddleware`` の下に設定する必要があります。
 
 .. code-block:: python
 
@@ -88,12 +70,7 @@ middleware.
   )
   AUTH_USER_MODEL = 'kay.auth.models.DatastoreUser'
 
-For now, there is no any convenience method to create users into the
-datastore. Please keep in mind that you need to set user's password in
-a special hashed format. You can use kay.utils.crypto.gen_pwhash
-function for this purpose. You also need to use key_name for a
-performance reason. Here is the code to create new user in the
-datastore.
+現在では、データストアにユーザーを作成する便利な手段は存在しません。ユーザーのパスワードを保存する場合には、特別なハッシュフォーマットで保存する必要がありますので気をつけてください。それには ``kay.utils.crypto.gen_pwhash`` 関数が使用できます。パフォーマンスのため、key_name を指定する必要もあります。下記に新しいユーザーを作成するコードを示します:
 
 .. code-block:: python
 
@@ -107,7 +84,7 @@ datastore.
                             user_name=user_name, password=gen_pwhash(password))
    new_user.put()
 
-Using datastore authentication on an owned domain
--------------------------------------------------
+独自ドメイン上でデータストア認証を使用する
+------------------------------------------
 
 TODO

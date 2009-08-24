@@ -1,34 +1,31 @@
-================
-Kay forms manual
-================
+==================
+フォームの使用方法
+==================
 
-Overview
---------
+概要
+----
 
-Kay has a utility for form handling. It is placed on kay.utils.forms,
-and kay.utils.forms.modelform. Here are conceptual elements for
-understanding Kay's form utilities.
+Kay にはフォームを扱うためのユーティリティが付属しています。
+``kay.utils.forms`` と ``kay.utils.forms.modelform`` です。Kay のフォームユーティリティを理解する助けとなる概念を説明しておきます。
+
 
 * Widget
 
-  A class that corresponds to HTML representation of a field, or even
-  a form, e.g. <input type="text">, <textarea> or
-  <form>...</form>. This class handles rendering HTML.
+  フィールドやフォーム自体の HTML 表現を担当するクラスです。例えば <input type="text"> や <textarea> または <form>...</form> といったように。HTML のレンダリング担当です。
 
 * Field
 
-  A class that is responsible for doing validation, e.g. an FloatField
-  that makes sure its data is a valid float value.
+  ポストされた値のヴァリデーション担当です。例えば ``FloatField`` はデータがきちんと浮動小数点数である事を保証してくれます。
 
 * Form
 
-  A collection of fields that knows how to validate itself and convert
-  itself to a widget.
+  フィールドが集まって出来ていて、自分自身のヴァリデート方法を知っています。また自分自身を Widget に変換する方法も知っています。
 
-Your First Form
----------------
 
-Let's consider a form to implement ``contact me`` functionality.
+初めてのフォーム
+----------------
+
+``お問い合わせ`` 機能を実装するためのフォームを考えてみましょう。
 
 .. code-block:: python
 
@@ -40,19 +37,16 @@ Let's consider a form to implement ``contact me`` functionality.
     sender = forms.EmailField(required=True)
     cc_myself = forms.BooleanField(required=False)
 
-A form is composed of Field objects. In this case, our form has four
-fields: subject, message, sender and cc_myself. TextField, EmailField
-and BooleanField are just three of the available field types; a full
-list can be found in :doc:`form-fields`.
+フォームはフィールドオブジェクトで構成されます。この場合は、フォームには四つのフィールドがあります: ``subject`` ``message`` ``sender`` そして ``cc_myself`` です。
+``TextField`` ``EmailField`` ``BooleanField`` は使用可能なフィールドのほんの一部です; 完全なリストは :doc:`form-fields` を参照ください。
 
-If your form is going to be used to directly add or edit an AppEngine
-Datastore model, you can use a ModelForm to avoid duplicating your
-model description.
+もしフォームが AppEngine のデータストア上でモデルをそのまま追加したり更新したりする目的なら ``ModelForm`` を使用する事でモデル定義を繰り返す事なくフォームを定義できます。
 
-Using a form in a view
-----------------------
 
-The standard pattern for processing a form in a view looks like this:
+ビュー内でフォームを使用する
+----------------------------
+
+ビュー内でフォームを使用する基本パターンは下記のようになります:
 
 .. code-block:: python
 
@@ -65,33 +59,22 @@ The standard pattern for processing a form in a view looks like this:
 	return redirect("/thanks/")
     return render_to_response("myapp/contact.html", {"form": form.as_widget()})
 
-There are three code paths here:
+ここでは処理は3パターンに分れます:
 
-1. If the form has not been submitted, a form instance of ContactForm
-   is created and the widget instance is passed to the template.
+1. フォームがサブミットされていない場合は ``ContactForm`` のインスタンスが作成され、その Widget がテンプレートに渡されます。
 
-2. If the form has been submitted, the data is validated using
-   form.validate(request.form). If the submitted data is valid, it is
-   processed and the user is re-directed to a ``/thanks/`` page.
+2. フォームがサブミットされた場合は ``form.validate(request.form)`` によりヴァリデートされます。もしデータが有効なら正常に処理されユーザーは ``/thanks/`` ページへリダイレクトされます。
 
-3. If the submitted data is invalid, the widget instance created using
-   form.as_widget() is passed to the template.
+3. サブミットされたデータが無効の場合は ``form.as_widget()`` により作成されたエラーメッセージを含む Widget がテンプレートに渡されます。
 
-Processing the data form a form
--------------------------------
 
-Once form.validate() returns True, you can process the form submission
-safely in the knowledge that it confirms to the validation rules
-defined by your form. While you could access request.form directly at
-this point, it is better to access form.data or access the data in
-following style: form["subject"], form["message"] or
-form["sender"]. This data has not only been validated but will also be
-converted into the relevant Python types for you. In the above
-example, cc_myself will be a boolean value. Likewise, fields such as
-IntegerField and FloatField convert values to a Python int and float
-respectively.
+フォームからのデータを処理する
+------------------------------
 
-Extending the above example, here's how the form data could be processed:
+``form.validate()`` が真を返したなら、フォームの投稿をフォームのヴァリデーションルールを満すものとして安全に扱う事ができます。
+ここで ``request.form`` を直接使用する事もできますが ``form.data`` を使用するか以下のスタイルでデータにアクセスしましょう: ``form["subject"]`` ``form["message"]`` または ``form["sender"]`` です。これらのデータはヴァリデートされているだけではなく、便宜のため適切な Python の型に変換されています。上記の例では ``cc_myself`` は真偽値になります。同様に ``IntegerField`` や ``FloatField`` は Python の int や float に変換されます。
+
+上記の例において、フォームデータを処理するコードは下記のようになるでしょう:
 
 .. code-block:: python
 
@@ -104,12 +87,11 @@ Extending the above example, here's how the form data could be processed:
                    subject=form["subject"], body=form["message"])
     return redirect("/thanks/")
 
-Displaying a form using a template
+
+テンプレート内でフォームを表示する
 ----------------------------------
 
-Form widgets are very easy to render. In the above example, we passed
-our ContactForms's widget representation to the template using the
-context variable form. Here's a simple example template:
+Widget はとても簡単に表示できます。上記の例では ``ContactForm`` を Widget の形式で ``form`` という名前に割り当ててテンプレートに渡しています。以下はシンプルなテンプレートの例です:
 
 .. code-block:: html
 
@@ -117,9 +99,7 @@ context variable form. Here's a simple example template:
     {{ form()|safe }}
   </body>
 
-Widgets are callable, and if you call it, you can get the rendered
-HTML form. The result is already HTML escaped, so you need to append
-a safe filter after it. Here's the output for our example template:
+Widget は callable で、call するとレンダーされた HTML form が得られます。結果は既に HTML escape されており ``safe`` フィルターを付加する必要があります。下記のような出力が得られる筈です:
 
 .. code-block:: html
 
@@ -140,15 +120,11 @@ a safe filter after it. Here's the output for our example template:
     <div class="actions"><input type="submit" value="submit"></div>
   </form>
 
-Customizing the form template
------------------------------
+フォーム表示のカスタマイズ
+--------------------------
 
-If the default generated HTML is not to your taste, you can completely
-customize the way a form is presented using ``call`` tag of
-jinja2. When you use ``call`` tag, you need to put your form's
-contents(including submit buttons) between {% call form() %} and {%
-endcall %}. Here's an example of how to customize the representation
-of our form.
+デフォルトで生成される HTML が気に入らない場合は、jinja2 の ``call`` タグを使用する事で見た目をとことんカスタマイズできます。
+``call`` タグを使用する場合には、フォームの中身を(サブミット用のボタンも) ``{% call form() %}`` と ``{% endcall %}`` の間に配置する必要があります。フォーム表示のカスタマイズ方法を見てみましょう:
 
 .. code-block:: html
 
@@ -183,11 +159,9 @@ of our form.
   {% endcall %}
   </body>
 
-The example above shows four different ways to display one field
-widget. You can access each field through the root widget's
-attribute. Let's take a look in turn.
+上記の例では、それぞれ違う四つの方法でフィールド Widget を描画しています。個々のフィールドは root Widget の attribute としてアクセスできます。順番に見ていきましょう。
 
-1. First example
+1. 一番目の例
 
 .. code-block:: html
 
@@ -196,13 +170,11 @@ attribute. Let's take a look in turn.
       {{ form.subject()|safe }}
     </div>
 
-This code renders the label of the subject field in ``myLabel``
-class. The word ``class`` is reserved, so you need to add an
-underscore to avoid error in order to specify the class. The subject
-field widget is also callable, and if you call it, you can get HTML
-for both of the input field and error messages at a time.
+このコードは ``subject`` フィールドのラベルを ``myLabel`` class として描画します。
+``class`` という単語は予約語なので、アンダースコアを付加する事になっています。
+``subject`` フィールド Widget も callable で、call すると input フィールドとエラーメッセージの両方を同時に表す HTML が得られます。
 
-2. Second example
+2. 二番目の例
 
 .. code-block:: html
 
@@ -212,19 +184,15 @@ for both of the input field and error messages at a time.
       {{ form.message.render()|safe }}
     </div>
 
-The second example shows you how to separate HTMLs of input field and
-error messages. If you call render() method instead of just call the
-field widget, you only get the HTML of input field. So in most cases,
-you need to put codes for displaying error messages. In this example,
-you will get this HTML for error messages:
+二番目の例では、input フィールドとエラーメッセージを別々に描画しています。フィールド Widget を直接 call する代りに ``render()`` メソッドを呼出せば input フィールドのみを表す HTML が得られます。ですので多くの場合、エラーメッセージを表示するコードが別途必要になるでしょう。この例ではエラーメッセージとして下記のような出力が得られます:
 
 .. code-block:: html
 
   <ul class="errors"><li>This field is required.</li></ul>
 
-What if you don't like <ul> tags?
+``<ul>`` タグがあまり気に入らない場合はどうしたら良いでしょう。
 
-3. Third example
+3. 三番目の例
 
 .. code-block:: html
 
@@ -240,10 +208,9 @@ What if you don't like <ul> tags?
       {% endif %}
     </div>
 
-The third example shows you how to iterate over error messages. Isn't
-is easy?
+この例ではエラーメッセージをループで処理する方法を示しています。簡単ですので説明は省きます。
 
-4. Forth example
+4. 四番目の例
 
 .. code-block:: html
 
@@ -253,18 +220,14 @@ is easy?
       {{ form.cc_myself.errors(class_="myErrors")|safe }}
     </div>
 
-The last example show you how to specify class on error
-messages. Actually, you can specify any attribute on any renderable
-widget by passing keyword argument on rendering.
+最後の例ではエラーメッセージの描画に class 指定をしています。実際にはレンダーの際にキーワード引数を与える事で、どんな HTML 属性も追加できます。
 
 
-Handling file upload
+ファイルアップロード
 --------------------
 
-If your form contains FileField or Field class drived from it, the
-widget automatically rendered with necessary attribute in its form
-tag. You need to pass request.files as well as request.form. Here's an
-example that shows you how to handle file upload.
+フォームに ``FileField`` かそれを継承したクラスのフィールドがある場合、Widget は自動的に form タグ内の必要な属性を設定します。
+``validate()`` メソッドには ``request.form`` だけでなく ``request.files`` を渡す必要があります。ファイルアップロードのやり方を下記に示します:
 
 .. code-block:: python
 
@@ -282,17 +245,12 @@ example that shows you how to handle file upload.
       return redirect("/thanks")
 
 
-Customizing form validation
----------------------------
+フォームヴァリデーションのカスタマイズ
+--------------------------------------
 
-To put validation method on particular field, you can define a method
-named ``validate_FIELDNAME``. e.g. To check if a value submitted as
-``password`` field is stronger enough, you can set
-``validate_password`` method in the class definition of the Form. If
-validation fails, you need to raise ValidationError with appropriate
-error message.
+特定のフィールドにヴァリデーション用のメソッドを設定するには、``validate_FIELDNAME`` という形式のメソッドを定義します。例えば ``password`` フィールドのデータが十分安全かどうかを確かめるためには ``validate_password`` メソッドをフォームクラスへ定義します。もしヴァリデーションが失敗したら、適切なエラーメッセージと共に ``ValidationError`` を発生させる必要があります。
 
-Here's an example:
+下記に例を示します:
 
 .. code-block:: python
 
@@ -307,9 +265,7 @@ Here's an example:
       if not stronger_enough(value):
 	raise ValidationError(u"The password you specified is too week.")
 
-What if adding a field for password confirmation? To do that, you have
-to check the values among plural fields, creating the method named
-``context_validate``. Here's an example:
+パスワードを確認のため再入力させる場合にはどうしたら良いでしょうか。そのためには ``context_validate`` というメソッドを定義して、複数のフィールドに跨がるデータをチェックする必要があります。例:
 
 .. code-block:: python
 
@@ -328,5 +284,4 @@ to check the values among plural fields, creating the method named
     def context_validate(self, data):
       if data['password'] != data['password_confirm']:
 	raise ValidationError(u"The passwords don't match.")
-
 

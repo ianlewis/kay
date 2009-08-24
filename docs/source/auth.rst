@@ -14,10 +14,10 @@ datastore.
 Helper functions and decorators
 -------------------------------
 
-There are helper functions in kay.utils module: create_logout_url and
-create_login_url. These functions are automatically imported into
-templates' rendering context. So you can use these functions in your
-templates just like:
+There are helper functions in ``kay.utils`` module:
+``create_logout_url`` and ``create_login_url``. These functions are
+automatically imported into templates' rendering context. So you can
+use these functions in your templates just like:
 
 .. code-block:: html
 
@@ -27,9 +27,9 @@ templates just like:
     Hello {{ request.user }}! <a href="{{ create_logout_url() }}">logout</a>
   {% endif %}
 
-There are decorators in kay.auth.decorators module: login_required and
-admin_required. You can decorate any view of yours with these
-decorators just like:
+There are decorators in ``kay.auth.decorators`` module:
+``login_required`` and ``admin_required``. You can decorate any view
+of yours with these decorators just like:
 
 .. code-block:: python
 
@@ -50,16 +50,17 @@ decorators just like:
 Using google account authentication
 -----------------------------------
 
-By default, kay.auth.middleware.GoogleAuthenticationMiddleware is
+By default, ``kay.auth.middleware.GoogleAuthenticationMiddleware`` is
 enabled. This middleware is for authentication using google account or
 google apps account. If a user logs into your app first time, an
-information of the user is stored as GoogleUser entity (It's just a
-default setting, it is also customizable) in the GAE datastore. You
+information of the user is stored as ``GoogleUser`` entity (It's just
+a default setting, it is also customizable) in the GAE datastore. You
 can use this middleware without using session capability.
 
 To customize user model, you need to define new class extended from
-kay.auth.models.GoogleUser, add any required properties to it, and set
-the name of your new class to AUTH_USER_MODEL settings directive.
+``kay.auth.models.GoogleUser``, add any required properties to it, and
+set the name of your new class to ``AUTH_USER_MODEL`` settings
+directive.
 
 .. code-block:: python
 
@@ -90,7 +91,7 @@ middleware.
 
 For now, there is no any convenience method to create users into the
 datastore. Please keep in mind that you need to set user's password in
-a special hashed format. You can use kay.utils.crypto.gen_pwhash
+a special hashed format. You can use ``kay.utils.crypto.gen_pwhash``
 function for this purpose. You also need to use key_name for a
 performance reason. Here is the code to create new user in the
 datastore.
