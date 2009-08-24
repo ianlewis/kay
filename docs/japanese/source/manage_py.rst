@@ -1,74 +1,56 @@
-=====================
-Kay management script
-=====================
+====================
+Kay 管理用スクリプト
+====================
 
-Overview
---------
+概要
+----
 
-Kay has a management script named ``manage.py``. This script covers
-most of the management tasks for your applications. Invoking it
-without any parameters gives you help text.
+Kay には ``manage.py`` という管理用のスクリプトが付いています。このスクリプトで、アプリケーション管理タスクの大部分をカバーできます。パラメーター無しで呼出せばヘルプを見る事ができます。
 
-Some of the tasks will invoking the commands provided by Google App
-Engine SDK with little parameter adjustments, and some preparations
-for the task.
+タスクの一部は、Google App Engine SDK が提供するコマンドを実行しますが、実行の際にパラメータの調整や、事前準備を行います。
 
-So do not think about invoking such scripts(appcfg.py,
-dev_appserver.py, bulkloader.py) directly from Google App Engine SDK.
+ですので、GAE 附属のスクリプト( appcfg.py や dev_appserver.py または bulkloader.py )をそのまま使用する事はなるべく避けてください。
 
-Appcfg subcommand
------------------
+appcfg サブコマンド
+-------------------
 
-This subcommand is in charge of doing some tasks which appcfg.py does
-in a pure GAE environment.  Here's a usage of appcfg subcommand:
+このサブコマンドは 素のGAE で appcfg.py にて行うタスクを実行するためのものです。appcfg サブコマンドの使用方法は下記のとおりです:
 
 .. code-block:: bash
 
   $ python manage.py appcfg [options] <action>
 
-Action must be one of:
+action は下記のどれかである必要があります:
 
- * cron_info: Display information about cron jobs.
- * download_data: Download entities from datastore.
- * help: Print help for a specific action.
- * request_logs: Write request logs in Apache common log format.
- * rollback: Rollback an in-progress update.
- * update: Create or update an app version.
- * update_cron: Update application cron definitions.
- * update_indexes: Update application indexes.
- * update_queues: Update application task queue definitions.
- * upload_data: Upload data records to datastore.
- * vacuum_indexes: Delete unused indexes from application.
+ * cron_info: cron ジョブの情報を表示します。
+ * download_data: データストアからデータをダウンロードします。
+ * help: あるアクションのヘルプを表示します。
+ * request_logs: Apache の common log フォーマットでログを書き出します。
+ * rollback: 実行途中のアップデートをロールバックします。
+ * update: アプリケーションをアップロードします。
+ * update_cron: アプリケーションの cron 設定を更新します。
+ * update_indexes: アプリケーションの index を更新します。
+ * update_queues: アプリケーションのタスクキュー設定を更新します。
+ * upload_data: データストアにデータをアップロードします。
+ * vacuum_indexes: アプリケーションで使用しない index を削除します。
 
-``Help`` action takes an action name for displaying help text. So, for
-example, you'll get help texts for ``update`` action by typing as
-follows:
+``help`` アクションに続いてアクション名を指定する事で、特定のアクションに対するヘルプを表示できます。例えば、下記のように実行すれば ``update`` アクションのヘルプが得られます:
 
 .. code-block:: bash
 
   $ python manage.py appcfg help update
 
-Kay supplements argument with current directory automatically. So you
-don't need to specify app's directory stated in action's ``help`` text
-(Actually, it is a confusing behaviour, so it might be fixed in a
-future version). For example, you can upload your application by just
-typing as follows:
+Kay は引数にカレントディレクトリを自動的に補完します。ですので、各アクションのヘルプにあるようにアプリケーションディレクトリを指定する必要はありません(この動作はちょっと紛らわしいので将来は修正されるかもしれません)。例えばアプリケーションをアップロードするには下記のコマンドでオッケイです:
 
 .. code-block:: bash
 
   $ python manage.py appcfg update  
 
 
-Jinja2 preparsing
+Jinja2 事前パース
 -----------------
 
-Current version of Kay loads only preparsed jinja2 templates in GAE
-environment, so you have to preparse before deploying your
-application. The manage.py script automatically do this job, so you
-don't have to worry about it usually. If you use launcher on MacOSX,
-please keep in mind that just push ``deploy`` button on it won't care
-about preparsing jinja2 templates. In such a case, to preparse jinja2
-template, perhaps you can execute following command:
+現バージョンの Kay は、GAE のサーバ上では事前パースされた jinja2 テンプレートのみ読み込みますので、デプロイの前にテンプレートの事前パースが必要です。manage.py スクリプトは自動的に事前パースを行いますので、普段ユーザーはこの事を気にする必要はありません。もし、MacOSX のランチャーを使っている場合には ``deploy`` ボタンを押すだけでは jinja2 テンプレートの事前パースは行われません。このような場合は、下記のようにすればテンプレートの事前パースを行う事ができます:
 
 .. code-block:: bash
 

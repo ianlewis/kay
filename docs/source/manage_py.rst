@@ -40,9 +40,9 @@ Action must be one of:
  * upload_data: Upload data records to datastore.
  * vacuum_indexes: Delete unused indexes from application.
 
-``Help`` action takes an action name for displaying help text. So, for
-example, you'll get help texts for ``update`` action by typing as
-follows:
+``Help`` action followed by a particular action name will give you
+help text for that action. So, for example, you'll get help texts for
+``update`` action by typing as follows:
 
 .. code-block:: bash
 

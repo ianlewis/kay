@@ -32,8 +32,7 @@ macports の python25 を使うばあいは、他に下記もインストール�
 プロジェクトの開始
 ------------------
 
-新しいプロジェクトを始めるには、kay の manage.py スクリプトでプロジェク
-トディレクトリの雛型を作成します。
+新しいプロジェクトを始めるには、kay の ``manage.py`` スクリプトでプロジェクトディレクトリの雛型を作成します。
 
 .. code-block:: bash
 
@@ -48,16 +47,12 @@ macports の python25 を使うばあいは、他に下記もインストール�
 
    1 directory, 4 files
 
-シンボリックリンクをサポートしているプラットフォームでは kay ディレクト
-リと manage.py へのシンボリックリンクが作成されます。後で kay の場所を
-動かすときっと動かなくなるのですが、そんな時はリンクを張り直してくださ
-い。
+シンボリックリンクをサポートしているプラットフォームでは kay ディレクトリと ``manage.py`` へのシンボリックリンクが作成されます。後で kay の場所を動かすときっと動かなくなるのですが、そんな時はリンクを張り直してください。
 
 アプリケーションを作る
 ----------------------
 
-出来たばかりの myproject ディレクトリに cd して、早速アプリケーションを
-作りましょう。下記の例では myapp というアプリケーションを作成しています。
+出来たばかりの ``myproject`` ディレクトリに ``cd`` して、早速アプリケーションを作りましょう。下記の例では ``myapp`` というアプリケーションを作成しています。
 
 .. code-block:: bash
 
@@ -74,11 +69,9 @@ macports の python25 を使うばあいは、他に下記もインストール�
 
    1 directory, 5 files
 
-アプリケーションが出来たら settings.py を編集して、プロジェクトに登録し
-ます。settings.py の INSTALLED_APPS に myapp を登録します。必要なら
-APP_MOUNT_POINTS も登録します。下記の例では、アプリケーションをルート
-URL にマウントする例です。APP_MOUNT_POINTS を設定しない場合は、/myapp
-というようにアプリケーション名 URL にマウントされます。
+アプリケーションが出来たら ``settings.py`` を編集して、プロジェクトに登録します。
+``settings.py`` の ``INSTALLED_APPS`` に ``myapp`` を登録します。必要なら ``APP_MOUNT_POINTS`` も登録します。下記の例では、アプリケーションをルート URL にマウントする例です。
+``APP_MOUNT_POINTS`` を設定しない場合は ``/myapp`` というようにアプリケーション名 URL にマウントされます。
 
 settings.py
 
@@ -98,14 +91,12 @@ settings.py
   }
 
 
-見れば分かると思いますが、INSTALLED_APPS はタプルで、APP_MOUNT_POINTS
-は dict になっています。
+見れば分かると思いますが ``INSTALLED_APPS`` はタプルで ``APP_MOUNT_POINTS`` は dict になっています。
 
 アプリケーションを動かす
 ------------------------
 
-作ったアプリケーションを動かしてみましょう。下記のコマンドで開発サーバ
-が起動する筈です。
+作ったアプリケーションを動かしてみましょう。下記のコマンドで開発サーバが起動する筈です。
 
 .. code-block:: bash
 
@@ -116,22 +107,19 @@ settings.py
   INFO     ... Running application myproject on port 8080: http://localhost:8080
 
 
-この状態で http://localhost:8080/ にアクセスすると、「Hello」又は「こん
-にちは」と表示される筈です。
+この状態で http://localhost:8080/ にアクセスすると、「Hello」又は「こんにちは」と表示される筈です。
 
 
 GAE にアップロードする
 ----------------------
 
-GAE にアップロードするには、対象の appid を app.yaml の application に
-設定してから、下記のコマンドを使用します。
+GAE にアップロードするには、対象の ``appid`` を ``app.yaml`` の ``application`` に設定してから、下記のコマンドを使用します。
 
 .. code-block:: bash
 
   $ python manage.py appcfg update
 
-成功すると、http://your-appid.appspot.com/ でアクセスできるようになりま
-す。
+成功すると、http://your-appid.appspot.com/ でアクセスできるようになります。
 
 テンプレート／ビュー
 --------------------
@@ -169,13 +157,11 @@ myapp/views.py
   def index(request):
     return render_to_response('myapp/index.html', {'message': _('Hello')})
 
-デフォルトのビューがひとつ定義されています。render_to_response 関数は第
-一引数にテンプレート名を受け取ります。第二引数にはテンプレートに渡す辞
-書を渡せます。_() という関数は国際化のために文字列をマークし、表示の時
-には実際に国際化するための関数です。
+デフォルトのビューがひとつ定義されています。
+``render_to_response`` 関数は第一引数にテンプレート名を受け取ります。第二引数にはテンプレートに渡す辞書を渡せます。
+``_()`` という関数は国際化のために文字列をマークし、表示の時には実際に国際化するための関数です。
 
-myapp/index.htmlが実際に指すテンプレートは、myapp/templates/index.html
-にあります(/templates/ が間に挟まっている事に注意してください)。
+``myapp/index.html`` が実際に指すテンプレートは、myapp/templates/index.html にあります(/templates/ が間に挟まっている事に注意してください)。
 
 myapp/templates/index.html
 
@@ -193,8 +179,7 @@ myapp/templates/index.html
   </body>
   </html>
 
-{{ message }} の部分に render_to_response の第二引数で渡した message が
-表示される事になります。
+``{{ message }}`` の部分に ``render_to_response`` の第二引数で渡した ``message`` が表示される事になります。
 
 
 url mapping
@@ -228,29 +213,21 @@ myapp/urls.py
   }
 
 
-この urls.py で定義された make_rules() 関数と all_views 辞書は、Kay に
-より自動的に収集され、設定されます。
+この ``urls.py`` で定義された ``make_rules()`` 関数と ``all_views`` 辞書は、Kay により自動的に収集され、設定されます。
 
-make_rules の方では、'/' という URL を 'myapp/index' という endpoint に
-結びつけていて、all_views の方では、'myapp/index' という endpoint を
-myapp.views.index 関数に対応づけています。
+``make_rules`` の方では ``'/'`` という URL を ``'myapp/index'`` という endpoint に結びつけていて ``all_views`` の方では ``'myapp/index'`` という endpoint を ``myapp.views.index`` 関数に対応づけています。
 
-これにより、'/' へのアクセス時に、myapp.views.index が呼出されるわけで
-す。
+これにより ``'/'`` へのアクセス時に ``myapp.views.index`` が呼出されるわけです。
 
-'/' -> 'myapp/index' -> myapp.views.index
+``'/'`` -> ``'myapp/index'`` -> ``myapp.views.index``
 
 
 ユーザー認証
 ------------
 
-ユーザー認証を使用する方法はいくつかありますが、ここでは Google
-Account での認証を使ってみましょう。デフォルトの settings.py では
-Google Account の認証を使用するようになっていますので、特に設定項目はあ
-りません。
+ユーザー認証を使用する方法はいくつかありますが、ここでは Google Account での認証を使ってみましょう。デフォルトの ``settings.py`` では Google Account の認証を使用するようになっていますので、特に設定項目はありません。
 
-myapp/templates/index.html を編集して、下記のようにすると、ユーザー認証
-を使用する事ができます。
+``myapp/templates/index.html`` を編集して、下記のようにすると、ユーザー認証を使用する事ができます。
 
 .. code-block:: html
 
@@ -274,17 +251,13 @@ myapp/templates/index.html を編集して、下記のようにすると、ユ�
   </html>
 
 
-上記のコードでは、ユーザーがログインしていない場合は、ログインフォーム
-へのリンクを表示し、ログイン済みの場合は、user のメールアドレスと、ログ
-アウトリンクを表示します。
+上記のコードでは、ユーザーがログインしていない場合は、ログインフォームへのリンクを表示し、ログイン済みの場合は、user のメールアドレスと、ログアウトリンクを表示します。
 
 開発環境と GAE の両方で試してみましょう。
 
-この段階ですと、ユーザーはログインせずとも myapp.index を閲覧する事がで
-きます。これをログインした場合だけ閲覧できるようにするには、どうすれば
-良いでしょうか。
+この段階ですと、ユーザーはログインせずとも ``myapp.index`` を閲覧する事ができます。これをログインした場合だけ閲覧できるようにするには、どうすれば良いでしょうか。
 
-下記のように myapp.views.index にデコレーターを付ける事で可能です。
+これは、下記のように ``myapp.views.index`` にデコレーターを付ける事で可能です。
 
 .. code-block:: python
 
@@ -298,8 +271,7 @@ myapp/templates/index.html を編集して、下記のようにすると、ユ�
   def index(request):
     return render_to_response('myapp/index.html', {'message': _('Hello')})
 
-login_required デコレーターで修飾すれば、そのビューはログインしていない
-と閲覧できなくなり、自動的にログインフォームへ飛ばされるようになります。
+``login_required`` デコレーターで修飾すれば、そのビューはログインしていないと閲覧できなくなり、自動的にログインフォームへ飛ばされるようになります。
 
 ここでは一度動作を確認した後で、このデコレーターは外しておきましょう。
 
@@ -307,8 +279,7 @@ login_required デコレーターで修飾すれば、そのビューはログ�
 モデル定義
 ----------
 
-それでは datastore にコメントを投稿できるようにしてみましょう。まずはコ
-メントを保存するためのモデルを定義します。
+それでは datastore にコメントを投稿できるようにしてみましょう。まずはコメントを保存するためのモデルを定義します。
 
 myapp/models.py
 
@@ -326,13 +297,9 @@ myapp/models.py
     body = db.TextProperty(required=True)
     created = db.DateTimeProperty(auto_now_add=True)
 
-モデルは google.appengine.ext.db.Model を継承したクラスを作成する事によ
-り定義します。クラス変数を定義する事により属性を定義できます。ここでは
-user にコメント主を、body に内容を、created に投稿日時を保存する事にし
-ました。
+モデルは ``google.appengine.ext.db.Model`` を継承したクラスを作成する事により定義します。クラス変数を定義する事により属性を定義できます。ここでは ``user`` にコメント主を ``body`` に内容を ``created`` に投稿日時を保存する事にしました。
 
-このモデルにデータを保存してみましょう。ここでは Kay の shell ツー
-ルを使ってデータを保存します。
+このモデルにデータを保存してみましょう。ここでは Kay の shell ツールを使ってデータを保存します。
 
 .. code-block:: bash
 
@@ -346,9 +313,8 @@ user にコメント主を、body に内容を、created に投稿日時を保�
   In [4]: ^D
   Do you really want to exit ([y]/n)? y
 
-^D は Ctrl + D です。put() を忘れると保存出来ませんので注意してください。
-データが保存されているかどうか、開発サーバーを起動した状態で
-http://localhost:8080/_ah/admin/ にアクセスして確認してみましょう。
+^D は Ctrl + D です。
+``put()`` を忘れると保存出来ませんので注意してください。データが保存されているかどうか、開発サーバーを起動した状態で http://localhost:8080/_ah/admin/ にアクセスして確認してみましょう。
 
 データを表示する
 ----------------
@@ -374,9 +340,7 @@ myapp/views.py
 			       'comments': comments})
 
 先程定義したモデルクラスを import するのを忘れないようにしましょう。
-Comment.all().order('-created').fetch(100) では、データストアから最新
-100 件のコメントを取得しています。そのリストを render_to_response に渡
-しています。
+``Comment.all().order('-created').fetch(100)`` では、データストアから最新 100 件のコメントを取得しています。そのリストを ``render_to_response`` に渡しています。
 
 myapp/templates/index.html
 
@@ -407,14 +371,13 @@ myapp/templates/index.html
   </body>
   </html>
 
-message を表示している下に、新しく div を追加しています。{% for ... %}
-と {% endfor %} はループです。ここでは comment.body を表示するだけです。
+``message`` を表示している下に、新しく div を追加しています。
+``{% for ... %}`` と ``{% endfor %}`` はループです。ここでは ``comment.body`` を表示するだけです。
 
 コメント投稿フォーム
 --------------------
 
-コメントを投稿できるようにしましょう。html のフォームのために forms.py
-というファイルを新規に作成します。
+コメントを投稿できるようにしましょう。html のフォームのために ``forms.py`` というファイルを新規に作成します。
 
 myapp/forms.py
 
@@ -427,8 +390,7 @@ myapp/forms.py
   class CommentForm(forms.Form):
     comment = forms.TextField(_("comment"), required=True)
 
-kay.utils.forms.Form を拡張したクラスを定義して、フィールドをひとつ定義
-します。このフォームを表示するためにビューとテンプレートを編集します。
+``kay.utils.forms.Form`` を拡張したクラスを定義して、フィールドをひとつ定義します。このフォームを表示するためにビューとテンプレートを編集します。
 
 myapp/views.py
 
