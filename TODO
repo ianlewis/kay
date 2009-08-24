@@ -5,6 +5,8 @@ TODO
 kay
 ----
 
+* Japanese document
+
 * Implementation for handling process_view of middleware classes.
 
 * Write documentations about middlewares, jinja2 howtos, etc..

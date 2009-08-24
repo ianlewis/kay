@@ -1,0 +1,98 @@
+==================
+Kay i18n mechanism
+==================
+
+Overview
+--------
+
+Kay has a almost full stack i18n feature including extracting messages
+from the source, adding new language to your app, updating and
+compiling the message catalogs and a handlers for javascript gettext
+implementation. This feature is basicaly based on the jinja2's i18n
+feature, so it is a good idea to refer to jinja2's documentation
+hosted at:
+
+  http://jinja.pocoo.org/2/documentation/
+
+Marking your messages
+---------------------
+
+You can mark your messages for translation in python code as
+following:
+
+.. code-block:: python
+
+  from kay.i18n import gettext as _
+  _('Hello')
+
+You can mark your messages for translation in templates as following:
+
+.. code-block:: html
+
+  <p>{{ _('Hello') }}</p>
+  <p>{% trans %}Hello{% endtrans %}
+
+Extracting messages
+-------------------
+
+You can extract the messages from 'myapp' application and create the
+template file as following:
+
+.. code-block:: bash
+
+   $ python manage.py extract_messages myapp
+
+The 'extract_messages' subcommand accepts optional '--domain'
+parameter. The value for this parameter must be 'messages' or
+'jsmessages'.
+
+
+Adding translations
+-------------------
+
+You can add new Japanese translations from the template like:
+
+.. code-block:: bash
+
+  $ python manage.py add_translations myapp -l ja
+
+Updating messages
+-----------------
+
+You can update your translations with updated translation template as
+following:
+
+.. code-block:: bash
+
+   $ python manage.py update_translations myapp -l ja
+
+
+Compiling messages
+------------------
+
+You can compile all of your translations under 'myapp' application as
+following:
+
+.. code-block:: bash
+
+  $ python manage.py compile_translations myapp
+
+
+Javascript handler
+------------------
+
+You can define a handler for pseudo javascript gettext as following:
+
+.. code-block:: python
+
+  from kay.views.i18n import javascript_catalog
+
+  return Map([
+    Rule('/_i18n.js', endpoint='i18n_js',
+         defaults={'packages':('myapp','kay')}),
+  ])
+
+  all_views = {
+    'i18n_js': javascript_catalog,
+  }
+

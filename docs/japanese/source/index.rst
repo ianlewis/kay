@@ -2,16 +2,24 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to kay's documentation!
-====================================
+Kay ドキュメントへようこそ
+==========================
 
-Contents:
+目次:
 
 .. toctree::
-   :maxdepth: 2
-   :glob:
+   :maxdepth: 1
 
    tutorial
+
+.. toctree::   
+   :maxdepth: 2
+
+   manage_py
+   urlmapping
+   auth
+   forms-usage
+   i18n
 
 Indices and tables
 ==================
