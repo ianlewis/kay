@@ -28,6 +28,6 @@ push 'deploy' button on it won't care about preparsing jinja2
 templates. In such a case, to preparse jinja2 template, perhaps you
 can execute following command:
 
-.. code-block:: console
+.. code-block:: bash
 
   $ python manage.py preparse_apps

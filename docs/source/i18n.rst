@@ -38,7 +38,7 @@ Extracting messages
 You can extract the messages from 'myapp' application and create the
 template file as following:
 
-.. code-block:: console
+.. code-block:: bash
 
    $ python manage.py extract_messages myapp
 
@@ -52,7 +52,7 @@ Adding translations
 
 You can add new Japanese translations from the template like:
 
-.. code-block:: console
+.. code-block:: bash
 
   $ python manage.py add_translations myapp -l ja
 
@@ -62,7 +62,7 @@ Updating messages
 You can update your translations with updated translation template as
 following:
 
-.. code-block:: console
+.. code-block:: bash
 
    $ python manage.py update_translations myapp -l ja
 
@@ -73,7 +73,7 @@ Compiling messages
 You can compile all of your translations under 'myapp' application as
 following:
 
-.. code-block:: console
+.. code-block:: bash
 
   $ python manage.py compile_translations myapp
 
