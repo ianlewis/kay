@@ -9,6 +9,8 @@ Kay application for sessions.
 
 from middleware import GAESessionStore
 
+NO_SESSION = 'nosession'
+
 def renew_session(request):
   session_store = GAESessionStore()
   oldsession = request.session

@@ -19,6 +19,8 @@ from google.appengine.api import memcache
 from kay.conf import settings
 from models import GAESession
 
+import kay.sessions
+
 class GAESessionStore(sessions.SessionStore):
   """
   A session store class with GAE Datastore backend.
@@ -76,11 +78,10 @@ class SessionMiddleware(object):
 
   def __init__(self):
     self.session_store = GAESessionStore()
-    self.ignore_session_url_prefix = settings.IGNORE_SESSION_URL_PREFIX
 
-  def process_request(self, request):
-    if request.path.startswith("/"+self.ignore_session_url_prefix):
-      return
+  def process_view(self, request, view_func, **kwargs):
+    if hasattr(view_func, kay.sessions.NO_SESSION):
+      return None
     sid = request.cookies.get(settings.COOKIE_NAME)
     if sid is None:
       request.session = self.session_store.new()
@@ -89,9 +90,7 @@ class SessionMiddleware(object):
     return None
 
   def process_response(self, request, response):
-    if request.path.startswith("/"+self.ignore_session_url_prefix):
-      return response
-    if request.session.should_save:
+    if hasattr(request, 'session') and request.session.should_save:
       self.session_store.save(request.session)
       if not isinstance(response, HTTPException):
         response.set_cookie(settings.COOKIE_NAME, request.session.sid,

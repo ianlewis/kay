@@ -273,9 +273,15 @@ class KayApp(object):
 
     try:
       endpoint, values = local.url_adapter.match()
-      # TODO: handle view_middleware here if neccesary
+      view_func = self.views.get(endpoint, None)
+      if view_func is None:
+        raise NotFound
+      for mw_method in self._view_middleware:
+        response = mw_method(request, view_func, **values)
+        if response:
+          return response
       try:
-        response = self.views[endpoint](request, **values)
+        response = view_func(request, **values)
       except Exception, e:
         # If the view raised an exception, run it through exception
         # middleware, and if the exception middleware returns a
