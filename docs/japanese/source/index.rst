@@ -18,6 +18,7 @@ Kay ドキュメントへようこそ
    manage_py
    urlmapping
    auth
+   session
    forms-usage
    i18n
 
