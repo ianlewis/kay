@@ -30,14 +30,12 @@ USE_I18N = True
 DEFAULT_LANG = 'en'
 
 INSTALLED_APPS = (
-  'kay.sessions',
 )
 
 APP_MOUNT_POINTS = {
 }
 
 MIDDLEWARE_CLASSES = (
-  'kay.sessions.middleware.SessionMiddleware',
   'kay.auth.middleware.GoogleAuthenticationMiddleware',
 )
 AUTH_USER_MODEL = 'kay.auth.models.GoogleUser'
