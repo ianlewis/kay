@@ -30,7 +30,6 @@ application, please refer to :doc:`urlmapping`.
 .. code-block:: python
 
   INSTALLED_APPS = (
-    'kay.sessions',
     'hello'
   )
 

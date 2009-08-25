@@ -82,7 +82,6 @@ settings.py
   #..
 
   INSTALLED_APPS = (
-    'kay.sessions',
     'myapp',
   )
 
