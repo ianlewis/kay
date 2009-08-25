@@ -7,8 +7,6 @@ A sample of kay settings.
 :license: BSD, see LICENSE for more details.
 """
 
-import os
-
 DEFAULT_TIMEZONE = 'Asia/Tokyo'
 DEBUG = True
 PROFILE = False
