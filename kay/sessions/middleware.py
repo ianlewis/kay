@@ -49,11 +49,13 @@ class GAESessionStore(sessions.SessionStore):
     gae_session = self.save_to_db(key_name, session)
     memcache.set(key_name, gae_session, settings.SESSION_MEMCACHE_AGE)
 
+  @retry_on_timeout(retries=5, secs=0.2)
   def delete(self, session):
     s = GAESession.get_by_key_name(self.get_key_name(session.sid))
     if s:
       s.delete()
 
+  @retry_on_timeout(retries=5, secs=0.2)
   def get(self, sid):
     key_name = self.get_key_name(sid)
     s = memcache.get(key_name)
