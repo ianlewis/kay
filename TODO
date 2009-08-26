@@ -19,10 +19,3 @@ kay.utils.forms
 
  * AjaxModelField
 
-
-kay.sessions
-------------
-
-* Retry when GAESessionStore.save fails cos' its important to keep
-  users' session data.
-

@@ -17,6 +17,7 @@ from google.appengine.ext import db
 from google.appengine.api import memcache
 
 from kay.conf import settings
+from kay.utils.decorators import retry_on_timeout
 from models import GAESession
 
 import kay.sessions
@@ -32,8 +33,8 @@ class GAESessionStore(sessions.SessionStore):
   def get_key_name(self, sid):
     return '%s:%s' %(self.session_prefix ,sid)
 
-  def save(self, session):
-    key_name = self.get_key_name(session.sid)
+  @retry_on_timeout(retries=5, secs=0.2)
+  def save_to_db(self, key_name, session):
     gae_session = GAESession(
       key_name = key_name,
       data = self.encode(dict(session)),
@@ -41,6 +42,11 @@ class GAESessionStore(sessions.SessionStore):
                      datetime.timedelta(seconds=settings.COOKIE_AGE))
     )
     gae_session.put()
+    return gae_session
+
+  def save(self, session):
+    key_name = self.get_key_name(session.sid)
+    gae_session = self.save_to_db(key_name, session)
     memcache.set(key_name, gae_session, settings.SESSION_MEMCACHE_AGE)
 
   def delete(self, session):
