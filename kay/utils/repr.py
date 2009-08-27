@@ -11,7 +11,8 @@ produce HTML instead of ASCII.
 Together with the CSS and JavaScript files of the debugger this gives
 a colorful and more compact output.
 
-:copyright: (c) 2009 by Kay Team, see AUTHORS for more details.
+:copyright: (c) 2009 by Accense Technology, Inc. See AUTHORS for more
+details.
 :copyright: (c) 2009 by the Werkzeug Team, see AUTHORS for more details.
 :license: BSD, see LICENSE for more details.
 """

@@ -6,7 +6,8 @@ kay.utils.decorators
 
 This module implements useful decorators for appengine datastore.
 
-:copyright: (c) 2009 by Kay Team, see AUTHORS for more details.
+:copyright: (c) 2009 by Accense Technology, Inc. See AUTHORS for more
+details.
 :license: BSD, see LICENSE for more details.
 """
 
