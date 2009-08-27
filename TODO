@@ -19,3 +19,12 @@ kay.utils.forms
 
  * AjaxModelField
 
+ * Implement a widget with JQuery's DatetimePicker
+
+
+Local GUI datastore administration tool
+---------------------------------------
+
+* An implementation using wxpython is the first option. Using
+  pyqt/Adobe air/tkinter would be also fine.
+
