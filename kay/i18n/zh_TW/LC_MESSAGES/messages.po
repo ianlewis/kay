@@ -1,7 +1,6 @@
-# Chinese translations for .
+# Chinese translations for Kay.
 # Copyright (C) 2009 Takashi Matsuo
-# This file is distributed under the same license as the  project.
-# TsungWei Hu <marr.tw AT gmail.com>, 2009.
+# Copyright (C) TsungWei Hu <marr.tw AT gmail.com>, 2009.
 #
 msgid ""
 msgstr ""

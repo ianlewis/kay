@@ -5,13 +5,15 @@ Kay framework.
 
 :copyright: (c) 2009 by Accense Technology, Inc. See AUTHORS for more
 details.
+:copyright: (c) 2009 by Ian Lewis <IanMLewis@gmail.com>. See AUTHORS
+for more details.
 :license: BSD, see LICENSE for more details.
 """
 
 import os
 import sys
 
-__version__ = "0.0.0"
+__version__ = "0.1.0"
 
 KAY_DIR = os.path.abspath(os.path.dirname(__file__))
 PROJECT_DIR = os.path.dirname(KAY_DIR)
