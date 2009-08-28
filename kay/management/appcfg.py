@@ -19,6 +19,7 @@ from kay.utils import local
 from kay.utils.jinja2utils.compiler import compile_dir
 from kay.utils.importlib import import_module
 from kay.management.preparse import do_preparse_apps
+from kay.management.utils import print_status
 from shell import get_all_models_as_dict
 
 class HookedOptionParser(optparse.OptionParser):
@@ -45,7 +46,7 @@ def do_appcfg_passthru_argv():
       kind = arg[7:]
       model = models.get(kind, None)
       if model is None:
-        print "Invalid kind: %s." % kind
+        print_status("Invalid kind: %s." % kind)
         sys.exit(1)
       args.append("--kind=%s" % model.kind())
     else:
@@ -70,9 +71,9 @@ def do_appcfg_passthru_argv():
     sys.exit(1)
   from kay.conf import settings
   if settings.PROFILE and 'update' in sys.argv:
-    print '--------------------------\n' \
+    print_status('--------------------------\n' \
         'WARNING: PROFILER ENABLED!\n' \
-        '--------------------------'
+        '--------------------------')
 
     
 do_appcfg_passthru_argv.passthru = True

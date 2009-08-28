@@ -22,6 +22,8 @@ from babel import Locale
 from babel.messages import Catalog
 from babel.messages.pofile import write_po, read_po
 
+from kay.management.utils import print_status
+
 domains = ['messages', 'jsmessages']
 
 def do_update_translations(target=("t", ""), lang=("l", ""),
@@ -30,28 +32,29 @@ def do_update_translations(target=("t", ""), lang=("l", ""),
   Update existing translations with updated pot files.
   """
   if not target:
-    print 'Please specify target.'
+    print_status('Please specify target.')
     sys.exit(1)
   elif target == 'kay':
-    print 'Updating core strings'
+    print_status('Updating core strings')
     root = path.join(kay.KAY_DIR, 'i18n')
   else:
     root = path.join(target, 'i18n')
     if not path.isdir(root):
-      print ('source folder missing')
+      print_status('source folder missing')
       sys.exit(1)
-    print 'Updating', root
+    print_status('Updating %s' % root)
 
   for domain in domains:
     if lang:
       filepath = path.join(root, lang, 'LC_MESSAGES', domain+'.po')
       if not path.exists(filepath):
-        print ("unknown locale. %s not found." % filepath)
+        print_status("unknown locale. %s not found." % filepath)
         sys.exit(1)
     try:
       f = file(path.join(root, domain+'.pot'))
     except IOError:
-      print 'Can not open file: %s, skipped.' % path.join(root, domain+'.pot')
+      print_status('Can not open file: %s, skipped.' %
+                   path.join(root, domain+'.pot'))
       continue
     try:
       template = read_po(f)
@@ -65,7 +68,7 @@ def do_update_translations(target=("t", ""), lang=("l", ""),
                          path.join(root, lang, 'LC_MESSAGES', domain+'.po'):
         continue
       if path.exists(filename):
-        print 'Updating %r' % lang_dir,
+        print_status('Updating %r' % lang_dir, nl=False)
         locale = Locale.parse(lang_dir)
         f = file(filename)
         try:
@@ -91,16 +94,16 @@ def do_update_translations(target=("t", ""), lang=("l", ""),
                 fuzzy += 1
             if len(catalog):
               percentage = translated * 100 // len(catalog)
-              print "-> %d of %d messages (%d%%) translated" % (
-                translated, len(catalog), percentage),
+              print_status("-> %d of %d messages (%d%%) translated" % (
+                translated, len(catalog), percentage), nl=False)
               if fuzzy:
                 if fuzzy == 1:
-                  print "%d of which is fuzzy" % fuzzy,
+                  print_status("%d of which is fuzzy" % fuzzy, nl=False)
                 else:
-                  print "%d of which are fuzzy" % fuzzy,
-              print
+                  print_status("%d of which are fuzzy" % fuzzy, nl=False)
+              print_status()
           else:
-            print
+            print_status()
           f.close()
 
-  print 'All done.'
+  print_status('All done.')

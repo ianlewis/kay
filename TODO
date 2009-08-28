@@ -22,6 +22,12 @@ kay.utils.forms
  * Implement a widget with JQuery's DatetimePicker
 
 
+kay.auth
+--------
+
+* A command for creating a user entity.
+
+
 Local GUI datastore administration tool
 ---------------------------------------
 

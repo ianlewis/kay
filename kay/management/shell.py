@@ -22,6 +22,7 @@ from kay.utils.importlib import import_module
 from kay.utils.repr import dump
 from kay.misc import get_appid
 from kay.misc import get_datastore_paths
+from kay.management.utils import print_status
 
 def get_all_models_as_dict():
   ret = {}
@@ -49,7 +50,7 @@ def auth_func():
 def delete_all_entities(model, num=20):
   entries = db.Query(model, keys_only=True).fetch(num)
   while len(entries) > 0:
-    print "Now deleting %d entries." % len(entries)
+    print_status("Now deleting %d entries." % len(entries))
     db.delete([k.key() for k in entries])
     entries = db.Query(model, keys_only=True).fetch(num)
 

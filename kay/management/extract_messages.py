@@ -22,6 +22,8 @@ from babel.messages import Catalog
 from babel.messages.extract import extract_from_dir
 from babel.messages.pofile import write_po
 
+from kay.management.utils import print_status
+
 KEYWORDS = {
   '_': None,
   'gettext': None,
@@ -58,20 +60,20 @@ def do_extract_messages(target=('t', ''), domain=('d', 'messages')):
   Extract messages and create pot file.
   """
   if not domain in ('messages', 'jsmessages'):
-    print 'invalid domain.'
+    print_status('invalid domain.')
     sys.exit(1)
   if not target:
-    print 'Please specify target.'
+    print_status('Please specify target.')
     sys.exit(1)
   elif target == 'kay':
-    print 'Extracting core strings'
+    print_status('Extracting core strings')
     root = kay.KAY_DIR
   else:
     root = path.abspath(target)
     if not path.isdir(root):
-      print 'source folder missing'
+      print_status('source folder missing')
       sys.exit(1)
-    print 'Extracting from', root
+    print_status('Extracting from %s' % root)
   if domain == 'messages':
     methods = METHODS
   else:
@@ -82,7 +84,7 @@ def do_extract_messages(target=('t', ''), domain=('d', 'messages')):
 
   def callback(filename, method, options):
     if method != 'ignore':
-      print strip_path(filename, root)
+      print_status(strip_path(filename, root))
 
   extracted = extract_from_dir(root, methods, {}, KEYWORDS,
                                COMMENT_TAGS, callback=callback,
@@ -102,4 +104,4 @@ def do_extract_messages(target=('t', ''), domain=('d', 'messages')):
   finally:
     f.close()
 
-  print 'All done.'
+  print_status('All done.')
