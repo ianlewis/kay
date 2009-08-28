@@ -3,7 +3,7 @@
 """
 Kay remote shell management command.
 
-:copyright: (c) 2009 by Kay Team, see AUTHORS for more details.
+:Copyright: (c) 2009 Accense Technology, Inc. All rights reserved.
 :license: BSD, see LICENSE for more details.
 """
 
@@ -22,6 +22,7 @@ from kay.utils.importlib import import_module
 from kay.utils.repr import dump
 from kay.misc import get_appid
 from kay.misc import get_datastore_paths
+from kay.management.utils import print_status
 
 def get_all_models_as_dict():
   ret = {}
@@ -49,7 +50,7 @@ def auth_func():
 def delete_all_entities(model, num=20):
   entries = db.Query(model, keys_only=True).fetch(num)
   while len(entries) > 0:
-    print "Now deleting %d entries." % len(entries)
+    print_status("Now deleting %d entries." % len(entries))
     db.delete([k.key() for k in entries])
     entries = db.Query(model, keys_only=True).fetch(num)
 
@@ -98,7 +99,8 @@ def shell(datastore_path='', history_path='', useful_imports=True):
   from code import interact
   interact(banner, local=namespace)
 
-def rshell(appid=('a', ''), host=('h', ''), useful_imports=True):
+def rshell(appid=('a', ''), host=('h', ''), path=('p', ''),
+           useful_imports=True, secure=True):
   """Start a new interactive python session with RemoteDatastore stub."""
   banner = ("Interactive Kay Shell with RemoteDatastore. \n"
             "-----------------WARNING--------------------\n"
@@ -114,8 +116,13 @@ def rshell(appid=('a', ''), host=('h', ''), useful_imports=True):
     appid = get_appid()
   if not host:
     host = "%s.appspot.com" % appid
-  remote_api_stub.ConfigureRemoteDatastore(appid, '/remote_api', auth_func,
-                                           host, secure=True)
+  if not path:
+    path = '/remote_api'
+
+  remote_api_stub.ConfigureRemoteApi(appid, path, auth_func,
+                                     host, secure=secure)
+  remote_api_stub.MaybeInvokeAuthentication()
+
   try:
     import IPython
   except ImportError:

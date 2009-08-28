@@ -3,7 +3,7 @@
 """
 Kay startapp management commands.
 
-:copyright: (c) 2009 by Kay Team, see AUTHORS for more details.
+:Copyright: (c) 2009 Accense Technology, Inc. All rights reserved.
 :license: BSD, see LICENSE for more details.
 """
 
@@ -13,6 +13,7 @@ import re
 import shutil
 
 import kay
+from kay.management.utils import print_status
 
 def startproject(proj_name=''):
   """
@@ -69,7 +70,7 @@ def startproject(proj_name=''):
                                   "on %s. You're probably using an "
                                   "uncommon filesystem setup. No "
                                   "problem.\n" % path_new))
-  print "Finished creating new project: %s." % proj_name
+  print_status("Finished creating new project: %s." % proj_name)
   
   
 

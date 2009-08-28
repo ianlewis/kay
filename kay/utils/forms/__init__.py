@@ -1762,8 +1762,11 @@ class FileField(Field):
     self.required = required
 
   def convert(self, value):
-    if self.required and value.filename is None:
-      raise ValidationError(_("Please select a file to upload."))
+    if not value:
+      if self.required:
+        raise ValidationError(_("Please select a file to upload."))
+      else:
+        return None
     ret = value.read()
     if self.required and len(ret) == 0:
       raise ValidationError(_("File must not empty."))

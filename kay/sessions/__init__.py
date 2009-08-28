@@ -3,11 +3,13 @@
 """
 Kay application for sessions.
 
-:copyright: (c) 2009 by Kay Team, see AUTHORS for more details.
+:Copyright: (c) 2009 Accense Technology, Inc. All rights reserved.
 :license: BSD, see LICENSE for more details.
 """
 
 from middleware import GAESessionStore
+
+NO_SESSION = 'nosession'
 
 def renew_session(request):
   session_store = GAESessionStore()

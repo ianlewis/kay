@@ -3,7 +3,7 @@
 """
 Kay appcfg management command.
 
-:copyright: (c) 2009 by Kay Team, see AUTHORS for more details.
+:Copyright: (c) 2009 Accense Technology, Inc. All rights reserved.
 :license: BSD, see LICENSE for more details.
 """
 
@@ -19,6 +19,7 @@ from kay.utils import local
 from kay.utils.jinja2utils.compiler import compile_dir
 from kay.utils.importlib import import_module
 from kay.management.preparse import do_preparse_apps
+from kay.management.utils import print_status
 from shell import get_all_models_as_dict
 
 class HookedOptionParser(optparse.OptionParser):
@@ -35,7 +36,7 @@ def do_appcfg_passthru_argv():
   if len(sys.argv) < 3:
     sys.stderr.write('action required.\n')
     sys.exit(1)
-  if sys.argv[2] == 'update':
+  if 'update' in sys.argv:
     do_preparse_apps()
   
   models = get_all_models_as_dict()
@@ -45,13 +46,15 @@ def do_appcfg_passthru_argv():
       kind = arg[7:]
       model = models.get(kind, None)
       if model is None:
-        print "Invalid kind: %s." % kind
+        print_status("Invalid kind: %s." % kind)
         sys.exit(1)
       args.append("--kind=%s" % model.kind())
     else:
       args.append(arg)
+      if arg == "request_logs":
+        args.append(os.getcwdu())
 
-  if "--help" in args or "help" in args:
+  if "--help" in args or "help" in args or "request_logs" in args:
     args = [progname] + args
   else:
     args = [progname] + args + [os.getcwdu()]
@@ -67,10 +70,10 @@ def do_appcfg_passthru_argv():
     StatusUpdate('Interrupted.')
     sys.exit(1)
   from kay.conf import settings
-  if settings.PROFILE and sys.argv[2] == 'update':
-    print '--------------------------\n' \
+  if settings.PROFILE and 'update' in sys.argv:
+    print_status('--------------------------\n' \
         'WARNING: PROFILER ENABLED!\n' \
-        '--------------------------'
+        '--------------------------')
 
     
 do_appcfg_passthru_argv.passthru = True

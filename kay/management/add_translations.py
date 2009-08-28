@@ -6,7 +6,7 @@ Kay add_translations management script.
 
 This script adds a new translation to Kay or Kay application.
 
-:copyright: (c) 2009 by Kay Team, see AUTHORS for more details.
+:Copyright: (c) 2009 Accense Technology, Inc. All rights reserved.
 :copyright: (c) 2009 by the Zine Team, see AUTHORS for more details.
 :license: BSD, see LICENSE for more details.
 
@@ -26,6 +26,8 @@ from babel.messages import Catalog
 from babel.messages.pofile import read_po, write_po
 from babel.util import LOCALTZ
 
+from kay.management.utils import print_status
+
 domains = ['messages', 'jsmessages']
 
 def do_add_translations(app=("a", ""), lang=("l", ""), force=("f", False)):
@@ -35,10 +37,10 @@ def do_add_translations(app=("a", ""), lang=("l", ""), force=("f", False)):
   try:
     locale = Locale.parse(lang)
   except (UnknownLocaleError, ValueError), e:
-    print "You must specify lang."
+    print_status("You must specify lang.")
     sys.exit(1)
   if not app:
-    print "Please specify app."
+    print_status("Please specify app.")
     sys.exit(1)
   elif app == 'kay':
     i18n_dir = join(kay.KAY_DIR, 'i18n')
@@ -51,7 +53,7 @@ def create_from_pot(locale, path):
   try:
     f = file(path)
   except IOError, e:
-    print "Cant open file. Skipped %s." % path
+    print_status("Cant open file. Skipped %s." % path)
     return None
   try:
     catalog = read_po(f, locale=locale)
@@ -68,9 +70,9 @@ def write_catalog(catalog, folder, domain, force):
     makedirs(target)
   filename = join(target, domain+'.po')
   if isfile(filename) and not force:
-    print "%s already exists, skipped." % filename
+    print_status("%s already exists, skipped." % filename)
     return
-  print "Creating %s." % filename
+  print_status("Creating %s." % filename)
   f = file(filename, 'w')
   try:
     write_po(f, catalog, width=79)
@@ -84,4 +86,4 @@ def add_translations(locale, i18n_dir, force):
     catalog = create_from_pot(locale, pot_file)
     if catalog:
       write_catalog(catalog, i18n_dir, domain, force)
-  print 'Created catalog for %s' % locale
+  print_status('Created catalog for %s' % locale)

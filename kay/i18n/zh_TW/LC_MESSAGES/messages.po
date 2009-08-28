@@ -1,14 +1,13 @@
-# Chinese translations for .
+# Chinese translations for Kay.
 # Copyright (C) 2009 Takashi Matsuo
-# This file is distributed under the same license as the  project.
-# TsungWei Hu <marr.tw AT gmail.com>, 2009.
+# Copyright (C) TsungWei Hu <marr.tw AT gmail.com>, 2009.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version:  kay-0.0.0\n"
 "Report-Msgid-Bugs-To: tmatsuo@candit.jp\n"
 "POT-Creation-Date: 2009-05-15 14:07+0900\n"
-"PO-Revision-Date: 2009-08-05 15:08+0900\n"
+"PO-Revision-Date: 2009-08-17 14:24+0900\n"
 "Last-Translator: TsungWei Hu <marr.tw AT gmail.com>\n"
 "Language-Team: Takashi Matsuo <tmatsuo@candit.jp>\n"
 "Plural-Forms: nplurals=1; plural=0\n"
@@ -17,7 +16,27 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 0.9.4\n"
 
-#: kay/i18n/__init__.py:301
+#: kay/auth/forms.py:14
+msgid "user name"
+msgstr ""
+
+#: kay/auth/forms.py:17
+msgid "password"
+msgstr ""
+
+#: kay/auth/views.py:32
+msgid "Failed to login."
+msgstr ""
+
+#: kay/auth/templates/loginform.html:5
+msgid "Kay Login"
+msgstr ""
+
+#: kay/auth/templates/loginform.html:27
+msgid "Login"
+msgstr ""
+
+#: kay/i18n/__init__.py:328
 msgid "now"
 msgstr "現在"
 
@@ -85,13 +104,13 @@ msgstr "本欄位必填。"
 msgid "Invalid security token submitted."
 msgstr "送出非法的安全記號。"
 
-#: kay/utils/forms/__init__.py:1168 kay/utils/forms/__init__.py:1601
+#: kay/utils/forms/__init__.py:1168 kay/utils/forms/__init__.py:1616
 #, python-format
 msgid "Please provide at least %d item."
 msgid_plural "Please provide at least %d items."
 msgstr[0] "請至少提供 %d 個必要項目。"
 
-#: kay/utils/forms/__init__.py:1175 kay/utils/forms/__init__.py:1608
+#: kay/utils/forms/__init__.py:1175 kay/utils/forms/__init__.py:1623
 #, python-format
 msgid "Please provide no more than %d item."
 msgid_plural "Please provide no more than %d items."
@@ -126,62 +145,62 @@ msgstr "請輸入正確的日期。"
 msgid "The selected entity does not exist, or is not allowed to select."
 msgstr "選擇項目並不存在，或不允許被選擇。"
 
-#: kay/utils/forms/__init__.py:1465
+#: kay/utils/forms/__init__.py:1480
 msgid "Invalid value."
 msgstr "不正確的屬性值。"
 
-#: kay/utils/forms/__init__.py:1466
+#: kay/utils/forms/__init__.py:1481
 msgid "Key does not exist."
 msgstr "鍵並不存在。"
 
-#: kay/utils/forms/__init__.py:1536
+#: kay/utils/forms/__init__.py:1551
 msgid "Please enter a valid choice."
 msgstr "請輸入正確的選擇。"
 
-#: kay/utils/forms/__init__.py:1595
+#: kay/utils/forms/__init__.py:1610
 #, python-format
 msgid "“%s” is not a valid choice"
 msgstr "“%s” 不是正確的選項。"
 
-#: kay/utils/forms/__init__.py:1641
+#: kay/utils/forms/__init__.py:1656
 msgid "Please enter a number."
 msgstr "請輸入一個數字。"
 
-#: kay/utils/forms/__init__.py:1667
+#: kay/utils/forms/__init__.py:1682
 #, python-format
 msgid "Ensure this value is greater than or equal to %s."
 msgstr "確保這個數值大於或等於 %s 。"
 
-#: kay/utils/forms/__init__.py:1673
+#: kay/utils/forms/__init__.py:1688
 #, python-format
 msgid "Ensure this value is less than or equal to %s."
 msgstr "確保這個數值小於或等於 %s 。"
 
-#: kay/utils/forms/__init__.py:1706
+#: kay/utils/forms/__init__.py:1721
 msgid "Please enter a whole number."
 msgstr "請輸入一個整數。"
 
-#: kay/utils/forms/__init__.py:1732
+#: kay/utils/forms/__init__.py:1747
 msgid "Please enter a float number."
 msgstr "請輸入一個浮點數。"
 
-#: kay/utils/forms/__init__.py:1751
+#: kay/utils/forms/__init__.py:1767
 msgid "Please select a file to upload."
 msgstr "請選擇要上傳的檔案。"
 
-#: kay/utils/forms/__init__.py:1754
+#: kay/utils/forms/__init__.py:1772
 msgid "File must not empty."
 msgstr "檔案不能是空的。"
 
-#: kay/utils/forms/__init__.py:1776
+#: kay/utils/forms/__init__.py:1794
 msgid "True"
 msgstr "真"
 
-#: kay/utils/forms/__init__.py:1777
+#: kay/utils/forms/__init__.py:1795
 msgid "False"
 msgstr "假"
 
-#: kay/utils/forms/__init__.py:1788
+#: kay/utils/forms/__init__.py:1806
 #, fuzzy
 msgid "Please select True or False."
 msgstr "請選擇要上傳的檔案。"

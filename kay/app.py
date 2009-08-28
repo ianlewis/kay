@@ -3,7 +3,7 @@
 """
 Kay application.
 
-:copyright: (c) 2009 by Kay Team, see AUTHORS for more details.
+:Copyright: (c) 2009 Accense Technology, Inc. All rights reserved.
 :license: BSD, see LICENSE for more details.
 """
 
@@ -48,7 +48,7 @@ def db_hook(service, call, request, response):
   elif call == 'Commit':
     from kay.utils.db_hook import execute_reserved_hooks
     execute_reserved_hooks()
-  elif call == 'Rollback':
+  elif call == 'Rollback' or call == 'BeginTransaction':
     from kay.utils.db_hook import clear_reserved_hooks
     clear_reserved_hooks()
     
@@ -76,6 +76,13 @@ class NullUndefined(Undefined):
     logging.debug("The variable '%s' undefined." % self._undefined_name)
     return u''
 
+def get_app_tailname(app):
+  dot = app.rfind('.')
+  if dot >= 0:
+    return app[dot+1:]
+  else:
+    return app
+  
 
 class KayApp(object):
 
@@ -101,7 +108,8 @@ class KayApp(object):
       except ImportError:
         logging.warning("Failed to import app '%s.urls', skipped." % app)
         continue
-      mountpoint = self.app_settings.APP_MOUNT_POINTS.get(app, "/%s" % app)
+      mountpoint = self.app_settings.APP_MOUNT_POINTS.get(
+        app, "/%s" % get_app_tailname(app))
       make_rules = getattr(url_mod, 'make_rules', None)
       if make_rules:
         self.url_map.add(Submount(mountpoint, make_rules()))
@@ -160,7 +168,7 @@ class KayApp(object):
       try:
         app_key = getattr(mod, 'template_loader_key')
       except AttributeError:
-        app_key = app
+        app_key = get_app_tailname(app)
       per_app_loaders[app_key] = FileSystemLoader(
         os.path.join(os.path.dirname(mod.__file__), template_dirname))
     loader = PrefixLoader(per_app_loaders)  
@@ -199,7 +207,7 @@ class KayApp(object):
       local.jinja2_env.install_gettext_translations(translations)
     else:
       from kay.i18n import KayNullTranslations
-      self.active_translations = NullTranslations()
+      self.active_translations = KayNullTranslations()
       local.jinja2_env.install_null_translations()
 
 
@@ -265,9 +273,15 @@ class KayApp(object):
 
     try:
       endpoint, values = local.url_adapter.match()
-      # TODO: handle view_middleware here if neccesary
+      view_func = self.views.get(endpoint, None)
+      if view_func is None:
+        raise NotFound
+      for mw_method in self._view_middleware:
+        response = mw_method(request, view_func, **values)
+        if response:
+          return response
       try:
-        response = self.views[endpoint](request, **values)
+        response = view_func(request, **values)
       except Exception, e:
         # If the view raised an exception, run it through exception
         # middleware, and if the exception middleware returns a

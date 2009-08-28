@@ -3,7 +3,9 @@
 """
 A decorators related authentication.
 
-:copyright: (c) 2009 by Kay Team, see AUTHORS for more details.
+:Copyright: (c) 2009 Accense Technology, Inc. All rights reserved.
+:copyright: (c) 2009 by Ian Lewis <IanMLewis@gmail.com>. See AUTHORS
+for more details.
 :license: BSD, see LICENSE for more details.
 """
 
@@ -27,7 +29,7 @@ def login_required(func):
 
 def admin_required(func):
   def inner(request, *args, **kwargs):
-    if not users.is_current_user_admin():
+    if not request.user.is_admin:
       if request.user.is_anonymous():
         return redirect(create_login_url(request.url))
       else:

@@ -1,0 +1,42 @@
+from __future__ import division
+from jinja2.runtime import LoopContext, TemplateReference, Macro, Markup, TemplateRuntimeError, missing, concat, escape, markup_join, unicode_join, TemplateNotFound
+name = '/loginform.html'
+
+def root(context, environment=environment):
+    l_message = context.resolve('message')
+    l_form = context.resolve('form')
+    l__ = context.resolve('_')
+    t_1 = environment.filters['safe']
+    if 0: yield None
+    yield u'<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">\n<html>\n<head>\n<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">\n<title>%s</title>\n</head>\n<body>\n<div id="message">\n%s\n</div>\n<div id="login_form">\n' % (
+        escape(context.call(l__, 'Kay Login')), 
+        escape(l_message), 
+    )
+    def macro():
+        t_2 = []
+        l_form = context.resolve('form')
+        pass
+        t_2.extend((
+            u'\n<dl>\n<dt>\n  ', 
+            escape(t_1(context.call(environment.getattr(environment.getattr(l_form, 'user_name'), 'label')))), 
+            u'\n</dt>\n<dd>\n  ', 
+            escape(t_1(context.call(environment.getattr(environment.getattr(l_form, 'user_name'), 'render')))), 
+            u'\n  ', 
+            escape(t_1(context.call(environment.getattr(environment.getattr(l_form, 'user_name'), 'errors')))), 
+            u'\n</dd>\n</dl>\n<dt>', 
+            escape(t_1(context.call(environment.getattr(environment.getattr(l_form, 'password'), 'label')))), 
+            u'</dt>\n<dd>\n  ', 
+            escape(t_1(context.call(environment.getattr(environment.getattr(l_form, 'password'), 'render')))), 
+            u'\n  ', 
+            escape(t_1(context.call(environment.getattr(environment.getattr(l_form, 'password'), 'errors')))), 
+            u'\n</dd>\n', 
+            escape(t_1(context.call(environment.getattr(l_form, 'default_actions'), label=context.call(l__, 'Login')))), 
+            u'\n', 
+        ))
+        return Markup(concat(t_2))
+    caller = Macro(environment, macro, None, (), (), False, False, False)
+    yield context.call(l_form, caller=caller)
+    yield u'\n</div>\n</body>\n</html>'
+
+blocks = {}
+debug_info = '1=11&5=12&9=13&12=15&15=21&18=23&19=25&22=27&24=29&25=31&27=33&12=38&28=39'

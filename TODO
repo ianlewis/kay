@@ -5,11 +5,12 @@ TODO
 kay
 ----
 
-* Implementation for handling process_view of middleware classes.
-
 * Write documentations about middlewares, jinja2 howtos, etc..
 
 * Change the url of paste capability in the werkzeug debugger.
+
+* Handle CapabilityDisabledError more gracefully.
+
 
 kay.utils.forms
 ----------------
@@ -18,23 +19,18 @@ kay.utils.forms
 
  * AjaxModelField
 
-
-kay.sessions
-------------
-
-* Retry when GAESessionStore.save fails cos' its important to keep
-  users' session data.
+ * Implement a widget with JQuery's DatetimePicker
 
 
 kay.auth
 --------
 
-* An authentication backend other than Google's auth.
+* A command for creating a user entity.
 
- * When using apps domain, we cannot use https on our domain. We have
-   to use appspot.com domain for SSL. So there will be the problem
-   that Kay can not handle the cookies from our own domain.
-   
-   To handle this situation, parhaps we can generate random string
-   internally for carrying the session values from the domain to the
-   other domain.
+
+Local GUI datastore administration tool
+---------------------------------------
+
+* An implementation using wxpython is the first option. Using
+  pyqt/Adobe air/tkinter would be also fine.
+

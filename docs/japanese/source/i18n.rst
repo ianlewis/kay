@@ -1,0 +1,87 @@
+====================
+Kay メッセージ国際化
+====================
+
+概要
+----
+
+Kay はソースからのメッセージ抽出・アプリケーションに新規言語を追加する方法・メッセージカタログの更新とコンパイル・javascript の gettext 実装を含む、殆んど完全な国際化機構を持っています。この機能は基本的に jinja2 の国際化機構をベースとしているので、下記でホストされている jinja2 のドキュメントを参照するのは良いアイデアと言えるでしょう:
+
+  http://jinja.pocoo.org/2/documentation/
+
+メッセージのマーク
+------------------
+
+Python コード内では下記のようにしてメッセージをマークできます:
+
+.. code-block:: python
+
+  from kay.i18n import gettext as _
+  _('Hello')
+
+テンプレート内では下記のようにします:
+
+.. code-block:: html
+
+  <p>{{ _('Hello') }}</p>
+  <p>{% trans %}Hello{% endtrans %}
+
+
+メッセージの抽出
+----------------
+
+``myapp`` アプリケーションからメッセージを抽出し、カタログファイルの雛型を作成するには下記のようにします:
+
+.. code-block:: bash
+
+   $ python manage.py extract_messages myapp
+
+``extract_messages`` サブコマンドはオプションの ``--domain`` パラメーターを受け付けます。この値は ``messages`` か ``jsmessages`` である必要があります。
+
+翻訳の追加
+----------
+
+雛型から日本語の翻訳を追加するには下記のようにします:
+
+.. code-block:: bash
+
+  $ python manage.py add_translations myapp -l ja
+
+翻訳の更新
+----------
+
+翻訳したファイルをアップデートされた雛型に追従させるには下記のようにします:
+
+.. code-block:: bash
+
+   $ python manage.py update_translations myapp -l ja
+
+
+メッセージのコンパイル
+----------------------
+
+``myapp`` アプリケーションの翻訳全てをコンパイルするには下記のようにします:
+
+.. code-block:: bash
+
+  $ python manage.py compile_translations myapp
+
+
+javascript ハンドラー
+---------------------
+
+javascript で gettext を使用するためのハンドラーは下記のように定義します:
+
+.. code-block:: python
+
+  from kay.views.i18n import javascript_catalog
+
+  return Map([
+    Rule('/_i18n.js', endpoint='i18n_js',
+         defaults={'packages':('myapp','kay')}),
+  ])
+
+  all_views = {
+    'i18n_js': javascript_catalog,
+  }
+

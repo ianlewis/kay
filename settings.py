@@ -3,11 +3,9 @@
 """
 A sample of kay settings.
 
-:copyright: (c) 2009 by Kay Team, see AUTHORS for more details.
+:Copyright: (c) 2009 Accense Technology, Inc. All rights reserved.
 :license: BSD, see LICENSE for more details.
 """
-
-import os
 
 DEFAULT_TIMEZONE = 'Asia/Tokyo'
 DEBUG = True
@@ -30,14 +28,12 @@ USE_I18N = True
 DEFAULT_LANG = 'en'
 
 INSTALLED_APPS = (
-  'kay.sessions',
 )
 
 APP_MOUNT_POINTS = {
 }
 
 MIDDLEWARE_CLASSES = (
-  'kay.sessions.middleware.SessionMiddleware',
   'kay.auth.middleware.GoogleAuthenticationMiddleware',
 )
 AUTH_USER_MODEL = 'kay.auth.models.GoogleUser'

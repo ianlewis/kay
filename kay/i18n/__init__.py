@@ -39,7 +39,7 @@ To compile the translations into the MO files just use
 
 New languages are added with `add-translation`.
 
-:copyright: (c) 2009 by Kay Team, see AUTHORS for more details.
+:Copyright: (c) 2009 Accense Technology, Inc. All rights reserved.
 :copyright: (c) 2009 by the Zine Team, see AUTHORS for more details.
 :license: BSD, see LICENSE for more details.
 

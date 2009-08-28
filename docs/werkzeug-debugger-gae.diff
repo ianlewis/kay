@@ -1,0 +1,36 @@
+diff -r 8ffe4e637e17 werkzeug/debug/console.py
+--- a/werkzeug/debug/console.py	Sat Apr 25 17:06:40 2009 +0000
++++ b/werkzeug/debug/console.py	Fri May 15 00:41:03 2009 +0900
+@@ -32,6 +32,12 @@
+     def close(self):
+         pass
+ 
++    def flush(self):
++        pass
++
++    def seek(self, n, mode=0):
++        pass
++
+     def reset(self):
+         val = ''.join(self._buffer)
+         del self._buffer[:]
+@@ -48,12 +54,18 @@
+     def writelines(self, x):
+         self._write(escape(''.join(x)))
+ 
++    def readline(self):
++        if len(self._buffer) == 0:
++            return ''
++        ret = self._buffer[0]
++        del self._buffer[0]
++        return ret
+ 
+ class ThreadedStream(object):
+     """Thread-local wrapper for sys.stdout for the interactive console."""
+ 
+     def push():
+-        if sys.stdout is sys.__stdout__:
++        if not isinstance(sys.stdout, ThreadedStream):
+             sys.stdout = ThreadedStream()
+         _local.stream = HTMLStringO()
+     push = staticmethod(push)

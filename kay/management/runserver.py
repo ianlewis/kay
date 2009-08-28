@@ -17,7 +17,7 @@
 """
 Kay runserver management commands.
 
-:copyright: (c) 2009 by Kay Team, see AUTHORS for more details.
+:Copyright: (c) 2009 Accense Technology, Inc. All rights reserved.
 :license: BSD, see LICENSE for more details.
 """
 
@@ -25,6 +25,7 @@ import os
 import sys
 
 from kay.misc import get_datastore_paths
+from kay.management.utils import print_status
 
 def args_have_option(args, option):
   for arg in args:
@@ -51,7 +52,7 @@ def runserver_passthru_argv():
   if "-h" in args or "--help" in args:
     render_dict = dev_appserver_main.DEFAULT_ARGS.copy()
     render_dict['script'] = "manage.py runserver"
-    print dev_appserver_main.__doc__ % render_dict
+    print_status(dev_appserver_main.__doc__ % render_dict)
     sys.stdout.flush()
     sys.exit(0)
     

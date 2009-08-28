@@ -3,14 +3,10 @@
 """
 Kay auth application.
 
-:copyright: (c) 2009 by Kay Team, see AUTHORS for more details.
+:Copyright: (c) 2009 Accense Technology, Inc. All rights reserved.
 :license: BSD, see LICENSE for more details.
 """
 
-from kay.auth.models import AnonymousUser
-
-def get_user(request):
-  return AnonymousUser()
 
 def process_context(request):
   return {'user': request.user}

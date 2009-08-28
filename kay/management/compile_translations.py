@@ -6,7 +6,7 @@ Compile translations
 
 Compile translations into the translated messages.
 
-:copyright: (c) 2009 by Kay Team, see AUTHORS for more details.
+:Copyright: (c) 2009 Accense Technology, Inc. All rights reserved.
 :copyright: (c) 2009 by the Zine Team, see AUTHORS for more details.
 :license: BSD, see LICENSE for more details.
 
@@ -23,6 +23,8 @@ kay.setup_syspath()
 from optparse import OptionParser
 from babel.messages.pofile import read_po
 from babel.messages.mofile import write_mo
+
+from kay.management.utils import print_status
 
 domains = ['messages', 'jsmessages']
 
@@ -42,17 +44,17 @@ def do_compile_translations(app=("a", "")):
   Compiling all the templates in specified application.
   """
   if not app:
-    print 'Please specify app.'
+    print_status('Please specify app.')
     sys.exit(1)
   elif app == 'kay':
-    print 'Compiling builtin languages'
+    print_status('Compiling builtin languages')
     root = path.join(kay.KAY_DIR, 'i18n')
   else:
     root = path.join(app, 'i18n')
     if not path.isdir(root):
       print('i18n folder missing')
       sys.exit(1)
-    print 'Compiling', root
+    print_status('Compiling %s' % root)
 
   for domain in domains:
     for lang in listdir(root):
@@ -61,7 +63,7 @@ def do_compile_translations(app=("a", "")):
 
       if path.isfile(translations):
         mo_file = open(translations.replace('.po', '.mo'), 'wb')
-        print 'Compiling %r ' % lang,
+        print_status('Compiling %r ' % lang)
         f = file(translations)
         try:
           catalog = read_po(f, locale=lang)
@@ -70,4 +72,4 @@ def do_compile_translations(app=("a", "")):
         # Write standard catalog
         write_mo(mo_file, catalog)
         mo_file.close()
-  print 'All done.'
+  print_status('All done.')

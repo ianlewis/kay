@@ -1,3 +1,6 @@
+
+import sys
+
 from kay.management.shell import (
   rshell, shell
 )
@@ -21,3 +24,7 @@ __all__ = [
   'do_compile_translations', 'shell', 'rshell', 'do_preparse_apps',
   'startproject',
 ]
+
+def print_status(msg):
+  print(msg)
+  sys.stdout.flush()

@@ -3,7 +3,9 @@
 """
 Middleware for authentication.
 
-:copyright: (c) 2009 by Kay Team, see AUTHORS for more details.
+:Copyright: (c) 2009 Accense Technology, Inc. All rights reserved.
+:copyright: (c) 2009 by Ian Lewis <IanMLewis@gmail.com>. See AUTHORS
+for more details.
 :license: BSD, see LICENSE for more details.
 """
 
@@ -11,21 +13,21 @@ from kay import auth
 from kay.exceptions import ImproperlyConfigured
 from kay.conf import settings
 from kay.utils.importlib import import_module
-
+from kay.utils import local
 
 class LazyUser(object):
   def __get__(self, request, obj_type=None):
     if not hasattr(request, '_cached_user'):
-      from kay.auth import get_user
-      request._cached_user = get_user(request)
+      request._cached_user = local.app.auth_backend.get_user(request)
     return request._cached_user
 
 
 class AuthenticationMiddleware(object):
   def process_request(self, request):
-    if not hasattr(request, 'session'):
+    if not 'kay.sessions.middleware.SessionMiddleware' in \
+          settings.MIDDLEWARE_CLASSES:
       raise ImproperlyConfigured(
-        "The Django authentication middleware requires session middleware to "
+        "The Kay authentication middleware requires session middleware to "
         "be installed. Edit your MIDDLEWARE_CLASSES setting to insert "
         "'kay.sessions.middleware.SessionMiddleware'.")
     request.__class__.user = LazyUser()

@@ -5,6 +5,8 @@ syntax: glob
 *~
 *.pdf
 .DS_Store
+docs/build
+docs/japanese/build
 
 syntax: regexp
 (.*/)?\#[^/]*\#$
