@@ -98,7 +98,7 @@ class MainFrame(wx.Frame):
         self.dialog_frame.Show()
         self.process = wx.Process(self)
         self.process.Redirect();
-        cmd = '/usr/bin/python manage.py appcfg update'
+        cmd = 'python manage.py appcfg update'
         pid = wx.Execute(cmd, wx.EXEC_ASYNC, self.process)
 
 
