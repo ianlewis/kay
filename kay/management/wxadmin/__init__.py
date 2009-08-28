@@ -1,5 +1,8 @@
 
-import wx
+try:
+  import wx
+except:
+  pass
 
 from mainframe import MainFrame
 

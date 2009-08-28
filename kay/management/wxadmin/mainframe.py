@@ -5,8 +5,11 @@
 import os
 import logging
 
-import wx
-import wx.lib.dialogs
+try:
+  import wx
+  import wx.lib.dialogs
+except:
+  pass
 
 
 ID_QUIT = 1
