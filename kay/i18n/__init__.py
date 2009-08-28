@@ -123,7 +123,7 @@ class KayTranslations(TranslationsBase):
     catalog = os.path.join(path, str(Locale.parse(locale)), 'LC_MESSAGES',
                            domain + '.mo')
     if os.path.isfile(catalog):
-      return KayTranslations(fileobj=open(catalog), locale=locale)
+      return KayTranslations(fileobj=open(catalog, 'rb'), locale=locale)
     else:
       return KayTranslations(fileobj=None, locale=locale)
 
