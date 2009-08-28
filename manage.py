@@ -32,6 +32,7 @@ action_compile_translations = do_compile_translations
 action_appcfg = do_appcfg_passthru_argv
 action_runserver = runserver_passthru_argv
 action_bulkloader = do_bulkloader_passthru_argv
+action_wxadmin = do_wxadmin
 
 if __name__ == '__main__':
   if len(sys.argv) == 1:
