@@ -1,6 +1,12 @@
 #!/usr/bin/python
+# -*- coding: utf-8 -*-
 
-# submenu.py
+"""
+Kay wxadmin main window.
+
+:Copyright: (c) 2009 Takashi Matsuo <tmatsuo@candit.jp> All rights reserved.
+:license: BSD, see LICENSE for more details.
+"""
 
 import os
 import logging
@@ -41,7 +47,6 @@ class AppCfgThread(object):
     thread.start_new_thread(self.Run, ())
 
   def ask_username(self, msg):
-    print_status("ask_username")
     evt = AskPassEvent(message=msg)
     wx.PostEvent(self.win, evt)
     while 1:
@@ -57,7 +62,6 @@ class AppCfgThread(object):
         time.sleep(0.1)
 
   def ask_pass(self, msg):
-    print_status("ask_pass")
     if self.win.password:
       ret = self.win.password
       self.win.password = None
