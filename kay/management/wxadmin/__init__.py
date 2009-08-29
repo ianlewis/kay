@@ -9,7 +9,7 @@ def do_wxadmin():
     from mainframe import MainFrame
   except:
     print_status('Can not import wxpython.')
-    sys.exit(-1)
+    raise
     
   app = wx.App()
   MainFrame(None, -1, 'Kay WxAdmin')

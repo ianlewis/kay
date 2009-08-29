@@ -58,7 +58,6 @@ def do_appcfg_passthru_argv():
     args = [progname] + args
   else:
     args = [progname] + args + [os.getcwdu()]
-  
   logging.basicConfig(format=('%(asctime)s %(levelname)s %(filename)s:'
                               '%(lineno)s %(message)s '))
   try:
@@ -67,7 +66,7 @@ def do_appcfg_passthru_argv():
     if result:
       sys.exit(result)
   except KeyboardInterrupt:
-    StatusUpdate('Interrupted.')
+    print_status('Interrupted.')
     sys.exit(1)
   from kay.conf import settings
   if settings.PROFILE and 'update' in sys.argv:
