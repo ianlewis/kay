@@ -183,31 +183,29 @@ class MainFrame(wx.Frame):
     menubar.Append(file, '&File')
     self.SetMenuBar(menubar)
 
-    self.deploy = wx.Button(self, -1, "Deploy", (50,50))
+    self.deploy = wx.Button(self, -1, 'Deploy', (50,50))
     self.Bind(wx.EVT_BUTTON, self.OnDeploy, self.deploy)
 
     self.Centre()
     self.Show(True)
 
   def OnDeploy(self, event):
-    self.dialog_frame = wx.Frame(None, -1, 'Deploying', size=(500,500),
-                                 style=wx.CAPTION|wx.RESIZE_BORDER)
-    vbox = wx.BoxSizer(wx.VERTICAL)
-    self.out = wx.TextCtrl(self.dialog_frame, -1,
-                           style=wx.TE_MULTILINE|wx.TE_READONLY|wx.TE_RICH2)
-    self.dialog_frame.close = wx.Button(self.dialog_frame, -1, "OK",
-                                        (50,50))
-    vbox.Add(self.out, 1, wx.EXPAND|wx.ALL)
-    vbox.Add(self.dialog_frame.close, 0, wx.BOTTOM)
-    self.dialog_frame.SetSizer(vbox)
+
+    from wx import xrc
+    res = xrc.XmlResource(os.path.join(
+        os.path.dirname(os.path.abspath(__file__)),
+        'dialog_frame.xrc'))
+
+    self.dialog_frame = res.LoadFrame(None, 'dialog_frame')
+    self.out = xrc.XRCCTRL(self.dialog_frame, 'log_text')
+    self.dialog_frame.close = xrc.XRCCTRL(self.dialog_frame, 'ok_button')
+    self.dialog_frame.SetTitle('Deploying')
     self.dialog_frame.Bind(wx.EVT_BUTTON, self.OnOK,
                            self.dialog_frame.close)
-
     self.dialog_frame.close.Enable(False)
     self.deploy.Enable(False)
-
-    self.dialog_frame.Center()
     self.dialog_frame.Show()
+
     self.Bind(EVT_THREAD_END, self.OnThreadEnd)
     self.Bind(EVT_MESSAGE_UPDATE, self.OnMsgUpdate)
     self.Bind(EVT_ASK_PASSWORD, self.OnAskPassword)
@@ -233,7 +231,7 @@ class MainFrame(wx.Frame):
   def OnMsgUpdate(self, event):
     self.out.AppendText(event.message)
 
-  def OnThreadEnd(self, event):  
+  def OnThreadEnd(self, event):
     self.dialog_frame.close.Enable(True)
     self.dialog_frame.close.SetFocus()
 
@@ -248,7 +246,3 @@ class MainFrame(wx.Frame):
   def __del__(self):
     if self.dialog_frame is not None:
       self.dialog_frame.Close()
-    if self.process is not None:
-      self.process.Detach()
-      self.process.CloseOutput()
-      self.process = None
