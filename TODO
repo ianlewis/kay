@@ -30,6 +30,8 @@ kay.auth
 
 * 'Registration' application needed.
 
+* A capability for changing templates for rendering a auth login form.
+
 kay.utils.forms
 ---------------
 
