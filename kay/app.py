@@ -93,6 +93,7 @@ class KayApp(object):
     self._request_middleware = self._response_middleware = \
         self._view_middleware = self._exception_middleware = None
     self.auth_backend = None
+    self.init_jinja2_environ()
 
   def init_url_map(self):
 
@@ -157,7 +158,6 @@ class KayApp(object):
       from kay.utils.jinja2utils.code_loaders import PrefixCodeLoader as \
           PrefixLoader
       template_dirname = "templates_compiled"
-    global local
     per_app_loaders = {}
     for app in self.app_settings.INSTALLED_APPS:
       try:
@@ -185,9 +185,8 @@ class KayApp(object):
       undefined=NullUndefined,
       extensions=['jinja2.ext.i18n'],
     )
-    jinja2_env = Environment(**env_dict)
-    jinja2_env.filters['nl2br'] = nl2br
-    local.jinja2_env = jinja2_env
+    self.jinja2_env = Environment(**env_dict)
+    self.jinja2_env.filters.update({'nl2br': nl2br})
 
   def init_lang(self, lang):
     """
@@ -204,11 +203,11 @@ class KayApp(object):
         translations_cache["trans:%s:%s" %
                      (self.app_settings.APP_NAME, lang)] = translations
       self.active_translations = translations
-      local.jinja2_env.install_gettext_translations(translations)
+      self.jinja2_env.install_gettext_translations(translations)
     else:
       from kay.i18n import KayNullTranslations
       self.active_translations = KayNullTranslations()
-      local.jinja2_env.install_null_translations()
+      self.jinja2_env.install_null_translations()
 
 
   def load_middleware(self):
@@ -261,7 +260,6 @@ class KayApp(object):
       if response:
         return response
 
-    self.init_jinja2_environ()
     lang = (request.accept_languages.best or 
             self.app_settings.DEFAULT_LANG)
     pos = lang.find('-')
