@@ -43,8 +43,8 @@ class AppCfgThread(object):
   def __init__(self, win):
     self.win = win
 
-  def Start(self):
-    thread.start_new_thread(self.Run, ())
+  def start(self):
+    thread.start_new_thread(self.run, ())
 
   def ask_username(self, msg):
     evt = AskPassEvent(message=msg)
@@ -80,7 +80,7 @@ class AppCfgThread(object):
       else:
         time.sleep(0.1)
 
-  def Run(self):
+  def run(self):
     from google.appengine.tools import appcfg
     from kay.management.preparse import do_preparse_apps
     import sys
@@ -177,19 +177,19 @@ class MainFrame(wx.Frame):
     quit = wx.MenuItem(file, ID_QUIT, '&Quit\tCtrl+W')
     file.Append(ID_QUIT, '&Quit')
 
-    self.Bind(wx.EVT_MENU, self.OnQuit, id=ID_QUIT)
-    self.Bind(wx.EVT_MENU, self.OnDeploy, id=ID_DEPLOY)
+    self.Bind(wx.EVT_MENU, self.on_quit, id=ID_QUIT)
+    self.Bind(wx.EVT_MENU, self.on_deploy, id=ID_DEPLOY)
 
     menubar.Append(file, '&File')
     self.SetMenuBar(menubar)
 
     self.deploy = wx.Button(self, -1, 'Deploy', (50,50))
-    self.Bind(wx.EVT_BUTTON, self.OnDeploy, self.deploy)
+    self.Bind(wx.EVT_BUTTON, self.on_deploy, self.deploy)
 
     self.Centre()
     self.Show(True)
 
-  def OnDeploy(self, event):
+  def on_deploy(self, event):
 
     from wx import xrc
     res = xrc.XmlResource(os.path.join(
@@ -200,19 +200,19 @@ class MainFrame(wx.Frame):
     self.out = xrc.XRCCTRL(self.dialog_frame, 'log_text')
     self.dialog_frame.close = xrc.XRCCTRL(self.dialog_frame, 'ok_button')
     self.dialog_frame.SetTitle('Deploying')
-    self.dialog_frame.Bind(wx.EVT_BUTTON, self.OnOK,
+    self.dialog_frame.Bind(wx.EVT_BUTTON, self.on_ok,
                            self.dialog_frame.close)
     self.dialog_frame.close.Enable(False)
     self.deploy.Enable(False)
     self.dialog_frame.Show()
 
-    self.Bind(EVT_THREAD_END, self.OnThreadEnd)
-    self.Bind(EVT_MESSAGE_UPDATE, self.OnMsgUpdate)
-    self.Bind(EVT_ASK_PASSWORD, self.OnAskPassword)
+    self.Bind(EVT_THREAD_END, self.on_thread_end)
+    self.Bind(EVT_MESSAGE_UPDATE, self.on_msg_update)
+    self.Bind(EVT_ASK_PASSWORD, self.on_ask_password)
     t = AppCfgThread(self)
-    t.Start()
+    t.start()
 
-  def OnAskPassword(self, event):
+  def on_ask_password(self, event):
     if self.username is not None and self.password is not None:
       return
     dlg = AskPassDialog(self, -1, 'Input your email/username and password',
@@ -228,19 +228,19 @@ class MainFrame(wx.Frame):
       self.password = ''
     dlg.Destroy()
 
-  def OnMsgUpdate(self, event):
+  def on_msg_update(self, event):
     self.out.AppendText(event.message)
 
-  def OnThreadEnd(self, event):
+  def on_thread_end(self, event):
     self.dialog_frame.close.Enable(True)
     self.dialog_frame.close.SetFocus()
 
-  def OnOK(self, event):
+  def on_ok(self, event):
     self.dialog_frame.Close()
     self.dialog_frame = None
     self.deploy.Enable(True)
 
-  def OnQuit(self, event):
+  def on_quit(self, event):
     self.Close()
 
   def __del__(self):
