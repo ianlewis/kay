@@ -47,7 +47,7 @@ def setup_env(manage_py_env=False):
     if SDK_PATH is None:
       # The SDK could not be found in any known location.
       sys.stderr.write('The Google App Engine SDK could not be found!\n'
-                       'Visit http://code.google.com/p/app-engine-patch/'
+                       'Please visit http://kay-docs.shehas.net/'
                        ' for installation instructions.\n')
       sys.exit(1)
     # Add the SDK and the libraries within it to the system path.
