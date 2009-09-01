@@ -2,6 +2,17 @@
 Kay Quickstart
 ==============
 
+Create a symlink for appengine SDK if neccessary
+------------------------------------------------
+
+* If you installed a zip package of appengine SDK, you need to create
+  a symlink beforehand like following:
+
+.. code-block:: bash
+
+   $ sudo ln -s /some/whare/google_appengine /usr/local/google_appengine    
+
+
 Let's start
 -----------
 

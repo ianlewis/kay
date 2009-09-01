@@ -29,6 +29,13 @@ macports の python25 を使うばあいは、他に下記もインストール�
 
   $ hg clone https://kay-framework.googlecode.com/hg/ kay
 
+もし zip 版の appengine SDK をインストールした場合は、下記のようにシンボリックリンクを作ってください。
+
+.. code-block:: bash
+
+   $ sudo ln -s /some/whare/google_appengine /usr/local/google_appengine    
+
+
 プロジェクトの開始
 ------------------
 
