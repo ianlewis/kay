@@ -44,7 +44,7 @@ def compile_file(env, src_path, dst_path, encoding='utf-8', base_dir=''):
   raw = env.compile(source, name=name, filename=name, raw=True)
 
   # Save to the destination.
-  dst_file = open(dst_path, 'w')
+  dst_file = open(dst_path, 'wb')
   dst_file.write(raw)
   dst_file.close()
 
