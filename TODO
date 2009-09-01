@@ -13,6 +13,7 @@ kay
 
 * A tool for dump and restore datastore
 
+
 kay.utils.forms
 ----------------
 
@@ -29,8 +30,6 @@ kay.auth
 * A command for creating a user entity.
 
 * 'Registration' application needed.
-
-* A capability for changing templates for rendering a auth login form.
 
 
 kay.utils.forms
