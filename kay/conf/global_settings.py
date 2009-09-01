@@ -23,6 +23,9 @@ ADD_APP_PREFIX_TO_KIND = True
 
 ROOT_URL_MODULE = 'urls'
 
+MEDIA_URL = '/media'
+INTERNAL_MEDIA_URL = '/_media'
+
 ADMINS = (
 )
 
@@ -41,6 +44,7 @@ APP_MOUNT_POINTS = {
 CONTEXT_PROCESSORS = (
   'kay.context_processors.request',
   'kay.context_processors.url_functions',
+  'kay.context_processors.media_url',
 )
 
 SUBMOUNT_APPS = (

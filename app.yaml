@@ -13,6 +13,10 @@ handlers:
   static_dir: media
   secure: optional
 
+- url: /_media
+  static_dir: kay/media
+  secure: optional
+
 - url: /_kay/.*
   script: kay/main.py
   login: admin
