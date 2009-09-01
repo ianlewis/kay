@@ -315,6 +315,7 @@ class KayApp(object):
       except Exception, e:
         request_repr = "Request repr() unavailable"
       message = "%s\n\n%s" % (self._get_traceback(exc_info), request_repr)
+      logging.error(message)
       mail.mail_admins(subject, message, fail_silently=True)
       # TODO: Return an HttpResponse that displays a friendly error message.
       return InternalServerError()
