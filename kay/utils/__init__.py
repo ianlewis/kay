@@ -152,7 +152,7 @@ def render_to_string(template, context={}, processors=None):
     processors = tuple(processors)
   for processor in get_standard_processors() + processors:
     context.update(processor(get_request()))
-  template = local.jinja2_env.get_template(template)
+  template = local.app.jinja2_env.get_template(template)
   return template.render(context)
 
 

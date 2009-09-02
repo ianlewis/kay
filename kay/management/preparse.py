@@ -45,7 +45,7 @@ def do_preparse_bundle():
   print_status("Compiling bundled templates...")
   app = kay.app.get_application()
   app.app.init_jinja2_environ()
-  env = local.jinja2_env
+  env = app.app.jinja2_env
   for dir in find_template_dir(kay.KAY_DIR, ('debug','app_template')):
     dest = prepare_destdir(dir)
     print_status("Now compiling templates in %s to %s." % (dir, dest))
@@ -86,7 +86,7 @@ def prepare_destdir(dir):
 
 def compile_app_templates(app):
   app.init_jinja2_environ()
-  env = local.jinja2_env
+  env = app.jinja2_env
   target_dirs = [dir for dir in app.app_settings.TEMPLATE_DIRS\
                    if os.path.isdir(dir)]
   for app in app.app_settings.INSTALLED_APPS:
