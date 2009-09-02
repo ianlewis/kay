@@ -140,7 +140,7 @@ class Traceback(object):
     def paste(self):
         """Create a paste and return the paste id."""
         from xmlrpclib import ServerProxy
-        srv = ServerProxy('http://paste.pocoo.org/xmlrpc/')
+        srv = ServerProxy('http://paste.shehas.net/xmlrpc/')
         return srv.pastes.newPaste('pytb', self.plaintext)
 
     def render_summary(self, include_title=True):
