@@ -7,8 +7,6 @@ kay
 
 * Write documentations about middlewares, jinja2 howtos, etc..
 
-* Change the url of paste capability in the werkzeug debugger.
-
 * Handle CapabilityDisabledError more gracefully.
 
 
