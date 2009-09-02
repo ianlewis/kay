@@ -1,31 +1,31 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>{{_('Kay Login')}}</title>
-</head>
-<body>
-<div id="message">
-{{ message }}
-</div>
-<div id="login_form">
-{% call form() %}
-<dl>
-<dt>
-  {{ form.user_name.label()|safe}}
-</dt>
-<dd>
-  {{ form.user_name.render()|safe }}
-  {{ form.user_name.errors()|safe }}
-</dd>
-</dl>
-<dt>{{ form.password.label()|safe}}</dt>
-<dd>
-  {{ form.password.render()|safe }}
-  {{ form.password.errors()|safe }}
-</dd>
-{{ form.default_actions(label=_("Login"))|safe }}
-{% endcall %}
-</div>
-</body>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>{{_('Kay Login')}}</title>
+    <link rel="stylesheet" type="text/css" href="{{ internal_media_url }}/css/loginform.css" />
+  </head>
+  <body>
+    <div id="message">
+      {{ message }}
+    </div>
+    <div id="loginform">
+      {% call form() %}
+      <fieldset>
+        <legend>{{ _('Kay Login Form') }}</legend>
+        <p>
+          {{ form.user_name.label()|safe }}
+          {{ form.user_name.render()|safe }}
+          {{ form.user_name.errors()|safe }}
+        </p>
+        <p>
+          {{ form.password.label()|safe }}
+          {{ form.password.render()|safe }}
+          {{ form.password.errors()|safe }}
+        </p>
+        {{ form.default_actions(label=_("Login"))|safe }}
+      </fieldset>
+      {% endcall %}
+    </div>
+  </body>
 </html>
