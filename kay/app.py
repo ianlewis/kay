@@ -17,14 +17,19 @@ from werkzeug import (
 from werkzeug.exceptions import (
   HTTPException, InternalServerError, NotFound
 )
-from werkzeug import Response
+from werkzeug import (
+  Response, redirect
+)
 from jinja2 import (
   Environment, Undefined,
 )
 from werkzeug.routing import Submount
+from google.appengine.runtime.apiproxy_errors import CapabilityDisabledError
 
 import kay
-from kay.utils import local, local_manager
+from kay.utils import (
+  local, local_manager, reverse
+)
 from kay.utils.importlib import import_module
 from kay import (
   utils, exceptions, mail,
@@ -301,6 +306,9 @@ class KayApp(object):
     except SystemExit:
       # Allow sys.exit() to actually exit.
       raise
+    except CapabilityDisabledError, e:
+      logging.error(e)
+      return redirect(reverse('_internal/maintenance_page'))
     except: # Handle everything else, including SuspiciousOperation, etc.
       # Get the exception info now, in case another exception is thrown later.
       import sys

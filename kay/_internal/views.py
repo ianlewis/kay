@@ -30,6 +30,6 @@ def cron_hourly(request):
   return Response("OK")
 
 @no_session
-def maintenance_page(request, message=_('Now it\'s under maintenance.')):
+def maintenance_page(request):
   return render_to_response("_internal/maintenance.html",
-                            {"message": message})
+                            {"message": _('Now it\'s under maintenance.')})

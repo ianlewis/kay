@@ -40,13 +40,6 @@ def retry_on_timeout(retries=3, secs=1):
   return _decorator
 
 def datastore_writable_for_certain_time():
-  from google.appengine.api.capabilities import CapabilitySet
-  from google.appengine.api import memcache
-  datastore_writable = memcache.get(DATASTORE_WRITABLE)
-  if datastore_writable is None:
-    datastore_write = CapabilitySet('datastore_v3', capabilities=['write'])
-    datastore_writable = datastore_write.will_remain_enabled_for(60)
-    memcache.set(DATASTORE_WRITABLE, datastore_writable, 30)
   return datastore_writable
 
 def maintenance_check(view):
@@ -54,14 +47,24 @@ def maintenance_check(view):
   Checks the request method is in one of the given methods
   """
   import logging
+  from google.appengine.api.capabilities import CapabilitySet
+  from google.appengine.api import memcache
   from werkzeug import redirect
   from kay.utils import reverse
+
   def wrapped(request, *args, **kwargs):
-    if not datastore_writable_for_certain_time():
+    datastore_writable = memcache.get(DATASTORE_WRITABLE)
+    if datastore_writable is None:
+      datastore_write = CapabilitySet('datastore_v3', capabilities=['write'])
+      datastore_writable = datastore_write.will_remain_enabled_for(60)
+      memcache.set(DATASTORE_WRITABLE, datastore_writable, 60)
+    if not datastore_writable:
       if request.is_xhr:
         # Ignore ajax request. This will cause 50? Status eventually.
         logging.debug('Datastore is not writable against an ajax request.')
       else:
+        logging.warn('Datastore is not writable. %s' %
+                     datastore_write.admin_message())
         return redirect(reverse('_internal/maintenance_page'))
     return view(request, *args, **kwargs)
   return wrapped
