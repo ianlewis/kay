@@ -39,9 +39,6 @@ def retry_on_timeout(retries=3, secs=1):
     return _wrapper
   return _decorator
 
-def datastore_writable_for_certain_time():
-  return datastore_writable
-
 def maintenance_check(view):
   """
   Checks the request method is in one of the given methods
