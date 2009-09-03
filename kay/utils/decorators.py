@@ -45,23 +45,27 @@ def maintenance_check(view):
   """
   import logging
   from google.appengine.api.capabilities import CapabilitySet
-  from google.appengine.api import memcache
-  from werkzeug import redirect
-  from kay.utils import reverse
+  from werkzeug import Response
+  from kay.utils import render_to_string
+  from kay.i18n import gettext as _
 
   def wrapped(request, *args, **kwargs):
-    datastore_writable = memcache.get(DATASTORE_WRITABLE)
-    if datastore_writable is None:
-      datastore_write = CapabilitySet('datastore_v3', capabilities=['write'])
-      datastore_writable = datastore_write.will_remain_enabled_for(60)
-      memcache.set(DATASTORE_WRITABLE, datastore_writable, 60)
+    datastore_write = CapabilitySet('datastore_v3', capabilities=['write'])
+    datastore_writable = datastore_write.will_remain_enabled_for(60)
     if not datastore_writable:
+      logging.warn('Datastore is not writable. %s' %
+                   datastore_write.admin_message())
       if request.is_xhr:
-        # Ignore ajax request. This will cause 50? Status eventually.
-        logging.debug('Datastore is not writable against an ajax request.')
+        return ServiceUnavailable('Appengine might be under maintenance.')
       else:
-        logging.warn('Datastore is not writable. %s' %
-                     datastore_write.admin_message())
+        # Saving session will also fail.
+        if hasattr(request, 'session'):
+          del(request.session)
+        return Response(
+          render_to_string(
+            "_internal/maintenance.html",
+            {"message": _('Appengine might be under maintenance.')}),
+          status=503)
         return redirect(reverse('_internal/maintenance_page'))
     return view(request, *args, **kwargs)
   return wrapped

@@ -28,7 +28,7 @@ from google.appengine.runtime.apiproxy_errors import CapabilityDisabledError
 
 import kay
 from kay.utils import (
-  local, local_manager, reverse
+  local, local_manager, reverse, render_to_string,
 )
 from kay.utils.importlib import import_module
 from kay import (
@@ -57,10 +57,10 @@ def db_hook(service, call, request, response):
     clear_reserved_hooks()
     
 
-def get_application():
-  application = KayApp(_settings)
+def get_application(settings=_settings):
+  application = KayApp(settings)
   submount_apps = {}
-  for app_name in _settings.SUBMOUNT_APPS:
+  for app_name in settings.SUBMOUNT_APPS:
     app = KayApp(LazySettings('%s.settings' % app_name))
     submount_apps['/%s' % app_name] = app
   application = DispatcherMiddleware(application, submount_apps)
@@ -129,15 +129,16 @@ class KayApp(object):
       if all_views:
         self.views.update(all_views)
     if 'kay.auth.middleware.AuthenticationMiddleware' in \
-          settings.MIDDLEWARE_CLASSES:
+          self.app_settings.MIDDLEWARE_CLASSES:
       try:
-        dot = settings.AUTH_USER_BACKEND.rindex('.')
+        dot = self.app_settings.AUTH_USER_BACKEND.rindex('.')
       except ValueError:
         raise exceptions.ImproperlyConfigured, \
             'Error importing auth backend %s: "%s"' % \
-            (settings.AUTH_USER_BACKEND, e)
-      backend_module, backend_classname = settings.AUTH_USER_BACKEND[:dot], \
-          settings.AUTH_USER_BACKEND[dot+1:]
+            (self.app_settings.AUTH_USER_BACKEND, e)
+      backend_module, backend_classname = \
+          self.app_settings.AUTH_USER_BACKEND[:dot], \
+          self.app_settings.AUTH_USER_BACKEND[dot+1:]
       try:
         mod = import_module(backend_module)
       except ImportError, e:
@@ -308,7 +309,14 @@ class KayApp(object):
       raise
     except CapabilityDisabledError, e:
       logging.error(e)
-      return redirect(reverse('_internal/maintenance_page'))
+      # Saving session will also fail.
+      if hasattr(request, 'session'):
+        del(request.session)
+      return Response(
+        render_to_string(
+          "_internal/maintenance.html",
+          {"message": _('Appengine might be under maintenance.')}),
+        status=503)
     except: # Handle everything else, including SuspiciousOperation, etc.
       # Get the exception info now, in case another exception is thrown later.
       import sys
