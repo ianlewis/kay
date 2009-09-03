@@ -2008,7 +2008,7 @@ class Form(object):
   csrf_protected = True
 #    redirect_tracking = True
 
-  def __init__(self, initial=None, **kwargs):
+  def __init__(self, initial=None):
     self.request = get_request()
     if initial is None:
       initial = {}
