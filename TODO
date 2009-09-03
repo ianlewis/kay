@@ -5,11 +5,10 @@ TODO
 kay
 ----
 
-* Write documentations about middlewares, jinja2 howtos, etc..
+* Write documentations about modules, middlewares, jinja2 howtos,
+  etc..
 
-* Handle CapabilityDisabledError more gracefully.
-
-
+* Test kay.utils.decorators.maintenance_check appropriately.
 
 kay.utils.forms
 ----------------

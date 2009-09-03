@@ -26,7 +26,6 @@ from werkzeug.routing import Submount
 import kay
 from kay.utils import local, local_manager
 from kay.utils.importlib import import_module
-from kay._internal import InternalApp
 from kay import (
   utils, exceptions, mail,
 )
@@ -55,8 +54,7 @@ def db_hook(service, call, request, response):
 
 def get_application():
   application = KayApp(_settings)
-  internal_app = InternalApp()
-  submount_apps = {'/_kay': internal_app}
+  submount_apps = {}
   for app_name in _settings.SUBMOUNT_APPS:
     app = KayApp(LazySettings('%s.settings' % app_name))
     submount_apps['/%s' % app_name] = app
@@ -95,6 +93,15 @@ class KayApp(object):
     self.auth_backend = None
     self.init_jinja2_environ()
 
+  def get_mount_point(self, app):
+    if app == 'kay._internal':
+      return '/_kay'
+    return self.app_settings.APP_MOUNT_POINTS.get(
+      app, "/%s" % get_app_tailname(app))
+
+  def get_installed_apps(self):
+    return self.app_settings.INSTALLED_APPS+['kay._internal']
+
   def init_url_map(self):
 
     mod = import_module(self.app_settings.ROOT_URL_MODULE)
@@ -103,14 +110,13 @@ class KayApp(object):
     all_views = getattr(mod, 'all_views')
     self.views = all_views
     self.url_map = make_url()
-    for app in self.app_settings.INSTALLED_APPS:
+    for app in self.get_installed_apps():
       try:
         url_mod = import_module("%s.urls" % app)
       except ImportError:
         logging.warning("Failed to import app '%s.urls', skipped." % app)
         continue
-      mountpoint = self.app_settings.APP_MOUNT_POINTS.get(
-        app, "/%s" % get_app_tailname(app))
+      mountpoint = self.get_mount_point(app)
       make_rules = getattr(url_mod, 'make_rules', None)
       if make_rules:
         self.url_map.add(Submount(mountpoint, make_rules()))
@@ -159,7 +165,7 @@ class KayApp(object):
           PrefixLoader
       template_dirname = "templates_compiled"
     per_app_loaders = {}
-    for app in self.app_settings.INSTALLED_APPS:
+    for app in self.get_installed_apps():
       try:
         mod = import_module(app)
       except ImportError:
@@ -171,7 +177,7 @@ class KayApp(object):
         app_key = get_app_tailname(app)
       per_app_loaders[app_key] = FileSystemLoader(
         os.path.join(os.path.dirname(mod.__file__), template_dirname))
-    loader = PrefixLoader(per_app_loaders)  
+    loader = PrefixLoader(per_app_loaders)
     if self.app_settings.TEMPLATE_DIRS:
       target = [d.replace("templates", template_dirname)
                 for d in self.app_settings.TEMPLATE_DIRS]

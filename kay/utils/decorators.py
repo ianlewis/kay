@@ -6,9 +6,13 @@ kay.utils.decorators
 
 This module implements useful decorators for appengine datastore.
 
-:Copyright: (c) 2009 Accense Technology, Inc. All rights reserved.
+:Copyright: (c) 2009 Accense Technology, Inc.,
+                     Takashi Matsuo <tmatsuo@candit.jp>,
+                     Ian Lewis <IanMLewis@gmail.com>,
+                     All rights reserved.
 :license: BSD, see LICENSE for more details.
 """
+
 DATASTORE_WRITABLE = "appengine_datastore_writable"
 
 def retry_on_timeout(retries=3, secs=1):
@@ -56,8 +60,8 @@ def maintenance_check(view):
     if not datastore_writable_for_certain_time():
       if request.is_xhr:
         # Ignore ajax request. This will cause 50? Status eventually.
-        logging.info('Ignore ajax request.')
+        logging.debug('Datastore is not writable against an ajax request.')
       else:
-        return redirect(reverse('maintenance_page'))
+        return redirect(reverse('_internal/maintenance_page'))
     return view(request, *args, **kwargs)
   return wrapped
