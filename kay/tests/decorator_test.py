@@ -20,7 +20,7 @@ from kay.app import get_application
 from kay.conf import LazySettings
 from kay.tests import capability_stub as mocked_capability_stub
 
-class DecoratorTestCase(unittest.TestCase):
+class MaintenanceCheckTestCase(unittest.TestCase):
 
   def setUp(self):
     s = LazySettings(settings_module='kay.tests.settings')
