@@ -17,16 +17,20 @@ from werkzeug import (
 from werkzeug.exceptions import (
   HTTPException, InternalServerError, NotFound
 )
-from werkzeug import Response
+from werkzeug import (
+  Response, redirect
+)
 from jinja2 import (
   Environment, Undefined,
 )
 from werkzeug.routing import Submount
+from google.appengine.runtime.apiproxy_errors import CapabilityDisabledError
 
 import kay
-from kay.utils import local, local_manager
+from kay.utils import (
+  local, local_manager, reverse, render_to_string,
+)
 from kay.utils.importlib import import_module
-from kay._internal import InternalApp
 from kay import (
   utils, exceptions, mail,
 )
@@ -53,11 +57,10 @@ def db_hook(service, call, request, response):
     clear_reserved_hooks()
     
 
-def get_application():
-  application = KayApp(_settings)
-  internal_app = InternalApp()
-  submount_apps = {'/_kay': internal_app}
-  for app_name in _settings.SUBMOUNT_APPS:
+def get_application(settings=_settings):
+  application = KayApp(settings)
+  submount_apps = {}
+  for app_name in settings.SUBMOUNT_APPS:
     app = KayApp(LazySettings('%s.settings' % app_name))
     submount_apps['/%s' % app_name] = app
   application = DispatcherMiddleware(application, submount_apps)
@@ -95,6 +98,15 @@ class KayApp(object):
     self.auth_backend = None
     self.init_jinja2_environ()
 
+  def get_mount_point(self, app):
+    if app == 'kay._internal':
+      return '/_kay'
+    return self.app_settings.APP_MOUNT_POINTS.get(
+      app, "/%s" % get_app_tailname(app))
+
+  def get_installed_apps(self):
+    return self.app_settings.INSTALLED_APPS+['kay._internal']
+
   def init_url_map(self):
 
     mod = import_module(self.app_settings.ROOT_URL_MODULE)
@@ -103,14 +115,13 @@ class KayApp(object):
     all_views = getattr(mod, 'all_views')
     self.views = all_views
     self.url_map = make_url()
-    for app in self.app_settings.INSTALLED_APPS:
+    for app in self.get_installed_apps():
       try:
         url_mod = import_module("%s.urls" % app)
       except ImportError:
         logging.warning("Failed to import app '%s.urls', skipped." % app)
         continue
-      mountpoint = self.app_settings.APP_MOUNT_POINTS.get(
-        app, "/%s" % get_app_tailname(app))
+      mountpoint = self.get_mount_point(app)
       make_rules = getattr(url_mod, 'make_rules', None)
       if make_rules:
         self.url_map.add(Submount(mountpoint, make_rules()))
@@ -118,15 +129,16 @@ class KayApp(object):
       if all_views:
         self.views.update(all_views)
     if 'kay.auth.middleware.AuthenticationMiddleware' in \
-          settings.MIDDLEWARE_CLASSES:
+          self.app_settings.MIDDLEWARE_CLASSES:
       try:
-        dot = settings.AUTH_USER_BACKEND.rindex('.')
+        dot = self.app_settings.AUTH_USER_BACKEND.rindex('.')
       except ValueError:
         raise exceptions.ImproperlyConfigured, \
             'Error importing auth backend %s: "%s"' % \
-            (settings.AUTH_USER_BACKEND, e)
-      backend_module, backend_classname = settings.AUTH_USER_BACKEND[:dot], \
-          settings.AUTH_USER_BACKEND[dot+1:]
+            (self.app_settings.AUTH_USER_BACKEND, e)
+      backend_module, backend_classname = \
+          self.app_settings.AUTH_USER_BACKEND[:dot], \
+          self.app_settings.AUTH_USER_BACKEND[dot+1:]
       try:
         mod = import_module(backend_module)
       except ImportError, e:
@@ -159,7 +171,7 @@ class KayApp(object):
           PrefixLoader
       template_dirname = "templates_compiled"
     per_app_loaders = {}
-    for app in self.app_settings.INSTALLED_APPS:
+    for app in self.get_installed_apps():
       try:
         mod = import_module(app)
       except ImportError:
@@ -171,7 +183,7 @@ class KayApp(object):
         app_key = get_app_tailname(app)
       per_app_loaders[app_key] = FileSystemLoader(
         os.path.join(os.path.dirname(mod.__file__), template_dirname))
-    loader = PrefixLoader(per_app_loaders)  
+    loader = PrefixLoader(per_app_loaders)
     if self.app_settings.TEMPLATE_DIRS:
       target = [d.replace("templates", template_dirname)
                 for d in self.app_settings.TEMPLATE_DIRS]
@@ -295,6 +307,16 @@ class KayApp(object):
     except SystemExit:
       # Allow sys.exit() to actually exit.
       raise
+    except CapabilityDisabledError, e:
+      logging.error(e)
+      # Saving session will also fail.
+      if hasattr(request, 'session'):
+        del(request.session)
+      return Response(
+        render_to_string(
+          "_internal/maintenance.html",
+          {"message": _('Appengine might be under maintenance.')}),
+        status=503)
     except: # Handle everything else, including SuspiciousOperation, etc.
       # Get the exception info now, in case another exception is thrown later.
       import sys

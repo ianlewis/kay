@@ -5,10 +5,8 @@ TODO
 kay
 ----
 
-* Write documentations about middlewares, jinja2 howtos, etc..
-
-* Handle CapabilityDisabledError more gracefully.
-
+* Write documentations about modules, middlewares, jinja2 howtos,
+  etc..
 
 * A tool for dump and restore datastore
 
