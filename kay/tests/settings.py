@@ -7,6 +7,8 @@ Kay test settings.
 :license: BSD, see LICENSE for more details.
 """
 
+DEBUG = False
+
 INSTALLED_APPS = (
   'kay.tests',
 )

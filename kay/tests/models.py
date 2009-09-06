@@ -12,20 +12,24 @@ from google.appengine.ext import db
 from kay.utils.forms import ValidationError
 from kay.utils.forms.modelform import ModelForm
 
-def CreateMaxLengthValidator(length):
-  def MaxLengthValidator(val):
-    if len(val) > length:
+class MaxLengthValidator(object):
+
+  def __init__(self, length):
+    self.length = length
+
+  def __call__(self, val):
+    if len(val) > self.length:
       raise ValidationError("Too long")
     return True
-  return MaxLengthValidator
   
 
 class TestModel(db.Model):
   number = db.IntegerProperty(required=True)
   data_field = db.StringProperty(required=True,
-                                 validator=CreateMaxLengthValidator(20))
+                                 validator=MaxLengthValidator(20))
   is_active = db.BooleanProperty(required=True)
   string_list_field = db.StringListProperty(required=True)
+
 
 class TestModelForm(ModelForm):
   csrf_protected = False
