@@ -51,7 +51,7 @@ def delete_all_entities(model, num=20):
   entries = db.Query(model, keys_only=True).fetch(num)
   while len(entries) > 0:
     print_status("Now deleting %d entries." % len(entries))
-    db.delete([k.key() for k in entries])
+    db.delete(entries)
     entries = db.Query(model, keys_only=True).fetch(num)
 
 
