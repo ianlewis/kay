@@ -32,7 +32,9 @@ def post_session(request):
       allowed_datetime = datetime.datetime.now() - \
           datetime.timedelta(seconds=10) # TODO: remove magic number
       if temporary_session.created > allowed_datetime:
-        local.request.session['_user'] = temporary_session.user.key()
+        from kay.sessions import renew_session
+        renew_session(request)
+        request.session['_user'] = temporary_session.user.key()
         return redirect(url_unquote_plus(request.values.get('next')))
   return Response("Error")
     
