@@ -229,6 +229,8 @@ def shell(datastore_path='', history_path='', useful_imports=True):
 
 def clear_datastore(appid=('a', ''), host=('h', ''), path=('p', ''),
                     kinds=('k', ''), clear_memcache=('c', False), secure=True):
+  """Clear all the data on GAE environment using remote_api.
+  """
   if not appid:
     appid = get_appid()
   if not host:
