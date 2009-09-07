@@ -228,17 +228,29 @@ def shell(datastore_path='', history_path='', useful_imports=True):
   interact(banner, local=namespace)
 
 def clear_datastore(appid=('a', ''), host=('h', ''), path=('p', ''),
-                    secure=True):
+                    kinds=('k', ''), clear_memcache=('c', False), secure=True):
   if not appid:
     appid = get_appid()
   if not host:
     host = "%s.appspot.com" % appid
   if not path:
     path = '/remote_api'
+  if not kinds:
+    models = None
+  else:
+    models_dict = get_all_models_as_dict()
+    models = []
+    for kind in kinds.split(','):
+      models.append(db.class_for_kind(kind))
+      
   remote_api_stub.ConfigureRemoteApi(appid, path, auth_func,
                                      host, secure=secure)
   remote_api_stub.MaybeInvokeAuthentication()
-  delete_all_entities()
+  delete_all_entities(models)
+  if clear_memcache:
+    from google.appengine.api import memcache
+    memcache.flush_all()
+    sys.stderr.write("Flushed memcache.\n")
 
 
 def rshell(appid=('a', ''), host=('h', ''), path=('p', ''),
