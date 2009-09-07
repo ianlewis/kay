@@ -30,6 +30,9 @@ class User(db.Model):
   def __unicode__(self):
     return unicode(self.email)
 
+  def __str__(self):
+    return self.__unicode__()
+
   def is_anonymous(self):
     return False
 

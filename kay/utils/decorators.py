@@ -66,6 +66,5 @@ def maintenance_check(view):
             "_internal/maintenance.html",
             {"message": _('Appengine might be under maintenance.')}),
           status=503)
-        return redirect(reverse('_internal/maintenance_page'))
     return view(request, *args, **kwargs)
   return wrapped

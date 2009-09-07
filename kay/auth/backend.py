@@ -40,6 +40,8 @@ class DatastoreBackend(object):
       pass
 
   def store_user(self, user):
+    from kay.sessions import renew_session
+    renew_session(local.request)
     local.request.session['_user'] = user.key()
     return True
 

@@ -1,0 +1,60 @@
+
+#message {
+  color:#F00;
+}
+
+label {
+  width:6em;
+  float:left;
+  display:block;
+  margin-right:0.5em;
+  text-align:right
+}
+
+.actions input {
+  margin-left:6.5em
+}
+
+input {
+  font-weight:bold
+  color:#781351;
+  background:#fee3ad;
+  border:1px solid #781351
+}
+
+.actions input {
+  color:#000;
+  background:#ffa20f;
+  border:2px #d7b9c9 outset
+}
+
+.errors {
+  color:#F00;
+  font-size:60%;
+}
+
+fieldset {
+  border:1px solid #781351;
+  width:22em
+}
+
+legend {
+  background:#ffa20c;
+  border:1px solid #781351;
+  letter-spacing:0
+}
+
+fieldset p {
+  margin-top:0
+}
+
+fieldset {
+  -moz-background-clip:border;
+  -moz-background-inline-policy:continuous;
+  -moz-background-origin:padding;
+  background:#FFFF99 url(../images/bg-box-s1.png) repeat-x scroll left bottom;
+  border:1px solid #DE7C33;
+  margin:2em 20px 0;
+  padding:2em 10px 1em;
+  position:relative;
+}

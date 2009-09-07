@@ -8,7 +8,8 @@ kay
 * Write documentations about modules, middlewares, jinja2 howtos,
   etc..
 
-* Test kay.utils.decorators.maintenance_check appropriately.
+* A tool for dump and restore datastore
+
 
 kay.utils.forms
 ----------------
@@ -24,6 +25,16 @@ kay.auth
 --------
 
 * A command for creating a user entity.
+
+* 'Registration' application needed.
+
+
+
+
+kay.utils.forms
+---------------
+
+* Form.freeze() method could be useful in some cases.
 
 
 Local GUI datastore administration tool

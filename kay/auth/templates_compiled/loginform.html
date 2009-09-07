@@ -9,7 +9,7 @@ def root(context, environment=environment):
     l__ = context.resolve('_')
     t_1 = environment.filters['safe']
     if 0: yield None
-    yield u'<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">\n<html>\n  <head>\n    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">\n    <title>%s</title>\n    <link rel="stylesheet" type="text/css" href="%s/css/loginform.css" />\n  </head>\n  <body>\n    <div id="message">\n      %s\n    </div>\n    <div id="loginform">\n      ' % (
+    yield u'<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">\n<html>\n  <head>\n    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">\n    <title>%s</title>\n    <link rel="stylesheet" type="text/css" href="%s/css/style.css" />\n  </head>\n  <body>\n    <div id="message">\n      %s\n    </div>\n    <div id="loginform">\n      ' % (
         escape(context.call(l__, 'Kay Login')), 
         escape(l_internal_media_url), 
         escape(l_message), 
@@ -21,19 +21,23 @@ def root(context, environment=environment):
         t_2.extend((
             u'\n      <fieldset>\n        <legend>', 
             escape(context.call(l__, 'Kay Login Form')), 
-            u'</legend>\n        <p>\n          ', 
-            escape(t_1(context.call(environment.getattr(environment.getattr(l_form, 'user_name'), 'label')))), 
-            u'\n          ', 
-            escape(t_1(context.call(environment.getattr(environment.getattr(l_form, 'user_name'), 'render')))), 
-            u'\n          ', 
-            escape(t_1(context.call(environment.getattr(environment.getattr(l_form, 'user_name'), 'errors')))), 
-            u'\n        </p>\n        <p>\n          ', 
-            escape(t_1(context.call(environment.getattr(environment.getattr(l_form, 'password'), 'label')))), 
-            u'\n          ', 
-            escape(t_1(context.call(environment.getattr(environment.getattr(l_form, 'password'), 'render')))), 
-            u'\n          ', 
-            escape(t_1(context.call(environment.getattr(environment.getattr(l_form, 'password'), 'errors')))), 
-            u'\n        </p>\n        ', 
+            u'</legend>\n        ', 
+        ))
+        l_field = missing
+        for l_field in l_form:
+            pass
+            t_2.extend((
+                u'\n        <p>\n          ', 
+                escape(t_1(context.call(environment.getattr(l_field, 'label')))), 
+                u'\n          ', 
+                escape(t_1(context.call(environment.getattr(l_field, 'render')))), 
+                u'\n          ', 
+                escape(t_1(context.call(environment.getattr(l_field, 'errors')))), 
+                u'\n        </p>\n        ', 
+            ))
+        l_field = missing
+        t_2.extend((
+            u'\n        ', 
             escape(t_1(context.call(environment.getattr(l_form, 'default_actions'), label=context.call(l__, 'Login')))), 
             u'\n      </fieldset>\n      ', 
         ))
@@ -43,4 +47,4 @@ def root(context, environment=environment):
     yield u'\n    </div>\n  </body>\n</html>'
 
 blocks = {}
-debug_info = '1=12&5=13&6=14&10=15&13=17&15=23&17=25&18=27&19=29&22=31&23=33&24=35&26=37&13=42&28=43'
+debug_info = '1=12&5=13&6=14&10=15&13=17&15=23&16=27&18=31&19=33&20=35&22=39&23=41&13=46&25=47'

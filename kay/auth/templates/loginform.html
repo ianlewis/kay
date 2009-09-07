@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>{{_('Kay Login')}}</title>
-    <link rel="stylesheet" type="text/css" href="{{ internal_media_url }}/css/loginform.css" />
+    <link rel="stylesheet" type="text/css" href="{{ internal_media_url }}/css/style.css" />
   </head>
   <body>
     <div id="message">
@@ -13,16 +13,13 @@
       {% call form() %}
       <fieldset>
         <legend>{{ _('Kay Login Form') }}</legend>
+        {% for field in form %}
         <p>
-          {{ form.user_name.label()|safe }}
-          {{ form.user_name.render()|safe }}
-          {{ form.user_name.errors()|safe }}
+          {{ field.label()|safe }}
+          {{ field.render()|safe }}
+          {{ field.errors()|safe }}
         </p>
-        <p>
-          {{ form.password.label()|safe }}
-          {{ form.password.render()|safe }}
-          {{ form.password.errors()|safe }}
-        </p>
+        {% endfor %}
         {{ form.default_actions(label=_("Login"))|safe }}
       </fieldset>
       {% endcall %}

@@ -9,8 +9,12 @@ Kay remote shell management command.
 
 import os
 import sys
+import time
 import getpass
 import logging
+import threading
+import Queue
+import signal
 
 from google.appengine.ext import db
 from google.appengine.ext.remote_api import remote_api_stub
@@ -20,9 +24,12 @@ from google.appengine.api import datastore_file_stub
 from kay.conf import settings
 from kay.utils.importlib import import_module
 from kay.utils.repr import dump
+from kay.utils.decorators import retry_on_timeout
 from kay.misc import get_appid
 from kay.misc import get_datastore_paths
 from kay.management.utils import print_status
+
+THREAD_NUM = 20
 
 def get_all_models_as_dict():
   ret = {}
@@ -47,13 +54,134 @@ def auth_func():
   return raw_input('Username:'), getpass.getpass('Password:')
 
 
-def delete_all_entities(model, num=20):
-  entries = db.Query(model, keys_only=True).fetch(num)
-  while len(entries) > 0:
-    print_status("Now deleting %d entries." % len(entries))
-    db.delete([k.key() for k in entries])
-    entries = db.Query(model, keys_only=True).fetch(num)
+class JobManager(object):
+  def __init__(self, models):
+    self.queue = Queue.Queue()
+    self.finished = dict(zip([model.kind() for model in models],
+                             [False for model in models]))
+    self.counts = dict(zip([model.kind() for model in models],
+                           [0 for model in models]))
+    self.unhandled_counts = dict(zip([model.kind() for model in models],
+                                     [0 for model in models]))
 
+  def add(self, model, job):
+    self.queue.put((model, job))
+    self.counts[model.kind()] += len(job)
+
+  def set_ready(self, model):
+    self.finished[model.kind()] = True
+
+  @property
+  def finished_collecting(self):
+    for finished in self.finished.values():
+      if not finished:
+        return False
+    return True
+
+  def report_result(self):
+    for kind, count in self.counts.iteritems():
+      sys.stderr.write("Collected %d of %s.\n" % (count, kind))
+    while not self.queue.empty():
+      try:
+        unused_item = self.queue.get_nowait()
+        self.queue.task_done()
+        model, job = unused_item
+        self.unhandled_counts[model.kind()] += len(job)
+      except Queue.Empty:
+        pass
+    for kind, count in self.unhandled_counts.iteritems():
+      if count != 0:
+        sys.stderr.write("Unhandled %d of %s.\n" % (count, kind))
+      
+
+@retry_on_timeout()
+def fetch_from_query(query, size):
+  return query.fetch(size)
+  
+
+class JobCollector(threading.Thread):
+  def __init__(self, job_manager, model, batch_size=20,
+               thread_num=THREAD_NUM):
+    threading.Thread.__init__(self)
+    self.job_manager = job_manager
+    self.model = model
+    self.batch_size = batch_size
+    self.thread_num = thread_num
+    self.exit_flag = False
+    
+  def run(self):
+    query = db.Query(self.model, keys_only=True).order("__key__")
+    entities = fetch_from_query(query, self.batch_size)
+    while entities and not self.exit_flag:
+      self.job_manager.add(self.model, entities)
+      query = db.Query(self.model, keys_only=True) \
+          .order("__key__") \
+          .filter("__key__ >", entities[-1])
+      entities = fetch_from_query(query, self.batch_size)
+    self.job_manager.set_ready(self.model)
+
+
+@retry_on_timeout()
+def delete_entities(entities):
+  db.delete(entities)
+
+class DeleteRunner(threading.Thread):
+
+  def __init__(self, job_manager):
+    threading.Thread.__init__(self)
+    self.job_manager = job_manager
+    self.exit_flag = False
+
+  def run(self):
+    while not self.exit_flag:
+      try:
+        (model, entities) = self.job_manager.queue.get_nowait()
+        sys.stderr.write("%s is deleting %d of %s entities.\n" %
+                         (self.getName(), len(entities), model.kind()))
+        sys.stderr.flush()
+        delete_entities(entities)
+        self.job_manager.queue.task_done()
+      except Queue.Empty, e:
+        if self.job_manager.finished_collecting:
+          return
+        else:
+          time.sleep(1)
+
+def any_thread_alive(threads):
+  for t in threads:
+    if t.isAlive():
+      return True
+
+def delete_all_entities(models=None, batch_size=20):
+  models_dict = get_all_models_as_dict()
+  if models is None:
+    models = models_dict.values()
+  if type(models) != list:
+    models = [models]
+  for model in models:
+    if not type(model) == type(db.Model) or \
+          type(model) == type(db.polymodel.PolyModel):
+      sys.stderr.write("Invalid model: %s\n" % model)
+      return
+  job_manager = JobManager(models)
+  threads = []
+  for model in models:
+    job_collector = JobCollector(job_manager, model)
+    threads.append(job_collector)
+    job_collector.start()
+  for i in range(THREAD_NUM):
+    t = DeleteRunner(job_manager)
+    threads.append(t)
+    t.start()
+  def handler(signum, frame):
+    for t in threads:
+      t.exit_flag = True
+  signal.signal(signal.SIGINT, handler)
+  while any_thread_alive(threads):
+    for t in threads:
+      if t.isAlive():
+        t.join(1)
+  job_manager.report_result()
 
 def create_useful_locals():
   local_d = {'db': db,
@@ -98,6 +226,34 @@ def shell(datastore_path='', history_path='', useful_imports=True):
     return
   from code import interact
   interact(banner, local=namespace)
+
+def clear_datastore(appid=('a', ''), host=('h', ''), path=('p', ''),
+                    kinds=('k', ''), clear_memcache=('c', False), secure=True):
+  """Clear all the data on GAE environment using remote_api.
+  """
+  if not appid:
+    appid = get_appid()
+  if not host:
+    host = "%s.appspot.com" % appid
+  if not path:
+    path = '/remote_api'
+  if not kinds:
+    models = None
+  else:
+    models_dict = get_all_models_as_dict()
+    models = []
+    for kind in kinds.split(','):
+      models.append(db.class_for_kind(kind))
+      
+  remote_api_stub.ConfigureRemoteApi(appid, path, auth_func,
+                                     host, secure=secure)
+  remote_api_stub.MaybeInvokeAuthentication()
+  delete_all_entities(models)
+  if clear_memcache:
+    from google.appengine.api import memcache
+    memcache.flush_all()
+    sys.stderr.write("Flushed memcache.\n")
+
 
 def rshell(appid=('a', ''), host=('h', ''), path=('p', ''),
            useful_imports=True, secure=True):
