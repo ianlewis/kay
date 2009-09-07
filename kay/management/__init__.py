@@ -2,7 +2,7 @@
 import sys
 
 from kay.management.shell import (
-  rshell, shell
+  rshell, shell, clear_datastore,
 )
 from kay.management.runserver import runserver_passthru_argv
 from kay.management.startapp import startapp
@@ -23,7 +23,7 @@ __all__ = [
   'do_bulkloader_passthru_argv', 'do_runtest', 'do_preparse_bundle',
   'do_extract_messages', 'do_add_translations', 'do_update_translations',
   'do_compile_translations', 'shell', 'rshell', 'do_preparse_apps',
-  'startproject', 'do_wxadmin',
+  'startproject', 'do_wxadmin', 'clear_datastore',
 ]
 
 def print_status(msg):
