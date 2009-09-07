@@ -42,17 +42,9 @@ def do_appcfg_passthru_argv():
   models = get_all_models_as_dict()
   args = []
   for arg in sys.argv[2:]:
-    if arg.startswith("--kind="):
-      kind = arg[7:]
-      model = models.get(kind, None)
-      if model is None:
-        print_status("Invalid kind: %s." % kind)
-        sys.exit(1)
-      args.append("--kind=%s" % model.kind())
-    else:
-      args.append(arg)
-      if arg == "request_logs":
-        args.append(os.getcwdu())
+    args.append(arg)
+    if arg == "request_logs":
+      args.append(os.getcwdu())
 
   if "--help" in args or "help" in args or "request_logs" in args:
     args = [progname] + args
