@@ -18,25 +18,27 @@ class KayHandler(object):
     pass
 
   def __call__(self, request):
+    self.request = request
     prepare_func = getattr(self, 'prepare', None)
     if callable(prepare_func):
-      response = prepare_func(request)
+      response = prepare_func()
       if response:
         return response
     if request.method in METHODS:
       func = getattr(self, request.method.lower(), None)
       if callable(func):
         try:
-          return func(request)
+          return func()
         except Exception, e:
           self.handle_exception(e)
+          raise
       else:
         return NotImplemented()
     else:
       return MethodNotAllowed()
 
   def handle_exception(self, exception):
-    raise exception
+    pass
 
 
 class XMPPBaseHandler(KayHandler):
@@ -73,9 +75,9 @@ class XMPPBaseHandler(KayHandler):
       self.xmpp_message.reply('Oops. Something went wrong.')
     super(XMPPBaseHandler, self).handle_exception(exception)
 
-  def post(self, request):
+  def post(self):
     try:
-      self.xmpp_message = xmpp.Message(request.form)
+      self.xmpp_message = xmpp.Message(self.request.form)
     except xmpp.InvalidMessageError, e:
       logging.error("Invalid XMPP request: Missing required field %s", e[0])
       return
