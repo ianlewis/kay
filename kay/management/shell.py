@@ -230,6 +230,7 @@ def shell(datastore_path='', history_path='', useful_imports=True):
   interact(banner, local=namespace)
 
 
+# TODO: Need refactoring of following three functions.
 def create_user(user_name=('u', ''), password=('P', ''), is_admin=('A', False),
                 appid=('a', ''), host=('h', ''), path=('p', ''), secure=True):
   """ Create new user using remote_api.
