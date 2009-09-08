@@ -157,7 +157,7 @@ def delete_all_entities(models=None, batch_size=20):
   models_dict = get_all_models_as_dict()
   if models is None:
     models = models_dict.values()
-  if type(models) != list:
+  if not isinstance(models, list):
     models = [models]
   for model in models:
     if not type(model) == type(db.Model) or \
