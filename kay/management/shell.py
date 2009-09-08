@@ -31,6 +31,7 @@ from kay.management.utils import print_status
 
 THREAD_NUM = 20
 
+
 def get_all_models_as_dict():
   ret = {}
   for app in settings.INSTALLED_APPS:
@@ -57,12 +58,9 @@ def auth_func():
 class JobManager(object):
   def __init__(self, models):
     self.queue = Queue.Queue()
-    self.finished = dict(zip([model.kind() for model in models],
-                             [False for model in models]))
-    self.counts = dict(zip([model.kind() for model in models],
-                           [0 for model in models]))
-    self.unhandled_counts = dict(zip([model.kind() for model in models],
-                                     [0 for model in models]))
+    self.finished = dict([[model.kind(), False] for model in models])
+    self.counts = dict([[model.kind(), 0] for model in models])
+    self.unhandled_counts = dict([[model.kind(), 0] for model in models])
 
   def add(self, model, job):
     self.queue.put((model, job))
@@ -125,6 +123,7 @@ class JobCollector(threading.Thread):
 def delete_entities(entities):
   db.delete(entities)
 
+
 class DeleteRunner(threading.Thread):
 
   def __init__(self, job_manager):
@@ -147,10 +146,12 @@ class DeleteRunner(threading.Thread):
         else:
           time.sleep(1)
 
+
 def any_thread_alive(threads):
   for t in threads:
     if t.isAlive():
       return True
+
 
 def delete_all_entities(models=None, batch_size=20):
   models_dict = get_all_models_as_dict()
@@ -182,6 +183,7 @@ def delete_all_entities(models=None, batch_size=20):
       if t.isAlive():
         t.join(1)
   job_manager.report_result()
+
 
 def create_useful_locals():
   local_d = {'db': db,
@@ -226,6 +228,7 @@ def shell(datastore_path='', history_path='', useful_imports=True):
     return
   from code import interact
   interact(banner, local=namespace)
+
 
 def clear_datastore(appid=('a', ''), host=('h', ''), path=('p', ''),
                     kinds=('k', ''), clear_memcache=('c', False), secure=True):
