@@ -8,8 +8,6 @@ kay
 * Write documentations about modules, middlewares, jinja2 howtos,
   etc..
 
-* A tool for dump and restore datastore
-
 
 kay.utils.forms
 ----------------
@@ -24,11 +22,7 @@ kay.utils.forms
 kay.auth
 --------
 
-* A command for creating a user entity.
-
 * 'Registration' application needed.
-
-
 
 
 kay.utils.forms
@@ -42,4 +36,3 @@ Local GUI datastore administration tool
 
 * An implementation using wxpython is the first option. Using
   pyqt/Adobe air/tkinter would be also fine.
-

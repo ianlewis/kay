@@ -230,6 +230,37 @@ def shell(datastore_path='', history_path='', useful_imports=True):
   interact(banner, local=namespace)
 
 
+def create_user(user_name=('u', ''), password=('P', ''), is_admin=('A', False),
+                appid=('a', ''), host=('h', ''), path=('p', ''), secure=True):
+  """ Create new user using remote_api.
+  """
+  from kay.auth import (
+    create_new_user, DuplicateKeyError,
+  )
+  if not user_name:
+    print_status('user_name required')
+    sys.exit(1)
+  if not password:
+    password = getpass.getpass('Please input a password for new user:')
+  if not appid:
+    appid = get_appid()
+  if not host:
+    host = "%s.appspot.com" % appid
+  if not path:
+    path = '/remote_api'
+    
+  remote_api_stub.ConfigureRemoteApi(appid, path, auth_func,
+                                     host, secure=secure)
+  remote_api_stub.MaybeInvokeAuthentication()
+  try:
+    create_new_user(user_name, password, is_admin)
+    print_status('A new user: %s successfully created.' % user_name)
+    sys.exit(0)
+  except DuplicateKeyError, e:
+    print_status(e)
+    sys.exit(1)
+
+
 def clear_datastore(appid=('a', ''), host=('h', ''), path=('p', ''),
                     kinds=('k', ''), clear_memcache=('c', False), secure=True):
   """Clear all the data on GAE environment using remote_api.
