@@ -70,19 +70,27 @@ Google Account 認証を使用する
   )
   AUTH_USER_MODEL = 'kay.auth.models.DatastoreUser'
 
-現在では、データストアにユーザーを作成する便利な手段は存在しません。ユーザーのパスワードを保存する場合には、特別なハッシュフォーマットで保存する必要がありますので気をつけてください。それには ``kay.utils.crypto.gen_pwhash`` 関数が使用できます。パフォーマンスのため、key_name を指定する必要もあります。下記に新しいユーザーを作成するコードを示します:
+
+ユーザーの作成
+--------------
+
+``kay.auth.create_new_user`` はユーザー作成用の関数です。既に同じユーザー名が登録されていると、``kay.auth.DuplicateKeyError``例外が raise されます。成功すると新しく作成されたユーザーオブジェクトが返ります。
 
 .. code-block:: python
 
-   from kay.utils.crypto import gen_pwhash
-   from kay.auth.models import DatastoreUser
+   from kay.auth import create_new_user
+   user_name = 'hoge'
+   password = 'hoge'
+   new_user = create_new_user(user_name, password, is_admin)
 
-   user_name = 'newuser'
-   password = 'newpassword'
+次のように ``manage.py create_user`` を使う事もできます:
 
-   new_user = DatastoreUser(key_name=DatastoreUser.get_key_name(user_name),
-                            user_name=user_name, password=gen_pwhash(password))
-   new_user.put()
+.. code-block:: bash
+
+   $ python manage.py create_user hoge
+
+このコマンドは、新しいユーザーのパスワードを尋ねてきます。
+
 
 独自ドメイン上でデータストア認証を使用する
 ------------------------------------------

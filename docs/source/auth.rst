@@ -74,12 +74,12 @@ Using datastore authentication
 ------------------------------
 
 To use this middleware, you need to set
-'kay.auth.middleware.AuthenticationMiddleware' to MIDDLEWARE_CLASSES
+``kay.auth.middleware.AuthenticationMiddleware`` to MIDDLEWARE_CLASSES
 settings directive, and also need to set
-'kay.auth.models.DatastoreUser' (or a classname that is extended from
-it) to AUTH_USER_MODEL settings directive. AuthenticationMiddleware
-must be placed under SessionMiddleware that is mandatry for this
-middleware.
+``kay.auth.models.DatastoreUser`` (or a classname that is extended
+from it) to AUTH_USER_MODEL settings
+directive. AuthenticationMiddleware must be placed under
+SessionMiddleware that is mandatry for this middleware.
 
 .. code-block:: python
 
@@ -89,24 +89,30 @@ middleware.
   )
   AUTH_USER_MODEL = 'kay.auth.models.DatastoreUser'
 
-For now, there is no any convenience method to create users into the
-datastore. Please keep in mind that you need to set user's password in
-a special hashed format. You can use ``kay.utils.crypto.gen_pwhash``
-function for this purpose. You also need to use key_name for a
-performance reason. Here is the code to create new user in the
-datastore.
+
+Creating a new user
+-------------------
+
+``kay.auth.create_new_user`` is a function for creating new user. If
+there is a user with the same user_name, this function raises
+``kay.auth.DuplicateKeyError``. If succeeded, it returns a newly
+created user object.
 
 .. code-block:: python
 
-   from kay.utils.crypto import gen_pwhash
-   from kay.auth.models import DatastoreUser
+   from kay.auth import create_new_user
+   user_name = 'hoge'
+   password = 'hoge'
+   new_user = create_new_user(user_name, password, is_admin)
 
-   user_name = 'newuser'
-   password = 'newpassword'
+You can also use ``manage.py create_user`` command like following:
 
-   new_user = DatastoreUser(key_name=DatastoreUser.get_key_name(user_name),
-                            user_name=user_name, password=gen_pwhash(password))
-   new_user.put()
+.. code-block:: bash
+
+   $ python manage.py create_user hoge
+
+This commands will ask you a new password for this user.
+
 
 Using datastore authentication on an owned domain
 -------------------------------------------------
