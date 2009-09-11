@@ -8,6 +8,10 @@ kay
 * Write documentations about modules, middlewares, jinja2 howtos,
   etc..
 
+* Add CONTEXT_PROCESSORS section to the default settings file.
+
+* Add a base model which has a classmethod for creating entity with
+  automatically created uuid as its key_name.
 
 kay.utils.forms
 ----------------

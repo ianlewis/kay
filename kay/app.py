@@ -115,7 +115,7 @@ class KayApp(object):
     return self.app_settings.INSTALLED_APPS+['kay._internal']
 
   def init_url_map(self):
-
+    self.has_error_on_init_url_map = False
     mod = import_module(self.app_settings.ROOT_URL_MODULE)
 
     make_url = getattr(mod, 'make_url')
@@ -127,6 +127,7 @@ class KayApp(object):
         url_mod = import_module("%s.urls" % app)
       except ImportError:
         logging.warning("Failed to import app '%s.urls', skipped." % app)
+        logging.debug("Reason:\n%s" % self._get_traceback(sys.exc_info()))
         continue
       mountpoint = self.get_mount_point(app)
       make_rules = getattr(url_mod, 'make_rules', None)
@@ -149,12 +150,12 @@ class KayApp(object):
       try:
         mod = import_module(backend_module)
       except ImportError, e:
-        raise ImproperlyConfigured, \
+        raise exceptions.ImproperlyConfigured, \
             'Error importing auth backend %s: "%s"' % (backend_module, e)
       try:
         klass = getattr(mod, backend_classname)
       except AttributeError:
-        raise ImproperlyConfigured, \
+        raise exceptions.ImproperlyConfigured, \
             'Auth backend module "%s" does not define a "%s" class' % \
             (backend_module, backend_classname)
       self.auth_backend = klass()
@@ -326,7 +327,6 @@ class KayApp(object):
         status=503)
     except: # Handle everything else, including SuspiciousOperation, etc.
       # Get the exception info now, in case another exception is thrown later.
-      import sys
       exc_info = sys.exc_info()
       return self.handle_uncaught_exception(request, exc_info)
     return response
@@ -363,8 +363,12 @@ class KayApp(object):
         'db_hook', db_hook, 'datastore_v3')
     local.app = self
     local.request = request = Request(environ)
-    if self.url_map is None:
-      self.init_url_map()
+    if self.url_map is None or self.has_error_on_init_url_map:
+      try:
+        self.init_url_map()
+      except (StandardError, exceptions.ImproperlyConfigured):
+        self.has_error_on_init_url_map = True
+        raise
     local.url_adapter = self.url_map.bind_to_environ(environ)
 
     response = self.get_response(request)
