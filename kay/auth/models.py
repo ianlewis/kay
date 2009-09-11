@@ -40,6 +40,8 @@ class User(db.Model):
     return True
 
   def __eq__(self, obj):
+    if not obj:
+      return False
     return self.key() == obj.key()
 
   def __ne__(self, obj):
@@ -92,6 +94,15 @@ class AnonymousUser(object):
 
   def key(self):
     return None
+
+  def __eq__(self, obj):
+    if not obj:
+      return True
+    return False
+
+  def __ne__(self, obj):
+    return not self.__eq__(obj)
+
 
 class TemporarySession(db.Model):
   """
