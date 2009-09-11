@@ -39,6 +39,12 @@ class User(db.Model):
   def is_authenticated(self):
     return True
 
+  def __eq__(self, obj):
+    return self.key() == obj.key()
+
+  def __ne__(self, obj):
+    return not self.__eq__(obj)
+
 class DatastoreUser(User):
   """
   Use DatastoreUser.get_key_name(user_name) as key_name for this model.
