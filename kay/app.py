@@ -66,18 +66,25 @@ def get_application(settings=_settings):
   application = DispatcherMiddleware(application, submount_apps)
   return application
 
+
 class NullUndefined(Undefined):
   """
   Do nothing except for logging when the specified variable doesn't exist.
   """
+  __slots__ = ()
   def __int__(self):
     return 0
   def __getattr__(self, value):
-    logging.debug("The variable '%s' undefined." % self._undefined_name)
     return u''
   def __html__(self):
-    logging.debug("The variable '%s' undefined." % self._undefined_name)
+    self.debug_log()
     return u''
+  def debug_log(self):
+    f = sys._getframe(1)
+    while not 'templates' in f.f_code.co_filename:
+      f = f.f_back
+    logging.warn("%s: %s is undefined." %
+                 (f.f_code.co_filename, self._undefined_name))
 
 def get_app_tailname(app):
   dot = app.rfind('.')

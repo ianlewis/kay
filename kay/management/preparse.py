@@ -90,7 +90,7 @@ def compile_app_templates(app):
   target_dirs = [dir for dir in app.app_settings.TEMPLATE_DIRS\
                    if os.path.isdir(dir)]
   for app in app.app_settings.INSTALLED_APPS:
-    if app.startswith("kay"):
+    if app.startswith("kay."):
       continue
     mod = import_module(app)
     target_dirs.extend(find_template_dir(os.path.dirname(mod.__file__),

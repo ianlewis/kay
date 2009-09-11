@@ -25,6 +25,7 @@ from babel.messages.pofile import write_po
 from kay.management.utils import print_status
 
 KEYWORDS = {
+  '__': None,
   '_': None,
   'gettext': None,
   'ngettext': (1, 2),

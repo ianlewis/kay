@@ -44,3 +44,4 @@ def admin_required(func):
     return func(request, *args, **kwargs)
   update_wrapper(inner, func)
   return inner
+
