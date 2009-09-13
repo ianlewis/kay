@@ -63,6 +63,15 @@ except TypeError, _error:
     del _test_gen_bug, _error
 
 
+# for python 2.x we create outselves a next() function that does the
+# basics without exception catching.
+try:
+    next = next
+except NameError:
+    def next(x):
+        return x.next()
+
+
 # ironpython without stdlib doesn't have keyword
 try:
     from keyword import iskeyword as is_python_keyword
@@ -460,7 +469,7 @@ class Markup(unicode):
         func.__doc__ = orig.__doc__
         return func
 
-    for method in '__getitem__', '__getslice__', 'capitalize', \
+    for method in '__getitem__', 'capitalize', \
                   'title', 'lower', 'upper', 'replace', 'ljust', \
                   'rjust', 'lstrip', 'rstrip', 'center', 'strip', \
                   'translate', 'expandtabs', 'swapcase', 'zfill':
@@ -474,6 +483,10 @@ class Markup(unicode):
     # new in python 2.6
     if hasattr(unicode, 'format'):
         format = make_wrapper('format')
+
+    # not in python 3
+    if hasattr(unicode, '__getslice__'):
+        __getslice__ = make_wrapper('__getslice__')
 
     del method, make_wrapper
 
