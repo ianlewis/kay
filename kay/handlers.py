@@ -12,12 +12,12 @@ from werkzeug.exceptions import (
 
 METHODS = ['GET', 'POST', 'HEAD', 'OPTIONS', 'PUT', 'DELETE', 'TRACE']
 
-class KayHandler(object):
+class BaseHandler(object):
 
   def __init__(self):
     pass
 
-  def __call__(self, request):
+  def __call__(self, request, **kwargs):
     self.request = request
     prepare_func = getattr(self, 'prepare', None)
     if callable(prepare_func):
@@ -28,7 +28,7 @@ class KayHandler(object):
       func = getattr(self, request.method.lower(), None)
       if callable(func):
         try:
-          return func()
+          return func(**kwargs)
         except Exception, e:
           self.handle_exception(e)
           raise
@@ -41,7 +41,7 @@ class KayHandler(object):
     pass
 
 
-class XMPPBaseHandler(KayHandler):
+class XMPPBaseHandler(BaseHandler):
   """A baseclass for XMPP handlers.
 
   Implements a straightforward message delivery pattern. When a message is
