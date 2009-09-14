@@ -53,6 +53,9 @@ def profile_main():
   import cProfile, pstats
   prof = cProfile.Profile()
   prof = prof.runctx("real_main()", globals(), locals())
+  print "<!--"
+  print "/*"
+  print "-->"
   print "<pre>"
   stats = pstats.Stats(prof)
   stats.sort_stats("time")  # Or cumulative
@@ -61,6 +64,9 @@ def profile_main():
   # stats.print_callees()
   # stats.print_callers()
   print "</pre>"
+  print "<!--"
+  print "*/"
+  print "//-->"
 
 if settings.PROFILE:
   main = profile_main
