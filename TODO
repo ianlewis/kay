@@ -8,9 +8,7 @@ kay
 * Write documentations about modules, middlewares, jinja2 howtos,
   etc..
 
-* Add a base model which has a classmethod for creating a new entity
-  with an automatically created uuid as its key_name.
-
+* Need a way for using any jinja2 custom filter.
 
 kay.utils.forms
 ----------------

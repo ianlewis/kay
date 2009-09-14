@@ -8,6 +8,7 @@ Kay remote shell management command.
 """
 
 import os
+import os.path
 import sys
 import time
 import getpass
@@ -15,6 +16,13 @@ import logging
 import threading
 import Queue
 import signal
+import atexit
+
+try:
+  import readline
+  import rlcompleter
+except ImportError:
+  readline = None
 
 from google.appengine.ext import db
 from google.appengine.ext.remote_api import remote_api_stub
@@ -30,7 +38,7 @@ from kay.misc import get_datastore_paths
 from kay.management.utils import print_status
 
 THREAD_NUM = 20
-
+HISTORY_PATH = os.path.expanduser('~/.kay_shell_history')
 
 def get_all_models_as_dict():
   ret = {}
@@ -43,6 +51,8 @@ def get_all_models_as_dict():
     for name, c in mod.__dict__.iteritems():
       try:
         if issubclass(c, db.Model):
+          if c in ret.values():
+            continue
           while ret.has_key(name):
             name = name + '_'
           ret[name] = c
@@ -199,7 +209,8 @@ def create_useful_locals_for_rshell():
   return local_d
 
 
-def shell(datastore_path='', history_path='', useful_imports=True):
+def shell(datastore_path='', history_path='', useful_imports=True,
+          use_ipython=True):
   """ Start a new interactive python session."""
   banner = 'Interactive Kay Shell'
   if useful_imports:
@@ -217,17 +228,24 @@ def shell(datastore_path='', history_path='', useful_imports=True):
   stub = datastore_file_stub.DatastoreFileStub(appid, datastore_path,
                                                history_path)
   apiproxy_stub_map.apiproxy.RegisterStub('datastore_v3', stub)
-
-  try:
-    import IPython
-  except ImportError:
-    pass
+  if use_ipython:
+    try:
+      import IPython
+    except ImportError:
+      pass
+    else:
+      sh = IPython.Shell.IPShellEmbed(argv='', banner=banner)
+      sh(global_ns={}, local_ns=namespace)
+      return
   else:
-    sh = IPython.Shell.IPShellEmbed(argv='', banner=banner)
-    sh(global_ns={}, local_ns=namespace)
-    return
-  from code import interact
-  interact(banner, local=namespace)
+    sys.ps1 = '%s> ' % appid
+    if readline is not None:
+      readline.parse_and_bind('tab: complete')
+      atexit.register(lambda: readline.write_history_file(HISTORY_PATH))
+      if os.path.exists(HISTORY_PATH):
+        readline.read_history_file(HISTORY_PATH)
+    from code import interact
+    interact(banner, local=namespace)
 
 
 # TODO: Need refactoring of following three functions.
@@ -291,7 +309,7 @@ def clear_datastore(appid=('a', ''), host=('h', ''), path=('p', ''),
 
 
 def rshell(appid=('a', ''), host=('h', ''), path=('p', ''),
-           useful_imports=True, secure=True):
+           useful_imports=True, secure=True, use_ipython=True):
   """Start a new interactive python session with RemoteDatastore stub."""
   banner = ("Interactive Kay Shell with RemoteDatastore. \n"
             "-----------------WARNING--------------------\n"
@@ -313,14 +331,21 @@ def rshell(appid=('a', ''), host=('h', ''), path=('p', ''),
   remote_api_stub.ConfigureRemoteApi(appid, path, auth_func,
                                      host, secure=secure)
   remote_api_stub.MaybeInvokeAuthentication()
-
-  try:
-    import IPython
-  except ImportError:
-    pass
+  if use_ipython:
+    try:
+      import IPython
+    except ImportError:
+      pass
+    else:
+      sh = IPython.Shell.IPShellEmbed(argv='', banner=banner)
+      sh(global_ns={}, local_ns=namespace)
+      return
   else:
-    sh = IPython.Shell.IPShellEmbed(argv='', banner=banner)
-    sh(global_ns={}, local_ns=namespace)
-    return
-  from code import interact
-  interact(banner, local=namespace)
+    sys.ps1 = '%s> ' % appid
+    if readline is not None:
+      readline.parse_and_bind('tab: complete')
+      atexit.register(lambda: readline.write_history_file(HISTORY_PATH))
+      if os.path.exists(HISTORY_PATH):
+        readline.read_history_file(HISTORY_PATH)
+    from code import interact
+    interact(banner, local=namespace)
