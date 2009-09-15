@@ -24,4 +24,4 @@ class NamedModel(db.Model):
       entity.put()
       return entity
     return db.run_in_transaction(txn)
-  
+

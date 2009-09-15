@@ -31,6 +31,8 @@ _translations_cache = {}
 _default_translations = None
 _standard_context_processors = None
 
+_timezone_cache = {}
+
 def set_trace():
   import pdb, sys
   debugger = pdb.Pdb(stdin=sys.__stdin__, 
@@ -49,18 +51,19 @@ def get_timezone(tzname):
   """
   Method to get timezone with memcached enhancement.
   """
-  try:
-    tz = memcache.get("tz:%s" % tzname)
-  except:
-    tz = None
-    logging.debug("timezone get failed: %s" % tzname)
+  global _timezone_cache
+  if hasattr(_timezone_cache, 'tzname'):
+    tz = _timezone_cache['tzname']
+  else:
+    try:
+      tz = memcache.get("tz:%s" % tzname)
+    except:
+      tz = None
+      logging.debug("timezone get failed: %s" % tzname)
   if tz is None:
     tz = timezone(tzname)
     memcache.add("tz:%s" % tzname, tz, 86400)
-    logging.debug("timezone memcache added: %s" % tzname)
-  else:
-    logging.debug("timezone memcache hit: %s" % tzname)
-
+    _timezone_cache['tzname'] = tz
   return tz
 
 
