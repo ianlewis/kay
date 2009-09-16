@@ -39,6 +39,10 @@ CONTEXT_PROCESSORS = (
   'kay.context_processors.media_url',
 )
 
+JINJA2_FILTERS = {
+  'nl2br': 'kay.utils.filters.nl2br',
+}
+
 MIDDLEWARE_CLASSES = (
   'kay.auth.middleware.GoogleAuthenticationMiddleware',
 )

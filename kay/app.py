@@ -159,7 +159,7 @@ class KayApp(object):
             'Auth backend module "%s" does not define a "%s" class' % \
             (backend_module, backend_classname)
       self.auth_backend = klass()
-    
+
   def init_jinja2_environ(self):
     """
     Initialize the environment for jinja2.
@@ -206,7 +206,28 @@ class KayApp(object):
       extensions=['jinja2.ext.i18n'],
     )
     self.jinja2_env = Environment(**env_dict)
-    self.jinja2_env.filters.update({'nl2br': nl2br})
+    for key, filter_str in self.app_settings.JINJA2_FILTERS.iteritems():
+      try:
+        dot = filter_str.rindex('.')
+      except ValueError:
+        logging.warn('%s is invalid for JINJA2_FILTERS.' % filter_str)
+        continue
+      filter_mod, filter_func = filter_str[:dot], filter_str[dot+1:]
+      try:
+        mod = import_module(filter_mod)
+      except ImportError, e:
+        logging.warn('Error importing auth backend %s: "%s"' % (filter_mod, e))
+        continue
+      try:
+        func = getattr(mod, filter_func)
+      except AttributeError:
+        logging.warn('Module "%s" does not define a "%s" func' % 
+                     (mod, filter_func))
+        continue
+      if self.jinja2_env.filters.has_key(key):
+        logging.warn('Key "%s" has already defined, skipped.' % key)
+        continue
+      self.jinja2_env.filters[key] = func
 
   def init_lang(self, lang):
     """
