@@ -24,6 +24,9 @@ from kay.misc import get_appid
 from kay.management.utils import print_status
 from shell import get_all_models_as_dict
 
+DUMP = 1
+RESTORE = 2
+
 def do_bulkloader_passthru_argv():
   """
   Execute bulkloader script with appropriate parameters. For more
@@ -48,10 +51,9 @@ def dummy_auth_func(self, raw_input_fn=None, password_input_fn=None):
   self.auth_called = True
   return ("admin", "pass")
 
-def dump_all(help=False, data_set=('d', ''), app_id=('i', ''),
-             url=('u', '')):
+def dump_or_restore_all(help, data_set, app_id, url, op):
   if help:
-    print_status('help')
+    print_status('help for %s' % op)
     sys.exit(0)
   if not data_set:
     data_set = datetime.datetime.now().strftime("%Y%m%d.%H%M%S")
@@ -60,80 +62,58 @@ def dump_all(help=False, data_set=('d', ''), app_id=('i', ''),
   if not url:
     url = "https://%s.appspot.com/remote_api" % app_id
   target_dir = os.path.join(kay.PROJECT_DIR, 'backup', data_set)
+
   if not os.path.isdir(target_dir):
-    makedirs(target_dir)
-    print_status('Directory "%s" created.' % target_dir)
+    if op == DUMP:
+      makedirs(target_dir)
+      print_status('Directory "%s" created.' % target_dir)
+    else:
+      print_status('Directory "%s" is missing, exiting...' % target_dir)
+      sys.exit(1)
+      
   current_time = datetime.datetime.now().strftime("%Y%m%d.%H%M%S")
   models = get_all_models_as_dict()
   results = {}
-  base_args = ["bulkloader", "--download", "--dump"]
+  if op == RESTORE:
+    base_args = ["bulkloader", "--restore"]
+  else:
+    base_args = ["bulkloader", "--download", "--dump"]
   if "localhost" in url:
     base_args.append("--app_id=%s" % app_id)
     bulkloader.RequestManager.AuthFunction = dummy_auth_func
   for key, model in models.iteritems():
     kind = model.kind()
-    db_filename = os.path.join(target_dir, "%s-%s.progress" %
+    db_filename = os.path.join(target_dir, "bulkloader-%s-%s.progress" %
                                (kind, current_time))
-    log_file = os.path.join(target_dir, "%s-%s.log" % (kind, current_time))
-    result_db_filename = os.path.join(target_dir, "%s-%s.result" %
+    log_file = os.path.join(target_dir, "bulkloader-%s-%s.log" %
+                            (kind, current_time))
+    result_db_filename = os.path.join(target_dir, "bulkloader-%s-%s.result" %
                                       (kind, current_time))
     args = copy.copy(base_args)
     args.append("--filename=%s" % os.path.join(target_dir, "%s.dat" % kind))
     args.append("--kind=%s" % kind)
     args.append("--db_filename=%s" % db_filename)
     args.append("--log_file=%s" % log_file)
-    args.append("--result_db_filename=%s" % result_db_filename)
+    if op == DUMP:
+      args.append("--result_db_filename=%s" % result_db_filename)
     args.append("--url=%s" % url)
     try:
       import backup
-      args.extend(backup.dump_options[kind])
+      if op == RESTORE:
+        args.extend(backup.restore_options[kind])
+      else:
+        args.extend(backup.dump_options[kind])
     except:
       pass
     results[key] = bulkloader.main(args)
     logging.getLogger('google.appengine.tools.bulkloader').handlers = []
   sys.exit(0)
 
+
+def dump_all(help=False, data_set=('d', ''), app_id=('i', ''),
+             url=('u', '')):
+  dump_or_restore_all(help, data_set, app_id, url, DUMP)
+
 def restore_all(help=False, data_set=('d', ''), app_id=('i', ''),
                 url=('u', '')):
-  if help:
-    print_status('help')
-    sys.exit(0)
-  if not data_set:
-    data_set = datetime.datetime.now().strftime("%Y%m%d.%H%M%S")
-  if not app_id:
-    app_id = get_appid()
-  if not url:
-    url = "https://%s.appspot.com/remote_api" % app_id
-  target_dir = os.path.join(kay.PROJECT_DIR, 'backup', data_set)
-  if not os.path.isdir(target_dir):
-    print_status('Directory "%s" is missing, exiting...' % target_dir)
-    sys.exit(1)
-  current_time = datetime.datetime.now().strftime("%Y%m%d.%H%M%S")
-  models = get_all_models_as_dict()
-  results = {}
-  base_args = ["bulkloader", "--restore"]
-  if "localhost" in url:
-    base_args.append("--app_id=%s" % app_id)
-    bulkloader.RequestManager.AuthFunction = dummy_auth_func
-  for key, model in models.iteritems():
-    kind = model.kind()
-    db_filename = os.path.join(target_dir, "%s-%s.progress" %
-                               (kind, current_time))
-    log_file = os.path.join(target_dir, "%s-%s.log" % (kind, current_time))
-    args = copy.copy(base_args)
-    args.append("--filename=%s" % os.path.join(target_dir, "%s.dat" % kind))
-    args.append("--kind=%s" % kind)
-    args.append("--db_filename=%s" % db_filename)
-    args.append("--log_file=%s" % log_file)
-    args.append("--url=%s" % url)
-    if "localhost" in url:
-      args.append("--app_id=%s" % app_id)
-      bulkloader.RequestManager.AuthFunction = dummy_auth_func
-    try:
-      import backup
-      args.extend(backup.restore_options[kind])
-    except:
-      pass
-    results[key] = bulkloader.main(args)
-    logging.getLogger('google.appengine.tools.bulkloader').handlers = []
-  sys.exit(0)
+  dump_or_restore_all(help, data_set, app_id, url, RESTORE)
