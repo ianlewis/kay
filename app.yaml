@@ -33,6 +33,7 @@ handlers:
 
 skip_files: |
   ^(.*/)?(
+  (backup/.*)|
   (app\.yaml)|
   (app\.yml)|
   (index\.yaml)|
