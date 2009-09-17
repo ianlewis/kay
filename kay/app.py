@@ -366,9 +366,12 @@ class KayApp(object):
         request_repr = "Request repr() unavailable"
       message = "%s\n\n%s" % (self._get_traceback(exc_info), request_repr)
       logging.error(message)
-      mail.mail_admins(subject, message, fail_silently=True)
-      # TODO: Return an HttpResponse that displays a friendly error message.
-      return InternalServerError()
+      if self.app_settings.DEBUG:
+        return InternalServerError(message.replace("\n", "<br/>\n"))
+      else:
+        mail.mail_admins(subject, message, fail_silently=True)
+        # TODO: Return an HttpResponse that displays a friendly error message.
+        return InternalServerError()
 
   def _get_traceback(self, exc_info):
     "Helper function to return the traceback as a string"
