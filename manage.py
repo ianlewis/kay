@@ -18,6 +18,8 @@ kay.setup_env(manage_py_env=True)
 from werkzeug import script
 from kay.management import *
 
+action_dump_all = dump_all
+action_restore_all = restore_all
 action_shell = shell
 action_rshell = rshell
 action_startapp = startapp

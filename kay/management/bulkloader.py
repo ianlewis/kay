@@ -3,13 +3,24 @@
 """
 Kay bulkload management command.
 
-:Copyright: (c) 2009 Accense Technology, Inc. All rights reserved.
+:Copyright: (c) 2009 Accense Technology, Inc. 
+                     Takashi Matsuo <tmatsuo@candit.jp>,
+                     All rights reserved.
 :license: BSD, see LICENSE for more details.
 """
 
 import os
+import os.path
 import sys
+import datetime
+import logging
+import copy
+from os import makedirs
 
+from google.appengine.tools import bulkloader
+
+import kay
+from kay.misc import get_appid
 from kay.management.utils import print_status
 from shell import get_all_models_as_dict
 
@@ -18,7 +29,6 @@ def do_bulkloader_passthru_argv():
   Execute bulkloader script with appropriate parameters. For more
   details, please invoke 'python manage.py bulkloader --help'.
   """
-  from google.appengine.tools import bulkloader
   progname = sys.argv[0]
   models = get_all_models_as_dict()
   args = []
@@ -33,3 +43,97 @@ def do_bulkloader_passthru_argv():
   sys.exit(bulkloader.main(args))
 
 do_bulkloader_passthru_argv.passthru = True
+
+def dummy_auth_func(self, raw_input_fn=None, password_input_fn=None):
+  self.auth_called = True
+  return ("admin", "pass")
+
+def dump_all(help=False, data_set=('d', ''), app_id=('i', ''),
+             url=('u', '')):
+  if help:
+    print_status('help')
+    sys.exit(0)
+  if not data_set:
+    data_set = datetime.datetime.now().strftime("%Y%m%d.%H%M%S")
+  if not app_id:
+    app_id = get_appid()
+  if not url:
+    url = "https://%s.appspot.com/remote_api" % app_id
+  target_dir = os.path.join(kay.PROJECT_DIR, 'backup', data_set)
+  if not os.path.isdir(target_dir):
+    makedirs(target_dir)
+    print_status('Directory "%s" created.' % target_dir)
+  current_time = datetime.datetime.now().strftime("%Y%m%d.%H%M%S")
+  models = get_all_models_as_dict()
+  results = {}
+  base_args = ["bulkloader", "--download", "--dump"]
+  if "localhost" in url:
+    base_args.append("--app_id=%s" % app_id)
+    bulkloader.RequestManager.AuthFunction = dummy_auth_func
+  for key, model in models.iteritems():
+    kind = model.kind()
+    db_filename = os.path.join(target_dir, "%s-%s.progress" %
+                               (kind, current_time))
+    log_file = os.path.join(target_dir, "%s-%s.log" % (kind, current_time))
+    result_db_filename = os.path.join(target_dir, "%s-%s.result" %
+                                      (kind, current_time))
+    args = copy.copy(base_args)
+    args.append("--filename=%s" % os.path.join(target_dir, "%s.dat" % kind))
+    args.append("--kind=%s" % kind)
+    args.append("--db_filename=%s" % db_filename)
+    args.append("--log_file=%s" % log_file)
+    args.append("--result_db_filename=%s" % result_db_filename)
+    args.append("--url=%s" % url)
+    try:
+      import backup
+      args.extend(backup.dump_options[kind])
+    except:
+      pass
+    results[key] = bulkloader.main(args)
+    logging.getLogger('google.appengine.tools.bulkloader').handlers = []
+  sys.exit(0)
+
+def restore_all(help=False, data_set=('d', ''), app_id=('i', ''),
+                url=('u', '')):
+  if help:
+    print_status('help')
+    sys.exit(0)
+  if not data_set:
+    data_set = datetime.datetime.now().strftime("%Y%m%d.%H%M%S")
+  if not app_id:
+    app_id = get_appid()
+  if not url:
+    url = "https://%s.appspot.com/remote_api" % app_id
+  target_dir = os.path.join(kay.PROJECT_DIR, 'backup', data_set)
+  if not os.path.isdir(target_dir):
+    print_status('Directory "%s" is missing, exiting...' % target_dir)
+    sys.exit(1)
+  current_time = datetime.datetime.now().strftime("%Y%m%d.%H%M%S")
+  models = get_all_models_as_dict()
+  results = {}
+  base_args = ["bulkloader", "--restore"]
+  if "localhost" in url:
+    base_args.append("--app_id=%s" % app_id)
+    bulkloader.RequestManager.AuthFunction = dummy_auth_func
+  for key, model in models.iteritems():
+    kind = model.kind()
+    db_filename = os.path.join(target_dir, "%s-%s.progress" %
+                               (kind, current_time))
+    log_file = os.path.join(target_dir, "%s-%s.log" % (kind, current_time))
+    args = copy.copy(base_args)
+    args.append("--filename=%s" % os.path.join(target_dir, "%s.dat" % kind))
+    args.append("--kind=%s" % kind)
+    args.append("--db_filename=%s" % db_filename)
+    args.append("--log_file=%s" % log_file)
+    args.append("--url=%s" % url)
+    if "localhost" in url:
+      args.append("--app_id=%s" % app_id)
+      bulkloader.RequestManager.AuthFunction = dummy_auth_func
+    try:
+      import backup
+      args.extend(backup.restore_options[kind])
+    except:
+      pass
+    results[key] = bulkloader.main(args)
+    logging.getLogger('google.appengine.tools.bulkloader').handlers = []
+  sys.exit(0)
