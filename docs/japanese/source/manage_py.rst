@@ -11,8 +11,35 @@ Kay には ``manage.py`` という管理用のスクリプトが付いていま�
 
 ですので、GAE 附属のスクリプト( appcfg.py や dev_appserver.py または bulkloader.py )をそのまま使用する事はなるべく避けてください。
 
-appcfg サブコマンド
--------------------
+
+.. program:: manage.py add_translations
+
+manage.py add_translation
+-------------------------
+
+指定したアプリケーションに新しい言語カタログを追加します。
+
+.. code-block:: bash
+
+  $ python manage.py add_translation [options]
+
+.. cmdoption:: -a app_name
+
+   アプリケーション名を指定します。
+
+.. cmdoption:: -l lang
+
+   言語コードを指定します。例) ja
+
+.. cmdoption:: -f
+
+   指定すると、既存のカタログがあっても上書きされます。
+
+
+.. _appcfg_label:
+
+manage.py appcfg
+----------------
 
 このサブコマンドは 素のGAE で appcfg.py にて行うタスクを実行するためのものです。appcfg サブコマンドの使用方法は下記のとおりです:
 
@@ -47,13 +74,16 @@ Kay は引数にカレントディレクトリを自動的に補完します。�
   $ python manage.py appcfg update  
 
 
-Jinja2 事前パース
------------------
+現バージョンの Kay は、GAE のサーバ上では事前パースされた jinja2 テンプレートのみ読み込みますので、デプロイの前にテンプレートの事前パースが必要です。manage.py スクリプトは自動的に事前パースを行いますので、普段ユーザーはこの事を気にする必要はありません。もし、MacOSX のランチャーを使っている場合には ``deploy`` ボタンを押すだけでは jinja2 テンプレートの事前パースは行われません。このような場合は、 :ref:`preparse_apps` のようにすればテンプレートの事前パースを行う事ができます。
 
-現バージョンの Kay は、GAE のサーバ上では事前パースされた jinja2 テンプレートのみ読み込みますので、デプロイの前にテンプレートの事前パースが必要です。manage.py スクリプトは自動的に事前パースを行いますので、普段ユーザーはこの事を気にする必要はありません。もし、MacOSX のランチャーを使っている場合には ``deploy`` ボタンを押すだけでは jinja2 テンプレートの事前パースは行われません。このような場合は、下記のようにすればテンプレートの事前パースを行う事ができます:
+
+.. _preparse_apps:
+
+manage.py preparse_apps
+-----------------------
+
+このコマンドは、 :attr:`settings.INSTALLED_APPS` の設定値に基いて、全ての jinja2 テンプレートを事前パースします。
 
 .. code-block:: bash
 
   $ python manage.py preparse_apps
-
-

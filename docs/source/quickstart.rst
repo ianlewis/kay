@@ -60,7 +60,6 @@ You can access your first application on the url:
 
   $ python manage.py appcfg update
 
-
 * You can handle i18n like following. For the details of i18n, please
   refer to :doc:`i18n`.
 

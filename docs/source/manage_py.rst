@@ -16,11 +16,37 @@ for the task.
 So do not think about invoking such scripts(appcfg.py,
 dev_appserver.py, bulkloader.py) directly from Google App Engine SDK.
 
-Appcfg subcommand
------------------
+.. program:: manage.py add_translations
 
-This subcommand is in charge of doing some tasks which appcfg.py does
-in a pure GAE environment.  Here's a usage of appcfg subcommand:
+add_translations action
+-----------------------
+
+This action adds a new language catalogue for specified application.
+
+.. code-block:: bash
+
+  $ python manage.py add_translation [options]
+
+.. cmdoption:: -a app_name
+
+   Specify target app_name.
+
+.. cmdoption:: -l lang
+
+   Specify language code, e.g) ja/en/fr
+
+.. cmdoption:: -f
+
+   If specified, any existing catalogue will be overwritten.
+
+
+.. _appcfg_label:
+
+manage.py appcfg
+----------------
+
+This action is in charge of doing some tasks which appcfg.py does in a
+pure GAE environment.  Here's a usage of appcfg action:
 
 .. code-block:: bash
 
@@ -58,20 +84,23 @@ typing as follows:
 
   $ python manage.py appcfg update  
 
-
-Jinja2 preparsing
------------------
-
 Current version of Kay loads only preparsed jinja2 templates in GAE
-environment, so you have to preparse before deploying your
-application. The ``manage.py`` script automatically do this job, so
-you don't have to worry about it usually. If you use launcher on
-MacOSX, please keep in mind that just push ``deploy`` button on it
-won't care about preparsing jinja2 templates. In such a case, to
-preparse jinja2 template, perhaps you can execute following command:
+environment, so you have to preparse all of your jinja2 template files
+before deploying your application. The ``manage.py`` script
+automatically do this job, so you don't have to worry about it
+usually. If you use launcher on MacOSX, please keep in mind that just
+push ``deploy`` button on it won't care about preparsing jinja2
+templates. In such a case, for preparsing jinja2 templates, you can
+execute :ref:`preparse_apps`.
+
+.. _preparse_apps:
+
+manage.py preparse_apps
+-----------------------
+
+This commands execute preparsing all of your jinja2 templates
+according to the values of your :attr:`settings.INSTALLED_APPS`.
 
 .. code-block:: bash
 
   $ python manage.py preparse_apps
-
-
