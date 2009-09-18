@@ -51,17 +51,19 @@ def dummy_auth_func(self, raw_input_fn=None, password_input_fn=None):
   self.auth_called = True
   return ("admin", "pass")
 
-def dump_or_restore_all(help, data_set, app_id, url, op):
+def dump_or_restore_all(help, data_set_name, app_id, url, directory, op):
   if help:
     print_status('help for %s' % op)
     sys.exit(0)
-  if not data_set:
-    data_set = datetime.datetime.now().strftime("%Y%m%d.%H%M%S")
+  if not data_set_name:
+    data_set_name = datetime.datetime.now().strftime("%Y%m%d.%H%M%S")
   if not app_id:
     app_id = get_appid()
   if not url:
     url = "https://%s.appspot.com/remote_api" % app_id
-  target_dir = os.path.join(kay.PROJECT_DIR, 'backup', data_set)
+  if not directory:
+    directory = '_backup'
+  target_dir = os.path.join(kay.PROJECT_DIR, directory, data_set_name)
 
   if not os.path.isdir(target_dir):
     if op == DUMP:
@@ -98,11 +100,12 @@ def dump_or_restore_all(help, data_set, app_id, url, op):
       args.append("--result_db_filename=%s" % result_db_filename)
     args.append("--url=%s" % url)
     try:
-      import backup
+      from kay.utils.importlib import import_module
+      backup_mod = import_module(directory)
       if op == RESTORE:
-        args.extend(backup.restore_options[kind])
+        args.extend(backup_mod.restore_options[kind])
       else:
-        args.extend(backup.dump_options[kind])
+        args.extend(backup_mod.dump_options[kind])
     except:
       pass
     results[key] = bulkloader.main(args)
@@ -110,10 +113,10 @@ def dump_or_restore_all(help, data_set, app_id, url, op):
   sys.exit(0)
 
 
-def dump_all(help=False, data_set=('d', ''), app_id=('i', ''),
-             url=('u', '')):
-  dump_or_restore_all(help, data_set, app_id, url, DUMP)
+def dump_all(help=False, data_set_name=('n', ''), app_id=('i', ''),
+             url=('u', ''), directory=('d', '')):
+  dump_or_restore_all(help, data_set_name, app_id, url, directory, DUMP)
 
-def restore_all(help=False, data_set=('d', ''), app_id=('i', ''),
-                url=('u', '')):
-  dump_or_restore_all(help, data_set, app_id, url, RESTORE)
+def restore_all(help=False, data_set_name=('n', ''), app_id=('i', ''),
+                url=('u', ''), directory=('d', '')):
+  dump_or_restore_all(help, data_set_name, app_id, url, directory, RESTORE)
