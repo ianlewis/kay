@@ -21,6 +21,7 @@ Kay ドキュメントへようこそ
    session
    forms-usage
    i18n
+   dump_restore
 
 Indices and tables
 ==================
