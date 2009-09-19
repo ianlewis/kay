@@ -80,18 +80,38 @@
   $ python manage.py restore_all -n 20090919local -u http://localhost:8080/remote_api
 
 
-失敗する場合
-------------
+自動採番の id について
+----------------------
 
-失敗するケースとしては、リストアする entity が大きいと、api の 1M limit にひっかかって失敗するケースがありました。この場合には、_backup/__init__.py を作り kind 毎に bulkloader の設定をカスタマイズする事で対応します。例えば bbs_image という kind の設定をカスタマイズして、一度に一つの entity のみ送るように設定するには下記のようにします。
+この方法でリストアする時には、自動採番された id も復元されますので、ReferenceProperty や parent/child の 関係も完全に復元されます。ただし、あるアプリからダンプしたデータを別のアプリにリストアした場合、id のカウンターはリセットされないので、db.allocate_ids を使用して id のカウンターをうまくリセットする必要があります。
 
-_backup/__init__.py:
+この作業は結構面倒です。これを避けるには、全てのエンティティを key_name 指定して作成するという方法もあります。エンティティが key_name を指定して作成されている場合には、この問題は起きません。kay.models.NamedModel を使用すると、key_name を指定してエンティティを作成するのが少し楽になります。
 
-.. code-block:: python
+ダンプやリストアに失敗する場合
+------------------------------
 
-  restore_options = {
-    'bbs_image': ['--batch_size=1'],
-  }
+* 失敗するケース1
 
+  リストアする entity が大きいと、api の 1M limit にひっかかって失敗するケースがありました。この場合には、_backup/__init__.py を作り kind 毎に bulkloader の設定をカスタマイズする事で対応します。例えば bbs_image という kind の設定をカスタマイズして、一度に一つの entity のみ送るように設定するには下記のようにします。
+
+  _backup/__init__.py:
+
+  .. code-block:: python
+
+    restore_options = {
+      'bbs_image': ['--batch_size=1'],
+    }
+
+* 失敗するケース2
+
+  ローカルの開発サーバーからダンプする時に、ローカルの開発サーバーはシングルスレッドなのが原因なのかよう分らないエラーで失敗する時がありました。試しに下記のように設定してシングルスレッドでダンプするようにしたら成功しました。
+
+  _backup/__init__.py:
+
+  .. code-block:: python
+  
+    dump_options = {
+      'chat_message': ['--num_threads=1'],
+    }
 
 他に失敗するケースがあれば、私に教えてください。ここに設定例を加えて行きたいと思います。
