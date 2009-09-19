@@ -2079,7 +2079,7 @@ class Form(object):
       login_time = self.request.session.get('lt', -1)
     except AttributeError:
       login_time = -1
-    import settings
+    from kay.conf import settings
     key = settings.SECRET_KEY
     return sha1(('%s|%s|%s|%s' % (path, login_time, user_id, key))
                  .encode('utf-8')).hexdigest()
