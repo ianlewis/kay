@@ -46,7 +46,7 @@ def get_all_models_as_dict():
     try:
       mod = import_module("%s.models" % app)
     except ImportError:
-      logging.warning("Failed to import app '%s', skipped.")
+      logging.debug("Failed to import model of an app '%s', skipped." % app)
       continue
     for name, c in mod.__dict__.iteritems():
       try:
