@@ -14,10 +14,15 @@ def request(request):
   return {"request": request}
 
 def url_functions(request):
-  return {'url_for': url_for,
-          'reverse': reverse,
-          'create_login_url': create_login_url,
-          'create_logout_url': create_logout_url}
+  ret = {'url_for': url_for,
+         'reverse': reverse,
+         'create_login_url': create_login_url,
+         'create_logout_url': create_logout_url}
+  if settings.USE_I18N:
+    from kay.i18n import create_lang_url
+    ret.update({'create_lang_url': create_lang_url})
+  return ret
+    
 
 def media_url(request):
   import sys
@@ -29,4 +34,3 @@ def media_url(request):
   return {'media_url': settings.MEDIA_URL,
           'app_media_url': '%s/%s' % (settings.MEDIA_URL, app_name),
           'internal_media_url': settings.INTERNAL_MEDIA_URL}
-

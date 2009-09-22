@@ -14,6 +14,11 @@ hosted at:
 
   http://jinja.pocoo.org/2/documentation/
 
+Kay automatically detects user's language by parsing Accept-Language
+header sent by user's browser. You can also create a link for setting
+preffered language in user's cookie which overrides Accept-Language
+setting.
+
 Marking your messages
 ---------------------
 
@@ -77,6 +82,27 @@ as following:
 
   $ python manage.py compile_translations myapp
 
+Create a link for setting language
+----------------------------------
+
+There is a function for creating a URL that will set preffered
+language in user's cookie. To use this capability, you need to add
+``kay.i18n`` to ``INSTALLED_APPS`` attribute as follows:
+
+.. code-block:: python
+
+  INSTALLED_APPS = (
+    'kay.i18n',
+  )
+
+In jinja2 context, ``create_lang_url`` function is automatically
+loaded. So you can use this function for creating a link for setting
+language explicitly as follows:
+
+.. code-block:: html
+
+  <a href="{{ create_lang_url(lang='en') }}">{{ _('English') }}</a>
+  <a href="{{ create_lang_url(lang='ja') }}">{{ _('Japanese') }}</a>
 
 Javascript handler
 ------------------

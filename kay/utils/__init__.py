@@ -106,7 +106,6 @@ def url_for(endpoint, **args):
     rv += '#' + url_quote(anchor)
   return rv
 
-
 def create_auth_url(url, action):
   # TODO: Change implementation according to auth backend settings.
   if url is None:

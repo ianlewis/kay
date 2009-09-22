@@ -59,10 +59,12 @@ from babel import Locale, dates, UnknownLocaleError
 from babel.support import Translations as TranslationsBase
 from pytz import timezone, UTC
 from werkzeug.exceptions import NotFound
+from werkzeug.urls import url_quote_plus
 import simplejson
 
 from kay import utils
 from kay.utils import local
+from kay.utils import url_for
 from kay.utils.importlib import import_module
 from kay.conf import settings
 
@@ -75,6 +77,11 @@ TIME_FORMATS = ['%H:%M', '%H:%M:%S', '%I:%M %p', '%I:%M:%S %p']
 
 
 _js_translations = WeakKeyDictionary()
+
+def create_lang_url(lang=None, url=None):
+  if not url:
+    url = local.request.url
+  return url_for("i18n/set_language", lang=lang, next=url_quote_plus(url))
 
 def load_translations(locale):
   """Load the translation for a locale.  If a locale does not exist

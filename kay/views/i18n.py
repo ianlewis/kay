@@ -98,8 +98,10 @@ def javascript_catalog(request, domain='jsmessages', packages=None):
     
   t = {}
   paths = []
-  locale = (request.accept_languages.best or
-            settings.DEFAULT_LANG).split('-')[0].lower()
+  locale = request.cookies.get(settings.LANG_COOKIE_NAME)
+  if not locale:
+    locale = (request.accept_languages.best or
+              settings.DEFAULT_LANG).split('-')[0].lower()
   # first load all english languages files for defaults
   for package in packages:
     p = importlib.import_module(package)
