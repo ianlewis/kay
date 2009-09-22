@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version:  kay-0.0.0\n"
 "Report-Msgid-Bugs-To: tmatsuo@candit.jp\n"
 "POT-Creation-Date: 2009-05-15 14:07+0900\n"
-"PO-Revision-Date: 2009-08-17 14:24+0900\n"
+"PO-Revision-Date: 2009-09-23 01:24+0900\n"
 "Last-Translator: TsungWei Hu <marr.tw AT gmail.com>\n"
 "Language-Team: Takashi Matsuo <tmatsuo@candit.jp>\n"
 "Plural-Forms: nplurals=1; plural=0\n"
@@ -58,7 +58,7 @@ msgstr "slug 過長。"
 
 #: kay/utils/validators.py:124
 msgid "The slug must not start with a slash"
-msgstr "slug 開頭必須是斜線符號。"
+msgstr "slug 的開頭不可以是斜線符號。"
 
 #: kay/utils/validators.py:142 kay/utils/validators.py:145
 msgid "You have to enter a valid net address."
