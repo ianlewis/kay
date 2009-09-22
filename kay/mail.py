@@ -3,11 +3,11 @@
 """
 Tools for sending email.
 
-:Copyright: (c) 2009 Accense Technology, Inc. All rights reserved.
+:Copyright: (c) 2009 Accense Technology, Inc. 
+                     Takashi Matsuo <tmatsuo@candit.jp>,
+                     All rights reserved.
 :license: BSD, see LICENSE for more details.
 """
-
-#TODO: use local.app.app_settings.ADMINS instead of kay.conf.settings
 
 from google.appengine.api import mail
 

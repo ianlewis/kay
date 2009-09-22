@@ -3,7 +3,9 @@
 """
 Kay authentication form.
 
-:Copyright: (c) 2009 Accense Technology, Inc. All rights reserved.
+:Copyright: (c) 2009 Accense Technology, Inc. 
+                     Takashi Matsuo <tmatsuo@candit.jp>,
+                     All rights reserved.
 :license: BSD, see LICENSE for more details.
 """
 
@@ -12,7 +14,6 @@ from kay.utils import forms
 
 class LoginForm(forms.Form):
   user_name = forms.TextField(required=True, label=_("user name"))
-  password = forms.TextField(required=True,
-                             widget=forms.PasswordInput,
+  password = forms.TextField(required=True, widget=forms.PasswordInput,
                              label=_("password"))
 

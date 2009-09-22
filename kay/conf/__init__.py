@@ -7,7 +7,9 @@ Values will be read from the module passed when initialization and
 then, kay.conf.global_settings; see the global settings file for a
 list of all possible variables.
 
-:Copyright: (c) 2009 Accense Technology, Inc. All rights reserved.
+:Copyright: (c) 2009 Accense Technology, Inc. 
+                     Takashi Matsuo <tmatsuo@candit.jp>,
+                     All rights reserved.
 :license: BSD, see LICENSE for more details.
 
 Taken from django.
@@ -23,9 +25,8 @@ from kay.misc.lazy import LazyObject
 
 class LazySettings(LazyObject):
   """
-  A lazy proxy for either global Django settings or a app local
-  settings object. Kay uses the settings module passed to __init__
-  medthod.
+  A lazy proxy for either global Kay settings or a app local settings
+  object. Kay uses the settings module passed to __init__ medthod.
   """
   def __init__(self, settings_module=None):
     super(LazySettings, self).__init__()

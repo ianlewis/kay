@@ -1,5 +1,11 @@
 # -*- coding: utf-8 -*-
-# kay.handlers
+
+"""
+kay.handlers
+
+:Copyright: (c) 2009 Takashi Matsuo <tmatsuo@candit.jp> All rights reserved.
+:license: BSD, see LICENSE for more details.
+"""
 
 import logging
 

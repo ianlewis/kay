@@ -6,7 +6,9 @@ Extract Messages
 
 Extract messages into a PO-Template.
 
-:Copyright: (c) 2009 Accense Technology, Inc. All rights reserved.
+:Copyright: (c) 2009 Accense Technology, Inc. 
+                     Takashi Matsuo <tmatsuo@candit.jp>,
+                     All rights reserved.
 :copyright: (c) 2009 by the Zine Team, see AUTHORS for more details.
 :license: BSD, see LICENSE for more details.
 

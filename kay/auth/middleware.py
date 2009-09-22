@@ -3,9 +3,9 @@
 """
 Middleware for authentication.
 
-:Copyright: (c) 2009 Accense Technology, Inc. All rights reserved.
-:copyright: (c) 2009 by Ian Lewis <IanMLewis@gmail.com>. See AUTHORS
-for more details.
+:Copyright: (c) 2009 Accense Technology, Inc.,
+                     Ian Lewis <IanMLewis@gmail.com>
+                     All rights reserved.
 :license: BSD, see LICENSE for more details.
 """
 

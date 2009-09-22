@@ -1,3 +1,16 @@
+# -*- coding: utf-8 -*-
+
+"""
+kay.management
+
+:Copyright: (c) 2009 Accense Technology, Inc. 
+                     Takashi Matsuo <tmatsuo@candit.jp>,
+                     All rights reserved.
+:license: BSD, see LICENSE for more details.
+
+Taken from django.
+"""
+
 
 import sys
 

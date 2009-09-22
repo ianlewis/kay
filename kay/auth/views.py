@@ -3,7 +3,9 @@
 """
 Kay authentication views.
 
-:Copyright: (c) 2009 Accense Technology, Inc. All rights reserved.
+:Copyright: (c) 2009 Accense Technology, Inc. 
+                     Takashi Matsuo <tmatsuo@candit.jp>,
+                     All rights reserved.
 :license: BSD, see LICENSE for more details.
 """
 
@@ -30,7 +32,7 @@ def post_session(request):
       temporary_session.delete()
       import datetime
       allowed_datetime = datetime.datetime.now() - \
-          datetime.timedelta(seconds=10) # TODO: remove magic number
+          datetime.timedelta(seconds=10)
       if temporary_session.created > allowed_datetime:
         from kay.sessions import renew_session
         renew_session(request)

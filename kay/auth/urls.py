@@ -3,13 +3,14 @@
 """
 Kay authentication urls.
 
-:Copyright: (c) 2009 Accense Technology, Inc. All rights reserved.
+:Copyright: (c) 2009 Accense Technology, Inc. 
+                     Takashi Matsuo <tmatsuo@candit.jp>,
+                     All rights reserved.
 :license: BSD, see LICENSE for more details.
 """
 
 from werkzeug.routing import (
-  Map, Rule, Submount,
-  EndpointPrefix, RuleTemplate,
+  Rule, EndpointPrefix,
 )
 import kay.auth.views
 

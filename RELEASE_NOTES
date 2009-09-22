@@ -1,7 +1,20 @@
 
-Copyright 2009 by Accense Technology, Inc All rights reserved.
+Copyright 2009 by Accense Technology, Inc
+	          Takashi Matsuo <tmatsuo@candit.jp>
+		  All rights reserved.
 
 Kay framework - Release Notes
+
+Kay-0.2.0 - September 23, 2009
+==============================
+
+  - Added handers for XMLPP
+  - Added clear_datastore action
+  - Added create_user action
+  - Added dump_all/restore_all action
+  - Added a capability for adding custom jinja2 filters
+  - Added a capability for setting user's preffered language explicitly.
+  - Documentation sites started.
 
 Kay-0.1.0 - August 27, 2009
 ===========================
