@@ -9,11 +9,10 @@ Kay application for sessions.
 :license: BSD, see LICENSE for more details.
 """
 
-from middleware import GAESessionStore
-
 NO_SESSION = 'nosession'
 
 def renew_session(request):
+  from middleware import GAESessionStore
   session_store = GAESessionStore()
   oldsession = request.session
   request.session = session_store.new()
