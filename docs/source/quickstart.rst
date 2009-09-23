@@ -19,11 +19,24 @@ Let's start
 * First, make symlynk of kay directory inside your project directry,
   copy settings files by invoking management script.
 
+  If you'd like to use kay repository version, please do as follows:
+
 .. code-block:: bash
 
    $ hg clone http://bitbucket.org/tmatsuo/kay/
    $ python kay/manage.py startproject myproject
    $ cd myproject
+
+If you'd like to use kay release version, first, download the newest
+version from http://code.google.com/p/kay-framework/downloads/list,
+and do as follows:
+
+.. code-block:: bash
+
+   $ tar zxvf kay-VERSION.tar.gz
+   $ python kay-VERSION/manage.py startproject myproject
+   $ cd myproject
+
 
 * Second, you can create your first application with following command.
 

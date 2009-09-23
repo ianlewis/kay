@@ -29,6 +29,13 @@ macports の python25 を使うばあいは、他に下記もインストール�
 
   $ hg clone https://kay-framework.googlecode.com/hg/ kay
 
+もしリリースバージョンを使う場合は http://code.google.com/p/kay-framework/downloads/list から最新版をダウンロードして下記のように解凍します。
+
+.. code-block:: bash
+
+   $ tar zxvf kay-VERSION.tar.gz
+
+
 もし zip 版の appengine SDK をインストールした場合は、下記のようにシンボリックリンクを作ってください。
 
 .. code-block:: bash
