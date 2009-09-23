@@ -8,7 +8,7 @@ Kay framework - Release Notes
 Kay-0.2.0 - September 23, 2009
 ==============================
 
-  - Added handers for XMLPP
+  - Added handers for XMPP
   - Added clear_datastore action
   - Added create_user action
   - Added dump_all/restore_all action
