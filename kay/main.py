@@ -61,8 +61,10 @@ def profile_main():
   stats.sort_stats("time")  # Or cumulative
   stats.print_stats(80)  # 80 = how many to print
   # The rest is optional.
-  # stats.print_callees()
-  # stats.print_callers()
+  if settings.PRINNT_CALLEES_ON_PROFILING:
+    stats.print_callees()
+  if settings.PRINNT_CALLERS_ON_PROFILING:
+    stats.print_callers()
   print "</pre>"
   print "<!--"
   print "*/"
