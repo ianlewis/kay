@@ -349,6 +349,7 @@ class KayApp(object):
         render_to_string(
           "_internal/maintenance.html",
           {"message": _('Appengine might be under maintenance.')}),
+        content_type="text/html; charset=utf-8",
         status=503)
     except: # Handle everything else, including SuspiciousOperation, etc.
       # Get the exception info now, in case another exception is thrown later.

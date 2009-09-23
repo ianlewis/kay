@@ -41,7 +41,7 @@ def retry_on_timeout(retries=3, secs=1):
 
 def maintenance_check(view):
   """
-  Checks the request method is in one of the given methods
+  checks if datastore capabilities stays available for certain time.
   """
   import logging
   from google.appengine.api.capabilities import CapabilitySet
@@ -65,6 +65,7 @@ def maintenance_check(view):
           render_to_string(
             "_internal/maintenance.html",
             {"message": _('Appengine might be under maintenance.')}),
+          content_type="text/html; charset=utf-8",
           status=503)
     return view(request, *args, **kwargs)
   return wrapped

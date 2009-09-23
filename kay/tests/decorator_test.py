@@ -50,6 +50,9 @@ class MaintenanceCheckTestCase(unittest.TestCase):
       mocked_capability_stub.DisabledCapabilityServiceStub())
     response = self.client.get('/')
     self.assertEqual(response.status_code, 503)
+    
+    self.assertEqual(response.headers.get('content-type'),
+                     "text/html; charset=utf-8")
 
 if __name__ == "__main__":
   unittest.main()
