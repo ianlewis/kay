@@ -9,9 +9,6 @@ kay.handlers
 
 import logging
 
-from google.appengine.api import xmpp
-from google.appengine.ext.webapp import xmpp_handlers
-
 from werkzeug.exceptions import (
   MethodNotAllowed, NotImplemented
 )
