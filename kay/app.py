@@ -295,24 +295,28 @@ class KayApp(object):
     self._request_middleware = request_middleware
 
   def get_response(self, request):
+    if self.app_settings.USE_I18N:
+      lang = request.cookies.get(settings.LANG_COOKIE_NAME)
+      if not lang:
+        lang = (request.accept_languages.best or 
+                self.app_settings.DEFAULT_LANG)
+      pos = lang.find('-')
+      if pos >= 0:
+        lang = lang[:pos].lower()+'_'+lang[pos+1:].upper()
+      else:
+        lang = lang.lower()
+    else:
+      lang = None
+    self.init_lang(lang)
+    request.lang = lang
+
+    # apply request middleware
     if self._request_middleware is None:
       self.load_middleware()
-    # apply request middleware
     for mw_method in self._request_middleware:
       response = mw_method(request)
       if response:
         return response
-    lang = request.cookies.get(settings.LANG_COOKIE_NAME)
-    if not lang:
-      lang = (request.accept_languages.best or 
-              self.app_settings.DEFAULT_LANG)
-    pos = lang.find('-')
-    if pos >= 0:
-      lang = lang[:pos].lower()+'_'+lang[pos+1:].upper()
-    else:
-      lang = lang.lower()
-    self.init_lang(lang)
-    request.lang = lang
 
     try:
       endpoint, values = local.url_adapter.match()
