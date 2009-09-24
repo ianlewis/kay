@@ -11,7 +11,6 @@ from werkzeug.routing import (
   Map, Rule, Submount,
   EndpointPrefix, RuleTemplate,
 )
-from kay.i18n import views
 
 def make_rules():
   return [
@@ -21,5 +20,5 @@ def make_rules():
   ]
 
 all_views = {
-  'i18n/set_language': views.set_language,
+  'i18n/set_language': 'kay.i18n.views.set_language',
 }

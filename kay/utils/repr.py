@@ -27,6 +27,7 @@ except ImportError:
 _paragraph_re = re.compile(r'(?:\r\n|\r|\n){2,}')
 RegexType = type(_paragraph_re)
 _password_re = re.compile(r'passwo?r?d', re.I)
+_acsid_re = re.compile(r'acsid', re.I)
 
 
 def dump(obj=None):
@@ -103,7 +104,7 @@ class DebugReprGenerator(object):
     for idx, (key, value) in enumerate(d.iteritems()):
       if idx:
         buf.append(', ')
-      if _password_re.search(key):
+      if _password_re.search(key) or _acsid_re.search(key):
         value = ''.join(['x' for c in value])
       buf.append('%s: %s' %
                  (self.repr(key), self.repr(value)))

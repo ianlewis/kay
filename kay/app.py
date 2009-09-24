@@ -319,6 +319,16 @@ class KayApp(object):
       view_func = self.views.get(endpoint, None)
       if view_func is None:
         raise NotFound
+      if isinstance(view_func, basestring):
+        try:
+          dot = view_func.rindex('.')
+          view_module, view_funcname = view_func[:dot], view_func[dot+1:]
+          view_mod = import_module(view_module)
+          view_func = getattr(view_mod, view_funcname)
+          assert(callable(view_func))
+        except StandardError, e:
+          logging.error(e)
+          raise NotFound
       for mw_method in self._view_middleware:
         response = mw_method(request, view_func, **values)
         if response:

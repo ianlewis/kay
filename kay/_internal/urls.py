@@ -13,7 +13,6 @@ from werkzeug.routing import (
   Map, Rule, Submount,
   EndpointPrefix, RuleTemplate,
 )
-from kay._internal import views
 
 def make_rules():
   return [
@@ -25,7 +24,7 @@ def make_rules():
   ]
 
 all_views = {
-  '_internal/cron/hourly': views.cron_hourly,
-  '_internal/cron/frequent': views.cron_frequent,
-  '_internal/maintenance_page': views.maintenance_page,
+  '_internal/cron/hourly': 'kay._internal.views.cron_hourly',
+  '_internal/cron/frequent': 'kay._internal.views.cron_frequent',
+  '_internal/maintenance_page': 'kay._internal.views.maintenance_page',
 }

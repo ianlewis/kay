@@ -12,7 +12,6 @@ Kay authentication urls.
 from werkzeug.routing import (
   Rule, EndpointPrefix,
 )
-import kay.auth.views
 
 def make_rules():
   return [
@@ -24,7 +23,7 @@ def make_rules():
   ]
 
 all_views = {
-  'auth/login': kay.auth.views.login,
-  'auth/post_session': kay.auth.views.post_session,
-  'auth/logout': kay.auth.views.logout,
+  'auth/login': 'kay.auth.views.login',
+  'auth/post_session': 'kay.auth.views.post_session',
+  'auth/logout': 'kay.auth.views.logout',
 }
