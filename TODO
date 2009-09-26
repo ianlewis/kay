@@ -8,9 +8,6 @@ kay
 * Write documentations about modules, middlewares, jinja2 howtos,
   etc..
 
-* Capability to change desired language explicitly (not by browser's
-  accept-language setting).
-
 kay.utils.forms
 ----------------
 
@@ -36,4 +33,5 @@ Local GUI datastore administration tool
 
 * An implementation using wxpython is the first option. Using
   pyqt/Adobe air/tkinter would be also fine.
+
 

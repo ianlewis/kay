@@ -5,6 +5,12 @@ Copyright 2009 by Accense Technology, Inc
 
 Kay framework - Release Notes
 
+Kay-0.3.0 - November ??, 2009
+=============================
+  - Now views can be defined as strings
+  - Added CacheMiddleware
+  - Allow users to pass kwargs to the constructor of jinja2.Environment.
+
 Kay-0.2.0 - September 23, 2009
 ==============================
 
