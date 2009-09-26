@@ -61,6 +61,10 @@ JINJA2_FILTERS = {
   'nl2br': 'kay.utils.filters.nl2br',
 }
 
+JINJA2_ENVIRONMENT_KWARGS = {
+  'autoescape': True,
+}
+
 SUBMOUNT_APPS = (
 )
 

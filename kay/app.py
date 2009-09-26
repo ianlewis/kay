@@ -201,12 +201,9 @@ class KayApp(object):
       base_loader = FileSystemLoader(
         [os.path.join(kay.PROJECT_DIR, d) for d in target])
       loader = ChoiceLoader([base_loader, loader])
-    env_dict = dict(
-      loader = loader,
-      autoescape=True,
-      undefined=NullUndefined,
-      extensions=['jinja2.ext.i18n'],
-    )
+    env_dict = self.app_settings.JINJA2_ENVIRONMENT_KWARGS
+    env_dict.update(dict(loader = loader, undefined=NullUndefined,
+                         extensions=['jinja2.ext.i18n']))
     self.jinja2_env = Environment(**env_dict)
     for key, filter_str in self.app_settings.JINJA2_FILTERS.iteritems():
       try:
