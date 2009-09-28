@@ -5,6 +5,14 @@ Kay URL Mapping
 Overview
 --------
 
+Kay uses Werkzeug for mapping urls and for the request and response
+objects passed to views.
+
+For the full details about how to configure url mappings using Werkzeug,
+please see Werkzeug's manual hosted at following URL:
+
+  http://werkzeug.pocoo.org/documentation/
+
 For now, kay has one global url mapping and one global
 endpoint-to-view dictionary per project unless you use SUBMOUNT_APP
 feature. Kay automatically collects all the url rules and
@@ -15,10 +23,9 @@ ones.
 How does it work?
 -----------------
 
-A newly created application by ``manage.py startapp`` command already
-has a default ``urls.py`` in it. The ``urls.py`` has a function named
-``make_rules``, which should return an instance of RuleFactory or
-Rule.
+A newly created application created by the ``manage.py startapp`` command
+already has a default ``urls.py`` in it. The ``urls.py`` has a function named
+``make_rules``, which should return an instance of the RuleFactory or Rule class.
 
 Kay just detects and import ``appname.urls`` module, and merge this
 RuleFactory into the global one.
@@ -70,8 +77,3 @@ Here is an example which adds ``index2`` view bound to the url
     'myapp/index': myapp.views.index,
     'myapp/index2': myapp.views.index2,
   }
-
-For the details of how to configure the url mappings, perhaps you can
-check werkzeug's manual hosted at following URL:
-
-  http://werkzeug.pocoo.org/documentation/
