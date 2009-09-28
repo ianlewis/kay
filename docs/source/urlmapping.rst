@@ -27,21 +27,21 @@ A newly created application created by the ``manage.py startapp`` command
 already has a default ``urls.py`` in it. The ``urls.py`` has a function named
 ``make_rules``, which should return an instance of the RuleFactory or Rule class.
 
-Kay just detects and import ``appname.urls`` module, and merge this
-RuleFactory into the global one.
+Kay automatically detects and imports the ``appname.urls`` module, and merges
+the modules RuleFactory into the global one.
 
-This Rules will be mounted on the url ``/appname`` by default, you can
-customize the mount point by adding ``{'appname': '/mount_path'}``
-style entry to the ``APP_MOUNT_POINTS`` variable.
+The imported Rules will be mounted on the url ``/appname`` by default, but you
+can customize the mount point by adding an ``{'appname': '/mount_path'}``
+style entry to the ``APP_MOUNT_POINTS`` variable in settings.py.
 
 The default ``urls.py`` has a module level global dictionary named
-``all_views`` as well. Kay will detects these dictionaries and update
+``all_views`` as well. Kay will detect these dictionaries and update
 the global one with these dictionaries automatically.
 
 Adding your view
 ----------------
 
-To add your original view, you need to edit ``urls.py`` in your
+To add your custom view, you need to edit ``urls.py`` in your
 application directory. Let's say we have our application named
 ``myapp``, and we want to add our original view. The default
 ``urls.py`` has a ``index`` view bound to the url ``/myapp/``. Here is
