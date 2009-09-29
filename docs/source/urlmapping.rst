@@ -11,7 +11,7 @@ objects passed to views.
 For the full details about how to configure url mappings using Werkzeug,
 please see Werkzeug's manual hosted at following URL:
 
-  http://werkzeug.pocoo.org/documentation/
+  http://werkzeug.pocoo.org/documentation/0.5.1/routing.html
 
 For now, kay has one global url mapping and one global
 endpoint-to-view dictionary per project unless you use SUBMOUNT_APP
@@ -48,6 +48,7 @@ application directory. Let's say we have our application named
 the default ``urls.py``.
 
 .. code-block:: python
+  from werkzeug.routing import Map, Rule, NotFound, RequestRedirect
 
   def make_rules():
     return [
