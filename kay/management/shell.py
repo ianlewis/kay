@@ -30,7 +30,8 @@ from google.appengine.ext import db
 from google.appengine.ext.remote_api import remote_api_stub
 from google.appengine.api import apiproxy_stub_map
 from google.appengine.api import datastore_file_stub
-    
+
+import kay    
 from kay.conf import settings
 from kay.utils.importlib import import_module
 from kay.utils.repr import dump
@@ -44,22 +45,30 @@ HISTORY_PATH = os.path.expanduser('~/.kay_shell_history')
 
 def get_all_models_as_dict():
   ret = {}
-  for app in settings.INSTALLED_APPS:
-    try:
-      mod = import_module("%s.models" % app)
-    except ImportError:
-      logging.debug("Failed to import model of an app '%s', skipped." % app)
+  apps = []
+  app = kay.app.get_application()
+  apps.append(app.app)
+  for key, submount_app in app.mounts.iteritems():
+    if key == "/_kay":
       continue
-    for name, c in mod.__dict__.iteritems():
+    apps.append(submount_app)
+  for kay_app in apps:
+    for app in kay_app.app_settings.INSTALLED_APPS:
       try:
-        if issubclass(c, db.Model):
-          if c in ret.values():
-            continue
-          while ret.has_key(name):
-            name = name + '_'
-          ret[name] = c
-      except TypeError:
-        pass
+        mod = import_module("%s.models" % app)
+      except ImportError:
+        logging.debug("Failed to import model of an app '%s', skipped." % app)
+        continue
+      for name, c in mod.__dict__.iteritems():
+        try:
+          if issubclass(c, db.Model):
+            if c in ret.values():
+              continue
+            while ret.has_key(name):
+              name = name + '_'
+            ret[name] = c
+        except TypeError:
+          pass
   return ret
 
 
