@@ -48,7 +48,8 @@ application directory. Let's say we have our application named
 the default ``urls.py``.
 
 .. code-block:: python
-  from werkzeug.routing import Map, Rule, NotFound, RequestRedirect
+
+  from werkzeug.routing import EndpointPrefix, Rule
 
   def make_rules():
     return [
@@ -65,6 +66,8 @@ Here is an example which adds ``index2`` view bound to the url
 ``/myapp/index2``:
 
 .. code-block:: python
+
+  from werkzeug.routing import EndpointPrefix, Rule
 
   def make_rules():
     return [
