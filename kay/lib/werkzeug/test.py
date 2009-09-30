@@ -9,6 +9,7 @@
     :license: BSD, see LICENSE for more details.
 """
 import sys
+import urllib
 import urlparse
 import mimetypes
 from time import time
@@ -21,7 +22,7 @@ from urllib2 import Request as U2Request
 
 from werkzeug._internal import _empty_stream
 from werkzeug.wrappers import BaseRequest
-from werkzeug.urls import url_encode
+from werkzeug.urls import url_encode, url_fix, iri_to_uri
 from werkzeug.wsgi import get_host, get_current_url
 from werkzeug.datastructures import FileMultiDict, MultiDict, \
      CombinedMultiDict, Headers, FileStorage
@@ -174,8 +175,12 @@ def _iter_data(data):
             for value in values:
                 yield key, value
     else:
-        for item in data.iteritems():
-            yield item
+        for key, values in data.iteritems():
+            if isinstance(values, list):
+                for value in values:
+                    yield key, value
+            else:
+                yield key, values
 
 
 class EnvironBuilder(object):
@@ -204,6 +209,10 @@ class EnvironBuilder(object):
             :class:`FileStorage` objects automatically.
         -   a tuple.  The :meth:`~FileMultiDict.add_file` method is called
             with the tuple items as positional arguments.
+
+    .. versionadded:: 0.6
+       `path` and `base_url` can now be unicode strings that are encoded using
+       the :func:`iri_to_uri` function.
 
     :param path: the path of the request.  In the WSGI environment this will
                  end up as `PATH_INFO`.  If the `query_string` is not defined
@@ -256,7 +265,14 @@ class EnvironBuilder(object):
         if query_string is None and '?' in path:
             path, query_string = path.split('?', 1)
         self.charset = charset
+        if isinstance(path, unicode):
+            path = iri_to_uri(path, charset)
         self.path = path
+        if base_url is not None:
+            if isinstance(base_url, unicode):
+                base_url = iri_to_uri(base_url, charset)
+            else:
+                base_url = url_fix(base_url, charset)
         self.base_url = base_url
         if isinstance(query_string, basestring):
             self.query_string = query_string
@@ -298,7 +314,7 @@ class EnvironBuilder(object):
                        hasattr(value, 'read'):
                         self._add_file_from_data(key, value)
                     else:
-                        self.form[key] = value
+                        self.form.setlistdefault(key).append(value)
 
     def _add_file_from_data(self, key, value):
         """Called in the EnvironBuilder to add files from the data dict."""
@@ -510,15 +526,15 @@ class EnvironBuilder(object):
         if self.environ_base:
             result.update(self.environ_base)
 
-        def _encode(x):
+        def _path_encode(x):
             if isinstance(x, unicode):
-                return x.encode(self.charset)
-            return x
+                x = x.encode(self.charset)
+            return urllib.unquote(x)
 
         result.update({
             'REQUEST_METHOD':       self.method,
-            'SCRIPT_NAME':          _encode(self.script_root),
-            'PATH_INFO':            _encode(self.path),
+            'SCRIPT_NAME':          _path_encode(self.script_root),
+            'PATH_INFO':            _path_encode(self.path),
             'QUERY_STRING':         self.query_string,
             'SERVER_NAME':          self.server_name,
             'SERVER_PORT':          str(self.server_port),
