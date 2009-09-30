@@ -8,6 +8,9 @@ kay
 * Write documentations about modules, middlewares, jinja2 howtos,
   etc..
 
+* Add convert_dataset action to manage.py for converting sqlite3
+  dataset to another app_id.
+
 kay.utils.forms
 ----------------
 

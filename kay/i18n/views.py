@@ -12,7 +12,7 @@ import logging
 from werkzeug import (
   Response, redirect
 )
-from werkzeug.urls import url_unquote_plus
+from urllib import unquote_plus
 
 from kay.utils import render_to_response
 from kay.sessions.decorators import no_session
@@ -21,7 +21,7 @@ from kay.conf import settings
 
 def set_language(request):
   lang = request.values['lang']
-  next = url_unquote_plus(request.values['next'])
+  next = unquote_plus(request.values['next'])
   ret = redirect(next)
   ret.set_cookie(settings.LANG_COOKIE_NAME, lang,
                  max_age=settings.LANG_COOKIE_AGE)

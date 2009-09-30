@@ -24,7 +24,7 @@ class CacheMiddleware(object):
     self.cache_anonymous_only = settings.CACHE_MIDDLEWARE_ANONYMOUS_ONLY
 
   def process_response(self, request, response):
-    if not request._cache_update:
+    if not hasattr(request, '_cache_update') or not request._cache_update:
       return response
     if not response.status_code == 200:
       return response
