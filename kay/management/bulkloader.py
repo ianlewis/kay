@@ -17,7 +17,7 @@ import logging
 import copy
 from os import makedirs
 
-from google.appengine.tools import bulkloader
+from kay.management import gae_bulkloader as bulkloader
 
 import kay
 from kay.misc import get_appid
