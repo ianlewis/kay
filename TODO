@@ -14,6 +14,8 @@ kay
 kay.utils.forms
 ----------------
 
+* Enable saving NamedModel
+
 * AjaxModelField
 
 * Implement a widget with JQuery's DatetimePicker
