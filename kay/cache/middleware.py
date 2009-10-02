@@ -26,7 +26,7 @@ class CacheMiddleware(object):
   def process_response(self, request, response):
     if not hasattr(request, '_cache_update') or not request._cache_update:
       return response
-    if not response.status_code == 200:
+    if not hasattr(response, 'status_code') or not response.status_code == 200:
       return response
     key = get_key(request.url, request.lang)
     timeout = response.cache_control.max_age
