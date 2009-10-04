@@ -72,12 +72,12 @@ def rimport_from_string(fullpath):
   try:
     dot = fullpath.rindex('.')
   except ValueError:
-    raise ImproperlyConfigured, 'Invalid fullpath string: ' % fullpath
+    raise ImproperlyConfigured, 'Invalid fullpath string: "%s".' % fullpath
   mod_name, obj_name = fullpath[:dot], fullpath[dot+1:]
   try:
     mod = import_module(mod_name)
   except ImportError, e:
-    raise ImproperlyConfigured, 'Error importing module %s: "%s"' %\
+    raise ImproperlyConfigured, 'Error importing module %s: "%s".' %\
         (mod_name, e)
   try:
     obj = getattr(mod, obj_name)
