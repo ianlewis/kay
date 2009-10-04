@@ -12,10 +12,10 @@ A sample of kay settings.
 DEFAULT_TIMEZONE = 'Asia/Tokyo'
 DEBUG = True
 PROFILE = False
-SECRET_KEY = 'hogehoge'
+SECRET_KEY = 'ReplaceItWithSecretString'
 SESSION_PREFIX = 'gaesess:'
 COOKIE_AGE = 1209600 # 2 weeks
-COOKIE_NAME = 'KAY_SID'
+COOKIE_NAME = 'KAY_SESSION'
 
 ADD_APP_PREFIX_TO_KIND = True
 

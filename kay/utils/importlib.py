@@ -32,6 +32,8 @@ Taken from django project.
 
 import sys
 
+from kay.exceptions import ImproperlyConfigured
+
 def _resolve_name(name, package, level):
   """Return the absolute name of the module to be imported."""
   if not hasattr(package, 'rindex'):
@@ -65,3 +67,22 @@ def import_module(name, package=None):
     name = _resolve_name(name[level:], package, level)
   __import__(name)
   return sys.modules[name]
+
+def rimport_from_string(fullpath):
+  try:
+    dot = fullpath.rindex('.')
+  except ValueError:
+    raise ImproperlyConfigured, 'Invalid fullpath string: ' % fullpath
+  mod_name, obj_name = fullpath[:dot], fullpath[dot+1:]
+  try:
+    mod = import_module(mod_name)
+  except ImportError, e:
+    raise ImproperlyConfigured, 'Error importing module %s: "%s"' %\
+        (mod_name, e)
+  try:
+    obj = getattr(mod, obj_name)
+  except AttributeError:
+    raise ImproperlyConfigured, 'Module "%s" does not define "%s".' %\
+        (mod_name, obj_name)
+  return obj
+  
