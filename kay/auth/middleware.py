@@ -46,7 +46,7 @@ class LazyGoogleUser(object):
     if not hasattr(request, '_cached_user'):
       from kay.auth.models import AnonymousUser
       try:
-        auth_model_class = import_string(AUTH_USER_MODEL)
+        auth_model_class = import_string(settings.AUTH_USER_MODEL)
       except (ImportError, AttributeError), e:
         raise ImproperlyConfigured, \
             'Failed to import %s: "%s".' % (settings.AUTH_USER_MODEL, e)
