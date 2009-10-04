@@ -77,16 +77,7 @@ class GoogleUser(User):
   """
   Use User.user_id() as key_name for this model.
   """
-  def __eq__(self, obj):
-    if not obj:
-      return False
-    if isinstance(obj, AnonymousUser):
-      return False
-    return self.email == obj.email
-
-  def __ne__(self, obj):
-    return not self.__eq__(obj)
-
+  pass
 
 class AnonymousUser(object):
   __slots__ = ('is_admin')
@@ -105,8 +96,6 @@ class AnonymousUser(object):
     return None
 
   def __eq__(self, obj):
-    if not obj:
-      return True
     return False
 
   def __ne__(self, obj):
