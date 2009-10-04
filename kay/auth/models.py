@@ -95,7 +95,10 @@ class AnonymousUser(object):
   is_admin = False
 
   def __unicode__(self):
-    return "AnonymousUser"
+    return u"AnonymousUser"
+
+  def __str__(self):
+    return self.__unicode__()
 
   def is_anonymous(self):
     return True

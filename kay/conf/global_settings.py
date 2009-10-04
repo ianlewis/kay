@@ -66,6 +66,10 @@ JINJA2_ENVIRONMENT_KWARGS = {
   'autoescape': True,
 }
 
+JINJA2_EXTENSIONS = (
+  'jinja2.ext.i18n',
+)
+
 SUBMOUNT_APPS = (
 )
 

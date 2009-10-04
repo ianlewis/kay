@@ -190,8 +190,17 @@ class KayApp(object):
         [os.path.join(kay.PROJECT_DIR, d) for d in target])
       loader = ChoiceLoader([base_loader, loader])
     env_dict = self.app_settings.JINJA2_ENVIRONMENT_KWARGS
+    jinja2_ext = []
+    for ext_str in self.app_settings.JINJA2_EXTENSIONS:
+      try:
+        ext = import_string(ext_str)
+      except (ImportError, AttributeError), e:
+        logging.warn('Failed to import jinja2 extension %s: "%s", skipped.'
+                     % (ext_str, e))
+        continue
+      jinja2_ext.append(ext)
     env_dict.update(dict(loader = loader, undefined=NullUndefined,
-                         extensions=['jinja2.ext.i18n']))
+                         extensions=jinja2_ext))
     self.jinja2_env = Environment(**env_dict)
     for key, filter_str in self.app_settings.JINJA2_FILTERS.iteritems():
       try: 
