@@ -8,3 +8,7 @@ Kay application for cache.
 """
 
 NO_CACHE = 'nocache'
+
+class NoCacheMixin(object):
+  nocache = True
+  
