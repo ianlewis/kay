@@ -73,7 +73,7 @@ class LazySettings(LazyObject):
 
 class Settings(object):
   def __init__(self, settings_module):
-    from kay.utils import importlib
+    from werkzeug.utils import import_string
     # update this dict from global settings (but only for ALL_CAPS settings)
     for setting in dir(global_settings):
       if setting == setting.upper():
@@ -83,7 +83,7 @@ class Settings(object):
     self.SETTINGS_MODULE = settings_module
 
     try:
-      mod = importlib.import_module(self.SETTINGS_MODULE)
+      mod = import_string(self.SETTINGS_MODULE)
     except ImportError, e:
       raise ImportError, ("Could not import settings '%s' (Is it on sys.path?"
                           " Does it have syntax errors?): %s"
@@ -106,7 +106,7 @@ class Settings(object):
     new_installed_apps = []
     for app in self.INSTALLED_APPS:
       if app.endswith('.*'):
-        app_mod = importlib.import_module(app[:-2])
+        app_mod = import_string(app[:-2])
         appdir = os.path.dirname(app_mod.__file__)
         app_subdirs = os.listdir(appdir)
         app_subdirs.sort()

@@ -9,12 +9,12 @@ Kay session middleware.
 
 import kay.sessions
 from kay.conf import settings
-from kay.utils.importlib import rimport_from_string
+from jinja2.utils import import_string
 
 class SessionMiddleware(object):
 
   def __init__(self):
-    session_store = rimport_from_string(settings.SESSION_STORE)
+    session_store = import_string(settings.SESSION_STORE)
     self.session_store = session_store()
 
   def process_view(self, request, view_func, **kwargs):

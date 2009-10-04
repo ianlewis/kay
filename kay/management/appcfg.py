@@ -19,7 +19,6 @@ import kay
 import kay.app
 from kay.utils import local
 from kay.utils.jinja2utils.compiler import compile_dir
-from kay.utils.importlib import import_module
 from kay.management.preparse import do_preparse_apps
 from kay.management.utils import print_status
 from shell import get_all_models_as_dict

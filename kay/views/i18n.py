@@ -1,9 +1,9 @@
 import os
 
 from werkzeug import Response
+from werkzeug.utils import import_string
 
 from kay.conf import settings
-from kay.utils import importlib
 from kay.utils.text import javascript_quote
 import gettext as gettext_module
 
@@ -104,7 +104,7 @@ def javascript_catalog(request, domain='jsmessages', packages=None):
               settings.DEFAULT_LANG).split('-')[0].lower()
   # first load all english languages files for defaults
   for package in packages:
-    p = importlib.import_module(package)
+    p = import_string(package)
     path = os.path.join(os.path.dirname(p.__file__), 'i18n')
     paths.append(path)
   # last load the currently selected language, if it isn't identical to the default.

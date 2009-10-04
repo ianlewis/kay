@@ -100,8 +100,8 @@ def dump_or_restore_all(help, data_set_name, app_id, url, directory, op):
       args.append("--result_db_filename=%s" % result_db_filename)
     args.append("--url=%s" % url)
     try:
-      from kay.utils.importlib import import_module
-      backup_mod = import_module(directory)
+      from werkzeug.utils import import_string
+      backup_mod = import_string(directory)
       if op == RESTORE:
         args.extend(backup_mod.restore_options[kind])
       else:

@@ -21,10 +21,10 @@ from werkzeug import (
 )
 from werkzeug.exceptions import NotFound
 from werkzeug.urls import url_quote
+from werkzeug.utils import import_string
 from pytz import timezone, UTC
 
 from kay.conf import settings
-from kay.utils.importlib import import_module
 
 local = Local()
 local_manager = LocalManager([local])
@@ -174,19 +174,11 @@ def get_standard_processors():
   if _standard_context_processors is None:
     processors = []
     for path in settings.CONTEXT_PROCESSORS:
-      i = path.rfind('.')
-      module, attr = path[:i], path[i+1:]
       try:
-        mod = import_module(module)
-      except ImportError, e:
+        func = import_string(path)
+      except (ImportError, AttributeError), e:
         raise ImproperlyConfigured('Error importing request processor module'
                                    ' %s: "%s"' % (module, e))
-      try:
-        func = getattr(mod, attr)
-      except AttributeError:
-        raise ImproperlyConfigured('Module "%s" does not define a "%s" '
-                                   'callable request processor' %
-                                   (module, attr))
       processors.append(func)
     _standard_context_processors = tuple(processors)
   return _standard_context_processors
