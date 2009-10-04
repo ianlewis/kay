@@ -13,7 +13,7 @@ kay
 kay.utils.forms
 ----------------
 
-* Enable saving NamedModel
+* Enable saving NamedModel without any hack
 
 * AjaxModelField
 
