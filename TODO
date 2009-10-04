@@ -10,10 +10,6 @@ kay
 
 * Add a document about SecureCookieSessionStore.
 
-* Add a template tag for caching
-
-* Add a decorator for caching
-
 kay.utils.forms
 ----------------
 
