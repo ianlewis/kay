@@ -16,20 +16,27 @@ class NamedModel(db.Model):
   new uuid for its key_name on creation of a new entity.
   """
   @classmethod
+  def get_key_generator(cls):
+    while 1:
+      yield crypto.new_iid()
+
+  @classmethod
   def create_new_entity(cls, **kwargs):
+    key_generator = cls.get_key_generator()
+    first_key_name = key_generator.next()
     def txn():
-      uuid = crypto.new_iid()
+      key_name = first_key_name
       if kwargs.has_key('parent'):
-        entity = cls.get_by_key_name(uuid, parent=kwargs['parent'])
+        entity = cls.get_by_key_name(key_name, parent=kwargs['parent'])
       else:
-        entity = cls.get_by_key_name(uuid)
+        entity = cls.get_by_key_name(key_name)
       while entity is not None:
-        uuid = crypto.new_iid()
+        key_name = key_negerator.next()
         if kwargs.has_key('parent'):
-          entity = cls.get_by_key_name(uuid, parent=kwargs['parent'])
+          entity = cls.get_by_key_name(key_name, parent=kwargs['parent'])
         else:
-          entity = cls.get_by_key_name(uuid)
-      entity = cls(key_name=uuid, **kwargs)
+          entity = cls.get_by_key_name(key_name)
+      entity = cls(key_name=key_name, **kwargs)
       entity.put()
       return entity
     return db.run_in_transaction(txn)
