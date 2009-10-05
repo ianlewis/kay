@@ -78,6 +78,7 @@ from kay.utils import forms
 from kay.utils import datastructures
 from kay.i18n import lazy_gettext as _
 from kay.exceptions import ImproperlyConfigured
+from kay.models import NamedModel
 
 def monkey_patch(name, bases, namespace):
   """A 'metaclass' for adding new methods to an existing class.
@@ -648,7 +649,7 @@ class BaseModelForm(forms.Form):
                   if value is not None)
     super(BaseModelForm, self).__init__(**kwargs)
 
-  def save(self, commit=True):
+  def save(self, commit=True, **kwargs):
     """Save this form's cleaned data into a model instance.
 
     Args:
@@ -687,8 +688,13 @@ class BaseModelForm(forms.Form):
       if value is not None:
         converted_data[name] = prop.make_value_from_form(value)
     try:
+      converted_data.update(kwargs)
       if instance is None:
-        instance = opts.model(**converted_data)
+        if issubclass(opts.model, NamedModel):
+          logging.debug("commit argument ignored.")
+          instance = opts.model.create_new_entity(**converted_data)
+        else:
+          instance = opts.model(**converted_data)
         self.instance = instance
       else:
         for name, value in converted_data.iteritems():
