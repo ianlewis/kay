@@ -24,3 +24,5 @@ def renew_session(request):
       request.session[key] = val
     session_store.delete(oldsession)
 
+class NoSessionMixin(object):
+  nosession = True
