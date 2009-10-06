@@ -13,8 +13,6 @@ kay
 kay.utils.forms
 ----------------
 
-* Enable saving NamedModel without any hack
-
 * AjaxModelField
 
 * Implement a widget with JQuery's DatetimePicker
