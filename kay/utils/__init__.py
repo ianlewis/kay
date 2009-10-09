@@ -144,6 +144,17 @@ def reverse(endpoint, _external=False, method='GET', **values):
   return local.url_adapter.build(endpoint, values, method=method,
       force_external=_external)
 
+def render_error(e):
+  from jinja2.exceptions import TemplateNotFound
+  try:
+    template = local.app.jinja2_env.get_template("%d.html" % e.code)
+  except TemplateNotFound:
+    template = local.app.jinja2_env.get_template("_internal/defaulterror.html")
+  return Response(
+        template.render(
+          {"code": e.code, "name": e.name, "description": e.description}),
+        content_type="text/html; charset=utf-8",
+        status=e.code)
 
 def render_to_string(template, context={}, processors=None):
   """
