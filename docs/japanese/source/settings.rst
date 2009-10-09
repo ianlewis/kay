@@ -4,7 +4,7 @@
 設定ファイル
 ============
 
-Kayアプリケーションの基本的な設定は ``settings.py`` で行います。元ファイルは ``kay/kay/conf/global_settings.py`` です。
+Kayアプリケーションの基本的な設定はプロジェクトディレクトリ直下の ``settings.py`` で行います。デフォルト設定は ``kay/kay/conf/global_settings.py`` に記載されています。
 
 
 設定項目
@@ -16,7 +16,7 @@ Kayアプリケーションの基本的な設定は ``settings.py`` で行いま
 
 .. attribute:: DEFAULT_TIMEZONE
 
-   タイムゾーンを文字列で設定します。デフォルト値は ``Asia/Tokyo`` です。未設定の場合、Kayは自動的に ``UTC`` を設定します。
+   タイムゾーンを文字列で設定します。デフォルト値は ``Asia/Tokyo`` です。未設定の場合、Kayは自動的に ``UTC`` を設定します。タイムゾーンの文字列はkay/lib/pytz/all_timezoneで参照可能です。
 
 .. attribute:: DEBUG
 
@@ -36,7 +36,7 @@ Kayアプリケーションの基本的な設定は ``settings.py`` で行いま
 
 .. attribute:: SECRET_KEY
 
-   ハッシュ値を生成するためのシードを設定します。デフォルト値は ``hogehoge`` です。
+   ハッシュ値を生成するためのシードを設定します。デフォルト値は ``  xxxx `` です。
 
 .. attribute:: SESSION_PREFIX
 
@@ -84,15 +84,15 @@ Kayアプリケーションの基本的な設定は ``settings.py`` で行いま
 
 .. attribute:: MEDIA_URL
 
-   アプリケーションごとにメディアファイルをもたせる際のパスを指定します。デフォルト値は ``media`` です。各アプリケーションの配下にここで指定したパスのディレクトリを作成します。
+   アプリケーションごとにメディアファイルをもたせる際のパスを指定します。デフォルト値は ``/_media`` です。詳細は、 ``xxxx`` を参照してください。
 
 .. attribute:: INTERNAL_MEDIA_URL
 
-   kay.authなどのミドルウェアが使用するメディアファイルを保存するパスを指定します。デフォルト値は ``media`` です。
+   kay.authなどのミドルウェアが使用するメディアファイルを保存するパスを指定します。デフォルト値は ``/media`` です。
 
 .. attribute:: ADMINS
 
-   管理者のメールアドレスを設定します。サーバエラーが発生した場合、ここで設定したメールアドレスにトレースバックが送信されます。デバッグ設定が無効（ ``DEBUG=False`` ）の場合のみ機能します。
+   管理者のメールアドレスを設定します。サーバエラーが発生した場合、ここで設定したメールアドレスにトレースバックが送信されます。デバッグ設定が無効（ ``DEBUG=False`` ）の場合のみ機能します。（例） `xxxx`
    
 .. attribute:: TEMPLATE_DIRS
 
@@ -100,7 +100,7 @@ Kayアプリケーションの基本的な設定は ``settings.py`` で行いま
 
 .. attribute:: USE_I18N
 
-   国際化の有効/無効を設定します。 ``True`` で有効、 ``False`` で無効になります。デフォルト値は ``False`` です。
+   国際化の有効/無効を設定します。 ``True`` で有効、 ``False`` で無効になります。デフォルト値は ``True`` です。
 
 .. attribute:: DEFAULT_LANG
 
@@ -116,7 +116,14 @@ Kayアプリケーションの基本的な設定は ``settings.py`` で行いま
 
 .. attribute:: CONTEXT_PROCESSORS
 
-   コンテキスト・プロセッサのパスを指定します。テンプレートエンジンで、変数と値のマッピング（コンテキスト）を指定したファイルのパスをタプルで設定します。デフォルト値は、 ``'kay.context_processors.request', 'kay.context_processors.url_functions', 'kay.context_processors.media_url',`` です。
+   コンテキスト・プロセッサのパスをタプルで指定します。コンテキスト・プロセッサを使うとテンプレートエンジンで、変数と関数のマッピング（コンテキスト）を追加で設定できます。デフォルト値は、
+
+
+   code-block : python
+
+   ``'kay.context_processors.request', 'kay.context_processors.url_functions', 'kay.context_processors.media_url',``
+
+   です。詳しくは、こちら `` `` を参照してください。
 
 
 .. attribute:: JINJA2_FILTERS
@@ -125,15 +132,25 @@ Kayアプリケーションの基本的な設定は ``settings.py`` で行いま
 
 .. attribute:: JINJA2_ENVIRONMENT_KWARGS
 
-   Jinja2の ``'autoescape': True`` 
+   Jinja2のコンストラクタに渡すキーワード引数を指定できます。デフォルト値は、
 
+    {
+ 	 'autoescape': True,
+	}
+
+	です。
+	
 .. attribute:: JINJA2_EXTENSIONS
 
-   Jinja2のエクステンションを追加する際に設定します。
+   Jinja2のエクステンションを追加する際に設定します。デフォルト値は、
+
+   ``'jinja2.ext.i18n',``
+
+   です。
 
 .. attribute:: SUBMOUNT_APPS
 
-   Kayに付属するミドルウェアを一切使わずに起動させたいアプリケーションがある場合は、ここに設定します。この機能は将来的に削除する可能性があります。
+   Kayに付属するミドルウェアを一切使わずに起動させたいアプリケーションがある場合は、ここに設定します。
 
 .. attribute:: MIDDLEWARE_CLASSES
 
@@ -141,7 +158,7 @@ Kayアプリケーションの基本的な設定は ``settings.py`` で行いま
 
 .. attribute:: AUTH_USER_BACKEND
 
-   ユーザ認証で使用するバックエンドクラスを指定します。デフォルトは ``kay.auth.backend.DatastoreBackend`` です。
+   ユーザ認証で使用するバックエンドクラスを指定します。デフォルトは ``kay.auth.backend.DatastoreBackend`` です。詳しくは、
 
 .. attribute:: AUTH_USER_MODEL
 
