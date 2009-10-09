@@ -11,6 +11,7 @@ Kay ドキュメントへようこそ
    :maxdepth: 1
 
    tutorial
+   settings
 
 .. toctree::   
    :maxdepth: 2
