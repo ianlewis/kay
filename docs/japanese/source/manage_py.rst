@@ -87,3 +87,181 @@ manage.py preparse_apps
 .. code-block:: bash
 
   $ python manage.py preparse_apps
+
+
+.. _dump_all:
+
+manage.py dump_all
+------------------
+
+すべてのデータをサーバからダンプします。
+
+.. seealso:: :doc:`dump_restore`
+
+.. _restore_all:
+
+すべてのデータをサーバにリストアします。
+
+.. seealso:: :doc:`dump_restore`
+
+.. _shell:
+
+.. _rshell:
+
+.. _startapp:
+
+.. _startproject:
+
+.. _runtest:
+
+.. _preparse_bundle:
+
+.. _preparse_apps:
+済み
+
+.. _extract_messages:
+
+.. _add_translations:
+済み
+
+.. _update_translations:
+
+.. _compile_translations:
+
+.. _runserver:
+
+
+
+.. code-block:: bash
+
+  $ python manage.py runserver -c
+
+
+.. _bulkloader:
+
+   http://code.google.com/intl/ja/appengine/docs/python/tools/uploadingdata.html
+
+.. _clear_datastore:
+
+サーバのデータを全て消去します。
+
+.. seealso:: :doc:`dump_restore`
+
+.. _create_user:
+
+
+
+.. _wxadmin:
+
+
+actions:
+
+  bulkloader:
+    Execute bulkloader script with appropriate parameters. For more
+    details, please invoke 'python manage.py bulkloader --help'.
+
+  clear_datastore:
+    Clear all the data on GAE environment using remote_api.
+      
+
+    -a, --appid                   string    
+    -h, --host                    string    
+    -p, --path                    string    
+    -k, --kinds                   string    
+    -c, --clear-memcache
+    --no-secure
+
+  compile_translations:
+    Compiling all the templates in specified application.
+
+    -a, --app                     string    
+
+  create_user:
+    Create new user using remote_api.
+      
+
+    -u, --user-name               string    
+    -P, --password                string    
+    -A, --is-admin
+    -a, --appid                   string    
+    -h, --host                    string    
+    -p, --path                    string    
+    --no-secure
+
+  dump_all:
+    undocumented action
+
+    --help
+    -n, --data-set-name           string    
+    -i, --app-id                  string    
+    -u, --url                     string    
+    -d, --directory               string    
+
+  extract_messages:
+    Extract messages and create pot file.
+
+    -t, --target                  string    
+    -d, --domain                  string    messages
+
+  preparse_apps:
+    Pre compile all the jinja2 templates in your applications.
+
+  preparse_bundle:
+    Pre compile all the jinja2 templates in Kay itself.
+
+  restore_all:
+    undocumented action
+
+    --help
+    -n, --data-set-name           string    
+    -i, --app-id                  string    
+    -u, --url                     string    
+    -d, --directory               string    
+
+  rshell:
+    Start a new interactive python session with RemoteDatastore stub.
+
+    -a, --appid                   string    
+    -h, --host                    string    
+    -p, --path                    string    
+    --no-useful-imports
+    --no-secure
+    --no-use-ipython
+
+  runserver:
+    Execute dev_appserver with appropriate parameters. For more details,
+    please invoke 'python manage.py runserver --help'.
+
+  shell:
+    Start a new interactive python session.
+
+    --datastore-path              string    
+    --history-path                string    
+    --no-useful-imports
+    --no-use-ipython
+
+  startapp:
+    Start new application.
+
+    --app-name                    string    
+
+  startproject:
+    Start new application.
+
+    --proj-name                   string    
+
+  test:
+    Run test for installed applications.
+
+    --target                      string    
+    -v, --verbosity               integer   0
+
+  update_translations:
+    Update existing translations with updated pot files.
+
+    -t, --target                  string    
+    -l, --lang                    string    
+    -s, --statistics
+
+  wxadmin:
+    undocumented action
