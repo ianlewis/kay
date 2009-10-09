@@ -12,7 +12,7 @@ Kay には ``manage.py`` という管理用のスクリプトが付いていま�
 ですので、GAE 附属のスクリプト( appcfg.py や dev_appserver.py または bulkloader.py )をそのまま使用する事はなるべく避けてください。
 
 
-.. program:: manage.py add_translations
+.. program:: manage.py add_translation
 
 manage.py add_translation
 -------------------------
@@ -23,6 +23,7 @@ manage.py add_translation
 
   $ python manage.py add_translation [options]
 
+  
 .. cmdoption:: -a app_name
 
    アプリケーション名を指定します。
@@ -89,179 +90,304 @@ manage.py preparse_apps
   $ python manage.py preparse_apps
 
 
-.. _dump_all:
+.. program:: manage.py dump_all
 
 manage.py dump_all
 ------------------
 
 すべてのデータをサーバからダンプします。
 
+.. cmdoption:: --help
+
+   ヘルプを表示します。
+
+.. cmdoption:: -n, --data-set-name string    
+
+   TODO
+
+.. cmdoption:: -i, --app-id string
+
+   ``appid`` を指定します。
+
+.. cmdoption:: -u, --url string
+
+   URLを指定します。
+
+.. cmdoption:: -d, --directory string
+
+
 .. seealso:: :doc:`dump_restore`
 
-.. _restore_all:
+
+
+.. program:: manage.py restore_all
+
+manage.py restore_all
+---------------------
 
 すべてのデータをサーバにリストアします。
 
+.. cmdoption:: --help
+.. cmdoption:: -n, --data-set-name string    
+.. cmdoption:: -i, --app-id string    
+.. cmdoption:: -u, --url string    
+.. cmdoption:: -d, --directory string    
+
+
 .. seealso:: :doc:`dump_restore`
 
-.. _shell:
 
-.. _rshell:
+.. program:: manage.py shell
 
-.. _startapp:
+manage.py shell
+---------------
 
-.. _startproject:
-
-.. _runtest:
-
-.. _preparse_bundle:
-
-.. _preparse_apps:
-済み
-
-.. _extract_messages:
-
-.. _add_translations:
-済み
-
-.. _update_translations:
-
-.. _compile_translations:
-
-.. _runserver:
-
-
+Pythonシェルを起動します。
 
 .. code-block:: bash
 
-  $ python manage.py runserver -c
+  $ python manage.py shell [options]
+
+  
+.. cmdoption:: --datastore-path string
+
+   データストアのパスを指定します。
+
+.. cmdoption:: --history-path string
+
+   クエリの履歴ファイルのパスを指定します。
+
+.. cmdoption:: --no-useful-imports
+
+   自動インポートを解除して起動します。アプリケーション配下のモデル定義がインポートされなくなります。
+
+.. cmdoption:: --no-use-ipython
+   
+   iPythonを使わずに通常の対話型シェルを起動します。
+    
+.. seealso:: http://code.google.com/intl/ja/appengine/docs/python/tools/devserver.html#The_Development_Console
 
 
-.. _bulkloader:
+.. program:: manage.py rshell
 
-   http://code.google.com/intl/ja/appengine/docs/python/tools/uploadingdata.html
+manage.py rshell
+----------------
 
-.. _clear_datastore:
+運用サーバのデータストアにアクセスする対話型のシェルを起動します。
 
-サーバのデータを全て消去します。
+.. code-block:: bash
+
+  $ python manage.py rshell
+
+
+.. cmdoption:: -a, --appid string
+
+   ``appid`` を指定します。
+
+.. cmdoption:: -h, --host string    
+
+   TODO
+
+.. cmdoption:: -p, --path string    
+
+   TODO
+
+.. cmdoption:: --no-useful-imports
+
+   自動インポートを解除して起動します。アプリケーション配下のモデル定義がインポートされなくなります。
+
+.. cmdoption:: --no-secure
+
+   TODO
+
+.. cmdoption:: --no-use-ipython
+
+   iPythonを使わずに通常の対話型シェルを起動します。
+
+
+
+.. _startapp:
+
+manage.py startapp
+------------------
+
+新しいアプリケーションを作成します。
+
+.. code-block:: bash
+
+  $ python manage.py startapp myapp
+
+  
+.. _startproject:
+
+manage.py startproject
+----------------------
+
+新しいプロジェクトを作成します。
+
+.. code-block:: bash
+
+  $ python manage.py startproject myproject
+
+  
+.. cmdoption:: --proj-name string
+
+   プロジェクト名を指定します
+
+
+.. _runtest:
+
+manage.py runtest
+-----------------
+
+テストを実行します。
+
+.. code-block:: bash
+
+  $ python manage.py runtest
+
+
+.. _preparse_bundle:
+
+manage.py preparse_bundle
+--------------------------
+
+Kay自身の Jinja2 テンプレートを事前パースします。TODO
+
+.. code-block:: bash
+
+  $ python manage.py preparse_bundle
+
+  
+.. program:: manage.py extract_messages
+
+manage.py extract_messages
+--------------------------
+
+国際化対象のメッセージを抽出して、potファイルを生成します。
+
+.. cmdoption:: -t, --target string
+
+TODO
+
+.. cmdoption:: -d, --domain string messages
+
+TODO
+
+
+.. program:: manage.py update_translations
+
+manage.py update_translations
+-----------------------------
+
+翻訳を更新されたpotファイルで更新します。
+
+.. cmdoption:: -t, --target string    
+
+.. cmdoption:: -l, --lang string    
+
+.. cmdoption:: -s, --statistics
+
+
+.. program:: manage.py compile_translations
+
+manage.py compile_translations
+------------------------------
+
+特定のアプリケーションの全てのテンプレートをコンパイルします。
+
+.. cmdoption:: -a, --app string    
+
+
+.. program:: manage.py runserver
+
+manage.py runserver
+-------------------
+
+dev_appserverを適切なパラメータで起動します。
+
+.. code-block:: bash
+
+  $ python manage.py runserver
+
+.. cmdoption:: --help
+
+ヘルプを表示します
+
+.. seealso:: http://code.google.com/intl/ja/appengine/docs/python/tools/devserver.html#The_Development_Console
+
+
+.. program:: manage.py bulkloader
+
+manage.py bulkloader
+--------------------
+
+適切なパラメータでバルクローダ・スクリプトを実行します。For more
+
+.. code-block:: bash
+
+  $ python manage.py bulkloader
+
+.. cmdoption:: --help
+
+ヘルプを表示します
+
+.. seealso:: http://code.google.com/intl/ja/appengine/docs/python/tools/uploadingdata.html
+
+
+
+.. program:: manage.py clear_datastore
+
+manage.py clear_datastore
+-------------------------
+
+リモートAPIを使用して、App Engine上のデータを全て消去します。
+
+.. cmdoption:: -a, --appid string    
+.. cmdoption:: -h, --host string    
+.. cmdoption:: -p, --path string    
+.. cmdoption:: -k, --kinds string    
+.. cmdoption:: -c, --clear-memcache
+.. cmdoption:: --no-secure
 
 .. seealso:: :doc:`dump_restore`
 
-.. _create_user:
+
+
+.. program:: manage.py create_user
+
+manage.py create_user
+---------------------
+
+リモートAPIを使用して、ユーザを新規作成します。
+
+.. cmdoption:: -u, --user-name string    
+.. cmdoption:: -P, --password string
+.. cmdoption:: -A, --is-admin
+.. cmdoption:: -a, --appid string
+.. cmdoption:: -h, --host string
+.. cmdoption:: -p, --path string
+.. cmdoption:: --no-secure
+
+
+
+.. program:: manage.py test
+
+manage.py test
+--------------
+
+インストールされたアプリケーションのテストを実行します
+
+.. cmdoption:: --target string    
+
+.. cmdoption:: -v, --verbosity integer 0
 
 
 
 .. _wxadmin:
 
+manage.py wxadmin
+-----------------
 
-actions:
-
-  bulkloader:
-    Execute bulkloader script with appropriate parameters. For more
-    details, please invoke 'python manage.py bulkloader --help'.
-
-  clear_datastore:
-    Clear all the data on GAE environment using remote_api.
+TODO
       
-
-    -a, --appid                   string    
-    -h, --host                    string    
-    -p, --path                    string    
-    -k, --kinds                   string    
-    -c, --clear-memcache
-    --no-secure
-
-  compile_translations:
-    Compiling all the templates in specified application.
-
-    -a, --app                     string    
-
-  create_user:
-    Create new user using remote_api.
-      
-
-    -u, --user-name               string    
-    -P, --password                string    
-    -A, --is-admin
-    -a, --appid                   string    
-    -h, --host                    string    
-    -p, --path                    string    
-    --no-secure
-
-  dump_all:
-    undocumented action
-
-    --help
-    -n, --data-set-name           string    
-    -i, --app-id                  string    
-    -u, --url                     string    
-    -d, --directory               string    
-
-  extract_messages:
-    Extract messages and create pot file.
-
-    -t, --target                  string    
-    -d, --domain                  string    messages
-
-  preparse_apps:
-    Pre compile all the jinja2 templates in your applications.
-
-  preparse_bundle:
-    Pre compile all the jinja2 templates in Kay itself.
-
-  restore_all:
-    undocumented action
-
-    --help
-    -n, --data-set-name           string    
-    -i, --app-id                  string    
-    -u, --url                     string    
-    -d, --directory               string    
-
-  rshell:
-    Start a new interactive python session with RemoteDatastore stub.
-
-    -a, --appid                   string    
-    -h, --host                    string    
-    -p, --path                    string    
-    --no-useful-imports
-    --no-secure
-    --no-use-ipython
-
-  runserver:
-    Execute dev_appserver with appropriate parameters. For more details,
-    please invoke 'python manage.py runserver --help'.
-
-  shell:
-    Start a new interactive python session.
-
-    --datastore-path              string    
-    --history-path                string    
-    --no-useful-imports
-    --no-use-ipython
-
-  startapp:
-    Start new application.
-
-    --app-name                    string    
-
-  startproject:
-    Start new application.
-
-    --proj-name                   string    
-
-  test:
-    Run test for installed applications.
-
-    --target                      string    
-    -v, --verbosity               integer   0
-
-  update_translations:
-    Update existing translations with updated pot files.
-
-    -t, --target                  string    
-    -l, --lang                    string    
-    -s, --statistics
-
-  wxadmin:
-    undocumented action
