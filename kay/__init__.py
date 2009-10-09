@@ -18,6 +18,7 @@ __version__ = "0.3.0"
 KAY_DIR = os.path.abspath(os.path.dirname(__file__))
 PROJECT_DIR = os.path.dirname(KAY_DIR)
 LIB_DIR = os.path.join(KAY_DIR, 'lib')
+PROJECT_LIB_DIR = os.path.join(PROJECT_DIR, 'lib')
 
 
 def setup_env(manage_py_env=False):
@@ -130,3 +131,5 @@ def setup_syspath():
     sys.path = [PROJECT_DIR] + sys.path
   if not LIB_DIR in sys.path:
     sys.path = [LIB_DIR] + sys.path
+  if not PROJECT_LIB_DIR in sys.path:
+    sys.path = [PROJECT_LIB_DIR] + sys.path
