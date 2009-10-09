@@ -16,13 +16,13 @@ class NamedModel(db.Model):
   new uuid for its key_name on creation of a new entity.
   """
   @classmethod
-  def get_key_generator(cls):
+  def get_key_generator(cls, **kwargs):
     while 1:
       yield crypto.new_iid()
 
   @classmethod
   def create_new_entity(cls, **kwargs):
-    key_generator = cls.get_key_generator()
+    key_generator = cls.get_key_generator(**kwargs)
     first_key_name = key_generator.next()
     def txn():
       key_name = first_key_name
