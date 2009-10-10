@@ -18,15 +18,17 @@ def get_key(url, lang):
   return "%s?lang=%s" % (url, lang)
 
 class CacheMiddleware(object):
-  def __init__(self):
-    self.cache_timeout = settings.CACHE_MIDDLEWARE_SECONDS
-    self.namespace = settings.CACHE_MIDDLEWARE_NAMESPACE
-    self.cache_anonymous_only = settings.CACHE_MIDDLEWARE_ANONYMOUS_ONLY
+  def __init__(self, cache_timeout=settings.CACHE_MIDDLEWARE_SECONDS,
+               namespace=settings.CACHE_MIDDLEWARE_NAMESPACE,
+               cache_anonymous_only=settings.CACHE_MIDDLEWARE_ANONYMOUS_ONLY):
+    self.cache_timeout = cache_timeout
+    self.namespace = namespace
+    self.cache_anonymous_only = cache_anonymous_only
 
   def process_response(self, request, response):
-    if not request._cache_update:
+    if not hasattr(request, '_cache_update') or not request._cache_update:
       return response
-    if not response.status_code == 200:
+    if not hasattr(response, 'status_code') or not response.status_code == 200:
       return response
     key = get_key(request.url, request.lang)
     timeout = response.cache_control.max_age

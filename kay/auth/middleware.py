@@ -4,15 +4,17 @@
 Middleware for authentication.
 
 :Copyright: (c) 2009 Accense Technology, Inc.,
+                     Takashi Matsuo <tmatsuo@candit.jp>,
                      Ian Lewis <IanMLewis@gmail.com>
                      All rights reserved.
 :license: BSD, see LICENSE for more details.
 """
 
+from werkzeug.utils import import_string
+
 from kay import auth
 from kay.exceptions import ImproperlyConfigured
 from kay.conf import settings
-from kay.utils.importlib import import_module
 from kay.utils import local
 
 class LazyUser(object):
@@ -44,23 +46,10 @@ class LazyGoogleUser(object):
     if not hasattr(request, '_cached_user'):
       from kay.auth.models import AnonymousUser
       try:
-        dot = settings.AUTH_USER_MODEL.rindex(".")
-      except ValueError:
+        auth_model_class = import_string(settings.AUTH_USER_MODEL)
+      except (ImportError, AttributeError), e:
         raise ImproperlyConfigured, \
-            '%s isn\'t a auth user model.' % settings.AUTH_USER_MODEL
-      auth_model_module = settings.AUTH_USER_MODEL[:dot]
-      auth_model_classname = settings.AUTH_USER_MODEL[dot+1:]
-      try:
-        mod = import_module(auth_model_module)
-      except ImportError, e:
-        raise ImproperlyConfigured, \
-            'Error importing auth model %s: "%s"' % (auth_model_module, e)
-      try:
-        auth_model_class = getattr(mod, auth_model_classname)
-      except AttributeError:
-        raise ImproperlyConfigured, \
-            'Auth model module "%s" does not define a "%s" class' % \
-            (auth_model_module, auth_model_classname)
+            'Failed to import %s: "%s".' % (settings.AUTH_USER_MODEL, e)
       from google.appengine.api import users
       from google.appengine.ext import db
       user = users.get_current_user()

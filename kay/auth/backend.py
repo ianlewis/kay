@@ -11,6 +11,7 @@ Kay authentication backends.
 
 from google.appengine.ext import db
 from werkzeug.urls import url_quote_plus
+from werkzeug.utils import import_string
 
 from kay.exceptions import ImproperlyConfigured
 from kay.conf import settings
@@ -18,7 +19,6 @@ from kay.utils import (
   local, url_for
 )
 from kay.auth.models import AnonymousUser
-from kay.utils.importlib import import_module
 from kay.misc import get_appid
 
 class DatastoreBackend(object):
@@ -49,23 +49,10 @@ class DatastoreBackend(object):
 
   def login(self, user_name, password):
     try:
-      dot = settings.AUTH_USER_MODEL.rindex(".")
-    except ValueError:
+      auth_model_class = import_string(settings.AUTH_USER_MODEL)
+    except (ImportError, AttributeError), e:
       raise ImproperlyConfigured, \
-          '%s isn\'t a auth user model.' % settings.AUTH_USER_MODEL
-    auth_model_module = settings.AUTH_USER_MODEL[:dot]
-    auth_model_classname = settings.AUTH_USER_MODEL[dot+1:]
-    try:
-      mod = import_module(auth_model_module)
-    except ImportError, e:
-      raise ImproperlyConfigured, \
-          'Error importing auth model %s: "%s"' % (auth_model_module, e)
-    try:
-      auth_model_class = getattr(mod, auth_model_classname)
-    except AttributeError:
-      raise ImproperlyConfigured, \
-          'Auth model module "%s" does not define a "%s" class' % \
-          (auth_model_module, auth_model_classname)
+          'Failed to import %s: "%s".' % (settings.AUTH_USER_MODEL, e)
     user = auth_model_class.get_by_user_name(user_name)
     if user is None:
       return False

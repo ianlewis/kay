@@ -23,7 +23,7 @@ Let's start
 
 .. code-block:: bash
 
-   $ hg clone http://bitbucket.org/tmatsuo/kay/
+   $ hg clone https://kay-framework.googlecode.com/hg/ kay
    $ python kay/manage.py startproject myproject
    $ cd myproject
 

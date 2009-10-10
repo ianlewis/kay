@@ -30,12 +30,12 @@ from werkzeug.http import HTTP_STATUS_CODES, \
      quote_etag, parse_set_header, parse_authorization_header, \
      parse_www_authenticate_header, remove_entity_headers, \
      parse_options_header, dump_options_header
-from werkzeug.urls import url_decode
+from werkzeug.urls import url_decode, iri_to_uri
 from werkzeug.formparser import parse_form_data, default_stream_factory
 from werkzeug.utils import cached_property, environ_property, \
      cookie_date, parse_cookie, dump_cookie, http_date, escape, \
      header_property, get_content_type
-from werkzeug.wsgi import get_current_url, get_host
+from werkzeug.wsgi import get_current_url, get_host, LimitedStream
 from werkzeug.datastructures import MultiDict, CombinedMultiDict, Headers, \
      EnvironHeaders, ImmutableMultiDict, ImmutableTypeConversionDict, \
      ImmutableList, MIMEAccept, CharsetAccept, LanguageAccept, \
@@ -254,6 +254,7 @@ class BaseRequest(object):
                                'form data.  If you really want to do '
                                'that, set `shallow` to False.')
         data = None
+        stream = _empty_stream
         if self.environ['REQUEST_METHOD'] in ('POST', 'PUT'):
             try:
                 data = parse_form_data(self.environ, self._get_file_stream,
@@ -264,8 +265,17 @@ class BaseRequest(object):
                                        silent=False)
             except ValueError, e:
                 self._form_parsing_failed(e)
+        else:
+            # if we have a content length header we are able to properly
+            # guard the incoming stream, no matter what request method is
+            # used.
+            content_length = self.headers.get('content-length', type=int)
+            if content_length is not None:
+                stream = LimitedStream(self.environ['wsgi.input'],
+                                       content_length)
+
         if data is None:
-            data = (_empty_stream, ImmutableMultiDict(),
+            data = (stream, ImmutableMultiDict(),
                     ImmutableMultiDict())
 
         # inject the values into the instance dict so that we bypass
@@ -535,6 +545,8 @@ class BaseResponse(object):
             self.response = []
         elif isinstance(response, basestring):
             self.response = [response]
+        elif isinstance(response, (tuple, list)):
+            self.response = response
         else:
             self.response = iter(response)
         if isinstance(headers, Headers):
@@ -721,8 +733,8 @@ class BaseResponse(object):
         try:
             len(self.response)
         except TypeError:
-            return False
-        return True
+            return True
+        return False
 
     def close(self):
         """Close the wrapped response if possible."""
@@ -731,9 +743,16 @@ class BaseResponse(object):
 
     def freeze(self):
         """Call this method if you want to make your response object ready for
-        being pickled.  This buffers the generator if there is one.
+        being pickled.  This buffers the generator if there is one.  It will
+        also set the `Content-Length` header to the length of the body.
+
+        .. versionchanged:: 0.6
+           The `Content-Length` header is now set.
         """
-        BaseResponse.data.__get__(self)
+        # this method invokes the descriptor on the base class because
+        # a subclass might change the behavior of that attribute
+        data = BaseResponse.data.__get__(self)
+        self.headers['Content-Length'] = str(len(data))
 
     def fix_headers(self, environ):
         # XXX: deprecated
@@ -755,22 +774,35 @@ class BaseResponse(object):
 
         .. versionchanged:: 0.6
            Previously that function was called `fix_headers` and modified
-           the response object in place.
+           the response object in place.  Also since 0.6, IRIs in location
+           and content-location headers are handled properly.
 
         :param environ: the WSGI environment of the request.
         :return: returns a new :class:`Headers` object.
         """
         headers = Headers(self.headers)
+
+        # make sure the location header is an absolute URL
         location = headers.get('location')
         if location is not None:
+            if isinstance(location, unicode):
+                location = iri_to_uri(location)
             headers['Location'] = urlparse.urljoin(
                 get_current_url(environ, root_only=True),
                 location
             )
+
+        # make sure the content location is a URL
+        content_location = headers.get('content-location')
+        if content_location is not None and \
+           isinstance(content_location, unicode):
+            headers['Content-Location'] = iri_to_uri(content_location)
+
         if 100 <= self.status_code < 200 or self.status_code == 204:
             headers['Content-Length'] = '0'
         elif self.status_code == 304:
             remove_entity_headers(headers)
+
         return headers
 
     def get_app_iter(self, environ):

@@ -8,6 +8,10 @@ kay
 * Write documentations about modules, middlewares, jinja2 howtos,
   etc..
 
+* Add a document about SecureCookieSessionStore.
+
+* Customize which template to use on various HttpError(s).
+
 kay.utils.forms
 ----------------
 

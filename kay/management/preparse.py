@@ -13,10 +13,11 @@ import os
 import sys
 from os import listdir, path, mkdir
 
+from werkzeug.utils import import_string
+
 import kay
 import kay.app
 from kay.utils import local
-from kay.utils.importlib import import_module
 from kay.utils.jinja2utils.compiler import compile_dir
 from kay.management.utils import print_status
 
@@ -94,7 +95,7 @@ def compile_app_templates(app):
   for app in app.app_settings.INSTALLED_APPS:
     if app.startswith("kay."):
       continue
-    mod = import_module(app)
+    mod = import_string(app)
     target_dirs.extend(find_template_dir(os.path.dirname(mod.__file__),
                                          ('kay')))
   for dir in target_dirs:

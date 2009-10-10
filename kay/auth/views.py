@@ -9,12 +9,12 @@ Kay authentication views.
 :license: BSD, see LICENSE for more details.
 """
 
+from urllib import unquote_plus
+
 from werkzeug import (
   unescape, redirect, Response,
 )
-from werkzeug.urls import (
-  url_unquote_plus, url_encode,
-)
+from werkzeug.urls import url_encode
 
 from kay.utils import (
   local, render_to_response, url_for,
@@ -37,12 +37,12 @@ def post_session(request):
         from kay.sessions import renew_session
         renew_session(request)
         request.session['_user'] = temporary_session.user.key()
-        return redirect(url_unquote_plus(request.values.get('next')))
+        return redirect(unquote_plus(request.values.get('next')))
   return Response("Error")
     
 
 def login(request):
-  next = url_unquote_plus(request.values.get("next"))
+  next = unquote_plus(request.values.get("next"))
   owned_domain_hack = request.values.get("owned_domain_hack")
   message = ""
   form = LoginForm()
@@ -52,7 +52,7 @@ def login(request):
                                             password=form.data['password'])
       if result:
         if owned_domain_hack == 'True':
-          original_host_url = url_unquote_plus(
+          original_host_url = unquote_plus(
             request.values.get("original_host_url"))
           url = original_host_url[:-1] + url_for("auth/post_session")
           url += '?' + url_encode({'session_id': result.key().name(),
@@ -69,4 +69,4 @@ def login(request):
 def logout(request):
   next = request.values.get("next")
   local.app.auth_backend.logout()
-  return redirect(url_unquote_plus(next))
+  return redirect(unquote_plus(next))

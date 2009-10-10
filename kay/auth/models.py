@@ -73,19 +73,21 @@ class DatastoreUser(User):
     self.password = crypto.gen_pwhash(raw_password)
     return self.put()
 
+
 class GoogleUser(User):
   """
   Use User.user_id() as key_name for this model.
   """
   def __eq__(self, obj):
-    if not obj:
+    if not obj or obj.is_anonymous():
       return False
-    if isinstance(obj, AnonymousUser):
-      return False
-    return self.email == obj.email
-
-  def __ne__(self, obj):
-    return not self.__eq__(obj)
+    import os
+    if 'SERVER_SOFTWARE' in os.environ and \
+          os.environ['SERVER_SOFTWARE'].startswith('Dev'):
+      # It allows us to pose as an user in dev server.
+      return self.email == obj.email
+    else:
+      return self.key() == obj.key()
 
 
 class AnonymousUser(object):
@@ -93,7 +95,10 @@ class AnonymousUser(object):
   is_admin = False
 
   def __unicode__(self):
-    return "AnonymousUser"
+    return u"AnonymousUser"
+
+  def __str__(self):
+    return self.__unicode__()
 
   def is_anonymous(self):
     return True
@@ -105,8 +110,6 @@ class AnonymousUser(object):
     return None
 
   def __eq__(self, obj):
-    if not obj:
-      return True
     return False
 
   def __ne__(self, obj):

@@ -259,7 +259,7 @@ def format_string(string, context):
 
 def secure_filename(filename):
     r"""Pass it a filename and it will return a secure version of it.  This
-    filename can then savely be stored on a regular file system and passed
+    filename can then safely be stored on a regular file system and passed
     to :func:`os.path.join`.  The filename returned is an ASCII only string
     for maximum portability.
 
@@ -468,18 +468,26 @@ def redirect(location, code=302):
     redirect and 304 because it's the answer for a request with a request
     with defined If-Modified-Since headers.
 
+    .. versionadded:: 0.6
+       The location can now be unicode strings that are encoded using
+       the :func:`iri_to_uri` function.
+
     :param location: the location the response should redirect to.
     :param code: the redirect status code.
     """
     assert code in (301, 302, 303, 305, 307), 'invalid code'
     from werkzeug.wrappers import BaseResponse
+    display_location = location
+    if isinstance(location, unicode):
+        from werkzeug.urls import iri_to_uri
+        location = iri_to_uri(location)
     response = BaseResponse(
         '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">\n'
         '<title>Redirecting...</title>\n'
         '<h1>Redirecting...</h1>\n'
         '<p>You should be redirected automatically to target URL: '
         '<a href="%s">%s</a>.  If not click the link.' %
-        ((escape(location),) * 2), code, mimetype='text/html')
+        (location, display_location), code, mimetype='text/html')
     response.headers['Location'] = location
     return response
 

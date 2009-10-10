@@ -10,9 +10,6 @@ Kay test views.
 from werkzeug import (
   unescape, redirect, Response,
 )
-from werkzeug.urls import (
-  url_unquote_plus, url_encode,
-)
 
 from kay.utils import (
   local, render_to_response, url_for,

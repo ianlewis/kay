@@ -50,7 +50,8 @@ def compile_file(env, src_path, dst_path, encoding='utf-8', base_dir=''):
 
 
 def compile_dir(env, src_path, dst_path, pattern=r'^.*\..*[^~]$',
-                encoding='utf-8', base_dir=None):
+                encoding='utf-8', base_dir=None,
+                negative_pattern=r'^.*\.swp$'):
   """Compiles a directory of Jinja2 templates to python code.
   Params:
     `env`: a Jinja2 Environment instance.
@@ -74,6 +75,7 @@ def compile_dir(env, src_path, dst_path, pattern=r'^.*\..*[^~]$',
         mkdir(dst_name)
       compile_dir(env, src_name, dst_name, encoding=encoding,
                   base_dir=base_dir)
-    elif path.isfile(src_name) and re.match(pattern, filename):
+    elif path.isfile(src_name) and re.match(pattern, filename) and \
+          not re.match(negative_pattern, filename):
       compile_file(env, src_name, dst_name, encoding=encoding,
                    base_dir=base_dir)

@@ -60,12 +60,12 @@ from babel.support import Translations as TranslationsBase
 from pytz import timezone, UTC
 from werkzeug.exceptions import NotFound
 from werkzeug.urls import url_quote_plus
+from werkzeug.utils import import_string
 import simplejson
 
 from kay import utils
 from kay.utils import local
 from kay.utils import url_for
-from kay.utils.importlib import import_module
 from kay.conf import settings
 
 __all__ = ['_', 'gettext', 'ngettext', 'lazy_gettext', 'lazy_ngettext']
@@ -103,7 +103,7 @@ def load_translations(locale):
   except AttributeError:
     installed_apps = settings.INSTALLED_APPS
   for appname in installed_apps:
-    app = import_module(appname)
+    app = import_string(appname)
     apppath = os.path.join(os.path.dirname(app.__file__), 'i18n')
 
     if os.path.isdir(apppath):

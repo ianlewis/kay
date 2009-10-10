@@ -22,17 +22,17 @@ from werkzeug.exceptions import (
 from werkzeug import (
   Response, redirect
 )
+from werkzeug.routing import Submount
+from werkzeug.utils import import_string
 from jinja2 import (
   Environment, Undefined,
 )
-from werkzeug.routing import Submount
 from google.appengine.runtime.apiproxy_errors import CapabilityDisabledError
 
 import kay
 from kay.utils import (
-  local, local_manager, reverse, render_to_string,
+  local, local_manager, reverse, render_to_string, render_error,
 )
-from kay.utils.importlib import import_module
 from kay import (
   utils, exceptions, mail,
 )
@@ -118,7 +118,7 @@ class KayApp(object):
 
   def init_url_map(self):
     self.has_error_on_init_url_map = False
-    mod = import_module(self.app_settings.ROOT_URL_MODULE)
+    mod = import_string(self.app_settings.ROOT_URL_MODULE)
 
     make_url = getattr(mod, 'make_url')
     all_views = getattr(mod, 'all_views')
@@ -126,8 +126,8 @@ class KayApp(object):
     self.url_map = make_url()
     for app in self.get_installed_apps():
       try:
-        url_mod = import_module("%s.urls" % app)
-      except ImportError:
+        url_mod = import_string("%s.urls" % app)
+      except (ImportError, AttributeError):
         logging.warning("Failed to import app '%s.urls', skipped." % app)
         logging.debug("Reason:\n%s" % self._get_traceback(sys.exc_info()))
         continue
@@ -141,25 +141,13 @@ class KayApp(object):
     if 'kay.auth.middleware.AuthenticationMiddleware' in \
           self.app_settings.MIDDLEWARE_CLASSES:
       try:
-        dot = self.app_settings.AUTH_USER_BACKEND.rindex('.')
-      except ValueError:
+        klass = import_string(self.app_settings.AUTH_USER_BACKEND)
+      except (AttributeError, ImportError), e:
         raise exceptions.ImproperlyConfigured, \
-            'Error importing auth backend %s: "%s"' % \
+            'Failed to import %s: "%s".' %\
             (self.app_settings.AUTH_USER_BACKEND, e)
-      backend_module, backend_classname = \
-          self.app_settings.AUTH_USER_BACKEND[:dot], \
-          self.app_settings.AUTH_USER_BACKEND[dot+1:]
-      try:
-        mod = import_module(backend_module)
-      except ImportError, e:
-        raise exceptions.ImproperlyConfigured, \
-            'Error importing auth backend %s: "%s"' % (backend_module, e)
-      try:
-        klass = getattr(mod, backend_classname)
-      except AttributeError:
-        raise exceptions.ImproperlyConfigured, \
-            'Auth backend module "%s" does not define a "%s" class' % \
-            (backend_module, backend_classname)
+      except:
+        raise
       self.auth_backend = klass()
 
   def init_jinja2_environ(self):
@@ -183,8 +171,8 @@ class KayApp(object):
     per_app_loaders = {}
     for app in self.get_installed_apps():
       try:
-        mod = import_module(app)
-      except ImportError:
+        mod = import_string(app)
+      except (ImportError, AttributeError):
         logging.warning("Failed to import app '%s', skipped." % app)
         continue
       try:
@@ -202,29 +190,29 @@ class KayApp(object):
         [os.path.join(kay.PROJECT_DIR, d) for d in target])
       loader = ChoiceLoader([base_loader, loader])
     env_dict = self.app_settings.JINJA2_ENVIRONMENT_KWARGS
+    jinja2_ext = []
+    for ext_str in self.app_settings.JINJA2_EXTENSIONS:
+      try:
+        ext = import_string(ext_str)
+      except (ImportError, AttributeError), e:
+        logging.warn('Failed to import jinja2 extension %s: "%s", skipped.'
+                     % (ext_str, e))
+        continue
+      jinja2_ext.append(ext)
     env_dict.update(dict(loader = loader, undefined=NullUndefined,
-                         extensions=['jinja2.ext.i18n']))
+                         extensions=jinja2_ext))
     self.jinja2_env = Environment(**env_dict)
     for key, filter_str in self.app_settings.JINJA2_FILTERS.iteritems():
-      try:
-        dot = filter_str.rindex('.')
-      except ValueError:
-        logging.warn('%s is invalid for JINJA2_FILTERS.' % filter_str)
-        continue
-      filter_mod, filter_func = filter_str[:dot], filter_str[dot+1:]
-      try:
-        mod = import_module(filter_mod)
-      except ImportError, e:
-        logging.warn('Error importing auth backend %s: "%s"' % (filter_mod, e))
-        continue
-      try:
-        func = getattr(mod, filter_func)
-      except AttributeError:
-        logging.warn('Module "%s" does not define a "%s" func' % 
-                     (mod, filter_func))
+      try: 
+        func = import_string(filter_str)
+      except (ImportError, AttributeError):
+        logging.warn('Cannot import %s.' % filter_str)
         continue
       if self.jinja2_env.filters.has_key(key):
         logging.warn('Key "%s" has already defined, skipped.' % key)
+        continue
+      if not callable(func):
+        logging.warn('%s is not a callable.' % filter_str)
         continue
       self.jinja2_env.filters[key] = func
 
@@ -257,22 +245,10 @@ class KayApp(object):
     request_middleware = []
     for mw_path in self.app_settings.MIDDLEWARE_CLASSES:
       try:
-        dot = mw_path.rindex('.')
-      except ValueError:
+        mw_class = import_string(mw_path)
+      except (ImportError, AttributeError), e:
         raise exceptions.ImproperlyConfigured, \
-            '%s isn\'t a middleware module' % mw_path
-      mw_module, mw_classname = mw_path[:dot], mw_path[dot+1:]
-      try:
-        mod = import_module(mw_module)
-      except ImportError, e:
-        raise exceptions.ImproperlyConfigured, \
-            'Error importing middleware %s: "%s"' % (mw_module, e)
-      try:
-        mw_class = getattr(mod, mw_classname)
-      except AttributeError:
-        raise exceptions.ImproperlyConfigured, \
-            'Middleware module "%s" does not define a "%s" class' % \
-            (mw_module, mw_classname)
+            '%s isn\'t a valid middleware module: "%s"' % (mw_path, e)
       try:
         mw_instance = mw_class()
       except exceptions.MiddlewareNotUsed:
@@ -319,17 +295,14 @@ class KayApp(object):
       endpoint, values = local.url_adapter.match()
       view_func = self.views.get(endpoint, None)
       if view_func is None:
-        raise NotFound
+        return render_error(NotFound())
       if isinstance(view_func, basestring):
         try:
-          dot = view_func.rindex('.')
-          view_module, view_funcname = view_func[:dot], view_func[dot+1:]
-          view_mod = import_module(view_module)
-          view_func = getattr(view_mod, view_funcname)
+          view_func = import_string(view_func)
           assert(callable(view_func))
         except StandardError, e:
           logging.error(e)
-          raise NotFound
+          return render_error(NotFound())
       for mw_method in self._view_middleware:
         response = mw_method(request, view_func, **values)
         if response:
@@ -347,7 +320,7 @@ class KayApp(object):
         raise
     except HTTPException, e:
       logging.warning(e)
-      response = e
+      response = render_error(e)
     except SystemExit:
       # Allow sys.exit() to actually exit.
       raise
