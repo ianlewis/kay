@@ -12,16 +12,16 @@ Kay には ``manage.py`` という管理用のスクリプトが付いていま�
 ですので、GAE 附属のスクリプト( appcfg.py や dev_appserver.py または bulkloader.py )をそのまま使用する事はなるべく避けてください。
 
 
-.. program:: manage.py add_translation
+.. program:: manage.py add_translations
 
-manage.py add_translation
--------------------------
+manage.py add_translations
+--------------------------
 
 指定したアプリケーションに新しい言語カタログを追加します。
 
 .. code-block:: bash
 
-  $ python manage.py add_translation [options]
+  $ python manage.py add_translations [options]
 
   
 .. cmdoption:: -a app_name
@@ -78,16 +78,123 @@ Kay は引数にカレントディレクトリを自動的に補完します。�
 現バージョンの Kay は、GAE のサーバ上では事前パースされた jinja2 テンプレートのみ読み込みますので、デプロイの前にテンプレートの事前パースが必要です。manage.py スクリプトは自動的に事前パースを行いますので、普段ユーザーはこの事を気にする必要はありません。もし、MacOSX のランチャーを使っている場合には ``deploy`` ボタンを押すだけでは jinja2 テンプレートの事前パースは行われません。このような場合は、 :ref:`preparse_apps` のようにすればテンプレートの事前パースを行う事ができます。
 
 
-.. _preparse_apps:
 
-manage.py preparse_apps
------------------------
+.. program:: manage.py bulkloader
 
-このコマンドは、 :attr:`settings.INSTALLED_APPS` の設定値に基いて、全ての jinja2 テンプレートを事前パースします。
+manage.py bulkloader
+--------------------
+
+適切なパラメータを指定して、バルクローダ・スクリプトを実行します。
 
 .. code-block:: bash
 
-  $ python manage.py preparse_apps
+  $ python manage.py bulkloader [option]
+
+.. cmdoption:: --help
+
+   ヘルプを表示します
+
+.. seealso:: http://code.google.com/intl/ja/appengine/docs/python/tools/uploadingdata.html
+
+
+
+.. program:: manage.py clear_datastore
+
+manage.py clear_datastore
+-------------------------
+
+リモートAPIを使用して、App Engine上のデータを全て消去します。
+
+.. code-block:: bash
+
+  $ python manage.py clear_datastore
+
+
+.. cmdoption:: -a, --appid appid
+
+   ``appid`` を指定します。
+
+.. cmdoption:: -h, --host string    
+
+   TODO
+
+.. cmdoption:: -p, --path path
+
+   TODO
+
+.. cmdoption:: -k, --kinds string    
+
+   TODO
+
+.. cmdoption:: -c, --clear-memcache
+
+   memcacheのデータもすべて削除します。
+
+.. cmdoption:: --no-secure
+
+   TODO
+
+
+.. seealso:: :doc:`dump_restore`
+
+
+
+.. program:: manage.py compile_translations
+
+manage.py compile_translations
+------------------------------
+
+特定のアプリケーションの全てのテンプレートをコンパイルします。
+
+.. code-block:: bash
+
+  $ python manage.py compile_translations
+
+.. cmdoption:: -a, --app string    
+
+   TODO
+
+   
+
+.. program:: manage.py create_user
+
+manage.py create_user
+---------------------
+
+リモートAPIを使用して、ユーザを新規作成します。
+
+.. code-block:: bash
+
+  $ python manage.py create_user
+
+.. cmdoption:: -u, --user-name username
+
+   ユーザ名を指定します。
+
+.. cmdoption:: -P, --password password
+
+   パスワードを指定します。
+
+.. cmdoption:: -A, --is-admin
+
+   管理者権限を付与する場合に指定します。
+
+.. cmdoption:: -a, --appid appid
+
+   ``appid`` を指定します。
+
+.. cmdoption:: -h, --host string
+
+   TODO
+
+.. cmdoption:: -p, --path string
+
+   TODO
+
+.. cmdoption:: --no-secure
+
+   TODO
+
 
 
 .. program:: manage.py dump_all
@@ -103,22 +210,71 @@ manage.py dump_all
 
 .. cmdoption:: -n, --data-set-name string    
 
-   TODO
+   ``_backup`` 配下に、ここで指定した名称のディレクトリが生成され、データとログファイルが保存されます。
 
-.. cmdoption:: -i, --app-id string
+.. cmdoption:: -i, --app-id appid
 
-   ``appid`` を指定します。
+   データをダンプするアプリケーションを ``appid`` で指定します。
 
-.. cmdoption:: -u, --url string
+.. cmdoption:: -u, --url url
 
-   URLを指定します。
+   データをダンプするアプリケーションをURLで指定します。
 
-.. cmdoption:: -d, --directory string
+.. cmdoption:: -d, --directory directory
 
+   データをダンプするディレクトリを指定します。
 
 .. seealso:: :doc:`dump_restore`
 
 
+
+.. program:: manage.py extract_messages
+
+manage.py extract_messages
+--------------------------
+
+国際化対象のメッセージを抽出して、potファイルを生成します。
+
+.. code-block:: bash
+
+  $ python manage.py extract_messages [options]
+
+.. cmdoption:: -t, --target string
+
+   対象となるディレクトリを指定します。
+
+.. cmdoption:: -d, --domain domain
+
+   ``messages`` を指定すると、TODO
+   ``jsmessages`` を指定すると、 ``media`` 配下のjsからメッセージを抽出し、 ``APP_DIR/i18n`` 配下にカタログファイルを生成します。
+
+
+
+.. _preparse_apps:
+
+manage.py preparse_apps
+-----------------------
+
+このコマンドは、 :attr:`settings.INSTALLED_APPS` の設定値に基いて、全ての jinja2 テンプレートを事前パースします。
+
+.. code-block:: bash
+
+  $ python manage.py preparse_apps
+
+
+
+.. _preparse_bundle:
+
+manage.py preparse_bundle
+--------------------------
+
+Kay自身の Jinja2 テンプレートを事前パースします。TODO
+
+.. code-block:: bash
+
+  $ python manage.py preparse_bundle
+
+  
 
 .. program:: manage.py restore_all
 
@@ -127,45 +283,32 @@ manage.py restore_all
 
 すべてのデータをサーバにリストアします。
 
-.. cmdoption:: --help
-.. cmdoption:: -n, --data-set-name string    
-.. cmdoption:: -i, --app-id string    
-.. cmdoption:: -u, --url string    
-.. cmdoption:: -d, --directory string    
+.. code-block:: bash
 
+  $ python manage.py restore_all [options]
+
+.. cmdoption:: --help
+
+   ヘルプを表示します。
+
+.. cmdoption:: -n, --data-set-name datasetname
+
+   ``_backup`` 配下の、ここで指定した名称のディレクトリに保存されているデータをサーバにリストアします。
+
+.. cmdoption:: -i, --app-id appid
+
+   データをリストアするアプリケーションを ``appid`` で指定します。
+
+.. cmdoption:: -u, --url url
+
+   データをリストアするアプリケーションをURLで指定します。
+
+.. cmdoption:: -d, --directory directory
+
+   リストアするデータの保存されたディレクトリを指定します。
 
 .. seealso:: :doc:`dump_restore`
 
-
-.. program:: manage.py shell
-
-manage.py shell
----------------
-
-Pythonシェルを起動します。
-
-.. code-block:: bash
-
-  $ python manage.py shell [options]
-
-  
-.. cmdoption:: --datastore-path string
-
-   データストアのパスを指定します。
-
-.. cmdoption:: --history-path string
-
-   クエリの履歴ファイルのパスを指定します。
-
-.. cmdoption:: --no-useful-imports
-
-   自動インポートを解除して起動します。アプリケーション配下のモデル定義がインポートされなくなります。
-
-.. cmdoption:: --no-use-ipython
-   
-   iPythonを使わずに通常の対話型シェルを起動します。
-    
-.. seealso:: http://code.google.com/intl/ja/appengine/docs/python/tools/devserver.html#The_Development_Console
 
 
 .. program:: manage.py rshell
@@ -177,18 +320,18 @@ manage.py rshell
 
 .. code-block:: bash
 
-  $ python manage.py rshell
+  $ python manage.py rshell [options]
 
 
-.. cmdoption:: -a, --appid string
+.. cmdoption:: -a, --appid appid
 
    ``appid`` を指定します。
 
-.. cmdoption:: -h, --host string    
+.. cmdoption:: -h, --host host    
 
    TODO
 
-.. cmdoption:: -p, --path string    
+.. cmdoption:: -p, --path path
 
    TODO
 
@@ -203,6 +346,71 @@ manage.py rshell
 .. cmdoption:: --no-use-ipython
 
    iPythonを使わずに通常の対話型シェルを起動します。
+
+
+
+.. program:: manage.py runserver
+
+manage.py runserver
+-------------------
+
+適切なパラメータを指定して、dev_appserverを起動します。
+
+
+.. code-block:: bash
+
+  $ python manage.py runserver [options]
+
+.. cmdoption:: --help
+
+   ヘルプを表示します
+
+.. seealso:: http://code.google.com/intl/ja/appengine/docs/python/tools/devserver.html#The_Development_Console
+
+
+
+.. _runtest:
+
+manage.py runtest
+-----------------
+
+テストを実行します。
+
+.. code-block:: bash
+
+  $ python manage.py runtest
+
+
+
+.. program:: manage.py shell
+
+manage.py shell
+---------------
+
+Pythonシェルを起動します。
+
+.. code-block:: bash
+
+  $ python manage.py shell [options]
+
+  
+.. cmdoption:: --datastore-path path
+
+   データストアのパスを指定します。
+
+.. cmdoption:: --history-path path
+
+   クエリの履歴ファイルのパスを指定します。
+
+.. cmdoption:: --no-useful-imports
+
+   自動インポートを解除して起動します。アプリケーション配下のモデル定義がインポートされなくなります。
+
+.. cmdoption:: --no-use-ipython
+   
+   iPythonを使わずに通常の対話型シェルを起動します。
+    
+.. seealso:: http://code.google.com/intl/ja/appengine/docs/python/tools/devserver.html#The_Development_Console
 
 
 
@@ -218,6 +426,7 @@ manage.py startapp
   $ python manage.py startapp myapp
 
   
+  
 .. _startproject:
 
 manage.py startproject
@@ -229,50 +438,32 @@ manage.py startproject
 
   $ python manage.py startproject myproject
 
-  
-.. cmdoption:: --proj-name string
+.. cmdoption:: --proj-name projectname
 
    プロジェクト名を指定します
 
 
-.. _runtest:
+   
+.. program:: manage.py test
 
-manage.py runtest
------------------
+manage.py test
+--------------
 
-テストを実行します。
-
-.. code-block:: bash
-
-  $ python manage.py runtest
-
-
-.. _preparse_bundle:
-
-manage.py preparse_bundle
---------------------------
-
-Kay自身の Jinja2 テンプレートを事前パースします。TODO
+インストールされたアプリケーションのテストを実行します
 
 .. code-block:: bash
 
-  $ python manage.py preparse_bundle
+  $ python manage.py test
 
-  
-.. program:: manage.py extract_messages
 
-manage.py extract_messages
---------------------------
+.. cmdoption:: --target string    
 
-国際化対象のメッセージを抽出して、potファイルを生成します。
+   TODO
 
-.. cmdoption:: -t, --target string
+.. cmdoption:: -v, --verbosity integer 0
 
-TODO
+   TODO
 
-.. cmdoption:: -d, --domain string messages
-
-TODO
 
 
 .. program:: manage.py update_translations
@@ -282,112 +473,33 @@ manage.py update_translations
 
 翻訳を更新されたpotファイルで更新します。
 
+.. code-block:: bash
+
+  $ python manage.py update_translations [options]
+
 .. cmdoption:: -t, --target string    
+
+   TODO
 
 .. cmdoption:: -l, --lang string    
 
+   TODO
+
 .. cmdoption:: -s, --statistics
 
-
-.. program:: manage.py compile_translations
-
-manage.py compile_translations
-------------------------------
-
-特定のアプリケーションの全てのテンプレートをコンパイルします。
-
-.. cmdoption:: -a, --app string    
+   TODO
 
 
-.. program:: manage.py runserver
-
-manage.py runserver
--------------------
-
-dev_appserverを適切なパラメータで起動します。
-
-.. code-block:: bash
-
-  $ python manage.py runserver
-
-.. cmdoption:: --help
-
-ヘルプを表示します
-
-.. seealso:: http://code.google.com/intl/ja/appengine/docs/python/tools/devserver.html#The_Development_Console
-
-
-.. program:: manage.py bulkloader
-
-manage.py bulkloader
---------------------
-
-適切なパラメータでバルクローダ・スクリプトを実行します。For more
-
-.. code-block:: bash
-
-  $ python manage.py bulkloader
-
-.. cmdoption:: --help
-
-ヘルプを表示します
-
-.. seealso:: http://code.google.com/intl/ja/appengine/docs/python/tools/uploadingdata.html
-
-
-
-.. program:: manage.py clear_datastore
-
-manage.py clear_datastore
--------------------------
-
-リモートAPIを使用して、App Engine上のデータを全て消去します。
-
-.. cmdoption:: -a, --appid string    
-.. cmdoption:: -h, --host string    
-.. cmdoption:: -p, --path string    
-.. cmdoption:: -k, --kinds string    
-.. cmdoption:: -c, --clear-memcache
-.. cmdoption:: --no-secure
-
-.. seealso:: :doc:`dump_restore`
-
-
-
-.. program:: manage.py create_user
-
-manage.py create_user
----------------------
-
-リモートAPIを使用して、ユーザを新規作成します。
-
-.. cmdoption:: -u, --user-name string    
-.. cmdoption:: -P, --password string
-.. cmdoption:: -A, --is-admin
-.. cmdoption:: -a, --appid string
-.. cmdoption:: -h, --host string
-.. cmdoption:: -p, --path string
-.. cmdoption:: --no-secure
-
-
-
-.. program:: manage.py test
-
-manage.py test
---------------
-
-インストールされたアプリケーションのテストを実行します
-
-.. cmdoption:: --target string    
-
-.. cmdoption:: -v, --verbosity integer 0
-
-
-
+   
 .. _wxadmin:
 
 manage.py wxadmin
 -----------------
+
+.. code-block:: bash
+
+  $ python manage.py wxadmin
+
 
 TODO
       
