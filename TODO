@@ -12,6 +12,11 @@ kay
 
 * Capability for compressing css and js media with i18n.
 
+kay.management
+--------------
+
+* Fix result count for deleting entities of PolyModel subclass.
+
 
 kay.i18n
 --------
