@@ -181,14 +181,22 @@ def delete_all_entities(models=None, batch_size=20):
     models = models_dict.values()
   if not isinstance(models, list):
     models = [models]
+  target_models = []
   for model in models:
-    if not type(model) == type(db.Model) or \
-          type(model) == type(db.polymodel.PolyModel):
+    if not (issubclass(model, db.Model) or \
+              issubclass(model, db.polymodel.PolyModel)):
       sys.stderr.write("Invalid model: %s\n" % model)
       return
-  job_manager = JobManager(models)
+    if model is db.polymodel.PolyModel or model is db.Model:
+      continue
+    if issubclass(model, db.polymodel.PolyModel):
+      if model.__base__ is db.polymodel.PolyModel:
+        target_models.append(model)
+    else:
+      target_models.append(model)
+  job_manager = JobManager(target_models)
   threads = []
-  for model in models:
+  for model in target_models:
     job_collector = JobCollector(job_manager, model)
     threads.append(job_collector)
     job_collector.start()
