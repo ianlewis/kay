@@ -74,7 +74,7 @@ def dump_or_restore_all(help, data_set_name, app_id, url, directory, op):
       sys.exit(1)
       
   current_time = datetime.datetime.now().strftime("%Y%m%d.%H%M%S")
-  models = get_all_models_as_dict()
+  models = get_all_models_as_dict(only_polymodel_base=True)
   results = {}
   if op == RESTORE:
     base_args = ["bulkloader", "--restore"]
