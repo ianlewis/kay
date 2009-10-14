@@ -31,7 +31,7 @@ from google.appengine.runtime.apiproxy_errors import CapabilityDisabledError
 
 import kay
 from kay.utils import (
-  local, local_manager, reverse, render_to_string,
+  local, local_manager, reverse, render_to_string, render_error,
 )
 from kay import (
   utils, exceptions, mail,
@@ -295,14 +295,14 @@ class KayApp(object):
       endpoint, values = local.url_adapter.match()
       view_func = self.views.get(endpoint, None)
       if view_func is None:
-        raise NotFound
+        return render_error(NotFound())
       if isinstance(view_func, basestring):
         try:
           view_func = import_string(view_func)
           assert(callable(view_func))
         except StandardError, e:
           logging.error(e)
-          raise NotFound
+          return render_error(NotFound())
       for mw_method in self._view_middleware:
         response = mw_method(request, view_func, **values)
         if response:
@@ -320,7 +320,7 @@ class KayApp(object):
         raise
     except HTTPException, e:
       logging.warning(e)
-      response = e
+      response = render_error(e)
     except SystemExit:
       # Allow sys.exit() to actually exit.
       raise

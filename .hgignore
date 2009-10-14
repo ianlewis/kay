@@ -4,11 +4,9 @@ syntax: glob
 *.tmp
 *~
 *.pdf
-*.png
 .DS_Store
 docs/build
 docs/japanese/build
-docs/work/
 kay/lib/tweepy/
 
 syntax: regexp
