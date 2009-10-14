@@ -43,7 +43,7 @@ from kay.management.utils import print_status
 THREAD_NUM = 20
 HISTORY_PATH = os.path.expanduser('~/.kay_shell_history')
 
-def get_all_models_as_dict():
+def get_all_models_as_dict(only_polymodel_base=False):
   ret = {}
   apps = []
   app = kay.app.get_application()
@@ -65,6 +65,10 @@ def get_all_models_as_dict():
           if issubclass(c, db.Model):
             if c in ret.values():
               continue
+            if only_polymodel_base and \
+                  issubclass(c, db.polymodel.PolyModel) and \
+                  c.__base__ is not db.polymodel.PolyModel:
+                continue
             while ret.has_key(name):
               name = name + '_'
             ret[name] = c
@@ -176,19 +180,23 @@ def any_thread_alive(threads):
 
 
 def delete_all_entities(models=None, batch_size=20):
-  models_dict = get_all_models_as_dict()
+  models_dict = get_all_models_as_dict(only_polymodel_base=True)
   if models is None:
     models = models_dict.values()
   if not isinstance(models, list):
     models = [models]
+  target_models = []
   for model in models:
-    if not type(model) == type(db.Model) or \
-          type(model) == type(db.polymodel.PolyModel):
+    if not (issubclass(model, db.Model) or \
+              issubclass(model, db.polymodel.PolyModel)):
       sys.stderr.write("Invalid model: %s\n" % model)
       return
-  job_manager = JobManager(models)
+    if model is db.polymodel.PolyModel or model is db.Model:
+      continue
+    target_models.append(model)
+  job_manager = JobManager(target_models)
   threads = []
-  for model in models:
+  for model in target_models:
     job_collector = JobCollector(job_manager, model)
     threads.append(job_collector)
     job_collector.start()
