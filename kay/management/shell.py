@@ -43,7 +43,7 @@ from kay.management.utils import print_status
 THREAD_NUM = 20
 HISTORY_PATH = os.path.expanduser('~/.kay_shell_history')
 
-def get_all_models_as_dict():
+def get_all_models_as_dict(only_polymodel_base=False):
   ret = {}
   apps = []
   app = kay.app.get_application()
@@ -65,6 +65,10 @@ def get_all_models_as_dict():
           if issubclass(c, db.Model):
             if c in ret.values():
               continue
+            if only_polymodel_base and \
+                  issubclass(c, db.polymodel.PolyModel) and \
+                  c.__base__ is not db.polymodel.PolyModel:
+                continue
             while ret.has_key(name):
               name = name + '_'
             ret[name] = c
@@ -176,7 +180,7 @@ def any_thread_alive(threads):
 
 
 def delete_all_entities(models=None, batch_size=20):
-  models_dict = get_all_models_as_dict()
+  models_dict = get_all_models_as_dict(only_polymodel_base=True)
   if models is None:
     models = models_dict.values()
   if not isinstance(models, list):
@@ -189,11 +193,7 @@ def delete_all_entities(models=None, batch_size=20):
       return
     if model is db.polymodel.PolyModel or model is db.Model:
       continue
-    if issubclass(model, db.polymodel.PolyModel):
-      if model.__base__ is db.polymodel.PolyModel:
-        target_models.append(model)
-    else:
-      target_models.append(model)
+    target_models.append(model)
   job_manager = JobManager(target_models)
   threads = []
   for model in target_models:

@@ -28,7 +28,8 @@ class SessionMiddleware(object):
     return None
 
   def process_response(self, request, response):
-    if hasattr(request, 'session') and request.session.should_save:
+    if hasattr(request, 'session') and request.session.should_save and \
+          hasattr(response, 'set_cookie'):
       self.session_store.save(request.session)
       response.set_cookie(settings.COOKIE_NAME,
                           self.session_store.get_data(request.session),
