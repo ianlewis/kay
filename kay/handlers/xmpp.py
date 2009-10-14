@@ -11,6 +11,7 @@ import logging
 
 from google.appengine.api import xmpp
 from google.appengine.ext.webapp import xmpp_handlers
+from werkzeug import Response
 
 from kay.handlers import BaseHandler
 
@@ -55,6 +56,7 @@ class XMPPBaseHandler(BaseHandler):
       logging.error("Invalid XMPP request: Missing required field %s", e[0])
       return
     self.message_received(self.xmpp_message)
+    return Response("OK")
 
 
 class XMPPCommandHandler(xmpp_handlers.CommandHandlerMixin, XMPPBaseHandler):
