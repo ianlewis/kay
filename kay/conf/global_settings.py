@@ -45,6 +45,7 @@ TEMPLATE_DIRS = (
 
 USE_I18N = True
 DEFAULT_LANG = 'en'
+I18N_DIR = 'i18n'
 
 INSTALLED_APPS = (
 )

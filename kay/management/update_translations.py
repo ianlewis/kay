@@ -27,7 +27,7 @@ from kay.management.utils import print_status
 domains = ['messages', 'jsmessages']
 
 def do_update_translations(target=("t", ""), lang=("l", ""),
-                           statistics=("s", False)):
+                           statistics=("s", False), i18n_dir=("i", "")):
   """
   Update existing translations with updated pot files.
   """
@@ -38,7 +38,10 @@ def do_update_translations(target=("t", ""), lang=("l", ""),
     print_status('Updating core strings')
     root = path.join(kay.KAY_DIR, 'i18n')
   else:
-    root = path.join(target, 'i18n')
+    if i18n_dir:
+      root = i18n_dir
+    else:
+      root = path.join(target, 'i18n')
     if not path.isdir(root):
       print_status('source folder missing')
       sys.exit(1)
@@ -48,8 +51,8 @@ def do_update_translations(target=("t", ""), lang=("l", ""),
     if lang:
       filepath = path.join(root, lang, 'LC_MESSAGES', domain+'.po')
       if not path.exists(filepath):
-        print_status("unknown locale. %s not found." % filepath)
-        sys.exit(1)
+        print_status("%s not found, skipped." % filepath)
+        continue
     try:
       f = file(path.join(root, domain+'.pot'))
     except IOError:
