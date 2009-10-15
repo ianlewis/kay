@@ -26,12 +26,14 @@ from babel.messages import Catalog
 from babel.messages.pofile import read_po, write_po
 from babel.util import LOCALTZ
 
-from kay.management.utils import print_status
+from kay.management.utils import (
+  print_status, get_user_apps,
+)
 
 domains = ['messages', 'jsmessages']
 
-def do_add_translations(app=("a", ""), lang=("l", ""), force=("f", False),
-                        i18n_dir=("i", "")):
+def do_add_translations(target=("t", ""), lang=("l", ""), force=("f", False),
+                        i18n_dir=("i", ""), all=("a", False)):
   """
   Add new translations for specified language.
   """
@@ -40,15 +42,21 @@ def do_add_translations(app=("a", ""), lang=("l", ""), force=("f", False),
   except (UnknownLocaleError, ValueError), e:
     print_status("You must specify lang.")
     sys.exit(1)
-  if not app:
-    print_status("Please specify app.")
+  if not target and not all:
+    print_status("Please specify target.")
     sys.exit(1)
-  elif app == 'kay':
+  elif target == 'kay':
     i18n_dir = join(kay.KAY_DIR, 'i18n')
     add_translations(locale, i18n_dir, force)
+  elif all:
+    targets = get_user_apps()
+    for target in targets:
+      do_add_translations(target=target, lang=lang, force=force,
+                          i18n_dir=None, all=False)
+    sys.exit(0)
   else:
     if not i18n_dir:
-      i18n_dir = join(app, 'i18n')
+      i18n_dir = join(target, 'i18n')
     add_translations(locale, i18n_dir, force)
 
 

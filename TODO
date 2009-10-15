@@ -13,12 +13,6 @@ kay
 * Capability for compressing css and js media with i18n.
 
 
-kay.i18n
---------
-
-* Add a convenient --all option.
-
-
 kay.utils.forms
 ----------------
 

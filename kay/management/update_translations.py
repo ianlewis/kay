@@ -22,21 +22,30 @@ from babel import Locale
 from babel.messages import Catalog
 from babel.messages.pofile import write_po, read_po
 
-from kay.management.utils import print_status
+from kay.management.utils import (
+  print_status, get_user_apps,
+)
 
 domains = ['messages', 'jsmessages']
 
 def do_update_translations(target=("t", ""), lang=("l", ""),
-                           statistics=("s", False), i18n_dir=("i", "")):
+                           statistics=("s", False), i18n_dir=("i", ""),
+                           all=("a", False)):
   """
   Update existing translations with updated pot files.
   """
-  if not target:
+  if not target and not all:
     print_status('Please specify target.')
     sys.exit(1)
   elif target == 'kay':
     print_status('Updating core strings')
     root = path.join(kay.KAY_DIR, 'i18n')
+  elif all:
+    targets = get_user_apps()
+    for target in targets:
+      do_update_translations(target=target, lang=lang, statistics=statistics,
+                             i18n_dir=None, all=False)
+    sys.exit(0)
   else:
     if i18n_dir:
       root = i18n_dir
