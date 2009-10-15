@@ -22,6 +22,10 @@ handlers:
   login: admin
   secure: optional
 
+- url: /_ah/queue/deferred
+    script: $PYTHON_LIB/google/appengine/ext/deferred/
+    login: admin
+
 - url: /remote_api
   script: $PYTHON_LIB/google/appengine/ext/remote_api/handler.py
   login: admin

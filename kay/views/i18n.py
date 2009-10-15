@@ -3,6 +3,7 @@ import os
 from werkzeug import Response
 from werkzeug.utils import import_string
 
+import kay
 from kay.conf import settings
 from kay.utils.text import javascript_quote
 import gettext as gettext_module
@@ -107,6 +108,9 @@ def javascript_catalog(request, domain='jsmessages', packages=None):
     p = import_string(package)
     path = os.path.join(os.path.dirname(p.__file__), 'i18n')
     paths.append(path)
+  # Add i18n_dir
+  if os.path.isdir(os.path.join(kay.PROJECT_DIR, settings.I18N_DIR)):
+    paths.append(os.path.join(kay.PROJECT_DIR, settings.I18N_DIR))
   # last load the currently selected language, if it isn't identical to the default.
   for path in paths:
     try:
