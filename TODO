@@ -16,7 +16,7 @@ kay
 kay.i18n
 --------
 
-* Fix PROJECT_DIR/media i18n issue.
+* Add a convenient --all option.
 
 
 kay.utils.forms
