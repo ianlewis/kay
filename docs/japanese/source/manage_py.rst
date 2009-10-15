@@ -109,22 +109,21 @@ manage.py clear_datastore
 
   $ python manage.py clear_datastore
 
-
 .. cmdoption:: -a, --appid appid
 
-   ``appid`` を指定します。
+   対象となるアプリケーションを ``app-id`` で指定します。デフォルト値は ``settings.py`` の ``APPLICATION_ID`` です。
 
-.. cmdoption:: -h, --host string    
+.. cmdoption:: -h, --host host
 
-   TODO
+   対象となるアプリケーションをホスト名で指定します。デフォルト値は ``settings.py`` の ``APPLICATION_ID.appspot.com`` です。
 
 .. cmdoption:: -p, --path path
 
-   TODO
+   リモートAPIのパスを指定します。デフォルト値は ``/remote_api`` です。
 
 .. cmdoption:: -k, --kinds string    
 
-   TODO
+   削除するエンティティの kind を指定します。kind はデフォルトでは ``appname_model`` となっています。
 
 .. cmdoption:: -c, --clear-memcache
 
@@ -132,7 +131,7 @@ manage.py clear_datastore
 
 .. cmdoption:: --no-secure
 
-   TODO
+   HTTPSを使用せずに通信します。
 
 
 .. seealso:: :doc:`dump_restore`
@@ -150,10 +149,9 @@ manage.py compile_translations
 
   $ python manage.py compile_translations
 
-.. cmdoption:: -a, --app string    
+.. cmdoption:: -a, --app appname
 
-   TODO
-
+   特定のアプリケーションのみを対象とする場合に、アプリケーション名をしてします。
    
 
 .. program:: manage.py create_user
@@ -179,21 +177,21 @@ manage.py create_user
 
    管理者権限を付与する場合に指定します。
 
-.. cmdoption:: -a, --appid appid
+.. cmdoption:: -a, --appid app-id
 
-   ``appid`` を指定します。
+   対象となるアプリケーションを ``app-id`` で指定します。デフォルト値は ``settings.py`` の ``APPLICATION_ID`` です。
 
-.. cmdoption:: -h, --host string
+.. cmdoption:: -h, --host host
 
-   TODO
+   対象となるアプリケーションをホスト名で指定します。デフォルト値は ``settings.py`` の ``APPLICATION_ID`` です。
 
-.. cmdoption:: -p, --path string
+.. cmdoption:: -p, --path path
 
-   TODO
+   リモートAPIのパスを指定します。デフォルト値は ``/remote_api`` です。
 
 .. cmdoption:: --no-secure
 
-   TODO
+   HTTPSを使用せずに通信します。
 
 
 
@@ -212,9 +210,9 @@ manage.py dump_all
 
    ``_backup`` 配下に、ここで指定した名称のディレクトリが生成され、データとログファイルが保存されます。
 
-.. cmdoption:: -i, --app-id appid
+.. cmdoption:: -i, --app-id app-id
 
-   データをダンプするアプリケーションを ``appid`` で指定します。
+   データをダンプするアプリケーションを ``app-id`` で指定します。
 
 .. cmdoption:: -u, --url url
 
@@ -245,10 +243,9 @@ manage.py extract_messages
 
 .. cmdoption:: -d, --domain domain
 
-   ``messages`` を指定すると、TODO
-   ``jsmessages`` を指定すると、 ``media`` 配下のjsからメッセージを抽出し、 ``APP_DIR/i18n`` 配下にカタログファイルを生成します。
-
-
+   * ``messages`` を指定すると、Pythonスクリプトと ``templates`` 配下のテンプレートファイルが対象となります。
+   * ``jsmessages`` を指定すると、JavaScriptファイルが対象となります。
+   
 
 .. _preparse_apps:
 
@@ -268,7 +265,7 @@ manage.py preparse_apps
 manage.py preparse_bundle
 --------------------------
 
-Kay自身の Jinja2 テンプレートを事前パースします。TODO
+Kay自身の Jinja2 テンプレートを事前パースします。
 
 .. code-block:: bash
 
@@ -329,11 +326,11 @@ manage.py rshell
 
 .. cmdoption:: -h, --host host    
 
-   TODO
+   対象となるアプリケーションをホスト名で指定します。デフォルト値は ``settings.py`` の ``APPLICATION_ID.appspot.com`` です。
 
 .. cmdoption:: -p, --path path
 
-   TODO
+   リモートAPIのパスを指定します。デフォルト値は ``/remote_api`` です。
 
 .. cmdoption:: --no-useful-imports
 
@@ -341,7 +338,7 @@ manage.py rshell
 
 .. cmdoption:: --no-secure
 
-   TODO
+   HTTPSを使用せずに通信します。
 
 .. cmdoption:: --no-use-ipython
 
@@ -374,11 +371,20 @@ manage.py runserver
 manage.py runtest
 -----------------
 
-テストを実行します。
+インストールされたアプリケーションのテストを実行します
 
 .. code-block:: bash
 
   $ python manage.py runtest
+
+.. cmdoption:: --target APP_DIR
+
+   対象となるアプリケーションのディレクトリを指定します。
+
+.. cmdoption:: -v, --verbosity integer
+
+   TODO。整数を指定します。デフォルト値は ``0`` です。
+
 
 
 
@@ -449,21 +455,6 @@ manage.py startproject
 manage.py test
 --------------
 
-インストールされたアプリケーションのテストを実行します
-
-.. code-block:: bash
-
-  $ python manage.py test
-
-
-.. cmdoption:: --target string    
-
-   TODO
-
-.. cmdoption:: -v, --verbosity integer 0
-
-   TODO
-
 
 
 .. program:: manage.py update_translations
@@ -477,13 +468,13 @@ manage.py update_translations
 
   $ python manage.py update_translations [options]
 
-.. cmdoption:: -t, --target string    
+.. cmdoption:: -t, --target APP_DIR
 
-   TODO
+   対象となるアプリケーションのディレクトリを指定します。
 
-.. cmdoption:: -l, --lang string    
+.. cmdoption:: -l, --lang lang 
 
-   TODO
+   翻訳する言語を指定します。例) -l ja
 
 .. cmdoption:: -s, --statistics
 
@@ -496,10 +487,11 @@ manage.py update_translations
 manage.py wxadmin
 -----------------
 
+管理用のGUI画面を立ち上げます。
+
 .. code-block:: bash
 
   $ python manage.py wxadmin
 
+  
 
-TODO
-      
