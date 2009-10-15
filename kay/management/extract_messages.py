@@ -49,7 +49,8 @@ JSMETHODS = [
   ('**.js', 'javascript'),
   ('**/templates_compiled/**.*', 'ignore'),
 ]
-COMMENT_TAGS = ['_']
+COMMENT_TAGS = ['_', '__', 'gettext', 'ngettext', 'lazy_gettext',
+                'lazy_ngettext']
 
 
 def strip_path(filename, base):
@@ -97,12 +98,12 @@ def do_extract_messages(target=('t', ''), domain=('d', 'messages'),
   for filename, lineno, message, comments in extracted:
     catalog.add(message, None, [(strip_path(filename, root), lineno)],
                 auto_comments=comments)
+  if not i18n_dir:
+    i18n_dir = path.join(root, 'i18n')
+  if not path.isdir(i18n_dir):
+    makedirs(i18n_dir)
 
-  output_path = path.join(root, 'i18n')
-  if not path.isdir(output_path):
-    makedirs(output_path)
-
-  f = file(path.join(output_path, domain+'.pot'), 'w')
+  f = file(path.join(i18n_dir, domain+'.pot'), 'w')
   try:
     write_po(f, catalog, width=79)
   finally:

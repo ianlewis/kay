@@ -30,7 +30,8 @@ from kay.management.utils import print_status
 
 domains = ['messages', 'jsmessages']
 
-def do_add_translations(app=("a", ""), lang=("l", ""), force=("f", False)):
+def do_add_translations(app=("a", ""), lang=("l", ""), force=("f", False),
+                        i18n_dir=("i", "")):
   """
   Add new translations for specified language.
   """
@@ -46,7 +47,9 @@ def do_add_translations(app=("a", ""), lang=("l", ""), force=("f", False)):
     i18n_dir = join(kay.KAY_DIR, 'i18n')
     add_translations(locale, i18n_dir, force)
   else:
-    add_translations(locale, join(app, 'i18n'), force)
+    if not i18n_dir:
+      i18n_dir = join(app, 'i18n')
+    add_translations(locale, i18n_dir, force)
 
 
 def create_from_pot(locale, path):

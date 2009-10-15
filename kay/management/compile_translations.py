@@ -39,7 +39,7 @@ def is_untranslated(obj):
   return True
 
 
-def do_compile_translations(app=("a", "")):
+def do_compile_translations(app=("a", ""), i18n_dir=("i", "")):
   """
   Compiling all the templates in specified application.
   """
@@ -50,7 +50,10 @@ def do_compile_translations(app=("a", "")):
     print_status('Compiling builtin languages')
     root = path.join(kay.KAY_DIR, 'i18n')
   else:
-    root = path.join(app, 'i18n')
+    if i18n_dir:
+      root = i18n_dir
+    else:
+      root = path.join(app, 'i18n')
     if not path.isdir(root):
       print('i18n folder missing')
       sys.exit(1)
