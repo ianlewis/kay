@@ -58,7 +58,8 @@ def strip_path(filename, base):
     filename, path.dirname(base)])):].lstrip(path.sep)
 
 
-def do_extract_messages(target=('t', ''), domain=('d', 'messages')):
+def do_extract_messages(target=('t', ''), domain=('d', 'messages'),
+                        i18n_dir=('i', '')):
   """
   Extract messages and create pot file.
   """
