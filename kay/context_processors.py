@@ -25,6 +25,11 @@ def url_functions(request):
     ret.update({'create_lang_url': create_lang_url})
   return ret
     
+def i18n(request):
+    #TODO: Add available languages like django's context processor
+    return {
+        "language_code": request.lang,
+    }
 
 def media_url(request):
   import sys
