@@ -11,35 +11,48 @@ Kay は、WSGI に準拠した Werkzeug のリクエストオブジェクト、�
 リクエストオブジェクト
 ======================
 
-
-特徴
-----
-
 * view関数は、リクエストオブジェクトを引数にとります。
-* リクエストオブジェクトは読み込みのみ可能です。変更は許可されていません。
+* リクエストオブジェクトは読み込み専用です。変更は許可されていません。
 * デフォルトでは、リクエストオブジェクトのテキストデータはすべて ``UTF-8`` でエンコードされています。
 
 
-属性
-----
+属性とメソッド
+--------------
 
-リクエストオブジェクトは以下の属性値を持っています。
+リクエストオブジェクトは以下の属性、およびメソッドを持っています。
 
+.. method:: _get_file_stream(total_content_length, content_type, filename=None, content_length=None)
+
+   ファイルアップロードのストリームを取得するために呼ばれます。
+
+   これは、ファイルのような書き込み、読み込み、ともに可能な ``read()`` , ``readline()`` , ``seek()`` メソッドもったファイルのようなクラスを提供しなければなりません。
+
+   総コンテンツ長が 500KB を超える場合、デフォルトの実装では一時ファイルを返します。多くのブラウザが総コンテンツ長のみを提供するだけで、ファイルのコンテンツ長を提供しないからです。
+
+   :param total_content_length: リクエスト中のすべてのデータの総コンテンツ長です。この値は存在することが保証されています。
+   :param content_type: アップロードされたファイルの mimetype です。
+   :param filename: アップロードされたファイルのファイル名です。おそらく ``None`` です。
+   :param content_length: ファイルの長さです。Webブラウザがこの値を提供しないため、通常は提供されません。
+
+.. method:: _form_parsing_failed(error)
+
+   フォームデータのパースに失敗したら呼ばれます。このメソッドは、現在ではマルチパートアップロードが失敗したときのみ呼び出されます。デフォルトではなにもしません。
+   
 .. attribute:: accept_charsets
 
-   Accept-Charset リクエストヘッダフィールドです。
+   クライアントがサポートしている文字セットのリストです。 `CharsetAccept　<http://werkzeug.pocoo.org/documentation/0.5.1/datastructures.html#werkzeug.CharsetAccept>` オブジェクトとして提供されます。
 
 .. attribute:: accept_encodings
 
-   Accept-Encodings リクエストヘッダフィールドです。
+   クライアントが許容しているエンコーディングのリストです。HTTP の用語において、gzipのようなエンコーディングの圧縮です。 文字セットについては ``accept_charsets`` を参照して下さい。
 
 .. attribute:: accept_languages
 
-   Accept-Languages リクエストヘッダフィールドです。
+   クライアントが許容している言語のリストです。 `LanguageAccept <http://werkzeug.pocoo.org/documentation/0.5.1/datastructures.html#werkzeug.LanguageAccept>` オブジェクトとして提供されます。
 
 .. attribute:: accept_mimetypes
 
-   Accept-Mimetipes リクエストヘッダフィールドです。
+   クライアントがサポートしている mimetype のリストです。 `MIMEAccept <http://werkzeug.pocoo.org/documentation/0.5.1/datastructures.html#werkzeug.MIMEAccept>` オブジェクトとして提供されます。
 
 .. attribute:: access_route
 
@@ -47,7 +60,7 @@ Kay は、WSGI に準拠した Werkzeug のリクエストオブジェクト、�
   
 .. classmethod:: application(f)
 
-   関数を第１引数に受け取ったリクエストを受け取るレスポンダとしてデコレートできます。
+   リクエストを第１引数にとる受け取るレスポンダとして、関数をデコレートできます。 ``responder`` デコレータのように機能しますが、関数は第１引数にリクエストオブジェクトをとります。
 
    .. code-block:: python
 
@@ -61,155 +74,153 @@ Kay は、WSGI に準拠した Werkzeug のリクエストオブジェクト、�
 
 .. attribute:: args
 
-  URLパラメータがディクショナリで格納されます。
+   パースされたURLパラメータです。 `ImmutableMultiDict` <http://werkzeug.pocoo.org/documentation/0.5.1/datastructures.html#werkzeug.ImmutableMultiDict> に格納されます。
 
 .. attribute:: authorization
 
-  TODO
+   パースされたフォームの中の ``Authorization`` オブジェクトです。
 
 .. attribute:: base_url
 
-  クエリ文字列を省いたURLです。
+   ``url`` と似ていますが、クエリ文字列が省かれています。
 
 .. attribute:: cache_control
 
-  キャッシュコントロールヘッダです。
+   受信したキャッシュコントロールヘッダを `RequestCacheControl <http://werkzeug.pocoo.org/documentation/0.5.1/datastructures.html#werkzeug.RequestCacheControl>` オブジェクトとして提供します。
 
 .. attribute:: charset
 
-  リクエストの文字セットです。デフォルト値は ``UTF-8`` です。
+   リクエストの文字セットです。デフォルト値は ``UTF-8`` です。
 
 .. attribute:: content_length
 
-  Content-Length エンティティヘッダフィールドは、受信者に送信されるエンティティボディのサイズを示します。HEAD メソッドの場合は GET リクエストされた場合に送信されるエンティティボディのサイズを示します。
+   Content-Length エンティティヘッダフィールドは、受信者に送信されるエンティティボディのサイズを示します。HEAD メソッドの場合は GET リクエストされた場合に送信されるエンティティボディのサイズを示します。
 
 .. attribute:: content_type
 
-  Content-Type エンティティヘッダフィールドは、受信者に送信されるエンティティボディのメディアタイプを示します。HEADメソッドの場合、GET リクエストされた場合に送信されるエンティティボディのメディアタイプを示します。
+   Content-Type エンティティヘッダフィールドは、受信者に送信されるエンティティボディのメディアタイプを示します。HEADメソッドの場合、GET リクエストされた場合に送信されるエンティティボディのメディアタイプを示します。
 
 .. attribute:: cookies
 
-  ディクショナリとして、cookieの値を扱うことができます。
+   ディクショナリとして、cookieの値を扱うことができます。
 
 .. attribute:: data
 
-  クライアントからのバッファされた入力データを文字列に読み込みます。通常これは ``data`` にアクセスするには悪いアイディアです。サーバのメモリに問題を引き起こすために、クライアントが何十メガバイトものデータを送ることができてしまうためです。
+   バッファリングされたクライアントからの入力データを文字列に読み込みます。普通は ``data`` にアクセスする方法としてはよくない方法です。クライアントが、サーバのメモリに問題を引き起こすために、何十メガバイトものデータを送ることができてしまうためです。
 
-  これを回避するためには、 ``content_length`` を先にチェックしてください。
+   これを避けるには、 ``content_length`` を先にチェックしてください。
 
 .. attribute:: date
 
-  Date ジェネラルヘッダフィールドは、メッセージが生成された日付と時間を表します。RFC 822の orig-date と同じセマンティクスをもっています。
+   Date ジェネラルヘッダフィールドは、メッセージが生成された日付と時間を表します。RFC 822の orig-date と同じセマンティクスをもっています。
 
 .. attribute:: encoding_errors
 
-  エラーハンドリングプロシージャです。デフォルト値は ``ignore`` です。
+   エラーハンドリングプロシージャです。デフォルト値は ``ignore`` です。
 
 .. attribute:: environ
 
-  リクエストオブジェクトがデータを取り扱うためのWSGI environmentです。
+   リクエストオブジェクトがデータを取り扱うための WSGI環境 です。
 
 .. attribute:: files
 
-  アップロードされたすべてのファイルを格納した ``MultiDict`` オブジェクトです。 ``files`` のそれぞれのキーは ``<input type="file" name="">`` のnameです。それぞれの値は Werkzeug の ``FileStorage`` オブジェクトです。
+   アップロードされたすべてのファイルを格納した ``MultiDict`` オブジェクトです。 ``files`` のそれぞれのキーは ``<input type="file" name="">`` のnameです。それぞれの値は Werkzeug の ``FileStorage`` オブジェクトです。
 
-  ``files`` は、リクエストメソッドが ``POST`` か、 ``PUT`` で、ポストされた ``<form>`` が ``enctype="multipart/form-data`` を持つ場合のみ、データを持ちます。そうでない場合は空です。
+   ``files`` は、リクエストメソッドが ``POST`` か、 ``PUT`` で、ポストされた ``<form>`` が ``enctype="multipart/form-data`` を持つ場合のみ、データを持ちます。そうでない場合は空です。
 
 .. attribute:: form
 
-  フォームのパラメータです。現在は、この関数が返すディクショナリの中身が、サブミットされたフォームデータと同じ順序であることは保証されていません。
+   フォームのパラメータです。現状、この関数が返すディクショナリの中身がサブミットされたフォームデータと同じ順序かどうかは保証されていません。
 
   .. seealso:: :doc:`forms-usage`
 
-.. attribute:: from_values(*args, **kwargs)
+.. classmethod:: from_values(*args, **kwargs)
 
-  提供された値をもとに、リクエストオブジェクトを新たに生成します。もし `environ` が与えられていれば、不足している値はそこから提供されます。URL からのリクエストをシミュレートする必要がある場合、簡単なスクリプトを書くのにはこのメソッドは便利です。ただし、このメソッドをユニットテストには使用しないでください。フルフィーチャーのクライアントオブジェクト( ``Client`` )があり、マルチパートのリクエストの生成、cookieのサポートなどが可能です。
+   提供された値をもとに、リクエストオブジェクトを新たに生成します。もし `environ` が与えられていれば、不足している値はそこから提供されます。URL からのリクエストをシミュレートする必要がある場合、簡単なスクリプトを書くのにはこのメソッドは便利です。ただし、このメソッドをユニットテストには使用しないでください。フル機能のクライアントオブジェクト( ``Client`` )があり、マルチパートのリクエストの生成、cookieのサポートなどが可能です。
   
 .. attribute:: headers
 
-  WSGI環境のヘッダです。不変の ``EnvironHeaders`` です。TODO
+   WSGI 環境由来のヘッダです。変更不可の `EnvironHeaders <http://werkzeug.pocoo.org/documentation/0.5.1/datastructures.html#werkzeug.EnvironHeaders>` です。
 
 .. attribute:: host
 
-  ホストです。取得可能ならポートもつきます。
+   ホストです。取得可能であればポートも含みます。
 
 .. attribute:: host_url
 
-  スキームをもったホストです。TODO
+   スキーム名つきのホストです。
 
 .. attribute:: if_match
 
-  If-Match ヘッダ中のすべてのetagsを格納したオブジェクトです。  
+   If-Match ヘッダ中のすべてのetags を格納したオブジェクトです。  
 
 .. attribute:: if_modified_since
 
-  パースされた ``If-Modified_Since`` ヘッダが ``datetime`` オブジェクトして格納されています。
+   パースされた ``If-Modified_Since`` ヘッダが ``datetime`` オブジェクトして格納されています。
 
 .. attribute:: if_none_match
 
-  ``If-Not-Match`` ヘッダ中のすべてのetagsを格納したオブジェクトです。  
+   ``If-None-Match`` ヘッダ中のすべてのetagsを格納したオブジェクトです。  
 
 .. attribute:: if_unmodified_since
 
-  パースされた ``If-Unmodified_Since`` ヘッダが ``datetime`` オブジェクトして格納されています。
+   パースされた ``If-Unmodified_Since`` ヘッダが ``datetime`` オブジェクトして格納されています。
   
 .. attribute:: input_stream
 
-  TODO  
+   TODO  
 
 .. attribute:: is_behind_proxy
 
-  HTTP プロキシの背後でアプリケーションが起動している場合に、 ``True`` となります。
+   HTTP プロキシの後ろでアプリケーションが起動している場合に ``True`` となります。
 
 .. attribute:: is_multiprocess
 
-  複数のプロセスを生成しているWSGIサーバによってアプリケーションが提供されている場合、 ``True`` となります。
+   複数のプロセスを生成している WSGI サーバによってアプリケーションが提供されている場合に ``True`` となるブール値です。
 
 .. attribute:: is_multithread
 
-  マルチスレッドの WSGI サーバによってアプリケーションが提供されている場合は ``True`` となります。
+   マルチスレッドの WSGI サーバによってアプリケーションが提供されている場合に ``True`` となるブール値です。
 
 .. attribute:: is_run_once
 
-  アプリケーションがプロセスの実行中に一度だけ実行される場合は、 ``True`` になります。これは、例えばCGIのような場合ですが、一度だけ実行されることは保証されていません。
-  TODO
+   アプリケーションがプロセスの生存期間中に一度だけ実行であろう場合は ``True`` になるブール値です。例えば CGI のような場合にあたりますが、一度だけ実行されることは保証されていません。
 
 .. attribute:: is_secure
 
-  セキュアなリクエストの場合、 ``True`` が格納されます。
+   セキュアなリクエストの場合 ``True`` となります。
 
 .. attribute:: is_xhr
 
-  リクエストが、JavaScript XMLHttpRequestを介して発行された場合、 ``True`` が格納されます。ライブラリが ``X-Requested-With`` ヘッダをサポートし、 ``XMLHttpRequest`` をセットしている場合のみ有効になります。prototype, jQuery, Mochikitなどが上記をサポートしています。
+   リクエストが JavaScript XMLHttpRequest を介して発行された場合、 ``True`` になります。ライブラリが ``X-Requested-With`` ヘッダをサポートし、 ``XMLHttpRequest`` をセットしている場合のみ機能します。prototype, jQuery, Mochikitなどが上記をサポートしています。
 
 .. attribute:: lang
 
-  ブラウザの言語設定です。
+   ブラウザの言語設定です。
 
 .. attribute:: max_content_length
 
-  コンテント長の最大値です。これは、フォームデータのパース関数( ``parse_form_data`` )に渡されます。セットされて、 ``form`` や ``file`` 属性がアクセスされると、パースは失敗します。指示子が ``RequestEntityTooLarge`` エクセプションがあがり、を送信されるので
-TODO
+   コンテント長の最大値です。この値はフォームデータをパースする関数( `parse_form_data() <http://werkzeug.pocoo.org/documentation/dev/http.html#werkzeug.parse_form_data>` )に渡されます。値がセットされていて、 ``form`` や ``file`` 属性にアクセスされ、指定した値を超える転送があってパースが失敗する場合、 `RequestEntityTooLarge <http://werkzeug.pocoo.org/documentation/dev/exceptions.html#werkzeug.exceptions.RequestEntityTooLarge>` エクセプションがあがります。
 
 .. attribute:: max_form_memory_size
 
-  TODO ほぼ同上
+   フォームフィールドの最大サイズです。この値はフォームデータをパースする関数( `parse_form_data() <http://werkzeug.pocoo.org/documentation/dev/http.html#werkzeug.parse_form_data>` )に渡されます。値がセットされていて、 ``form`` や ``file`` 属性にアクセスされ、ポストデータ用のメモリーデータが指定した値を超えると、 `RequestEntityTooLarge <http://werkzeug.pocoo.org/documentation/dev/exceptions.html#werkzeug.exceptions.RequestEntityTooLarge>` エクセプションがあがります。
 
 .. attribute:: max_forwards
 
-  Max-Forwards リクエストヘッダフィールドは、 TRACE と OPTIONS メソッドに、リクエストを別のサーバへフォワードするプロキシやゲートウェアの数を制限する仕組みを提供します。
+   Max-Forwards リクエストヘッダフィールドは、 TRACE と OPTIONS メソッドに、リクエストを別のサーバへフォワードするプロキシやゲートウェイの数を制限する仕組みを提供します。
 
 .. attribute:: method
 
-  HTTPメソッドです。 ``GET`` or ``POST``
+   HTTPメソッドです。 ``GET`` or ``POST``
 
 .. attribute:: mimetype
 
-  ``content-type`` と似ていますが、パラメータ（例：文字セット、型など）がありません。例えば、コンテントタイプが ``text/html; charset=utf-8`` の場合、mimetypeは ``'text/html'`` となります。
+   ``content-type`` と似ていますが、パラメータ（例：文字セット、型など）がありません。例えば、コンテントタイプが ``text/html; charset=utf-8`` の場合、mimetypeは ``'text/html'`` となります。
 
 .. attribute:: mimetype_params
 
-  mimtypeパラメータがディクショナリで格納されています。例えば、コンテントタイプが ``text/html; charset=utf-8`` の場合、パラメータは ``{'charset': 'utf-8'}`` のようになっています。
+   mimetypeパラメータがディクショナリで格納されています。例えば、コンテントタイプが ``text/html; charset=utf-8`` の場合、パラメータは ``{'charset': 'utf-8'}`` のようになっています。
 
 .. attribute:: path
 
@@ -217,112 +228,93 @@ TODO
 
 .. attribute:: pragma
 
-  Pragmaジェネラルヘッダフィールドは、リクエスト/レスポンス連鎖中のあらゆる受信者にも適用されるであろう実装の特別な指示を示すために使われます。全ての pragma 指示子は、プロトコルの視点から見ればオプショナルな振る舞いを指定しますが、その振る舞いが指示子と一致していることを要求するシステムがあるかもしれません。
+   Pragmaジェネラルヘッダフィールドは、リクエスト/レスポンス連鎖中のあらゆる受信者にも適用されるであろう実装の特別な指示を示すために使われます。全ての pragma 指示子は、プロトコルの視点から見ればオプショナルな振る舞いを指定しますが、その振る舞いが指示子と一致していることを要求するシステムがあるかもしれません。
   
 
 .. attribute:: query_string
 
-  URLパラメータです。バイトストリングで格納されています。
+   URLパラメータです。バイトストリングで格納されています。
 
 .. attribute:: referrer
 
-  Referer[原文ママ] リクエストヘッダフィールドは、サーバの利益のために、 Request-URI が取得されたリソースのアドレス (URI) をクライアントに示させます。
+   Referer[原文ママ] リクエストヘッダフィールドは、サーバの利益のために、 Request-URI が取得されたリソースのアドレス (URI) をクライアントに示させます。
 
 .. attribute:: remote_addr
 
-  クライアントのリモートアドレスです。
+   クライアントのリモートアドレスです。
 
 .. attribute:: remote_user
 
-  ユーザ認証を有効にしている場合、ユーザ名が格納されます。
+   ユーザ認証を有効にしている場合、ユーザ名が格納されます。
 
 .. attribute:: script_root
 
-  末尾のスラッシュを取り除いた、スクリプトのルートパスです。
+   末尾のスラッシュを取り除いた、スクリプトのルートパスです。
 
 .. attribute:: session
 
-  セッションデータが格納されています。セッション機能を有効にすると使用できます。
+   セッションデータが格納されています。セッション機能を有効にすると使用できます。
 
   .. seealso:: :doc:`session`
 
 .. attribute:: shallow
 
-  リクエストがenvironのshallow copyである場合、 ``True`` が格納されています。
+   リクエストがenvironのshallow copyである場合、 ``True`` が格納されています。
 
 .. attribute:: stream
 
-  もしサブミットされたデータが複数のパートをもたないか、urlエンコードされたフォームデータでなければ、パースされたストリームが格納されます。このストリームはパースされた後に、フォームデータパーサモジュールによって残されたストリームです。TODO
+   もしサブミットされたデータが複数のパートをもたないか、urlエンコードされたフォームデータでなければ、パースされたストリームが格納されます。このストリームはパースされた後に、フォームデータパーサモジュールによって残されたストリームです。TODO
 
 .. attribute:: url
 
-  リモートアドレスです。
+   リモートアドレスです。
 
 .. attribute:: url_charset
 
-  URLに使われる文字セットです。デフォルトは ``charset`` の値になっています。
+   URLに使われる文字セットです。デフォルトは ``charset`` の値になっています。
 
 .. attribute:: url_root
 
-  ホストネームのついた完全なURLです。これはアプリケーションルートです。
+   ホストネームのついた完全なURLです。これはアプリケーションルートです。
 
 .. attribute:: user
 
-  ユーザ認証を有効にしている場合、 ``settings.py`` の ``AUTH_USER_MODEL`` で指定したユーザオブジェクトが格納されます。
+   ユーザ認証を有効にしている場合、 ``settings.py`` の ``AUTH_USER_MODEL`` で指定したユーザオブジェクトが格納されます。
 
   .. seealso:: :doc:`auth`
 
 .. attribute:: user_agent
 
-  現在のユーザエージェントです。
+   現在のユーザエージェントです。
 
 .. attribute:: values
 
-  ``args`` や ``form`` のための、ディクショナリです。
-
-
-メソッド
---------
-
-.. attribute:: _get_file_stream(total_content_length, content_type, filename=None, content_length=None)
-
-
-
-.. attribute:: _form_parsing_failed(error)
-
-
-クラスメソッド
---------------
-
-.. classmethod:: application(f)
-
-
- 
-.. classmethod:: from_values(*args, **kwargs)
-
+   ``args`` や ``form`` のための、ディクショナリです。
 
 
 
 パラメータの取得
 ----------------
 
-* GETのパラメータ取得するには、以下のように記述します。
+GETメソッドのパラメータ取得するには、以下のように記述します。
 
 .. code-block:: python
 
-   request.GET["param"]
+
+
 
 
 レスポンスオブジェクト
 ======================
 
-view関数は、必ずレスポンスオブジェクトを返す必要があります。レスポンスオブジェクトは ``Response`` クラスのインスタンスです。html
+* view関数は、必ずレスポンスオブジェクトを返す必要があります。
+* レスポンスオブジェクトは ``Response`` クラスのインスタンスです。
 
 
-属性
-----
+属性とメソッド
+--------------
 
-レスポンスオブジェクトは以下の属性値を持っています。
+レスポンスオブジェクトは以下の属性、および、メソッドを持っています。
 
 .. attribute:: _get_mimetype_params
 .. attribute:: add_etag(overwrite=False, weak=False)
@@ -332,11 +324,11 @@ view関数は、必ずレスポンスオブジェクトを返す必要があり�
 .. attribute:: cache_control
 .. attribute:: charset
 
-  レスポンスの文字セットです。
+   レスポンスの文字セットです。
 
 .. attribute:: close()
 
-  可能であれば、ラップされたレスポンスをクローズします。
+   可能であれば、ラップされたレスポンスをクローズします。
 
 .. attribute:: content_encoding
 .. attribute:: content_language
@@ -345,37 +337,59 @@ view関数は、必ずレスポンスオブジェクトを返す必要があり�
 .. attribute:: content_md5
 .. attribute:: content_type
 
-  Content-Type エンティティヘッダフィールドは、受信者に送信されるエンティティボディのメディアタイプを示します。HEADメソッドの場合、GET リクエストされた場合に送信されるエンティティボディのメディアタイプを示します。
+   Content-Type エンティティヘッダフィールドは、受信者に送信されるエンティティボディのメディアタイプを示します。HEADメソッドの場合、GET リクエストされた場合に送信されるエンティティボディのメディアタイプを示します。
 
 .. attribute:: data
 
-  リクエスト本文の文字列です。この属性にアクセスするときは、リクエストはイテラブルはエンコードされ平板化されています。これは、ストリームが巨大なデータである場合に、不測の振る舞いを引き起こす可能性があります。
+   リクエスト本文の文字列です。この属性にアクセスするときは、リクエストはイテラブルはエンコードされ平板化されています。これは、ストリームが巨大なデータである場合に、不測の振る舞いを引き起こす可能性があります。
 
-  TODO
+   TODO
 
 .. attribute:: date
 
-  Date ジェネラルヘッダフィールドは、メッセージが生成された日付と時間を表します。RFC 822の orig-date と同じセマンティクスをもっています。
+   Date ジェネラルヘッダフィールドは、メッセージが生成された日付と時間を表します。RFC 822の orig-date と同じセマンティクスをもっています。
 
 .. attribute:: default_mimetype
 
-  mimetype が設定されていない場合のデフォルトの mimetype です。
+   mimetype が設定されていない場合のデフォルトの mimetype です。
 
 .. attribute:: default_status
 
-  status が設定されていない場合のデフォルトの status です。
+   status が設定されていない場合のデフォルトの status です。
 
+.. attribute:: delete_cookie(key, path='/', domain=None)
+
+   cookie を削除します。
+   TODO
+   
 .. attribute:: direct_passthrough
 
-  もし、WSGI アプリケーションとしてのレスポンスオブジェクトが使用される前に、 ``direct_passthrough=True`` がレスポンスオブジェクトに渡されるか、この属性が ``True`` にセットされるかしたた場合、イテレータは変更なしで返されます。これによって、特別な ``wsgi.file_wrapper`` をレスポンスオブジェクトに渡すことができます。詳しくは ``wrap_file()`` を参照してください。
+   もし、WSGI アプリケーションとしてのレスポンスオブジェクトが使用される前に、 ``direct_passthrough=True`` がレスポンスオブジェクトに渡されるか、この属性が ``True`` にセットされるかしたた場合、イテレータは変更なしで返されます。これによって、特別な ``wsgi.file_wrapper`` をレスポンスオブジェクトに渡すことができます。詳しくは ``wrap_file()`` を参照してください。
 
-  TODO
-
+   TODO
+  
 .. attribute:: expires
 
-  
+   TODO
 
 .. attribute:: fix_headers
+
+   TODO
+
+.. method:: force_type()
+
+   todo
+   
+.. method:: freeze()
+
+   pickleされるレスポンスオブジェクトを作成する場合は、このメソッドを呼び出してください。
+
+   TODO
+
+.. method:: from_app(app, environ, buffered=False)
+
+   TODO
+   
 .. attribute:: get_app_iter
 .. attribute:: get_etag
 .. attribute:: get_wsgi_headers
@@ -383,61 +397,80 @@ view関数は、必ずレスポンスオブジェクトを返す必要があり�
 .. attribute:: header_list
 .. attribute:: headers
 
-  レスポンスヘッダを表す ``Headers`` オブジェクトです。
+   レスポンスヘッダを表す ``Headers`` オブジェクトです。
 
 .. attribute:: is_streamed
+
+   もし、レスポンスがストリームの場合（レスポンスが長さの情報をもったイテラブルでない場合）、この属性は ``True`` になります。この場合、streamd はイテレーションの数についての情報を持たないということを意味します。ジェネレータがレスポンスオブジェクトに引き継がれる場合、通常 ``True`` になります。
+
+   TODO
+
+.. method:: iter_encoded(charset=None)
+
+   TODO
+
 .. attribute:: last_modified
+
+   Last-Modified エンティティヘッダフィールドは、オリジンサーバーがバリアントが最後に更新されたと考える日付と時間を表します。
+
 .. attribute:: location
-.. attribute:: make_conditional
+
+   Location レスポンスヘッダフィールドは、リクエストの完了、または、新しいリソースの識別のために、受信者を Request-URI 以外の場所にリダイレクトするのに使われます。
+
+.. method:: make_conditional(request_or_envrion)
+
+   TODO
+
 .. attribute:: mimetype
 
-  ``content-type`` と似ていますが、パラメータ（例：文字セット、型など）がありません。例えば、コンテントタイプが ``text/html; charset=utf-8`` の場合、mimetypeは ``'text/html'`` となります。
+   ``content-type`` と似ていますが、パラメータ（例：文字セット、型など）がありません。例えば、コンテントタイプが ``text/html; charset=utf-8`` の場合、mimetypeは ``'text/html'`` となります。
 
 .. attribute:: mimetype_params
 
-  mimtypeパラメータがディクショナリで格納されています。例えば、コンテントタイプが ``text/html; charset=utf-8`` の場合、パラメータは ``{'charset': 'utf-8'}`` のようになっています。
+   mimtypeパラメータがディクショナリで格納されています。例えば、コンテントタイプが ``text/html; charset=utf-8`` の場合、パラメータは ``{'charset': 'utf-8'}`` のようになっています。
 
 .. attribute:: response
 
-  アプリケーションイテレータです。文字列で構成されていればリストになり、それ以外では、アプリケーションイテレータとして提供されます。
+   アプリケーションイテレータです。文字列で構成されていればリストになり、それ以外では、アプリケーションイテレータとして提供されます。
 
 .. attribute:: retry_after
 
-  
+   TODO
+   
+.. attribute:: set_cookie
+
+   TODO
 
 .. attribute:: set_etag
+
+   TODO
+   
 .. attribute:: status
 
-  文字列のステータスか、整数値のステータスコードを渡します。
+   文字列のステータスか、整数値のステータスコードを渡します。
 
 .. attribute:: status_code
 
-  レスポンスステータスです。整数値です。
+   レスポンスステータスです。整数値です。
 
 .. attribute:: stream
+
+   todo
+
 .. attribute:: vary
+
+   todo
+   
 .. attribute:: www_authenticate
 
-
+   todo
 
 メソッド
 --------
 
-* delete_cookie(key, path='/', domain=None)
 
-  cookie を削除します。
 
-* force_type()
 
-* freeze()
-
-  pickleされるレスポンスオブジェクトを作成する場合は、このメソッドを呼び出してください。
-
-  TODO
-
-* from_app(app, environ, buffered=False)
-* iter_encoded
-* set_cookie
 
 
 生成方法
