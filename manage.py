@@ -12,9 +12,7 @@ import sys
 import os
 import logging
 
-PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
-sys.path = [PROJECT_DIR, os.path.join(PROJECT_DIR, 'lib')] + sys.path
-
+sys.path = [os.path.abspath(os.path.dirname(__file__))] + sys.path
 import kay
 kay.setup_env(manage_py_env=True)
 from werkzeug import script
