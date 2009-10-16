@@ -63,6 +63,7 @@ from werkzeug.urls import url_quote_plus
 from werkzeug.utils import import_string
 import simplejson
 
+import kay
 from kay import utils
 from kay.utils import local
 from kay.utils import url_for
@@ -108,7 +109,10 @@ def load_translations(locale):
 
     if os.path.isdir(apppath):
       ret = _merge(apppath)
-
+  # Add I18N_DIR
+  target = os.path.join(kay.PROJECT_DIR, local.app.app_settings.I18N_DIR)
+  if os.path.isdir(target):
+    ret = _merge(target)
   return ret
 
 

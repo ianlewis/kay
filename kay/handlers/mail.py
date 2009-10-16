@@ -25,7 +25,6 @@ class MailBaseHandler(BaseHandler):
 
   def post(self, address):
     """Transforms body to email request."""
-    logging.debug(self.request.data)
     self.receive(mail.InboundEmailMessage(self.request.data), address)
     return Response("OK")
 

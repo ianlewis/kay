@@ -27,6 +27,7 @@ from babel.messages.pofile import write_po
 from kay.management.utils import (
   print_status, get_user_apps,
 )
+from kay.conf import settings
 
 KEYWORDS = {
   '__': None,
@@ -42,6 +43,7 @@ METHODS = [
   ('**.py', 'python'),
   ('**/templates/*~', 'ignore'),
   ('**/templates/**.*', 'jinja2.ext:babel_extract'),
+  ('**.html', 'jinja2.ext:babel_extract'),
   ('**.js', 'ignore'),
   ('**/templates_compiled/**.*', 'ignore'),
 ]
@@ -99,7 +101,14 @@ def do_extract_messages(target=('t', ''), domain=('d', 'messages'),
     if method != 'ignore':
       print_status(strip_path(filename, root))
 
-  extracted = extract_from_dir(root, methods, {}, KEYWORDS,
+  option = {}
+  option['extensions'] = ','.join(settings.JINJA2_EXTENSIONS)
+  option.update(settings.JINJA2_ENVIRONMENT_KWARGS)
+  options = {
+    '**/templates/**.*': option,
+    '**.html': option,
+  }
+  extracted = extract_from_dir(root, methods, options, KEYWORDS,
                                COMMENT_TAGS, callback=callback,
                                strip_comment_tags=True)
 
