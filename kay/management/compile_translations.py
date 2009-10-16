@@ -74,7 +74,7 @@ def do_compile_translations(target=("t", ""), i18n_dir=("i", ""),
 
       if path.isfile(translations):
         mo_file = open(translations.replace('.po', '.mo'), 'wb')
-        print_status('Compiling %r ' % lang)
+        print_status('Compiling %s ' % translations)
         f = file(translations)
         try:
           catalog = read_po(f, locale=lang)

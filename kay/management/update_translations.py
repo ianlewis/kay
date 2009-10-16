@@ -80,7 +80,7 @@ def do_update_translations(target=("t", ""), lang=("l", ""),
                          path.join(root, lang, 'LC_MESSAGES', domain+'.po'):
         continue
       if path.exists(filename):
-        print_status('Updating %r' % lang_dir, nl=False)
+        print_status('Updating %s' % filename, nl=False)
         locale = Locale.parse(lang_dir)
         f = file(filename)
         try:
