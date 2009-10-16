@@ -17,7 +17,7 @@ Writing Templates
 
 Writing templates is covered in depth by the ``Jinja2 Template Designer Documentation`` found at::
 
-http://jinja.pocoo.org/2/documentation/templates
+  http://jinja.pocoo.org/2/documentation/templates
 
 Context Processors
 -----------------------
