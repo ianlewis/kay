@@ -269,7 +269,7 @@ Kay自身の Jinja2 テンプレートを事前パースします。
 
 .. code-block:: bash
 
-  $ python manage.py preparse_bundle
+   $ python manage.py preparse_bundle
 
   
 
@@ -282,7 +282,7 @@ manage.py restore_all
 
 .. code-block:: bash
 
-  $ python manage.py restore_all [options]
+   $ python manage.py restore_all [options]
 
 .. cmdoption:: --help
 
@@ -317,7 +317,7 @@ manage.py rshell
 
 .. code-block:: bash
 
-  $ python manage.py rshell [options]
+   $ python manage.py rshell [options]
 
 
 .. cmdoption:: -a, --appid appid
@@ -356,35 +356,13 @@ manage.py runserver
 
 .. code-block:: bash
 
-  $ python manage.py runserver [options]
+   $ python manage.py runserver [options]
 
 .. cmdoption:: --help
 
    ヘルプを表示します
 
 .. seealso:: http://code.google.com/intl/ja/appengine/docs/python/tools/devserver.html#The_Development_Console
-
-
-
-.. _runtest:
-
-manage.py runtest
------------------
-
-インストールされたアプリケーションのテストを実行します
-
-.. code-block:: bash
-
-  $ python manage.py runtest
-
-.. cmdoption:: --target APP_DIR
-
-   対象となるアプリケーションのディレクトリを指定します。
-
-.. cmdoption:: -v, --verbosity integer
-
-   TODO。整数を指定します。デフォルト値は ``0`` です。
-
 
 
 
@@ -397,7 +375,7 @@ Pythonシェルを起動します。
 
 .. code-block:: bash
 
-  $ python manage.py shell [options]
+   $ python manage.py shell [options]
 
   
 .. cmdoption:: --datastore-path path
@@ -429,7 +407,7 @@ manage.py startapp
 
 .. code-block:: bash
 
-  $ python manage.py startapp myapp
+   $ python manage.py startapp myapp
 
   
   
@@ -442,11 +420,11 @@ manage.py startproject
 
 .. code-block:: bash
 
-  $ python manage.py startproject myproject
+   $ python manage.py startproject myproject
 
 .. cmdoption:: --proj-name projectname
 
-   プロジェクト名を指定します
+   プロジェクト名を指定します。
 
 
    
@@ -455,18 +433,35 @@ manage.py startproject
 manage.py test
 --------------
 
+インストールされたアプリケーションのテストを実行します。
 
+.. code-block:: bash
 
+   $ python manage.py runtest
+
+.. cmdoption:: --target APP_DIR
+
+   対象となるアプリケーションのディレクトリを指定します。
+
+.. cmdoption:: -v, --verbosity integer
+
+   メッセージの出力レベルを整数で指定します。デフォルト値は ``0`` です。
+
+   * `0`: 出力なし。
+   * `1`: 進捗を `.` で出力。
+   * `2`: テスト関数の docstring を出力。
+
+   
 .. program:: manage.py update_translations
 
 manage.py update_translations
 -----------------------------
 
-翻訳を更新されたpotファイルで更新します。
+potファイルで翻訳ファイルを更新します。
 
 .. code-block:: bash
 
-  $ python manage.py update_translations [options]
+   $ python manage.py update_translations [options]
 
 .. cmdoption:: -t, --target APP_DIR
 
@@ -478,7 +473,7 @@ manage.py update_translations
 
 .. cmdoption:: -s, --statistics
 
-   TODO
+   翻訳の完成度合いを出力します。
 
 
    
@@ -491,7 +486,7 @@ manage.py wxadmin
 
 .. code-block:: bash
 
-  $ python manage.py wxadmin
+   $ python manage.py wxadmin
 
   
 
