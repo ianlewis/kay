@@ -42,6 +42,7 @@ METHODS = [
   ('**.py', 'python'),
   ('**/templates/*~', 'ignore'),
   ('**/templates/**.*', 'jinja2.ext:babel_extract'),
+  ('**.html', 'jinja2.ext:babel_extract'),
   ('**.js', 'ignore'),
   ('**/templates_compiled/**.*', 'ignore'),
 ]

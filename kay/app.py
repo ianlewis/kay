@@ -223,7 +223,7 @@ class KayApp(object):
     from kay.i18n import load_translations
     global translations_cache
     if self.app_settings.USE_I18N:
-      translations = translations_cache.get("%s:%s" %
+      translations = translations_cache.get("trans:%s:%s" %
                                             (self.app_settings.APP_NAME, lang),
                                             None)
       if translations is None:
