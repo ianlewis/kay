@@ -380,11 +380,14 @@ GETメソッドのパラメータ取得するには、以下のように記述�
 
    status が設定されていない場合のデフォルトの status です。
 
-.. attribute:: delete_cookie(key, path='/', domain=None)
+.. method:: delete_cookie(key, path='/', domain=None)
 
-   cookie を削除します。
-   TODO
-   
+   cookie を削除します。キーがない場合は、フェールサイレントです。
+
+   :param key: 削除される cookie のキー(名称)です。
+   :param path: もし削除されるべき cookie があるパスに限定されている場合、そのパスを指定しなければなりません。
+   :param domain: もし削除されるべき cookie があるドメインに限定されている場合、そのドメインを指定しなければなりません。
+
 .. attribute:: direct_passthrough
 
    もし、WSGI アプリケーションとしてのレスポンスオブジェクトが使用される前に、 ``direct_passthrough=True`` がレスポンスオブジェクトに渡されるか、この属性が ``True`` にセットされるかしたた場合、イテレータは変更なしで返されます。これによって、特別な ``wsgi.file_wrapper`` をレスポンスオブジェクトに渡すことができます。詳しくは ``wrap_file()`` を参照してください。
