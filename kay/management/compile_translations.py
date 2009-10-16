@@ -24,7 +24,9 @@ from optparse import OptionParser
 from babel.messages.pofile import read_po
 from babel.messages.mofile import write_mo
 
-from kay.management.utils import print_status
+from kay.management.utils import (
+  print_status, get_user_apps,
+)
 
 domains = ['messages', 'jsmessages']
 
@@ -39,21 +41,27 @@ def is_untranslated(obj):
   return True
 
 
-def do_compile_translations(app=("a", ""), i18n_dir=("i", "")):
+def do_compile_translations(target=("t", ""), i18n_dir=("i", ""),
+                            all=("a", False)):
   """
   Compiling all the templates in specified application.
   """
-  if not app:
-    print_status('Please specify app.')
+  if not target and not all:
+    print_status('Please specify target.')
     sys.exit(1)
-  elif app == 'kay':
+  elif target == 'kay':
     print_status('Compiling builtin languages')
     root = path.join(kay.KAY_DIR, 'i18n')
+  elif all:
+    targets = get_user_apps()
+    for target in targets:
+      do_compile_translations(target=target, i18n_dir=None, all=False)
+    sys.exit(0)
   else:
     if i18n_dir:
       root = i18n_dir
     else:
-      root = path.join(app, 'i18n')
+      root = path.join(target, 'i18n')
     if not path.isdir(root):
       print('i18n folder missing')
       sys.exit(1)
