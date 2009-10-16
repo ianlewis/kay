@@ -40,7 +40,7 @@ Kay は、WSGI に準拠した Werkzeug のリクエストオブジェクト、�
    
 .. attribute:: accept_charsets
 
-   クライアントがサポートしている文字セットのリストです。 `CharsetAccept　<http://werkzeug.pocoo.org/documentation/0.5.1/datastructures.html#werkzeug.CharsetAccept>` オブジェクトとして提供されます。
+   クライアントがサポートしている文字セットのリストです。 `CharsetAccept　<http://werkzeug.pocoo.org/documentation/0.5.1/datastructures.html#werkzeug.CharsetAccept>`_ オブジェクトとして提供されます。
 
 .. attribute:: accept_encodings
 
@@ -48,11 +48,11 @@ Kay は、WSGI に準拠した Werkzeug のリクエストオブジェクト、�
 
 .. attribute:: accept_languages
 
-   クライアントが許容している言語のリストです。 `LanguageAccept <http://werkzeug.pocoo.org/documentation/0.5.1/datastructures.html#werkzeug.LanguageAccept>` オブジェクトとして提供されます。
+   クライアントが許容している言語のリストです。 `LanguageAccept <http://werkzeug.pocoo.org/documentation/0.5.1/datastructures.html#werkzeug.LanguageAccept>`_ オブジェクトとして提供されます。
 
 .. attribute:: accept_mimetypes
 
-   クライアントがサポートしている mimetype のリストです。 `MIMEAccept <http://werkzeug.pocoo.org/documentation/0.5.1/datastructures.html#werkzeug.MIMEAccept>` オブジェクトとして提供されます。
+   クライアントがサポートしている mimetype のリストです。 `MIMEAccept <http://werkzeug.pocoo.org/documentation/0.5.1/datastructures.html#werkzeug.MIMEAccept>`_ オブジェクトとして提供されます。
 
 .. attribute:: access_route
 
@@ -74,7 +74,7 @@ Kay は、WSGI に準拠した Werkzeug のリクエストオブジェクト、�
 
 .. attribute:: args
 
-   パースされたURLパラメータです。 `ImmutableMultiDict` <http://werkzeug.pocoo.org/documentation/0.5.1/datastructures.html#werkzeug.ImmutableMultiDict> に格納されます。
+   パースされたURLパラメータです。 `ImmutableMultiDict <http://werkzeug.pocoo.org/documentation/0.5.1/datastructures.html#werkzeug.ImmutableMultiDict>`_ に格納されます。
 
 .. attribute:: authorization
 
@@ -86,7 +86,7 @@ Kay は、WSGI に準拠した Werkzeug のリクエストオブジェクト、�
 
 .. attribute:: cache_control
 
-   受信したキャッシュコントロールヘッダを `RequestCacheControl <http://werkzeug.pocoo.org/documentation/0.5.1/datastructures.html#werkzeug.RequestCacheControl>` オブジェクトとして提供します。
+   受信したキャッシュコントロールヘッダを `RequestCacheControl <http://werkzeug.pocoo.org/documentation/0.5.1/datastructures.html#werkzeug.RequestCacheControl>`_ オブジェクトとして提供します。
 
 .. attribute:: charset
 
@@ -140,7 +140,7 @@ Kay は、WSGI に準拠した Werkzeug のリクエストオブジェクト、�
   
 .. attribute:: headers
 
-   WSGI 環境由来のヘッダです。変更不可の `EnvironHeaders <http://werkzeug.pocoo.org/documentation/0.5.1/datastructures.html#werkzeug.EnvironHeaders>` です。
+   WSGI 環境由来のヘッダです。変更不可の `EnvironHeaders <http://werkzeug.pocoo.org/documentation/0.5.1/datastructures.html#werkzeug.EnvironHeaders>`_ です。
 
 .. attribute:: host
 
@@ -200,11 +200,11 @@ Kay は、WSGI に準拠した Werkzeug のリクエストオブジェクト、�
 
 .. attribute:: max_content_length
 
-   コンテント長の最大値です。この値はフォームデータをパースする関数( `parse_form_data() <http://werkzeug.pocoo.org/documentation/dev/http.html#werkzeug.parse_form_data>` )に渡されます。値がセットされていて、 ``form`` や ``file`` 属性にアクセスされ、指定した値を超える転送があってパースが失敗する場合、 `RequestEntityTooLarge <http://werkzeug.pocoo.org/documentation/dev/exceptions.html#werkzeug.exceptions.RequestEntityTooLarge>` エクセプションがあがります。
+   コンテント長の最大値です。この値はフォームデータをパースする関数( `parse_form_data() <http://werkzeug.pocoo.org/documentation/dev/http.html#werkzeug.parse_form_data>`_ )に渡されます。値がセットされていて、 ``form`` や ``file`` 属性にアクセスされ、指定した値を超える転送があってパースが失敗する場合、 `RequestEntityTooLarge <http://werkzeug.pocoo.org/documentation/dev/exceptions.html#werkzeug.exceptions.RequestEntityTooLarge>`_ エクセプションがあがります。
 
 .. attribute:: max_form_memory_size
 
-   フォームフィールドの最大サイズです。この値はフォームデータをパースする関数( `parse_form_data() <http://werkzeug.pocoo.org/documentation/dev/http.html#werkzeug.parse_form_data>` )に渡されます。値がセットされていて、 ``form`` や ``file`` 属性にアクセスされ、ポストデータ用のメモリーデータが指定した値を超えると、 `RequestEntityTooLarge <http://werkzeug.pocoo.org/documentation/dev/exceptions.html#werkzeug.exceptions.RequestEntityTooLarge>` エクセプションがあがります。
+   フォームフィールドの最大サイズです。この値はフォームデータをパースする関数( `parse_form_data() <http://werkzeug.pocoo.org/documentation/dev/http.html#werkzeug.parse_form_data>`_ )に渡されます。値がセットされていて、 ``form`` や ``file`` 属性にアクセスされ、ポストデータ用のメモリーデータが指定した値を超えると、 `RequestEntityTooLarge <http://werkzeug.pocoo.org/documentation/dev/exceptions.html#werkzeug.exceptions.RequestEntityTooLarge>`_ エクセプションがあがります。
 
 .. attribute:: max_forwards
 
@@ -317,9 +317,17 @@ GETメソッドのパラメータ取得するには、以下のように記述�
 レスポンスオブジェクトは以下の属性、および、メソッドを持っています。
 
 .. attribute:: _get_mimetype_params
+
+   
+
 .. attribute:: add_etag(overwrite=False, weak=False)
-  
+
+   
+
 .. attribute:: age
+
+   
+
 .. attribute:: allow
 .. attribute:: cache_control
 .. attribute:: charset
