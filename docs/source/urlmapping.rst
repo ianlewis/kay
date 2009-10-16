@@ -14,7 +14,7 @@ please see Werkzeug's manual hosted at following URL:
   http://werkzeug.pocoo.org/documentation/0.5.1/routing.html
 
 For now, kay has one global url mapping and one global
-endpoint-to-view dictionary per project unless you use SUBMOUNT_APP
+endpoint-to-view dictionary per project unless you use ``SUBMOUNT_APP``
 feature. Kay automatically collects all the url rules and
 endpoint-to-view dictionaries from installed applications(according to
 the settings in the file settings.py), and put them into the global
@@ -25,18 +25,21 @@ How does it work?
 
 A newly created application created by the ``manage.py startapp`` command
 already has a default ``urls.py`` in it. The ``urls.py`` has a function named
-``make_rules``, which should return an instance of the RuleFactory or Rule class.
+``make_rules``, which should return an instance of the ``Werkzeug`` ``RuleFactory``
+or ``Rule`` class.
 
 Kay automatically detects and imports the ``appname.urls`` module, and merges
-the modules RuleFactory into the global one.
+the modules ``RuleFactory`` into the global one.
 
 The imported Rules will be mounted on the url ``/appname`` by default, but you
 can customize the mount point by adding an ``{'appname': '/mount_path'}``
 style entry to the ``APP_MOUNT_POINTS`` variable in settings.py.
 
 The default ``urls.py`` has a module level global dictionary named
-``all_views`` as well. Kay will detect these dictionaries and update
-the global one with these dictionaries automatically.
+``all_views`` as well. This is a dictionary containing endpoint name to 
+view function mappings. The endpoint mappings here should match your 
+endpoints specified in ``make_rules``. Kay will detect these dictionaries
+and update the global one with these dictionaries automatically.
 
 Adding your view
 ----------------

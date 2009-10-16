@@ -1,12 +1,11 @@
 .. module:: settings
 
 ====================
-settings config file
+Settings Config File
 ====================
 
-You can configure settings config file for customizing Kay
-application's behavior.
-
+This is a list of available settings that can be modified
+to customize the behavior of your application.
 
 .. attribute:: INSTALLED_APPS
 
@@ -42,3 +41,18 @@ application's behavior.
    If set to True, a profiling information will be displayed on the
    browser following normal application's response.
 
+.. attribute:: TEMPLATE_DIRS
+
+   Allows you to specify the directory where Kay will look for your
+   templates. This is a list of relative paths from your project root
+   to your template directories.
+
+.. attribute:: JINJA2_EXTENSIONS
+
+   A list of Jinja2 extension classes. These are automatically
+   imported and loaded into the Jinja2 environment.
+
+.. attribute:: JINJA2_FILTERS
+
+    A dictionary of filter name to callable filters that are automatically
+    loaded into the Jinja2 environment.
