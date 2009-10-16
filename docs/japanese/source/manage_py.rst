@@ -115,7 +115,7 @@ manage.py clear_datastore
 
 .. cmdoption:: -h, --host host
 
-   対象となるアプリケーションをホスト名で指定します。デフォルト値は ``settings.py`` の ``APPLICATION_ID.appspot.com`` です。
+   対象となるアプリケーションをホスト名で指定します。デフォルト値は ``APPLICATION_ID.appspot.com`` です。
 
 .. cmdoption:: -p, --path path
 
@@ -326,7 +326,7 @@ manage.py rshell
 
 .. cmdoption:: -h, --host host    
 
-   対象となるアプリケーションをホスト名で指定します。デフォルト値は ``settings.py`` の ``APPLICATION_ID.appspot.com`` です。
+   対象となるアプリケーションをホスト名で指定します。デフォルト値は ``APPLICATION_ID.appspot.com`` です。
 
 .. cmdoption:: -p, --path path
 
@@ -371,7 +371,7 @@ manage.py runserver
 manage.py shell
 ---------------
 
-Pythonシェルを起動します。
+Pythonの対話型プロンプトを起動します。
 
 .. code-block:: bash
 
@@ -392,7 +392,7 @@ Pythonシェルを起動します。
 
 .. cmdoption:: --no-use-ipython
    
-   iPythonを使わずに通常の対話型シェルを起動します。
+   iPythonを使わずに標準の対話型プロンプトを起動します。
     
 .. seealso:: http://code.google.com/intl/ja/appengine/docs/python/tools/devserver.html#The_Development_Console
 
@@ -437,7 +437,7 @@ manage.py test
 
 .. code-block:: bash
 
-   $ python manage.py runtest
+   $ python manage.py runtest [options]
 
 .. cmdoption:: --target APP_DIR
 
@@ -448,7 +448,7 @@ manage.py test
    メッセージの出力レベルを整数で指定します。デフォルト値は ``0`` です。
 
    * ``0``: 出力なし。
-   * ``1``: 進捗を `'.'` で出力。
+   * ``1``: 進捗を ``.`` で出力。
    * ``2``: テスト関数の docstring を出力。
 
    
