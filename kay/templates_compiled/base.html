@@ -1,15 +1,21 @@
 from __future__ import division
 from jinja2.runtime import LoopContext, TemplateReference, Macro, Markup, TemplateRuntimeError, missing, concat, escape, markup_join, unicode_join, to_string, TemplateNotFound
-name = '/loginform.html'
+name = '/base.html'
 
 def root(context, environment=environment):
-    parent_template = None
     if 0: yield None
-    parent_template = environment.get_template('base.html', '/loginform.html')
-    for name, parent_block in parent_template.blocks.iteritems():
-        context.blocks.setdefault(name, []).append(parent_block)
-    for event in parent_template.root_render_func(context):
+    yield u'<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">\n<html>\n  <head>\n    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">\n    <title>'
+    for event in context.blocks['title'][0](context):
         yield event
+    yield u'</title>'
+    for event in context.blocks['css'][0](context):
+        yield event
+    for event in context.blocks['js'][0](context):
+        yield event
+    yield u'</head>\n  <body>\n    '
+    for event in context.blocks['content'][0](context):
+        yield event
+    yield u'\n  </body>\n</html>'
 
 def block_content(context, environment=environment):
     l_message = context.resolve('message')
@@ -50,19 +56,18 @@ def block_content(context, environment=environment):
         return concat(t_2)
     caller = Macro(environment, macro, None, (), (), False, False, False)
     yield context.call(l_form, caller=caller)
-    yield u'\n    </div>\n'
+    yield u'\n    </div>\n    '
+
+def block_js(context, environment=environment):
+    if 0: yield None
+    yield u'\n    '
 
 def block_css(context, environment=environment):
-    l_internal_media_url = context.resolve('internal_media_url')
     if 0: yield None
-    yield u'\n<link rel="stylesheet" type="text/css" href="%s/css/style.css" />\n' % (
-        l_internal_media_url, 
-    )
+    yield u'\n    '
 
 def block_title(context, environment=environment):
-    l__ = context.resolve('_')
     if 0: yield None
-    yield to_string(context.call(l__, 'Kay Login'))
 
-blocks = {'content': block_content, 'css': block_css, 'title': block_title}
-debug_info = '1=8&6=14&8=20&11=22&13=29&14=33&16=37&17=39&18=41&20=45&21=47&11=52&23=53&3=55&4=59&2=62'
+blocks = {'content': block_content, 'js': block_js, 'css': block_css, 'title': block_title}
+debug_info = '1=7&5=8&6=11&8=13&10=15&12=16&31=18&12=20&14=26&17=28&19=35&20=39&22=43&23=45&24=47&26=51&27=53&17=58&29=59&8=61&6=65&5=69'

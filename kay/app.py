@@ -183,8 +183,10 @@ class KayApp(object):
         os.path.join(os.path.dirname(mod.__file__), template_dirname))
     loader = PrefixLoader(per_app_loaders)
     if self.app_settings.TEMPLATE_DIRS:
+      target_dirs = list(self.app_settings.TEMPLATE_DIRS)
+      target_dirs.append("kay/templates")
       target = [d.replace("templates", template_dirname)
-                for d in self.app_settings.TEMPLATE_DIRS]
+                for d in target_dirs]
       import kay
       base_loader = FileSystemLoader(
         [os.path.join(kay.PROJECT_DIR, d) for d in target])

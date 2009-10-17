@@ -23,7 +23,6 @@ ADMINS = (
 )
 
 TEMPLATE_DIRS = (
-  'templates',
 )
 
 USE_I18N = True
