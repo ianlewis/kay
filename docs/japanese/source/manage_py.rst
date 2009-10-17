@@ -24,9 +24,13 @@ manage.py add_translations
   $ python manage.py add_translations [options]
 
   
-.. cmdoption:: -a app_name
+.. cmdoption:: -t, --target string
 
-   アプリケーション名を指定します。
+   対象となるディレクトリを指定します。
+
+.. cmdoption:: -a
+
+   指定すると全てのアプリケーションが対象になります。
 
 .. cmdoption:: -l lang
 
@@ -111,11 +115,11 @@ manage.py clear_datastore
 
 .. cmdoption:: -a, --appid appid
 
-   対象となるアプリケーションを ``app-id`` で指定します。デフォルト値は ``settings.py`` の ``APPLICATION_ID`` です。
+   対象となるアプリケーションを ``app-id`` で指定します。指定が無ければ ``app.yaml`` 内の ``application`` に設定された値が使用されます。
 
 .. cmdoption:: -h, --host host
 
-   対象となるアプリケーションをホスト名で指定します。デフォルト値は ``APPLICATION_ID.appspot.com`` です。
+   対象となるアプリケーションをホスト名で指定します。デフォルト値は ``app-id.appspot.com`` です。
 
 .. cmdoption:: -p, --path path
 
@@ -123,7 +127,7 @@ manage.py clear_datastore
 
 .. cmdoption:: -k, --kinds string    
 
-   削除するエンティティの kind を指定します。kind はデフォルトでは ``appname_model`` となっています。
+   削除するエンティティの kind を指定します。kind はデフォルトでは ``appname_model`` となっています。指定が無ければ全てのモデルが対象になります。
 
 .. cmdoption:: -c, --clear-memcache
 
@@ -143,15 +147,19 @@ manage.py clear_datastore
 manage.py compile_translations
 ------------------------------
 
-特定のアプリケーションの全てのテンプレートをコンパイルします。
+アプリケーションの全ての国際化カタログをコンパイルします。
 
 .. code-block:: bash
 
   $ python manage.py compile_translations
 
-.. cmdoption:: -a, --app appname
+.. cmdoption:: -t, --target string
 
-   特定のアプリケーションのみを対象とする場合に、アプリケーション名をしてします。
+   対象となるディレクトリを指定します。
+
+.. cmdoption:: -a, --all
+
+   指定すると全てのアプリケーションが対象になります。
    
 
 .. program:: manage.py create_user
@@ -241,6 +249,10 @@ manage.py extract_messages
 
    対象となるディレクトリを指定します。
 
+.. cmdoption:: -a, --all
+
+   指定すると全てのアプリケーションが対象になります。
+
 .. cmdoption:: -d, --domain domain
 
    * ``messages`` を指定すると、Pythonスクリプトと ``templates`` 配下のテンプレートファイルが対象となります。
@@ -252,7 +264,7 @@ manage.py extract_messages
 manage.py preparse_apps
 -----------------------
 
-このコマンドは、 :attr:`settings.INSTALLED_APPS` の設定値に基いて、全ての jinja2 テンプレートを事前パースします。
+このコマンドは、 :attr:`settings.INSTALLED_APPS` の設定値に基いて、全ての jinja2 テンプレートを事前パースします。manage.py を使用してアプリケーションをアップロードする時、自動的にこの処理が行われるので、普段は実行する必要はありません。
 
 .. code-block:: bash
 
@@ -265,7 +277,7 @@ manage.py preparse_apps
 manage.py preparse_bundle
 --------------------------
 
-Kay自身の Jinja2 テンプレートを事前パースします。
+Kay自身の Jinja2 テンプレートを事前パースします。Kayの開発者が使用するコマンドです。
 
 .. code-block:: bash
 
@@ -326,7 +338,7 @@ manage.py rshell
 
 .. cmdoption:: -h, --host host    
 
-   対象となるアプリケーションをホスト名で指定します。デフォルト値は ``APPLICATION_ID.appspot.com`` です。
+   対象となるアプリケーションをホスト名で指定します。デフォルト値は ``appid.appspot.com`` です。
 
 .. cmdoption:: -p, --path path
 
@@ -437,7 +449,7 @@ manage.py test
 
 .. code-block:: bash
 
-   $ python manage.py runtest [options]
+   $ python manage.py test [options]
 
 .. cmdoption:: --target APP_DIR
 
@@ -449,7 +461,7 @@ manage.py test
 
    * ``0``: 出力なし。
    * ``1``: 進捗を ``.`` で出力。
-   * ``2``: テスト関数の docstring を出力。
+   * ``2``: テストメソッドの docstring を出力。
 
    
 .. program:: manage.py update_translations
@@ -463,9 +475,13 @@ potファイルで翻訳ファイルを更新します。
 
    $ python manage.py update_translations [options]
 
-.. cmdoption:: -t, --target APP_DIR
+.. cmdoption:: -t, --target string
 
-   対象となるアプリケーションのディレクトリを指定します。
+   対象となるディレクトリを指定します。
+
+.. cmdoption:: -a
+
+   指定すると全てのアプリケーションが対象になります。
 
 .. cmdoption:: -l, --lang lang 
 

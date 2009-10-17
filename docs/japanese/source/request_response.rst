@@ -11,7 +11,7 @@ Kay は、WSGI に準拠した Werkzeug のリクエストオブジェクト、�
 リクエストオブジェクト
 ======================
 
-*  view 関数は、リクエストオブジェクトを引数にとります。
+* view は、リクエストオブジェクトを引数にとります。
 * リクエストオブジェクトは読み込み専用です。変更は許可されていません。
 * デフォルトでは、リクエストオブジェクトのテキストデータはすべて ``UTF-8`` でエンコードされています。
 
@@ -19,25 +19,8 @@ Kay は、WSGI に準拠した Werkzeug のリクエストオブジェクト、�
 属性とメソッド
 --------------
 
-リクエストオブジェクトは以下の属性、およびメソッドを持っています。
+リクエストオブジェクトは以下の属性を持っています。
 
-.. method:: _get_file_stream(total_content_length, content_type, filename=None, content_length=None)
-
-   ファイルアップロードのストリームを取得するために呼ばれます。
-
-   このメソッドは、ファイルのような ``read()`` , ``readline()`` , ``seek()`` メソッドをもった、読み込みと書き込みがどちらも可能なファイルのようなクラスを提供します。
-
-   総コンテンツ長が 500KB を超える場合、デフォルトの実装では一時ファイルを返します。それは、多くのブラウザが総コンテンツ長のみを提供するだけで、ファイルのコンテンツ長を提供しないためです。
-
-   :param total_content_length: リクエスト中のすべてのデータの総コンテンツ長です。この値は存在することが保証されています。
-   :param content_type: アップロードされたファイルの mimetype です。
-   :param filename: アップロードされたファイルのファイル名です。おそらく ``None`` です。
-   :param content_length: ファイルの長さです。Webブラウザがこの値を提供しないため、通常は提供されません。
-
-.. method:: _form_parsing_failed(error)
-
-   フォームデータのパースに失敗した場合に呼び出されます。このメソッドは、現在ではマルチパートアップロードが失敗したときのみ呼び出されます。デフォルトではなにもしません。
-   
 .. attribute:: accept_charsets
 
    クライアントがサポートしている文字セットのリストです。 `CharsetAccept <http://werkzeug.pocoo.org/documentation/0.5.1/datastructures.html#werkzeug.CharsetAccept>`_ オブジェクトとして提供されます。
@@ -58,20 +41,6 @@ Kay は、WSGI に準拠した Werkzeug のリクエストオブジェクト、�
 
    フォワードヘッダがある場合、クライアントのIPからサーバの直前のプロキシサーバまでのIPアドレスのリストが格納されます。
   
-.. classmethod:: application(f)
-
-   リクエストを第１引数にとる受け取るレスポンダとして、関数をデコレートできます。 ``responder`` デコレータのように機能しますが、関数は第１引数にリクエストオブジェクトをとります。
-
-   .. code-block:: python
-
-   	  @Request.application
-	  def my_wsgi_app(request):
-   	  	  return Response('Hello World!')
-
-   :param f: デコレートする WSGI コーラブル
-   :rtype: 新しい WSGI コーラブル
-
-
 .. attribute:: args
 
    パースされたURLパラメータです。 `ImmutableMultiDict <http://werkzeug.pocoo.org/documentation/0.5.1/datastructures.html#werkzeug.ImmutableMultiDict>`_ に格納されます。
@@ -106,7 +75,7 @@ Kay は、WSGI に準拠した Werkzeug のリクエストオブジェクト、�
 
 .. attribute:: data
 
-   バッファリングされたクライアントからの入力データを文字列に読み込みます。普通は ``data`` にアクセスする方法としてはよくない方法です。クライアントが、サーバのメモリに問題を引き起こすために、何十メガバイトものデータを送ることができてしまうためです。
+   バッファリングされたクライアントからの入力データを文字列に読み込みます。普通は ``data`` にアクセスする方法としてはよくない方法です。クライアントが、サーバのメモリを浪費させるために、何十メガバイトものデータを送ることができてしまうためです。
 
    これを避けるには、 ``content_length`` を先にチェックしてください。
 
@@ -120,7 +89,7 @@ Kay は、WSGI に準拠した Werkzeug のリクエストオブジェクト、�
 
 .. attribute:: environ
 
-   リクエストオブジェクトがデータを取り扱うための WSGI環境 です。
+   リクエストオブジェクトがデータを取り扱うための WSGI env です。
 
 .. attribute:: files
 
@@ -194,7 +163,7 @@ Kay は、WSGI に準拠した Werkzeug のリクエストオブジェクト、�
 
 .. attribute:: lang
 
-   ブラウザの言語設定です。
+   リクエストから Kay が推測した結果の使用言語が格納されています。
 
 .. attribute:: max_content_length
 
@@ -210,7 +179,7 @@ Kay は、WSGI に準拠した Werkzeug のリクエストオブジェクト、�
 
 .. attribute:: method
 
-   HTTPメソッドです。 ``GET`` or ``POST``
+   HTTPメソッドです。 ``GET``  ``POST`` などです。
 
 .. attribute:: mimetype
 
@@ -235,7 +204,7 @@ Kay は、WSGI に準拠した Werkzeug のリクエストオブジェクト、�
 
 .. attribute:: referrer
 
-   Referer[原文ママ] リクエストヘッダフィールドは、Request-URI が取得されたリソースのアドレス (URI) をクライアントに示させます。
+   Referrer です。
 
 .. attribute:: remote_addr
 
@@ -289,9 +258,7 @@ Kay は、WSGI に準拠した Werkzeug のリクエストオブジェクト、�
 
 .. attribute:: values
 
-   ``args`` や ``form`` のための、ディクショナリです。
-
-
+   ``args``  ``form`` 両方を結合したディクショナリと考えてください。
 
 
 
@@ -503,7 +470,7 @@ Kay は、WSGI に準拠した Werkzeug のリクエストオブジェクト、�
    :param domain: クロスドメインcookieをセットしたい場合に使います。例えば、 ``domain=".exmaple.com"`` だと、 "www.example.com" と "foo.example.com" ドメインから読み込める cookie がセットされます。指定がなければ、セットしたドメインからのみ読み込める cookie がセットされます。
    :param path: cookie のパスを制限します。デフォルトでは、ドメイン全体です。
       
-.. attribute:: set_etag
+.. method:: set_etag(etag, weak=False)
 
    etag をセットします。もし、古いのがあれば上書きします。
    
@@ -538,7 +505,7 @@ Kay は、WSGI に準拠した Werkzeug のリクエストオブジェクト、�
 レスポンスオブジェクトは、 ``werkzeug.Response`` クラスのインスタンスです。Kay には、レスポンスを生成するための関数が用意されています。
 
 
-.. function:: render_to_response(template, context, mimetype='text/html', processors=None)
+.. function:: kay.utils.render_to_response(template, context, mimetype='text/html', processors=None)
 
    HTMLページのレンダリング
 
@@ -548,16 +515,6 @@ Kay は、WSGI に準拠した Werkzeug のリクエストオブジェクト、�
    :param processors: コンテキストプロセッサ
    :rtype: レスポンスオブジェクト
 
-.. function:: render_error(e)
-
-   エラーページのレンダリング
-
-   :param e: エクセプションオブジェクト
-   :rtype: レスポンスオブジェクト
-
-
-
-   
 .. seealso:: http://werkzeug.pocoo.org/documentation/dev/wrappers.html
 
 
