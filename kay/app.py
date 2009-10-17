@@ -189,7 +189,8 @@ class KayApp(object):
       base_loader = FileSystemLoader(
         [os.path.join(kay.PROJECT_DIR, d) for d in target])
       loader = ChoiceLoader([base_loader, loader])
-    env_dict = self.app_settings.JINJA2_ENVIRONMENT_KWARGS
+    env_dict = {}
+    env_dict.update(self.app_settings.JINJA2_ENVIRONMENT_KWARGS)
     jinja2_ext = []
     for ext_str in self.app_settings.JINJA2_EXTENSIONS:
       try:
@@ -223,7 +224,7 @@ class KayApp(object):
     from kay.i18n import load_translations
     global translations_cache
     if self.app_settings.USE_I18N:
-      translations = translations_cache.get("%s:%s" %
+      translations = translations_cache.get("trans:%s:%s" %
                                             (self.app_settings.APP_NAME, lang),
                                             None)
       if translations is None:
