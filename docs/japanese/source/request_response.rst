@@ -40,7 +40,7 @@ Kay は、WSGI に準拠した Werkzeug のリクエストオブジェクト、�
    
 .. attribute:: accept_charsets
 
-   クライアントがサポートしている文字セットのリストです。 `CharsetAccept　<http://werkzeug.pocoo.org/documentation/0.5.1/datastructures.html#werkzeug.CharsetAccept>`_ オブジェクトとして提供されます。
+   クライアントがサポートしている文字セットのリストです。 `CharsetAccept <http://werkzeug.pocoo.org/documentation/0.5.1/datastructures.html#werkzeug.CharsetAccept>`_ オブジェクトとして提供されます。
 
 .. attribute:: accept_encodings
 
