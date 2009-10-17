@@ -1,66 +1,66 @@
 ==============================================
-’¥ê’¥¯’¥¨’¥¹’¥È’¥ª’¥Ö’¥¸’¥§’¥¯’¥È’¤È’¥ì’¥¹’¥Ý’¥ó’¥¹’¥ª’¥Ö’¥¸’¥§’¥¯’¥È
+ãƒªã‚¯ã‚¨ã‚¹ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¨ãƒ¬ã‚¹ãƒãƒ³ã‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 ==============================================
 
-’³µ’Í×
+æ¦‚è¦
 ====
 
-Kay ’¤Ï’¡¢WSGI ’¤Ë’½à’µò’¤·’¤¿ Werkzeug ’¤Î’¥ê’¥¯’¥¨’¥¹’¥È’¥ª’¥Ö’¥¸’¥§’¥¯’¥È’¡¢’¤ª’¤è’¤Ó’¡¢’¥ì’¥¹’¥Ý’¥ó’¥¹’¥ª’¥Ö’¥¸’¥§’¥¯’¥È’¤ò’ºÎ’ÍÑ’¤·’¤Æ’¤¤’¤Þ’¤¹’¡£Kay ’¤Ï’¡¢’¥Ö’¥é’¥¦’¥¶’¤«’¤é’¥¢’¥¯’¥»’¥¹’¤µ’¤ì’¤ë’¤È’¥ê’¥¯’¥¨’¥¹’¥È’¥ª’¥Ö’¥¸’¥§’¥¯’¥È’¤ò’À¸’À®’¤·’¡¢URL’¥Þ’¥Ã’¥Ô’¥ó’¥°’¤Ë’¤è’¤Ã’¤Æ’ÆÃ’Äê’¤·’¤¿view’´Ø’¿ô’¤Ë’ÅÏ’¤·’¤Þ’¤¹’¡£view’´Ø’¿ô’¤Ï’Âè’£±’°ú’¿ô’¤Ë’¥ê’¥¯’¥¨’¥¹’¥È’¥ª’¥Ö’¥¸’¥§’¥¯’¥È’¤ò’¤È’¤ê’¡¢’¥ì’¥¹’¥Ý’¥ó’¥¹’¥ª’¥Ö’¥¸’¥§’¥¯’¥È’¤ò’À¸’À®’¤·’¤Æ’ÊÖ’¤¹’É¬’Í×’¤¬’¤¢’¤ê’¤Þ’¤¹’¡£’¤³’¤³’¤Ç’¤Ï’¡¢’¥ê’¥¯’¥¨’¥¹’¥È’¥ª’¥Ö’¥¸’¥§’¥¯’¥È’¡¢’¤ª’¤è’¤Ó’¡¢’¥ì’¥¹’¥Ý’¥ó’¥¹’¥ª’¥Ö’¥¸’¥§’¥¯’¥È’¤Î’¹½’À®’¤Ë’¤Ä’¤¤’¤Æ’Àâ’ÌÀ’¤·’¤Þ’¤¹’¡£
+Kay ã¯ã€WSGI ã«æº–æ‹ ã—ãŸ Werkzeug ã®ãƒªã‚¯ã‚¨ã‚¹ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã€ãŠã‚ˆã³ã€ãƒ¬ã‚¹ãƒãƒ³ã‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’æŽ¡ç”¨ã—ã¦ã„ã¾ã™ã€‚Kay ã¯ã€ãƒ–ãƒ©ã‚¦ã‚¶ã‹ã‚‰ã‚¢ã‚¯ã‚»ã‚¹ã•ã‚Œã‚‹ã¨ãƒªã‚¯ã‚¨ã‚¹ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ç”Ÿæˆã—ã€URLãƒžãƒƒãƒ”ãƒ³ã‚°ã«ã‚ˆã£ã¦ç‰¹å®šã—ãŸviewé–¢æ•°ã«æ¸¡ã—ã¾ã™ã€‚viewé–¢æ•°ã¯ç¬¬ï¼‘å¼•æ•°ã«ãƒªã‚¯ã‚¨ã‚¹ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ã¨ã‚Šã€ãƒ¬ã‚¹ãƒãƒ³ã‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ç”Ÿæˆã—ã¦è¿”ã™å¿…è¦ãŒã‚ã‚Šã¾ã™ã€‚ã“ã“ã§ã¯ã€ãƒªã‚¯ã‚¨ã‚¹ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã€ãŠã‚ˆã³ã€ãƒ¬ã‚¹ãƒãƒ³ã‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®æ§‹æˆã«ã¤ã„ã¦èª¬æ˜Žã—ã¾ã™ã€‚
 
 
-’¥ê’¥¯’¥¨’¥¹’¥È’¥ª’¥Ö’¥¸’¥§’¥¯’¥È
+ãƒªã‚¯ã‚¨ã‚¹ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 ======================
 
-* view’´Ø’¿ô’¤Ï’¡¢’¥ê’¥¯’¥¨’¥¹’¥È’¥ª’¥Ö’¥¸’¥§’¥¯’¥È’¤ò’°ú’¿ô’¤Ë’¤È’¤ê’¤Þ’¤¹’¡£
-* ’¥ê’¥¯’¥¨’¥¹’¥È’¥ª’¥Ö’¥¸’¥§’¥¯’¥È’¤Ï’ÆÉ’¤ß’¹þ’¤ß’Àì’ÍÑ’¤Ç’¤¹’¡£’ÊÑ’¹¹’¤Ï’µö’²Ä’¤µ’¤ì’¤Æ’¤¤’¤Þ’¤»’¤ó’¡£
-* ’¥Ç’¥Õ’¥©’¥ë’¥È’¤Ç’¤Ï’¡¢’¥ê’¥¯’¥¨’¥¹’¥È’¥ª’¥Ö’¥¸’¥§’¥¯’¥È’¤Î’¥Æ’¥­’¥¹’¥È’¥Ç’¡¼’¥¿’¤Ï’¤¹’¤Ù’¤Æ ``UTF-8`` ’¤Ç’¥¨’¥ó’¥³’¡¼’¥É’¤µ’¤ì’¤Æ’¤¤’¤Þ’¤¹’¡£
+* viewé–¢æ•°ã¯ã€ãƒªã‚¯ã‚¨ã‚¹ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å¼•æ•°ã«ã¨ã‚Šã¾ã™ã€‚
+* ãƒªã‚¯ã‚¨ã‚¹ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¯èª­ã¿è¾¼ã¿å°‚ç”¨ã§ã™ã€‚å¤‰æ›´ã¯è¨±å¯ã•ã‚Œã¦ã„ã¾ã›ã‚“ã€‚
+* ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã§ã¯ã€ãƒªã‚¯ã‚¨ã‚¹ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ãƒ†ã‚­ã‚¹ãƒˆãƒ‡ãƒ¼ã‚¿ã¯ã™ã¹ã¦ ``UTF-8`` ã§ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã•ã‚Œã¦ã„ã¾ã™ã€‚
 
 
-’Â°’À­’¤È’¥á’¥½’¥Ã’¥É
+å±žæ€§ã¨ãƒ¡ã‚½ãƒƒãƒ‰
 --------------
 
-’¥ê’¥¯’¥¨’¥¹’¥È’¥ª’¥Ö’¥¸’¥§’¥¯’¥È’¤Ï’°Ê’²¼’¤Î’Â°’À­’¡¢’¤ª’¤è’¤Ó’¥á’¥½’¥Ã’¥É’¤ò’»ý’¤Ã’¤Æ’¤¤’¤Þ’¤¹’¡£
+ãƒªã‚¯ã‚¨ã‚¹ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¯ä»¥ä¸‹ã®å±žæ€§ã€ãŠã‚ˆã³ãƒ¡ã‚½ãƒƒãƒ‰ã‚’æŒã£ã¦ã„ã¾ã™ã€‚
 
 .. method:: _get_file_stream(total_content_length, content_type, filename=None, content_length=None)
 
-   ’¥Õ’¥¡’¥¤’¥ë’¥¢’¥Ã’¥×’¥í’¡¼’¥É’¤Î’¥¹’¥È’¥ê’¡¼’¥à’¤ò’¼è’ÆÀ’¤¹’¤ë’¤¿’¤á’¤Ë’¸Æ’¤Ð’¤ì’¤Þ’¤¹’¡£
+   ãƒ•ã‚¡ã‚¤ãƒ«ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ã®ã‚¹ãƒˆãƒªãƒ¼ãƒ ã‚’å–å¾—ã™ã‚‹ãŸã‚ã«å‘¼ã°ã‚Œã¾ã™ã€‚
 
-   ’¤³’¤ì’¤Ï’¡¢’¥Õ’¥¡’¥¤’¥ë’¤Î’¤è’¤¦’¤Ê’½ñ’¤­’¹þ’¤ß’¡¢’ÆÉ’¤ß’¹þ’¤ß’¡¢’¤È’¤â’¤Ë’²Ä’Ç½’¤Ê ``read()`` , ``readline()`` , ``seek()`` ’¥á’¥½’¥Ã’¥É’¤â’¤Ã’¤¿’¥Õ’¥¡’¥¤’¥ë’¤Î’¤è’¤¦’¤Ê’¥¯’¥é’¥¹’¤ò’Äó’¶¡’¤·’¤Ê’¤±’¤ì’¤Ð’¤Ê’¤ê’¤Þ’¤»’¤ó’¡£
+   ã“ã‚Œã¯ã€ãƒ•ã‚¡ã‚¤ãƒ«ã®ã‚ˆã†ãªæ›¸ãè¾¼ã¿ã€èª­ã¿è¾¼ã¿ã€ã¨ã‚‚ã«å¯èƒ½ãª ``read()`` , ``readline()`` , ``seek()`` ãƒ¡ã‚½ãƒƒãƒ‰ã‚‚ã£ãŸãƒ•ã‚¡ã‚¤ãƒ«ã®ã‚ˆã†ãªã‚¯ãƒ©ã‚¹ã‚’æä¾›ã—ãªã‘ã‚Œã°ãªã‚Šã¾ã›ã‚“ã€‚
 
-   ’Áí’¥³’¥ó’¥Æ’¥ó’¥Ä’Ä¹’¤¬ 500KB ’¤ò’Ä¶’¤¨’¤ë’¾ì’¹ç’¡¢’¥Ç’¥Õ’¥©’¥ë’¥È’¤Î’¼Â’Áõ’¤Ç’¤Ï’°ì’»þ’¥Õ’¥¡’¥¤’¥ë’¤ò’ÊÖ’¤·’¤Þ’¤¹’¡£’Â¿’¤¯’¤Î’¥Ö’¥é’¥¦’¥¶’¤¬’Áí’¥³’¥ó’¥Æ’¥ó’¥Ä’Ä¹’¤Î’¤ß’¤ò’Äó’¶¡’¤¹’¤ë’¤À’¤±’¤Ç’¡¢’¥Õ’¥¡’¥¤’¥ë’¤Î’¥³’¥ó’¥Æ’¥ó’¥Ä’Ä¹’¤ò’Äó’¶¡’¤·’¤Ê’¤¤’¤«’¤é’¤Ç’¤¹’¡£
+   ç·ã‚³ãƒ³ãƒ†ãƒ³ãƒ„é•·ãŒ 500KB ã‚’è¶…ãˆã‚‹å ´åˆã€ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®å®Ÿè£…ã§ã¯ä¸€æ™‚ãƒ•ã‚¡ã‚¤ãƒ«ã‚’è¿”ã—ã¾ã™ã€‚å¤šãã®ãƒ–ãƒ©ã‚¦ã‚¶ãŒç·ã‚³ãƒ³ãƒ†ãƒ³ãƒ„é•·ã®ã¿ã‚’æä¾›ã™ã‚‹ã ã‘ã§ã€ãƒ•ã‚¡ã‚¤ãƒ«ã®ã‚³ãƒ³ãƒ†ãƒ³ãƒ„é•·ã‚’æä¾›ã—ãªã„ã‹ã‚‰ã§ã™ã€‚
 
-   :param total_content_length: ’¥ê’¥¯’¥¨’¥¹’¥È’Ãæ’¤Î’¤¹’¤Ù’¤Æ’¤Î’¥Ç’¡¼’¥¿’¤Î’Áí’¥³’¥ó’¥Æ’¥ó’¥Ä’Ä¹’¤Ç’¤¹’¡£’¤³’¤Î’ÃÍ’¤Ï’Â¸’ºß’¤¹’¤ë’¤³’¤È’¤¬’ÊÝ’¾Ú’¤µ’¤ì’¤Æ’¤¤’¤Þ’¤¹’¡£
-   :param content_type: ’¥¢’¥Ã’¥×’¥í’¡¼’¥É’¤µ’¤ì’¤¿’¥Õ’¥¡’¥¤’¥ë’¤Î mimetype ’¤Ç’¤¹’¡£
-   :param filename: ’¥¢’¥Ã’¥×’¥í’¡¼’¥É’¤µ’¤ì’¤¿’¥Õ’¥¡’¥¤’¥ë’¤Î’¥Õ’¥¡’¥¤’¥ë’Ì¾’¤Ç’¤¹’¡£’¤ª’¤½’¤é’¤¯ ``None`` ’¤Ç’¤¹’¡£
-   :param content_length: ’¥Õ’¥¡’¥¤’¥ë’¤Î’Ä¹’¤µ’¤Ç’¤¹’¡£Web’¥Ö’¥é’¥¦’¥¶’¤¬’¤³’¤Î’ÃÍ’¤ò’Äó’¶¡’¤·’¤Ê’¤¤’¤¿’¤á’¡¢’ÄÌ’¾ï’¤Ï’Äó’¶¡’¤µ’¤ì’¤Þ’¤»’¤ó’¡£
+   :param total_content_length: ãƒªã‚¯ã‚¨ã‚¹ãƒˆä¸­ã®ã™ã¹ã¦ã®ãƒ‡ãƒ¼ã‚¿ã®ç·ã‚³ãƒ³ãƒ†ãƒ³ãƒ„é•·ã§ã™ã€‚ã“ã®å€¤ã¯å­˜åœ¨ã™ã‚‹ã“ã¨ãŒä¿è¨¼ã•ã‚Œã¦ã„ã¾ã™ã€‚
+   :param content_type: ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ã•ã‚ŒãŸãƒ•ã‚¡ã‚¤ãƒ«ã® mimetype ã§ã™ã€‚
+   :param filename: ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ã•ã‚ŒãŸãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ•ã‚¡ã‚¤ãƒ«åã§ã™ã€‚ãŠãã‚‰ã ``None`` ã§ã™ã€‚
+   :param content_length: ãƒ•ã‚¡ã‚¤ãƒ«ã®é•·ã•ã§ã™ã€‚Webãƒ–ãƒ©ã‚¦ã‚¶ãŒã“ã®å€¤ã‚’æä¾›ã—ãªã„ãŸã‚ã€é€šå¸¸ã¯æä¾›ã•ã‚Œã¾ã›ã‚“ã€‚
 
 .. method:: _form_parsing_failed(error)
 
-   ’¥Õ’¥©’¡¼’¥à’¥Ç’¡¼’¥¿’¤Î’¥Ñ’¡¼’¥¹’¤Ë’¼º’ÇÔ’¤·’¤¿’¤é’¸Æ’¤Ð’¤ì’¤Þ’¤¹’¡£’¤³’¤Î’¥á’¥½’¥Ã’¥É’¤Ï’¡¢’¸½’ºß’¤Ç’¤Ï’¥Þ’¥ë’¥Á’¥Ñ’¡¼’¥È’¥¢’¥Ã’¥×’¥í’¡¼’¥É’¤¬’¼º’ÇÔ’¤·’¤¿’¤È’¤­’¤Î’¤ß’¸Æ’¤Ó’½Ð’¤µ’¤ì’¤Þ’¤¹’¡£’¥Ç’¥Õ’¥©’¥ë’¥È’¤Ç’¤Ï’¤Ê’¤Ë’¤â’¤·’¤Þ’¤»’¤ó’¡£
+   ãƒ•ã‚©ãƒ¼ãƒ ãƒ‡ãƒ¼ã‚¿ã®ãƒ‘ãƒ¼ã‚¹ã«å¤±æ•—ã—ãŸã‚‰å‘¼ã°ã‚Œã¾ã™ã€‚ã“ã®ãƒ¡ã‚½ãƒƒãƒ‰ã¯ã€ç¾åœ¨ã§ã¯ãƒžãƒ«ãƒãƒ‘ãƒ¼ãƒˆã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ãŒå¤±æ•—ã—ãŸã¨ãã®ã¿å‘¼ã³å‡ºã•ã‚Œã¾ã™ã€‚ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã§ã¯ãªã«ã‚‚ã—ã¾ã›ã‚“ã€‚
    
 .. attribute:: accept_charsets
 
-   ’¥¯’¥é’¥¤’¥¢’¥ó’¥È’¤¬’¥µ’¥Ý’¡¼’¥È’¤·’¤Æ’¤¤’¤ë’Ê¸’»ú’¥»’¥Ã’¥È’¤Î’¥ê’¥¹’¥È’¤Ç’¤¹’¡£ `CharsetAccept’¡¡<http://werkzeug.pocoo.org/documentation/0.5.1/datastructures.html#werkzeug.CharsetAccept>`_ ’¥ª’¥Ö’¥¸’¥§’¥¯’¥È’¤È’¤·’¤Æ’Äó’¶¡’¤µ’¤ì’¤Þ’¤¹’¡£
+   ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆãŒã‚µãƒãƒ¼ãƒˆã—ã¦ã„ã‚‹æ–‡å­—ã‚»ãƒƒãƒˆã®ãƒªã‚¹ãƒˆã§ã™ã€‚ `CharsetAcceptã€€<http://werkzeug.pocoo.org/documentation/0.5.1/datastructures.html#werkzeug.CharsetAccept>`_ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¨ã—ã¦æä¾›ã•ã‚Œã¾ã™ã€‚
 
 .. attribute:: accept_encodings
 
-   ’¥¯’¥é’¥¤’¥¢’¥ó’¥È’¤¬’µö’ÍÆ’¤·’¤Æ’¤¤’¤ë’¥¨’¥ó’¥³’¡¼’¥Ç’¥£’¥ó’¥°’¤Î’¥ê’¥¹’¥È’¤Ç’¤¹’¡£HTTP ’¤Î’ÍÑ’¸ì’¤Ë’¤ª’¤¤’¤Æ’¡¢gzip’¤Î’¤è’¤¦’¤Ê’¥¨’¥ó’¥³’¡¼’¥Ç’¥£’¥ó’¥°’¤Î’°µ’½Ì’¤Ç’¤¹’¡£ ’Ê¸’»ú’¥»’¥Ã’¥È’¤Ë’¤Ä’¤¤’¤Æ’¤Ï ``accept_charsets`` ’¤ò’»²’¾È’¤·’¤Æ’²¼’¤µ’¤¤’¡£
+   ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆãŒè¨±å®¹ã—ã¦ã„ã‚‹ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‡ã‚£ãƒ³ã‚°ã®ãƒªã‚¹ãƒˆã§ã™ã€‚HTTP ã®ç”¨èªžã«ãŠã„ã¦ã€gzipã®ã‚ˆã†ãªã‚¨ãƒ³ã‚³ãƒ¼ãƒ‡ã‚£ãƒ³ã‚°ã®åœ§ç¸®ã§ã™ã€‚ æ–‡å­—ã‚»ãƒƒãƒˆã«ã¤ã„ã¦ã¯ ``accept_charsets`` ã‚’å‚ç…§ã—ã¦ä¸‹ã•ã„ã€‚
 
 .. attribute:: accept_languages
 
-   ’¥¯’¥é’¥¤’¥¢’¥ó’¥È’¤¬’µö’ÍÆ’¤·’¤Æ’¤¤’¤ë’¸À’¸ì’¤Î’¥ê’¥¹’¥È’¤Ç’¤¹’¡£ `LanguageAccept <http://werkzeug.pocoo.org/documentation/0.5.1/datastructures.html#werkzeug.LanguageAccept>`_ ’¥ª’¥Ö’¥¸’¥§’¥¯’¥È’¤È’¤·’¤Æ’Äó’¶¡’¤µ’¤ì’¤Þ’¤¹’¡£
+   ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆãŒè¨±å®¹ã—ã¦ã„ã‚‹è¨€èªžã®ãƒªã‚¹ãƒˆã§ã™ã€‚ `LanguageAccept <http://werkzeug.pocoo.org/documentation/0.5.1/datastructures.html#werkzeug.LanguageAccept>`_ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¨ã—ã¦æä¾›ã•ã‚Œã¾ã™ã€‚
 
 .. attribute:: accept_mimetypes
 
-   ’¥¯’¥é’¥¤’¥¢’¥ó’¥È’¤¬’¥µ’¥Ý’¡¼’¥È’¤·’¤Æ’¤¤’¤ë mimetype ’¤Î’¥ê’¥¹’¥È’¤Ç’¤¹’¡£ `MIMEAccept <http://werkzeug.pocoo.org/documentation/0.5.1/datastructures.html#werkzeug.MIMEAccept>`_ ’¥ª’¥Ö’¥¸’¥§’¥¯’¥È’¤È’¤·’¤Æ’Äó’¶¡’¤µ’¤ì’¤Þ’¤¹’¡£
+   ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆãŒã‚µãƒãƒ¼ãƒˆã—ã¦ã„ã‚‹ mimetype ã®ãƒªã‚¹ãƒˆã§ã™ã€‚ `MIMEAccept <http://werkzeug.pocoo.org/documentation/0.5.1/datastructures.html#werkzeug.MIMEAccept>`_ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¨ã—ã¦æä¾›ã•ã‚Œã¾ã™ã€‚
 
 .. attribute:: access_route
 
-   ’¥Õ’¥©’¥ï’¡¼’¥É’¥Ø’¥Ã’¥À’¤¬’¤¢’¤ë’¾ì’¹ç’¡¢’¥¯’¥é’¥¤’¥¢’¥ó’¥È’¤ÎIP’¤«’¤é’¥µ’¡¼’¥Ð’¤Î’Ä¾’Á°’¤Î’¥×’¥í’¥­’¥·’¥µ’¡¼’¥Ð’¤Þ’¤Ç’¤ÎIP’¥¢’¥É’¥ì’¥¹’¤Î’¥ê’¥¹’¥È’¤¬’³Ê’Ç¼’¤µ’¤ì’¤Þ’¤¹’¡£
+   ãƒ•ã‚©ãƒ¯ãƒ¼ãƒ‰ãƒ˜ãƒƒãƒ€ãŒã‚ã‚‹å ´åˆã€ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆã®IPã‹ã‚‰ã‚µãƒ¼ãƒã®ç›´å‰ã®ãƒ—ãƒ­ã‚­ã‚·ã‚µãƒ¼ãƒã¾ã§ã®IPã‚¢ãƒ‰ãƒ¬ã‚¹ã®ãƒªã‚¹ãƒˆãŒæ ¼ç´ã•ã‚Œã¾ã™ã€‚
   
 .. classmethod:: application(f)
 
-   ’¥ê’¥¯’¥¨’¥¹’¥È’¤ò’Âè’£±’°ú’¿ô’¤Ë’¤È’¤ë’¼õ’¤±’¼è’¤ë’¥ì’¥¹’¥Ý’¥ó’¥À’¤È’¤·’¤Æ’¡¢’´Ø’¿ô’¤ò’¥Ç’¥³’¥ì’¡¼’¥È’¤Ç’¤­’¤Þ’¤¹’¡£ ``responder`` ’¥Ç’¥³’¥ì’¡¼’¥¿’¤Î’¤è’¤¦’¤Ë’µ¡’Ç½’¤·’¤Þ’¤¹’¤¬’¡¢’´Ø’¿ô’¤Ï’Âè’£±’°ú’¿ô’¤Ë’¥ê’¥¯’¥¨’¥¹’¥È’¥ª’¥Ö’¥¸’¥§’¥¯’¥È’¤ò’¤È’¤ê’¤Þ’¤¹’¡£
+   ãƒªã‚¯ã‚¨ã‚¹ãƒˆã‚’ç¬¬ï¼‘å¼•æ•°ã«ã¨ã‚‹å—ã‘å–ã‚‹ãƒ¬ã‚¹ãƒãƒ³ãƒ€ã¨ã—ã¦ã€é–¢æ•°ã‚’ãƒ‡ã‚³ãƒ¬ãƒ¼ãƒˆã§ãã¾ã™ã€‚ ``responder`` ãƒ‡ã‚³ãƒ¬ãƒ¼ã‚¿ã®ã‚ˆã†ã«æ©Ÿèƒ½ã—ã¾ã™ãŒã€é–¢æ•°ã¯ç¬¬ï¼‘å¼•æ•°ã«ãƒªã‚¯ã‚¨ã‚¹ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ã¨ã‚Šã¾ã™ã€‚
 
    .. code-block:: python
 
@@ -74,229 +74,225 @@ Kay ’¤Ï’¡¢WSGI ’¤Ë’½à’µò’¤·’¤¿ Werkzeug ’¤Î’¥ê’¥¯’¥¨’¥¹’¥È’¥ª’¥Ö’¥¸’¥§’¥¯’¥È’¡¢’
 
 .. attribute:: args
 
-   ’¥Ñ’¡¼’¥¹’¤µ’¤ì’¤¿URL’¥Ñ’¥é’¥á’¡¼’¥¿’¤Ç’¤¹’¡£ `ImmutableMultiDict <http://werkzeug.pocoo.org/documentation/0.5.1/datastructures.html#werkzeug.ImmutableMultiDict>`_ ’¤Ë’³Ê’Ç¼’¤µ’¤ì’¤Þ’¤¹’¡£
+   ãƒ‘ãƒ¼ã‚¹ã•ã‚ŒãŸURLãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã§ã™ã€‚ `ImmutableMultiDict <http://werkzeug.pocoo.org/documentation/0.5.1/datastructures.html#werkzeug.ImmutableMultiDict>`_ ã«æ ¼ç´ã•ã‚Œã¾ã™ã€‚
 
 .. attribute:: authorization
 
-   ’¥Ñ’¡¼’¥¹’¤µ’¤ì’¤¿’¥Õ’¥©’¡¼’¥à’¤Î’Ãæ’¤Î ``Authorization`` ’¥ª’¥Ö’¥¸’¥§’¥¯’¥È’¤Ç’¤¹’¡£
+   ãƒ‘ãƒ¼ã‚¹ã•ã‚ŒãŸãƒ•ã‚©ãƒ¼ãƒ ã®ä¸­ã® ``Authorization`` ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã§ã™ã€‚
 
 .. attribute:: base_url
 
-   ``url`` ’¤È’»÷’¤Æ’¤¤’¤Þ’¤¹’¤¬’¡¢’¥¯’¥¨’¥ê’Ê¸’»ú’Îó’¤¬’¾Ê’¤«’¤ì’¤Æ’¤¤’¤Þ’¤¹’¡£
+   ``url`` ã¨ä¼¼ã¦ã„ã¾ã™ãŒã€ã‚¯ã‚¨ãƒªæ–‡å­—åˆ—ãŒçœã‹ã‚Œã¦ã„ã¾ã™ã€‚
 
 .. attribute:: cache_control
 
-   ’¼õ’¿®’¤·’¤¿’¥­’¥ã’¥Ã’¥·’¥å’¥³’¥ó’¥È’¥í’¡¼’¥ë’¥Ø’¥Ã’¥À’¤ò `RequestCacheControl <http://werkzeug.pocoo.org/documentation/0.5.1/datastructures.html#werkzeug.RequestCacheControl>`_ ’¥ª’¥Ö’¥¸’¥§’¥¯’¥È’¤È’¤·’¤Æ’Äó’¶¡’¤·’¤Þ’¤¹’¡£
+   å—ä¿¡ã—ãŸã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ãƒ˜ãƒƒãƒ€ã‚’ `RequestCacheControl <http://werkzeug.pocoo.org/documentation/0.5.1/datastructures.html#werkzeug.RequestCacheControl>`_ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¨ã—ã¦æä¾›ã—ã¾ã™ã€‚
 
 .. attribute:: charset
 
-   ’¥ê’¥¯’¥¨’¥¹’¥È’¤Î’Ê¸’»ú’¥»’¥Ã’¥È’¤Ç’¤¹’¡£’¥Ç’¥Õ’¥©’¥ë’¥È’ÃÍ’¤Ï ``UTF-8`` ’¤Ç’¤¹’¡£
+   ãƒªã‚¯ã‚¨ã‚¹ãƒˆã®æ–‡å­—ã‚»ãƒƒãƒˆã§ã™ã€‚ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã¯ ``UTF-8`` ã§ã™ã€‚
 
 .. attribute:: content_length
 
-   Content-Length ’¥¨’¥ó’¥Æ’¥£’¥Æ’¥£’¥Ø’¥Ã’¥À’¥Õ’¥£’¡¼’¥ë’¥É’¤Ï’¡¢’¼õ’¿®’¼Ô’¤Ë’Á÷’¿®’¤µ’¤ì’¤ë’¥¨’¥ó’¥Æ’¥£’¥Æ’¥£’¥Ü’¥Ç’¥£’¤Î’¥µ’¥¤’¥º’¤ò’¼¨’¤·’¤Þ’¤¹’¡£HEAD ’¥á’¥½’¥Ã’¥É’¤Î’¾ì’¹ç’¤Ï GET ’¥ê’¥¯’¥¨’¥¹’¥È’¤µ’¤ì’¤¿’¾ì’¹ç’¤Ë’Á÷’¿®’¤µ’¤ì’¤ë’¥¨’¥ó’¥Æ’¥£’¥Æ’¥£’¥Ü’¥Ç’¥£’¤Î’¥µ’¥¤’¥º’¤ò’¼¨’¤·’¤Þ’¤¹’¡£
+   Content-Length ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ãƒ˜ãƒƒãƒ€ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã¯ã€å—ä¿¡è€…ã«é€ä¿¡ã•ã‚Œã‚‹ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ãƒœãƒ‡ã‚£ã®ã‚µã‚¤ã‚ºã‚’ç¤ºã—ã¾ã™ã€‚HEAD ãƒ¡ã‚½ãƒƒãƒ‰ã®å ´åˆã¯ GET ãƒªã‚¯ã‚¨ã‚¹ãƒˆã•ã‚ŒãŸå ´åˆã«é€ä¿¡ã•ã‚Œã‚‹ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ãƒœãƒ‡ã‚£ã®ã‚µã‚¤ã‚ºã‚’ç¤ºã—ã¾ã™ã€‚
 
 .. attribute:: content_type
 
-   Content-Type ’¥¨’¥ó’¥Æ’¥£’¥Æ’¥£’¥Ø’¥Ã’¥À’¥Õ’¥£’¡¼’¥ë’¥É’¤Ï’¡¢’¼õ’¿®’¼Ô’¤Ë’Á÷’¿®’¤µ’¤ì’¤ë’¥¨’¥ó’¥Æ’¥£’¥Æ’¥£’¥Ü’¥Ç’¥£’¤Î’¥á’¥Ç’¥£’¥¢’¥¿’¥¤’¥×’¤ò’¼¨’¤·’¤Þ’¤¹’¡£HEAD’¥á’¥½’¥Ã’¥É’¤Î’¾ì’¹ç’¡¢GET ’¥ê’¥¯’¥¨’¥¹’¥È’¤µ’¤ì’¤¿’¾ì’¹ç’¤Ë’Á÷’¿®’¤µ’¤ì’¤ë’¥¨’¥ó’¥Æ’¥£’¥Æ’¥£’¥Ü’¥Ç’¥£’¤Î’¥á’¥Ç’¥£’¥¢’¥¿’¥¤’¥×’¤ò’¼¨’¤·’¤Þ’¤¹’¡£
+   Content-Type ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ãƒ˜ãƒƒãƒ€ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã¯ã€å—ä¿¡è€…ã«é€ä¿¡ã•ã‚Œã‚‹ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ãƒœãƒ‡ã‚£ã®ãƒ¡ãƒ‡ã‚£ã‚¢ã‚¿ã‚¤ãƒ—ã‚’ç¤ºã—ã¾ã™ã€‚HEADãƒ¡ã‚½ãƒƒãƒ‰ã®å ´åˆã€GET ãƒªã‚¯ã‚¨ã‚¹ãƒˆã•ã‚ŒãŸå ´åˆã«é€ä¿¡ã•ã‚Œã‚‹ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ãƒœãƒ‡ã‚£ã®ãƒ¡ãƒ‡ã‚£ã‚¢ã‚¿ã‚¤ãƒ—ã‚’ç¤ºã—ã¾ã™ã€‚
 
 .. attribute:: cookies
 
-   ’¥Ç’¥£’¥¯’¥·’¥ç’¥Ê’¥ê’¤È’¤·’¤Æ’¡¢cookie’¤Î’ÃÍ’¤ò’°·’¤¦’¤³’¤È’¤¬’¤Ç’¤­’¤Þ’¤¹’¡£
+   ãƒ‡ã‚£ã‚¯ã‚·ãƒ§ãƒŠãƒªã¨ã—ã¦ã€cookieã®å€¤ã‚’æ‰±ã†ã“ã¨ãŒã§ãã¾ã™ã€‚
 
 .. attribute:: data
 
-   ’¥Ð’¥Ã’¥Õ’¥¡’¥ê’¥ó’¥°’¤µ’¤ì’¤¿’¥¯’¥é’¥¤’¥¢’¥ó’¥È’¤«’¤é’¤Î’Æþ’ÎÏ’¥Ç’¡¼’¥¿’¤ò’Ê¸’»ú’Îó’¤Ë’ÆÉ’¤ß’¹þ’¤ß’¤Þ’¤¹’¡£’Éá’ÄÌ’¤Ï ``data`` ’¤Ë’¥¢’¥¯’¥»’¥¹’¤¹’¤ë’Êý’Ë¡’¤È’¤·’¤Æ’¤Ï’¤è’¤¯’¤Ê’¤¤’Êý’Ë¡’¤Ç’¤¹’¡£’¥¯’¥é’¥¤’¥¢’¥ó’¥È’¤¬’¡¢’¥µ’¡¼’¥Ð’¤Î’¥á’¥â’¥ê’¤Ë’Ìä’Âê’¤ò’°ú’¤­’µ¯’¤³’¤¹’¤¿’¤á’¤Ë’¡¢’²¿’½½’¥á’¥¬’¥Ð’¥¤’¥È’¤â’¤Î’¥Ç’¡¼’¥¿’¤ò’Á÷’¤ë’¤³’¤È’¤¬’¤Ç’¤­’¤Æ’¤·’¤Þ’¤¦’¤¿’¤á’¤Ç’¤¹’¡£
+   ãƒãƒƒãƒ•ã‚¡ãƒªãƒ³ã‚°ã•ã‚ŒãŸã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆã‹ã‚‰ã®å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ã‚’æ–‡å­—åˆ—ã«èª­ã¿è¾¼ã¿ã¾ã™ã€‚æ™®é€šã¯ ``data`` ã«ã‚¢ã‚¯ã‚»ã‚¹ã™ã‚‹æ–¹æ³•ã¨ã—ã¦ã¯ã‚ˆããªã„æ–¹æ³•ã§ã™ã€‚ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆãŒã€ã‚µãƒ¼ãƒã®ãƒ¡ãƒ¢ãƒªã«å•é¡Œã‚’å¼•ãèµ·ã“ã™ãŸã‚ã«ã€ä½•åãƒ¡ã‚¬ãƒã‚¤ãƒˆã‚‚ã®ãƒ‡ãƒ¼ã‚¿ã‚’é€ã‚‹ã“ã¨ãŒã§ãã¦ã—ã¾ã†ãŸã‚ã§ã™ã€‚
 
-   ’¤³’¤ì’¤ò’Èò’¤±’¤ë’¤Ë’¤Ï’¡¢ ``content_length`` ’¤ò’Àè’¤Ë’¥Á’¥§’¥Ã’¥¯’¤·’¤Æ’¤¯’¤À’¤µ’¤¤’¡£
+   ã“ã‚Œã‚’é¿ã‘ã‚‹ã«ã¯ã€ ``content_length`` ã‚’å…ˆã«ãƒã‚§ãƒƒã‚¯ã—ã¦ãã ã•ã„ã€‚
 
 .. attribute:: date
 
-   Date ’¥¸’¥§’¥Í’¥é’¥ë’¥Ø’¥Ã’¥À’¥Õ’¥£’¡¼’¥ë’¥É’¤Ï’¡¢’¥á’¥Ã’¥»’¡¼’¥¸’¤¬’À¸’À®’¤µ’¤ì’¤¿’Æü’ÉÕ’¤È’»þ’´Ö’¤ò’É½’¤·’¤Þ’¤¹’¡£RFC 822’¤Î orig-date ’¤È’Æ±’¤¸’¥»’¥Þ’¥ó’¥Æ’¥£’¥¯’¥¹’¤ò’¤â’¤Ã’¤Æ’¤¤’¤Þ’¤¹’¡£
+   Date ã‚¸ã‚§ãƒãƒ©ãƒ«ãƒ˜ãƒƒãƒ€ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã¯ã€ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãŒç”Ÿæˆã•ã‚ŒãŸæ—¥ä»˜ã¨æ™‚é–“ã‚’è¡¨ã—ã¾ã™ã€‚RFC 822ã® orig-date ã¨åŒã˜ã‚»ãƒžãƒ³ãƒ†ã‚£ã‚¯ã‚¹ã‚’ã‚‚ã£ã¦ã„ã¾ã™ã€‚
 
 .. attribute:: encoding_errors
 
-   ’¥¨’¥é’¡¼’¥Ï’¥ó’¥É’¥ê’¥ó’¥°’¥×’¥í’¥·’¡¼’¥¸’¥ã’¤Ç’¤¹’¡£’¥Ç’¥Õ’¥©’¥ë’¥È’ÃÍ’¤Ï ``ignore`` ’¤Ç’¤¹’¡£
+   ã‚¨ãƒ©ãƒ¼ãƒãƒ³ãƒ‰ãƒªãƒ³ã‚°ãƒ—ãƒ­ã‚·ãƒ¼ã‚¸ãƒ£ã§ã™ã€‚ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã¯ ``ignore`` ã§ã™ã€‚
 
 .. attribute:: environ
 
-   ’¥ê’¥¯’¥¨’¥¹’¥È’¥ª’¥Ö’¥¸’¥§’¥¯’¥È’¤¬’¥Ç’¡¼’¥¿’¤ò’¼è’¤ê’°·’¤¦’¤¿’¤á’¤Î WSGI’´Ä’¶­ ’¤Ç’¤¹’¡£
+   ãƒªã‚¯ã‚¨ã‚¹ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒãƒ‡ãƒ¼ã‚¿ã‚’å–ã‚Šæ‰±ã†ãŸã‚ã® WSGIç’°å¢ƒ ã§ã™ã€‚
 
 .. attribute:: files
 
-   ’¥¢’¥Ã’¥×’¥í’¡¼’¥É’¤µ’¤ì’¤¿’¤¹’¤Ù’¤Æ’¤Î’¥Õ’¥¡’¥¤’¥ë’¤ò’³Ê’Ç¼’¤·’¤¿ ``MultiDict`` ’¥ª’¥Ö’¥¸’¥§’¥¯’¥È’¤Ç’¤¹’¡£ ``files`` ’¤Î’¤½’¤ì’¤¾’¤ì’¤Î’¥­’¡¼’¤Ï ``<input type="file" name="">`` ’¤Îname’¤Ç’¤¹’¡£’¤½’¤ì’¤¾’¤ì’¤Î’ÃÍ’¤Ï Werkzeug ’¤Î ``FileStorage`` ’¥ª’¥Ö’¥¸’¥§’¥¯’¥È’¤Ç’¤¹’¡£
+   ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ã•ã‚ŒãŸã™ã¹ã¦ã®ãƒ•ã‚¡ã‚¤ãƒ«ã‚’æ ¼ç´ã—ãŸ ``MultiDict`` ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã§ã™ã€‚ ``files`` ã®ãã‚Œãžã‚Œã®ã‚­ãƒ¼ã¯ ``<input type="file" name="">`` ã®nameã§ã™ã€‚ãã‚Œãžã‚Œã®å€¤ã¯ Werkzeug ã® ``FileStorage`` ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã§ã™ã€‚
 
-   ``files`` ’¤Ï’¡¢’¥ê’¥¯’¥¨’¥¹’¥È’¥á’¥½’¥Ã’¥É’¤¬ ``POST`` ’¤«’¡¢ ``PUT`` ’¤Ç’¡¢’¥Ý’¥¹’¥È’¤µ’¤ì’¤¿ ``<form>`` ’¤¬ ``enctype="multipart/form-data`` ’¤ò’»ý’¤Ä’¾ì’¹ç’¤Î’¤ß’¡¢’¥Ç’¡¼’¥¿’¤ò’»ý’¤Á’¤Þ’¤¹’¡£’¤½’¤¦’¤Ç’¤Ê’¤¤’¾ì’¹ç’¤Ï’¶õ’¤Ç’¤¹’¡£
+   ``files`` ã¯ã€ãƒªã‚¯ã‚¨ã‚¹ãƒˆãƒ¡ã‚½ãƒƒãƒ‰ãŒ ``POST`` ã‹ã€ ``PUT`` ã§ã€ãƒã‚¹ãƒˆã•ã‚ŒãŸ ``<form>`` ãŒ ``enctype="multipart/form-data`` ã‚’æŒã¤å ´åˆã®ã¿ã€ãƒ‡ãƒ¼ã‚¿ã‚’æŒã¡ã¾ã™ã€‚ãã†ã§ãªã„å ´åˆã¯ç©ºã§ã™ã€‚
 
 .. attribute:: form
 
-   ’¥Õ’¥©’¡¼’¥à’¤Î’¥Ñ’¥é’¥á’¡¼’¥¿’¤Ç’¤¹’¡£’¸½’¾õ’¡¢’¤³’¤Î’´Ø’¿ô’¤¬’ÊÖ’¤¹’¥Ç’¥£’¥¯’¥·’¥ç’¥Ê’¥ê’¤Î’Ãæ’¿È’¤¬’¥µ’¥Ö’¥ß’¥Ã’¥È’¤µ’¤ì’¤¿’¥Õ’¥©’¡¼’¥à’¥Ç’¡¼’¥¿’¤È’Æ±’¤¸’½ç’½ø’¤«’¤É’¤¦’¤«’¤Ï’ÊÝ’¾Ú’¤µ’¤ì’¤Æ’¤¤’¤Þ’¤»’¤ó’¡£
+   ãƒ•ã‚©ãƒ¼ãƒ ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã§ã™ã€‚ç¾çŠ¶ã€ã“ã®é–¢æ•°ãŒè¿”ã™ãƒ‡ã‚£ã‚¯ã‚·ãƒ§ãƒŠãƒªã®ä¸­èº«ãŒã‚µãƒ–ãƒŸãƒƒãƒˆã•ã‚ŒãŸãƒ•ã‚©ãƒ¼ãƒ ãƒ‡ãƒ¼ã‚¿ã¨åŒã˜é †åºã‹ã©ã†ã‹ã¯ä¿è¨¼ã•ã‚Œã¦ã„ã¾ã›ã‚“ã€‚
 
   .. seealso:: :doc:`forms-usage`
 
 .. classmethod:: from_values(*args, **kwargs)
 
-   ’Äó’¶¡’¤µ’¤ì’¤¿’ÃÍ’¤ò’¤â’¤È’¤Ë’¡¢’¥ê’¥¯’¥¨’¥¹’¥È’¥ª’¥Ö’¥¸’¥§’¥¯’¥È’¤ò’¿·’¤¿’¤Ë’À¸’À®’¤·’¤Þ’¤¹’¡£’¤â’¤· `environ` ’¤¬’Í¿’¤¨’¤é’¤ì’¤Æ’¤¤’¤ì’¤Ð’¡¢’ÉÔ’Â­’¤·’¤Æ’¤¤’¤ë’ÃÍ’¤Ï’¤½’¤³’¤«’¤é’Äó’¶¡’¤µ’¤ì’¤Þ’¤¹’¡£URL ’¤«’¤é’¤Î’¥ê’¥¯’¥¨’¥¹’¥È’¤ò’¥·’¥ß’¥å’¥ì’¡¼’¥È’¤¹’¤ë’É¬’Í×’¤¬’¤¢’¤ë’¾ì’¹ç’¡¢’´Ê’Ã±’¤Ê’¥¹’¥¯’¥ê’¥×’¥È’¤ò’½ñ’¤¯’¤Î’¤Ë’¤Ï’¤³’¤Î’¥á’¥½’¥Ã’¥É’¤Ï’ÊØ’Íø’¤Ç’¤¹’¡£’¤¿’¤À’¤·’¡¢’¤³’¤Î’¥á’¥½’¥Ã’¥É’¤ò’¥æ’¥Ë’¥Ã’¥È’¥Æ’¥¹’¥È’¤Ë’¤Ï’»È’ÍÑ’¤·’¤Ê’¤¤’¤Ç’¤¯’¤À’¤µ’¤¤’¡£’¥Õ’¥ë’µ¡’Ç½’¤Î’¥¯’¥é’¥¤’¥¢’¥ó’¥È’¥ª’¥Ö’¥¸’¥§’¥¯’¥È( ``Client`` )’¤¬’¤¢’¤ê’¡¢’¥Þ’¥ë’¥Á’¥Ñ’¡¼’¥È’¤Î’¥ê’¥¯’¥¨’¥¹’¥È’¤Î’À¸’À®’¡¢cookie’¤Î’¥µ’¥Ý’¡¼’¥È’¤Ê’¤É’¤¬’²Ä’Ç½’¤Ç’¤¹’¡£
+   æä¾›ã•ã‚ŒãŸå€¤ã‚’ã‚‚ã¨ã«ã€ãƒªã‚¯ã‚¨ã‚¹ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’æ–°ãŸã«ç”Ÿæˆã—ã¾ã™ã€‚ã‚‚ã— `environ` ãŒä¸Žãˆã‚‰ã‚Œã¦ã„ã‚Œã°ã€ä¸è¶³ã—ã¦ã„ã‚‹å€¤ã¯ãã“ã‹ã‚‰æä¾›ã•ã‚Œã¾ã™ã€‚URL ã‹ã‚‰ã®ãƒªã‚¯ã‚¨ã‚¹ãƒˆã‚’ã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ãƒˆã™ã‚‹å¿…è¦ãŒã‚ã‚‹å ´åˆã€ç°¡å˜ãªã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚’æ›¸ãã®ã«ã¯ã“ã®ãƒ¡ã‚½ãƒƒãƒ‰ã¯ä¾¿åˆ©ã§ã™ã€‚ãŸã ã—ã€ã“ã®ãƒ¡ã‚½ãƒƒãƒ‰ã‚’ãƒ¦ãƒ‹ãƒƒãƒˆãƒ†ã‚¹ãƒˆã«ã¯ä½¿ç”¨ã—ãªã„ã§ãã ã•ã„ã€‚ãƒ•ãƒ«æ©Ÿèƒ½ã®ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ( ``Client`` )ãŒã‚ã‚Šã€ãƒžãƒ«ãƒãƒ‘ãƒ¼ãƒˆã®ãƒªã‚¯ã‚¨ã‚¹ãƒˆã®ç”Ÿæˆã€cookieã®ã‚µãƒãƒ¼ãƒˆãªã©ãŒå¯èƒ½ã§ã™ã€‚
   
 .. attribute:: headers
 
-   WSGI ’´Ä’¶­’Í³’Íè’¤Î’¥Ø’¥Ã’¥À’¤Ç’¤¹’¡£’ÊÑ’¹¹’ÉÔ’²Ä’¤Î `EnvironHeaders <http://werkzeug.pocoo.org/documentation/0.5.1/datastructures.html#werkzeug.EnvironHeaders>`_ ’¤Ç’¤¹’¡£
+   WSGI ç’°å¢ƒç”±æ¥ã®ãƒ˜ãƒƒãƒ€ã§ã™ã€‚å¤‰æ›´ä¸å¯ã® `EnvironHeaders <http://werkzeug.pocoo.org/documentation/0.5.1/datastructures.html#werkzeug.EnvironHeaders>`_ ã§ã™ã€‚
 
 .. attribute:: host
 
-   ’¥Û’¥¹’¥È’¤Ç’¤¹’¡£’¼è’ÆÀ’²Ä’Ç½’¤Ç’¤¢’¤ì’¤Ð’¥Ý’¡¼’¥È’¤â’´Þ’¤ß’¤Þ’¤¹’¡£
+   ãƒ›ã‚¹ãƒˆã§ã™ã€‚å–å¾—å¯èƒ½ã§ã‚ã‚Œã°ãƒãƒ¼ãƒˆã‚‚å«ã¿ã¾ã™ã€‚
 
 .. attribute:: host_url
 
-   ’¥¹’¥­’¡¼’¥à’Ì¾’¤Ä’¤­’¤Î’¥Û’¥¹’¥È’¤Ç’¤¹’¡£
+   ã‚¹ã‚­ãƒ¼ãƒ åã¤ãã®ãƒ›ã‚¹ãƒˆã§ã™ã€‚
 
 .. attribute:: if_match
 
-   If-Match ’¥Ø’¥Ã’¥À’Ãæ’¤Î’¤¹’¤Ù’¤Æ’¤Îetags ’¤ò’³Ê’Ç¼’¤·’¤¿’¥ª’¥Ö’¥¸’¥§’¥¯’¥È’¤Ç’¤¹’¡£  
+   If-Match ãƒ˜ãƒƒãƒ€ä¸­ã®ã™ã¹ã¦ã®etags ã‚’æ ¼ç´ã—ãŸã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã§ã™ã€‚  
 
 .. attribute:: if_modified_since
 
-   ’¥Ñ’¡¼’¥¹’¤µ’¤ì’¤¿ ``If-Modified_Since`` ’¥Ø’¥Ã’¥À’¤¬ ``datetime`` ’¥ª’¥Ö’¥¸’¥§’¥¯’¥È’¤·’¤Æ’³Ê’Ç¼’¤µ’¤ì’¤Æ’¤¤’¤Þ’¤¹’¡£
+   ãƒ‘ãƒ¼ã‚¹ã•ã‚ŒãŸ ``If-Modified_Since`` ãƒ˜ãƒƒãƒ€ãŒ ``datetime`` ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã—ã¦æ ¼ç´ã•ã‚Œã¦ã„ã¾ã™ã€‚
 
 .. attribute:: if_none_match
 
-   ``If-None-Match`` ’¥Ø’¥Ã’¥À’Ãæ’¤Î’¤¹’¤Ù’¤Æ’¤Îetags’¤ò’³Ê’Ç¼’¤·’¤¿’¥ª’¥Ö’¥¸’¥§’¥¯’¥È’¤Ç’¤¹’¡£  
+   ``If-None-Match`` ãƒ˜ãƒƒãƒ€ä¸­ã®ã™ã¹ã¦ã®etagsã‚’æ ¼ç´ã—ãŸã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã§ã™ã€‚  
 
 .. attribute:: if_unmodified_since
 
-   ’¥Ñ’¡¼’¥¹’¤µ’¤ì’¤¿ ``If-Unmodified_Since`` ’¥Ø’¥Ã’¥À’¤¬ ``datetime`` ’¥ª’¥Ö’¥¸’¥§’¥¯’¥È’¤·’¤Æ’³Ê’Ç¼’¤µ’¤ì’¤Æ’¤¤’¤Þ’¤¹’¡£
+   ãƒ‘ãƒ¼ã‚¹ã•ã‚ŒãŸ ``If-Unmodified_Since`` ãƒ˜ãƒƒãƒ€ãŒ ``datetime`` ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã—ã¦æ ¼ç´ã•ã‚Œã¦ã„ã¾ã™ã€‚
   
-.. attribute:: input_stream
-
-   TODO  
-
 .. attribute:: is_behind_proxy
 
-   HTTP ’¥×’¥í’¥­’¥·’¤Î’¸å’¤í’¤Ç’¥¢’¥×’¥ê’¥±’¡¼’¥·’¥ç’¥ó’¤¬’µ¯’Æ°’¤·’¤Æ’¤¤’¤ë’¾ì’¹ç’¤Ë ``True`` ’¤È’¤Ê’¤ê’¤Þ’¤¹’¡£
+   HTTP ãƒ—ãƒ­ã‚­ã‚·ã®å¾Œã‚ã§ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ãŒèµ·å‹•ã—ã¦ã„ã‚‹å ´åˆã« ``True`` ã¨ãªã‚Šã¾ã™ã€‚
 
 .. attribute:: is_multiprocess
 
-   ’Ê£’¿ô’¤Î’¥×’¥í’¥»’¥¹’¤ò’À¸’À®’¤·’¤Æ’¤¤’¤ë WSGI ’¥µ’¡¼’¥Ð’¤Ë’¤è’¤Ã’¤Æ’¥¢’¥×’¥ê’¥±’¡¼’¥·’¥ç’¥ó’¤¬’Äó’¶¡’¤µ’¤ì’¤Æ’¤¤’¤ë’¾ì’¹ç’¤Ë ``True`` ’¤È’¤Ê’¤ë’¥Ö’¡¼’¥ë’ÃÍ’¤Ç’¤¹’¡£
+   è¤‡æ•°ã®ãƒ—ãƒ­ã‚»ã‚¹ã‚’ç”Ÿæˆã—ã¦ã„ã‚‹ WSGI ã‚µãƒ¼ãƒã«ã‚ˆã£ã¦ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ãŒæä¾›ã•ã‚Œã¦ã„ã‚‹å ´åˆã« ``True`` ã¨ãªã‚‹ãƒ–ãƒ¼ãƒ«å€¤ã§ã™ã€‚
 
 .. attribute:: is_multithread
 
-   ’¥Þ’¥ë’¥Á’¥¹’¥ì’¥Ã’¥É’¤Î WSGI ’¥µ’¡¼’¥Ð’¤Ë’¤è’¤Ã’¤Æ’¥¢’¥×’¥ê’¥±’¡¼’¥·’¥ç’¥ó’¤¬’Äó’¶¡’¤µ’¤ì’¤Æ’¤¤’¤ë’¾ì’¹ç’¤Ë ``True`` ’¤È’¤Ê’¤ë’¥Ö’¡¼’¥ë’ÃÍ’¤Ç’¤¹’¡£
+   ãƒžãƒ«ãƒã‚¹ãƒ¬ãƒƒãƒ‰ã® WSGI ã‚µãƒ¼ãƒã«ã‚ˆã£ã¦ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ãŒæä¾›ã•ã‚Œã¦ã„ã‚‹å ´åˆã« ``True`` ã¨ãªã‚‹ãƒ–ãƒ¼ãƒ«å€¤ã§ã™ã€‚
 
 .. attribute:: is_run_once
 
-   ’¥¢’¥×’¥ê’¥±’¡¼’¥·’¥ç’¥ó’¤¬’¥×’¥í’¥»’¥¹’¤Î’À¸’Â¸’´ü’´Ö’Ãæ’¤Ë’°ì’ÅÙ’¤À’¤±’¼Â’¹Ô’¤Ç’¤¢’¤í’¤¦’¾ì’¹ç’¤Ï ``True`` ’¤Ë’¤Ê’¤ë’¥Ö’¡¼’¥ë’ÃÍ’¤Ç’¤¹’¡£’Îã’¤¨’¤Ð CGI ’¤Î’¤è’¤¦’¤Ê’¾ì’¹ç’¤Ë’¤¢’¤¿’¤ê’¤Þ’¤¹’¤¬’¡¢’°ì’ÅÙ’¤À’¤±’¼Â’¹Ô’¤µ’¤ì’¤ë’¤³’¤È’¤Ï’ÊÝ’¾Ú’¤µ’¤ì’¤Æ’¤¤’¤Þ’¤»’¤ó’¡£
+   ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ãŒãƒ—ãƒ­ã‚»ã‚¹ã®ç”Ÿå­˜æœŸé–“ä¸­ã«ä¸€åº¦ã ã‘å®Ÿè¡Œã§ã‚ã‚ã†å ´åˆã¯ ``True`` ã«ãªã‚‹ãƒ–ãƒ¼ãƒ«å€¤ã§ã™ã€‚ä¾‹ãˆã° CGI ã®ã‚ˆã†ãªå ´åˆã«ã‚ãŸã‚Šã¾ã™ãŒã€ä¸€åº¦ã ã‘å®Ÿè¡Œã•ã‚Œã‚‹ã“ã¨ã¯ä¿è¨¼ã•ã‚Œã¦ã„ã¾ã›ã‚“ã€‚
 
 .. attribute:: is_secure
 
-   ’¥»’¥­’¥å’¥¢’¤Ê’¥ê’¥¯’¥¨’¥¹’¥È’¤Î’¾ì’¹ç ``True`` ’¤È’¤Ê’¤ê’¤Þ’¤¹’¡£
+   ã‚»ã‚­ãƒ¥ã‚¢ãªãƒªã‚¯ã‚¨ã‚¹ãƒˆã®å ´åˆ ``True`` ã¨ãªã‚Šã¾ã™ã€‚
 
 .. attribute:: is_xhr
 
-   ’¥ê’¥¯’¥¨’¥¹’¥È’¤¬ JavaScript XMLHttpRequest ’¤ò’²ð’¤·’¤Æ’È¯’¹Ô’¤µ’¤ì’¤¿’¾ì’¹ç’¡¢ ``True`` ’¤Ë’¤Ê’¤ê’¤Þ’¤¹’¡£’¥é’¥¤’¥Ö’¥é’¥ê’¤¬ ``X-Requested-With`` ’¥Ø’¥Ã’¥À’¤ò’¥µ’¥Ý’¡¼’¥È’¤·’¡¢ ``XMLHttpRequest`` ’¤ò’¥»’¥Ã’¥È’¤·’¤Æ’¤¤’¤ë’¾ì’¹ç’¤Î’¤ß’µ¡’Ç½’¤·’¤Þ’¤¹’¡£prototype, jQuery, Mochikit’¤Ê’¤É’¤¬’¾å’µ­’¤ò’¥µ’¥Ý’¡¼’¥È’¤·’¤Æ’¤¤’¤Þ’¤¹’¡£
+   ãƒªã‚¯ã‚¨ã‚¹ãƒˆãŒ JavaScript XMLHttpRequest ã‚’ä»‹ã—ã¦ç™ºè¡Œã•ã‚ŒãŸå ´åˆã€ ``True`` ã«ãªã‚Šã¾ã™ã€‚ãƒ©ã‚¤ãƒ–ãƒ©ãƒªãŒ ``X-Requested-With`` ãƒ˜ãƒƒãƒ€ã‚’ã‚µãƒãƒ¼ãƒˆã—ã€ ``XMLHttpRequest`` ã‚’ã‚»ãƒƒãƒˆã—ã¦ã„ã‚‹å ´åˆã®ã¿æ©Ÿèƒ½ã—ã¾ã™ã€‚prototype, jQuery, Mochikitãªã©ãŒä¸Šè¨˜ã‚’ã‚µãƒãƒ¼ãƒˆã—ã¦ã„ã¾ã™ã€‚
 
 .. attribute:: lang
 
-   ’¥Ö’¥é’¥¦’¥¶’¤Î’¸À’¸ì’Àß’Äê’¤Ç’¤¹’¡£
+   ãƒ–ãƒ©ã‚¦ã‚¶ã®è¨€èªžè¨­å®šã§ã™ã€‚
 
 .. attribute:: max_content_length
 
-   ’¥³’¥ó’¥Æ’¥ó’¥È’Ä¹’¤Î’ºÇ’Âç’ÃÍ’¤Ç’¤¹’¡£’¤³’¤Î’ÃÍ’¤Ï’¥Õ’¥©’¡¼’¥à’¥Ç’¡¼’¥¿’¤ò’¥Ñ’¡¼’¥¹’¤¹’¤ë’´Ø’¿ô( `parse_form_data() <http://werkzeug.pocoo.org/documentation/dev/http.html#werkzeug.parse_form_data>`_ )’¤Ë’ÅÏ’¤µ’¤ì’¤Þ’¤¹’¡£’ÃÍ’¤¬’¥»’¥Ã’¥È’¤µ’¤ì’¤Æ’¤¤’¤Æ’¡¢ ``form`` ’¤ä ``file`` ’Â°’À­’¤Ë’¥¢’¥¯’¥»’¥¹’¤µ’¤ì’¡¢’»Ø’Äê’¤·’¤¿’ÃÍ’¤ò’Ä¶’¤¨’¤ë’Å¾’Á÷’¤¬’¤¢’¤Ã’¤Æ’¥Ñ’¡¼’¥¹’¤¬’¼º’ÇÔ’¤¹’¤ë’¾ì’¹ç’¡¢ `RequestEntityTooLarge <http://werkzeug.pocoo.org/documentation/dev/exceptions.html#werkzeug.exceptions.RequestEntityTooLarge>`_ ’¥¨’¥¯’¥»’¥×’¥·’¥ç’¥ó’¤¬’¤¢’¤¬’¤ê’¤Þ’¤¹’¡£
+   ã‚³ãƒ³ãƒ†ãƒ³ãƒˆé•·ã®æœ€å¤§å€¤ã§ã™ã€‚ã“ã®å€¤ã¯ãƒ•ã‚©ãƒ¼ãƒ ãƒ‡ãƒ¼ã‚¿ã‚’ãƒ‘ãƒ¼ã‚¹ã™ã‚‹é–¢æ•°( `parse_form_data() <http://werkzeug.pocoo.org/documentation/dev/http.html#werkzeug.parse_form_data>`_ )ã«æ¸¡ã•ã‚Œã¾ã™ã€‚å€¤ãŒã‚»ãƒƒãƒˆã•ã‚Œã¦ã„ã¦ã€ ``form`` ã‚„ ``file`` å±žæ€§ã«ã‚¢ã‚¯ã‚»ã‚¹ã•ã‚Œã€æŒ‡å®šã—ãŸå€¤ã‚’è¶…ãˆã‚‹è»¢é€ãŒã‚ã£ã¦ãƒ‘ãƒ¼ã‚¹ãŒå¤±æ•—ã™ã‚‹å ´åˆã€ `RequestEntityTooLarge <http://werkzeug.pocoo.org/documentation/dev/exceptions.html#werkzeug.exceptions.RequestEntityTooLarge>`_ ã‚¨ã‚¯ã‚»ãƒ—ã‚·ãƒ§ãƒ³ãŒã‚ãŒã‚Šã¾ã™ã€‚
 
 .. attribute:: max_form_memory_size
 
-   ’¥Õ’¥©’¡¼’¥à’¥Õ’¥£’¡¼’¥ë’¥É’¤Î’ºÇ’Âç’¥µ’¥¤’¥º’¤Ç’¤¹’¡£’¤³’¤Î’ÃÍ’¤Ï’¥Õ’¥©’¡¼’¥à’¥Ç’¡¼’¥¿’¤ò’¥Ñ’¡¼’¥¹’¤¹’¤ë’´Ø’¿ô( `parse_form_data() <http://werkzeug.pocoo.org/documentation/dev/http.html#werkzeug.parse_form_data>`_ )’¤Ë’ÅÏ’¤µ’¤ì’¤Þ’¤¹’¡£’ÃÍ’¤¬’¥»’¥Ã’¥È’¤µ’¤ì’¤Æ’¤¤’¤Æ’¡¢ ``form`` ’¤ä ``file`` ’Â°’À­’¤Ë’¥¢’¥¯’¥»’¥¹’¤µ’¤ì’¡¢’¥Ý’¥¹’¥È’¥Ç’¡¼’¥¿’ÍÑ’¤Î’¥á’¥â’¥ê’¡¼’¥Ç’¡¼’¥¿’¤¬’»Ø’Äê’¤·’¤¿’ÃÍ’¤ò’Ä¶’¤¨’¤ë’¤È’¡¢ `RequestEntityTooLarge <http://werkzeug.pocoo.org/documentation/dev/exceptions.html#werkzeug.exceptions.RequestEntityTooLarge>`_ ’¥¨’¥¯’¥»’¥×’¥·’¥ç’¥ó’¤¬’¤¢’¤¬’¤ê’¤Þ’¤¹’¡£
+   ãƒ•ã‚©ãƒ¼ãƒ ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®æœ€å¤§ã‚µã‚¤ã‚ºã§ã™ã€‚ã“ã®å€¤ã¯ãƒ•ã‚©ãƒ¼ãƒ ãƒ‡ãƒ¼ã‚¿ã‚’ãƒ‘ãƒ¼ã‚¹ã™ã‚‹é–¢æ•°( `parse_form_data() <http://werkzeug.pocoo.org/documentation/dev/http.html#werkzeug.parse_form_data>`_ )ã«æ¸¡ã•ã‚Œã¾ã™ã€‚å€¤ãŒã‚»ãƒƒãƒˆã•ã‚Œã¦ã„ã¦ã€ ``form`` ã‚„ ``file`` å±žæ€§ã«ã‚¢ã‚¯ã‚»ã‚¹ã•ã‚Œã€ãƒã‚¹ãƒˆãƒ‡ãƒ¼ã‚¿ç”¨ã®ãƒ¡ãƒ¢ãƒªãƒ¼ãƒ‡ãƒ¼ã‚¿ãŒæŒ‡å®šã—ãŸå€¤ã‚’è¶…ãˆã‚‹ã¨ã€ `RequestEntityTooLarge <http://werkzeug.pocoo.org/documentation/dev/exceptions.html#werkzeug.exceptions.RequestEntityTooLarge>`_ ã‚¨ã‚¯ã‚»ãƒ—ã‚·ãƒ§ãƒ³ãŒã‚ãŒã‚Šã¾ã™ã€‚
 
 .. attribute:: max_forwards
 
-   Max-Forwards ’¥ê’¥¯’¥¨’¥¹’¥È’¥Ø’¥Ã’¥À’¥Õ’¥£’¡¼’¥ë’¥É’¤Ï’¡¢ TRACE ’¤È OPTIONS ’¥á’¥½’¥Ã’¥É’¤Ë’¡¢’¥ê’¥¯’¥¨’¥¹’¥È’¤ò’ÊÌ’¤Î’¥µ’¡¼’¥Ð’¤Ø’¥Õ’¥©’¥ï’¡¼’¥É’¤¹’¤ë’¥×’¥í’¥­’¥·’¤ä’¥²’¡¼’¥È’¥¦’¥§’¥¤’¤Î’¿ô’¤ò’À©’¸Â’¤¹’¤ë’»Å’ÁÈ’¤ß’¤ò’Äó’¶¡’¤·’¤Þ’¤¹’¡£
+   Max-Forwards ãƒªã‚¯ã‚¨ã‚¹ãƒˆãƒ˜ãƒƒãƒ€ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã¯ã€ TRACE ã¨ OPTIONS ãƒ¡ã‚½ãƒƒãƒ‰ã«ã€ãƒªã‚¯ã‚¨ã‚¹ãƒˆã‚’åˆ¥ã®ã‚µãƒ¼ãƒã¸ãƒ•ã‚©ãƒ¯ãƒ¼ãƒ‰ã™ã‚‹ãƒ—ãƒ­ã‚­ã‚·ã‚„ã‚²ãƒ¼ãƒˆã‚¦ã‚§ã‚¤ã®æ•°ã‚’åˆ¶é™ã™ã‚‹ä»•çµ„ã¿ã‚’æä¾›ã—ã¾ã™ã€‚
 
 .. attribute:: method
 
-   HTTP’¥á’¥½’¥Ã’¥É’¤Ç’¤¹’¡£ ``GET`` or ``POST``
+   HTTPãƒ¡ã‚½ãƒƒãƒ‰ã§ã™ã€‚ ``GET`` or ``POST``
 
 .. attribute:: mimetype
 
-   ``content-type`` ’¤È’»÷’¤Æ’¤¤’¤Þ’¤¹’¤¬’¡¢’¥Ñ’¥é’¥á’¡¼’¥¿’¡Ê’Îã’¡§’Ê¸’»ú’¥»’¥Ã’¥È’¡¢’·¿’¤Ê’¤É’¡Ë’¤¬’¤¢’¤ê’¤Þ’¤»’¤ó’¡£’Îã’¤¨’¤Ð’¡¢’¥³’¥ó’¥Æ’¥ó’¥È’¥¿’¥¤’¥×’¤¬ ``text/html; charset=utf-8`` ’¤Î’¾ì’¹ç’¡¢mimetype’¤Ï ``'text/html'`` ’¤È’¤Ê’¤ê’¤Þ’¤¹’¡£
+   ``content-type`` ã¨ä¼¼ã¦ã„ã¾ã™ãŒã€ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ï¼ˆä¾‹ï¼šæ–‡å­—ã‚»ãƒƒãƒˆã€åž‹ãªã©ï¼‰ãŒã‚ã‚Šã¾ã›ã‚“ã€‚ä¾‹ãˆã°ã€ã‚³ãƒ³ãƒ†ãƒ³ãƒˆã‚¿ã‚¤ãƒ—ãŒ ``text/html; charset=utf-8`` ã®å ´åˆã€mimetypeã¯ ``'text/html'`` ã¨ãªã‚Šã¾ã™ã€‚
 
 .. attribute:: mimetype_params
 
-   mimetype’¥Ñ’¥é’¥á’¡¼’¥¿’¤¬’¥Ç’¥£’¥¯’¥·’¥ç’¥Ê’¥ê’¤Ç’³Ê’Ç¼’¤µ’¤ì’¤Æ’¤¤’¤Þ’¤¹’¡£’Îã’¤¨’¤Ð’¡¢’¥³’¥ó’¥Æ’¥ó’¥È’¥¿’¥¤’¥×’¤¬ ``text/html; charset=utf-8`` ’¤Î’¾ì’¹ç’¡¢’¥Ñ’¥é’¥á’¡¼’¥¿’¤Ï ``{'charset': 'utf-8'}`` ’¤Î’¤è’¤¦’¤Ë’¤Ê’¤Ã’¤Æ’¤¤’¤Þ’¤¹’¡£
+   mimetypeãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãŒãƒ‡ã‚£ã‚¯ã‚·ãƒ§ãƒŠãƒªã§æ ¼ç´ã•ã‚Œã¦ã„ã¾ã™ã€‚ä¾‹ãˆã°ã€ã‚³ãƒ³ãƒ†ãƒ³ãƒˆã‚¿ã‚¤ãƒ—ãŒ ``text/html; charset=utf-8`` ã®å ´åˆã€ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã¯ ``{'charset': 'utf-8'}`` ã®ã‚ˆã†ã«ãªã£ã¦ã„ã¾ã™ã€‚
 
 .. attribute:: path
 
-  ’¥ê’¥¯’¥¨’¥¹’¥È’¤µ’¤ì’¤¿’¥Ñ’¥¹’¤¬Unicode’¤Ç’³Ê’Ç¼’¤µ’¤ì’¤Þ’¤¹’¡£WSGI’´Ä’¶­’¤Î’¥Ñ’¥¹’¤È’Æ±’¤¸’¤è’¤¦’¤Ê’¤â’¤Î’¤Ç’¤¹’¤¬’¡¢’¾ï’¤Ë’¥¹’¥é’¥Ã’¥·’¥å’¤¬’´Þ’¤Þ’¤ì’¤Þ’¤¹’¡£’¥ë’¡¼’¥È’¤Ø’¤Î’ÂÐ’¤¹’¤ë’¥¢’¥¯’¥»’¥¹’¤Ç’¤â’Æ±’ÍÍ’¤Ç’¤¹’¡£
+  ãƒªã‚¯ã‚¨ã‚¹ãƒˆã•ã‚ŒãŸãƒ‘ã‚¹ãŒUnicodeã§æ ¼ç´ã•ã‚Œã¾ã™ã€‚WSGIç’°å¢ƒã®ãƒ‘ã‚¹ã¨åŒã˜ã‚ˆã†ãªã‚‚ã®ã§ã™ãŒã€å¸¸ã«ã‚¹ãƒ©ãƒƒã‚·ãƒ¥ãŒå«ã¾ã‚Œã¾ã™ã€‚ãƒ«ãƒ¼ãƒˆã¸ã®å¯¾ã™ã‚‹ã‚¢ã‚¯ã‚»ã‚¹ã§ã‚‚åŒæ§˜ã§ã™ã€‚
 
 .. attribute:: pragma
 
-   Pragma’¥¸’¥§’¥Í’¥é’¥ë’¥Ø’¥Ã’¥À’¥Õ’¥£’¡¼’¥ë’¥É’¤Ï’¡¢’¥ê’¥¯’¥¨’¥¹’¥È/’¥ì’¥¹’¥Ý’¥ó’¥¹’Ï¢’º¿’Ãæ’¤Î’¤¢’¤é’¤æ’¤ë’¼õ’¿®’¼Ô’¤Ë’¤â’Å¬’ÍÑ’¤µ’¤ì’¤ë’¤Ç’¤¢’¤í’¤¦’¼Â’Áõ’¤Î’ÆÃ’ÊÌ’¤Ê’»Ø’¼¨’¤ò’¼¨’¤¹’¤¿’¤á’¤Ë’»È’¤ï’¤ì’¤Þ’¤¹’¡£’Á´’¤Æ’¤Î pragma ’»Ø’¼¨’»Ò’¤Ï’¡¢’¥×’¥í’¥È’¥³’¥ë’¤Î’»ë’ÅÀ’¤«’¤é’¸«’¤ì’¤Ð’¥ª’¥×’¥·’¥ç’¥Ê’¥ë’¤Ê’¿¶’¤ë’Éñ’¤¤’¤ò’»Ø’Äê’¤·’¤Þ’¤¹’¤¬’¡¢’¤½’¤Î’¿¶’¤ë’Éñ’¤¤’¤¬’»Ø’¼¨’»Ò’¤È’°ì’Ã×’¤·’¤Æ’¤¤’¤ë’¤³’¤È’¤ò’Í×’µá’¤¹’¤ë’¥·’¥¹’¥Æ’¥à’¤¬’¤¢’¤ë’¤«’¤â’¤·’¤ì’¤Þ’¤»’¤ó’¡£
+   Pragmaã‚¸ã‚§ãƒãƒ©ãƒ«ãƒ˜ãƒƒãƒ€ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã¯ã€ãƒªã‚¯ã‚¨ã‚¹ãƒˆ/ãƒ¬ã‚¹ãƒãƒ³ã‚¹é€£éŽ–ä¸­ã®ã‚ã‚‰ã‚†ã‚‹å—ä¿¡è€…ã«ã‚‚é©ç”¨ã•ã‚Œã‚‹ã§ã‚ã‚ã†å®Ÿè£…ã®ç‰¹åˆ¥ãªæŒ‡ç¤ºã‚’ç¤ºã™ãŸã‚ã«ä½¿ã‚ã‚Œã¾ã™ã€‚å…¨ã¦ã® pragma æŒ‡ç¤ºå­ã¯ã€ãƒ—ãƒ­ãƒˆã‚³ãƒ«ã®è¦–ç‚¹ã‹ã‚‰è¦‹ã‚Œã°ã‚ªãƒ—ã‚·ãƒ§ãƒŠãƒ«ãªæŒ¯ã‚‹èˆžã„ã‚’æŒ‡å®šã—ã¾ã™ãŒã€ãã®æŒ¯ã‚‹èˆžã„ãŒæŒ‡ç¤ºå­ã¨ä¸€è‡´ã—ã¦ã„ã‚‹ã“ã¨ã‚’è¦æ±‚ã™ã‚‹ã‚·ã‚¹ãƒ†ãƒ ãŒã‚ã‚‹ã‹ã‚‚ã—ã‚Œã¾ã›ã‚“ã€‚
   
 
 .. attribute:: query_string
 
-   URL’¥Ñ’¥é’¥á’¡¼’¥¿’¤Ç’¤¹’¡£’¥Ð’¥¤’¥È’¥¹’¥È’¥ê’¥ó’¥°’¤Ç’³Ê’Ç¼’¤µ’¤ì’¤Æ’¤¤’¤Þ’¤¹’¡£
+   URLãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã§ã™ã€‚ãƒã‚¤ãƒˆã‚¹ãƒˆãƒªãƒ³ã‚°ã§æ ¼ç´ã•ã‚Œã¦ã„ã¾ã™ã€‚
 
 .. attribute:: referrer
 
-   Referer[’¸¶’Ê¸’¥Þ’¥Þ] ’¥ê’¥¯’¥¨’¥¹’¥È’¥Ø’¥Ã’¥À’¥Õ’¥£’¡¼’¥ë’¥É’¤Ï’¡¢’¥µ’¡¼’¥Ð’¤Î’Íø’±×’¤Î’¤¿’¤á’¤Ë’¡¢ Request-URI ’¤¬’¼è’ÆÀ’¤µ’¤ì’¤¿’¥ê’¥½’¡¼’¥¹’¤Î’¥¢’¥É’¥ì’¥¹ (URI) ’¤ò’¥¯’¥é’¥¤’¥¢’¥ó’¥È’¤Ë’¼¨’¤µ’¤»’¤Þ’¤¹’¡£
+   Referer[åŽŸæ–‡ãƒžãƒž] ãƒªã‚¯ã‚¨ã‚¹ãƒˆãƒ˜ãƒƒãƒ€ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã¯ã€ã‚µãƒ¼ãƒã®åˆ©ç›Šã®ãŸã‚ã«ã€ Request-URI ãŒå–å¾—ã•ã‚ŒãŸãƒªã‚½ãƒ¼ã‚¹ã®ã‚¢ãƒ‰ãƒ¬ã‚¹ (URI) ã‚’ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆã«ç¤ºã•ã›ã¾ã™ã€‚
 
 .. attribute:: remote_addr
 
-   ’¥¯’¥é’¥¤’¥¢’¥ó’¥È’¤Î’¥ê’¥â’¡¼’¥È’¥¢’¥É’¥ì’¥¹’¤Ç’¤¹’¡£
+   ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆã®ãƒªãƒ¢ãƒ¼ãƒˆã‚¢ãƒ‰ãƒ¬ã‚¹ã§ã™ã€‚
 
 .. attribute:: remote_user
 
-   ’¥æ’¡¼’¥¶’Ç§’¾Ú’¤ò’Í­’¸ú’¤Ë’¤·’¤Æ’¤¤’¤ë’¾ì’¹ç’¡¢’¥æ’¡¼’¥¶’Ì¾’¤¬’³Ê’Ç¼’¤µ’¤ì’¤Þ’¤¹’¡£
+   ãƒ¦ãƒ¼ã‚¶èªè¨¼ã‚’æœ‰åŠ¹ã«ã—ã¦ã„ã‚‹å ´åˆã€ãƒ¦ãƒ¼ã‚¶åãŒæ ¼ç´ã•ã‚Œã¾ã™ã€‚
 
 .. attribute:: script_root
 
-   ’Ëö’Èø’¤Î’¥¹’¥é’¥Ã’¥·’¥å’¤ò’¼è’¤ê’½ü’¤¤’¤¿’¡¢’¥¹’¥¯’¥ê’¥×’¥È’¤Î’¥ë’¡¼’¥È’¥Ñ’¥¹’¤Ç’¤¹’¡£
+   æœ«å°¾ã®ã‚¹ãƒ©ãƒƒã‚·ãƒ¥ã‚’å–ã‚Šé™¤ã„ãŸã€ã‚¹ã‚¯ãƒªãƒ—ãƒˆã®ãƒ«ãƒ¼ãƒˆãƒ‘ã‚¹ã§ã™ã€‚
 
 .. attribute:: session
 
-   ’¥»’¥Ã’¥·’¥ç’¥ó’¥Ç’¡¼’¥¿’¤¬’³Ê’Ç¼’¤µ’¤ì’¤Æ’¤¤’¤Þ’¤¹’¡£’¥»’¥Ã’¥·’¥ç’¥ó’µ¡’Ç½’¤ò’Í­’¸ú’¤Ë’¤¹’¤ë’¤È’»È’ÍÑ’¤Ç’¤­’¤Þ’¤¹’¡£
+   ã‚»ãƒƒã‚·ãƒ§ãƒ³ãƒ‡ãƒ¼ã‚¿ãŒæ ¼ç´ã•ã‚Œã¦ã„ã¾ã™ã€‚ã‚»ãƒƒã‚·ãƒ§ãƒ³æ©Ÿèƒ½ã‚’æœ‰åŠ¹ã«ã™ã‚‹ã¨ä½¿ç”¨ã§ãã¾ã™ã€‚
 
   .. seealso:: :doc:`session`
 
 .. attribute:: shallow
 
-   ’¥ê’¥¯’¥¨’¥¹’¥È’¤¬environ’¤Îshallow copy’¤Ç’¤¢’¤ë’¾ì’¹ç’¡¢ ``True`` ’¤¬’³Ê’Ç¼’¤µ’¤ì’¤Æ’¤¤’¤Þ’¤¹’¡£
+   ãƒªã‚¯ã‚¨ã‚¹ãƒˆãŒenvironã®shallow copyã§ã‚ã‚‹å ´åˆã€ ``True`` ãŒæ ¼ç´ã•ã‚Œã¦ã„ã¾ã™ã€‚
 
 .. attribute:: stream
 
-   ’¤â’¤·’¥µ’¥Ö’¥ß’¥Ã’¥È’¤µ’¤ì’¤¿’¥Ç’¡¼’¥¿’¤¬’Ê£’¿ô’¤Î’¥Ñ’¡¼’¥È’¤ò’¤â’¤¿’¤Ê’¤¤’¤«’¡¢url’¥¨’¥ó’¥³’¡¼’¥É’¤µ’¤ì’¤¿’¥Õ’¥©’¡¼’¥à’¥Ç’¡¼’¥¿’¤Ç’¤Ê’¤±’¤ì’¤Ð’¡¢’¥Ñ’¡¼’¥¹’¤µ’¤ì’¤¿’¥¹’¥È’¥ê’¡¼’¥à’¤¬’³Ê’Ç¼’¤µ’¤ì’¤Þ’¤¹’¡£’¤³’¤Î’¥¹’¥È’¥ê’¡¼’¥à’¤Ï’¥Ñ’¡¼’¥¹’¤µ’¤ì’¤¿’¸å’¤Ë’¡¢’¥Õ’¥©’¡¼’¥à’¥Ç’¡¼’¥¿’¥Ñ’¡¼’¥µ’¥â’¥¸’¥å’¡¼’¥ë’¤Ë’¤è’¤Ã’¤Æ’»Ä’¤µ’¤ì’¤¿’¥¹’¥È’¥ê’¡¼’¥à’¤Ç’¤¹’¡£TODO
+   ã‚‚ã—ã‚µãƒ–ãƒŸãƒƒãƒˆã•ã‚ŒãŸãƒ‡ãƒ¼ã‚¿ãŒè¤‡æ•°ã®ãƒ‘ãƒ¼ãƒˆã‚’ã‚‚ãŸãªã„ã‹ã€urlã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã•ã‚ŒãŸãƒ•ã‚©ãƒ¼ãƒ ãƒ‡ãƒ¼ã‚¿ã§ãªã‘ã‚Œã°ã€ãƒ‘ãƒ¼ã‚¹ã•ã‚ŒãŸã‚¹ãƒˆãƒªãƒ¼ãƒ ãŒæ ¼ç´ã•ã‚Œã¾ã™ã€‚ã“ã®ã‚¹ãƒˆãƒªãƒ¼ãƒ ã¯ãƒ‘ãƒ¼ã‚¹ã•ã‚ŒãŸå¾Œã«ã€ãƒ•ã‚©ãƒ¼ãƒ ãƒ‡ãƒ¼ã‚¿ãƒ‘ãƒ¼ã‚µãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã«ã‚ˆã£ã¦æ®‹ã•ã‚ŒãŸã‚¹ãƒˆãƒªãƒ¼ãƒ ã§ã™ã€‚TODO
 
 .. attribute:: url
 
-   ’¥ê’¥â’¡¼’¥È’¥¢’¥É’¥ì’¥¹’¤Ç’¤¹’¡£
+   ãƒªãƒ¢ãƒ¼ãƒˆã‚¢ãƒ‰ãƒ¬ã‚¹ã§ã™ã€‚
 
 .. attribute:: url_charset
 
-   URL’¤Ë’»È’¤ï’¤ì’¤ë’Ê¸’»ú’¥»’¥Ã’¥È’¤Ç’¤¹’¡£’¥Ç’¥Õ’¥©’¥ë’¥È’¤Ï ``charset`` ’¤Î’ÃÍ’¤Ë’¤Ê’¤Ã’¤Æ’¤¤’¤Þ’¤¹’¡£
+   URLã«ä½¿ã‚ã‚Œã‚‹æ–‡å­—ã‚»ãƒƒãƒˆã§ã™ã€‚ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯ ``charset`` ã®å€¤ã«ãªã£ã¦ã„ã¾ã™ã€‚
 
 .. attribute:: url_root
 
-   ’¥Û’¥¹’¥È’¥Í’¡¼’¥à’¤Î’¤Ä’¤¤’¤¿’´°’Á´’¤ÊURL’¤Ç’¤¹’¡£’¤³’¤ì’¤Ï’¥¢’¥×’¥ê’¥±’¡¼’¥·’¥ç’¥ó’¥ë’¡¼’¥È’¤Ç’¤¹’¡£
+   ãƒ›ã‚¹ãƒˆãƒãƒ¼ãƒ ã®ã¤ã„ãŸå®Œå…¨ãªURLã§ã™ã€‚ã“ã‚Œã¯ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ãƒ«ãƒ¼ãƒˆã§ã™ã€‚
 
 .. attribute:: user
 
-   ’¥æ’¡¼’¥¶’Ç§’¾Ú’¤ò’Í­’¸ú’¤Ë’¤·’¤Æ’¤¤’¤ë’¾ì’¹ç’¡¢ ``settings.py`` ’¤Î ``AUTH_USER_MODEL`` ’¤Ç’»Ø’Äê’¤·’¤¿’¥æ’¡¼’¥¶’¥ª’¥Ö’¥¸’¥§’¥¯’¥È’¤¬’³Ê’Ç¼’¤µ’¤ì’¤Þ’¤¹’¡£
+   ãƒ¦ãƒ¼ã‚¶èªè¨¼ã‚’æœ‰åŠ¹ã«ã—ã¦ã„ã‚‹å ´åˆã€ ``settings.py`` ã® ``AUTH_USER_MODEL`` ã§æŒ‡å®šã—ãŸãƒ¦ãƒ¼ã‚¶ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒæ ¼ç´ã•ã‚Œã¾ã™ã€‚
 
   .. seealso:: :doc:`auth`
 
 .. attribute:: user_agent
 
-   ’¸½’ºß’¤Î’¥æ’¡¼’¥¶’¥¨’¡¼’¥¸’¥§’¥ó’¥È’¤Ç’¤¹’¡£
+   ç¾åœ¨ã®ãƒ¦ãƒ¼ã‚¶ã‚¨ãƒ¼ã‚¸ã‚§ãƒ³ãƒˆã§ã™ã€‚
 
 .. attribute:: values
 
-   ``args`` ’¤ä ``form`` ’¤Î’¤¿’¤á’¤Î’¡¢’¥Ç’¥£’¥¯’¥·’¥ç’¥Ê’¥ê’¤Ç’¤¹’¡£
+   ``args`` ã‚„ ``form`` ã®ãŸã‚ã®ã€ãƒ‡ã‚£ã‚¯ã‚·ãƒ§ãƒŠãƒªã§ã™ã€‚
 
 
 
-’¥Ñ’¥é’¥á’¡¼’¥¿’¤Î’¼è’ÆÀ
+ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®å–å¾—
 ----------------
 
-GET’¥á’¥½’¥Ã’¥É’¤Î’¥Ñ’¥é’¥á’¡¼’¥¿’¼è’ÆÀ’¤¹’¤ë’¤Ë’¤Ï’¡¢’°Ê’²¼’¤Î’¤è’¤¦’¤Ë’µ­’½Ò’¤·’¤Þ’¤¹’¡£
+GETãƒ¡ã‚½ãƒƒãƒ‰ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿å–å¾—ã™ã‚‹ã«ã¯ã€ä»¥ä¸‹ã®ã‚ˆã†ã«è¨˜è¿°ã—ã¾ã™ã€‚
 
 .. code-block:: python
 
@@ -304,241 +300,264 @@ GET’¥á’¥½’¥Ã’¥É’¤Î’¥Ñ’¥é’¥á’¡¼’¥¿’¼è’ÆÀ’¤¹’¤ë’¤Ë’¤Ï’¡¢’°Ê’²¼’¤Î’¤è’¤¦’¤Ë’µ­’½Ò’¤
 
 
 
-’¥ì’¥¹’¥Ý’¥ó’¥¹’¥ª’¥Ö’¥¸’¥§’¥¯’¥È
+ãƒ¬ã‚¹ãƒãƒ³ã‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 ======================
 
-* view’´Ø’¿ô’¤Ï’¡¢’É¬’¤º’¥ì’¥¹’¥Ý’¥ó’¥¹’¥ª’¥Ö’¥¸’¥§’¥¯’¥È’¤ò’ÊÖ’¤¹’É¬’Í×’¤¬’¤¢’¤ê’¤Þ’¤¹’¡£
+* viewé–¢æ•°ã¯ã€å¿…ãšãƒ¬ã‚¹ãƒãƒ³ã‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’è¿”ã™å¿…è¦ãŒã‚ã‚Šã¾ã™ã€‚
 
-’Â°’À­’¤È’¥á’¥½’¥Ã’¥É
+å±žæ€§ã¨ãƒ¡ã‚½ãƒƒãƒ‰
 --------------
 
-’¥ì’¥¹’¥Ý’¥ó’¥¹’¥ª’¥Ö’¥¸’¥§’¥¯’¥È’¤Ï’°Ê’²¼’¤Î’Â°’À­’¡¢’¤ª’¤è’¤Ó’¡¢’¥á’¥½’¥Ã’¥É’¤ò’»ý’¤Ã’¤Æ’¤¤’¤Þ’¤¹’¡£
+ãƒ¬ã‚¹ãƒãƒ³ã‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¯ä»¥ä¸‹ã®å±žæ€§ã€ãŠã‚ˆã³ã€ãƒ¡ã‚½ãƒƒãƒ‰ã‚’æŒã£ã¦ã„ã¾ã™ã€‚
 
 
 .. method:: add_etag(overwrite=False, weak=False)
 
-   ’¸½’ºß’¤Î’¥ª’¥Ö’¥¸’¥§’¥¯’¥È’¤Ë etag ’¤ò’ÄÉ’²Ã’¤·’¤Þ’¤¹’¡£   
+   ç¾åœ¨ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã« etag ã‚’è¿½åŠ ã—ã¾ã™ã€‚   
 
 .. attribute:: age
    
-   Age ’¥ì’¥¹’¥Ý’¥ó’¥¹’¥Ø’¥Ã’¥À’¤Ï’¡¢’¥ª’¥ê’¥¸’¥ó’¥µ’¡¼’¥Ð’¤Ë’¤ª’¤¤’¤Æ’¥ì’¥¹’¥Ý’¥ó’¥¹’¡Ê’¤Þ’¤¿’¤Ï’¡¢’¤½’¤Î’ºÆ’¸¡’¾Ú’¤¬) ’¤¬’À¸’À®’¤µ’¤ì’¤Æ’¤«’¤é’¤Î’¡¢’Á÷’¿®’¼Ô’¤Î’¿ä’Äê’·Ð’²á’»þ’´Ö’¤ò’¼¨’¤·’¤Þ’¤¹’¡£
+   Age ãƒ¬ã‚¹ãƒãƒ³ã‚¹ãƒ˜ãƒƒãƒ€ã¯ã€ã‚ªãƒªã‚¸ãƒ³ã‚µãƒ¼ãƒã«ãŠã„ã¦ãƒ¬ã‚¹ãƒãƒ³ã‚¹ï¼ˆã¾ãŸã¯ã€ãã®å†æ¤œè¨¼ãŒ) ãŒç”Ÿæˆã•ã‚Œã¦ã‹ã‚‰ã®ã€é€ä¿¡è€…ã®æŽ¨å®šçµŒéŽæ™‚é–“ã‚’ç¤ºã—ã¾ã™ã€‚
 
-   Age ’¤Î’ÃÍ’¤Ï’¡¢’Éé’ÃÍ’¤Ç’¤Ê’¤¤10’¿Ê’¿ô’¤Î’À°’¿ô’¤Ç’¡¢’ÉÃ’¤Ç’»þ’´Ö’¤ò’É½’¤·’¤Þ’¤¹’¡£
+   Age ã®å€¤ã¯ã€è² å€¤ã§ãªã„10é€²æ•°ã®æ•´æ•°ã§ã€ç§’ã§æ™‚é–“ã‚’è¡¨ã—ã¾ã™ã€‚
 
 .. attribute:: allow
 
-   Allow ’¥¨’¥ó’¥Æ’¥£’¥Æ’¥£’¥Ø’¥Ã’¥À’¥Õ’¥£’¡¼’¥ë’¥É’¤Ï’¡¢ Request-URI ’¤Ë’¤è’¤Ã’¤Æ’¼±’ÊÌ’¤µ’¤ì’¤¿’¥ê’¥½’¡¼’¥¹’¤Ë’¤è’¤Ã’¤Æ’¥µ’¥Ý’¡¼’¥È’¤µ’¤ì’¤Æ’¤¤’¤ë’¥á’¥½’¥Ã’¥É’¤Î’¥»’¥Ã’¥È’¤ò’¼¨’¤·’¤Þ’¤¹’¡£’¤³’¤Î’¥Õ’¥£’¡¼’¥ë’¥É’¤Î’ÌÜ’Åª’¤Ï’¡¢’¥ê’¥½’¡¼’¥¹’¤Ë’´Ø’¤¹’¤ë’Í­’¸ú’¤Ê’¥á’¥½’¥Ã’¥É’¤ò’¼õ’¿®’¼Ô’¤Ë’¸·’Ì©’¤Ë’ÃÎ’¤é’¤»’¤ë’¤³’¤È’¤Ç’¤¹’¡£Allow ’¥Ø’¥Ã’¥À’¤Ï 405 (Method Not Allowed) ’¥ì’¥¹’¥Ý’¥ó’¥¹’Ãæ’¤Ë’Â¸’ºß’¤·’¤Ê’¤±’¤ì’¤Ð’¤Ê’¤ê’¤Þ’¤»’¤ó’¡£
+   Allow ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ãƒ˜ãƒƒãƒ€ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã¯ã€ Request-URI ã«ã‚ˆã£ã¦è­˜åˆ¥ã•ã‚ŒãŸãƒªã‚½ãƒ¼ã‚¹ã«ã‚ˆã£ã¦ã‚µãƒãƒ¼ãƒˆã•ã‚Œã¦ã„ã‚‹ãƒ¡ã‚½ãƒƒãƒ‰ã®ã‚»ãƒƒãƒˆã‚’ç¤ºã—ã¾ã™ã€‚ã“ã®ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®ç›®çš„ã¯ã€ãƒªã‚½ãƒ¼ã‚¹ã«é–¢ã™ã‚‹æœ‰åŠ¹ãªãƒ¡ã‚½ãƒƒãƒ‰ã‚’å—ä¿¡è€…ã«åŽ³å¯†ã«çŸ¥ã‚‰ã›ã‚‹ã“ã¨ã§ã™ã€‚Allow ãƒ˜ãƒƒãƒ€ã¯ 405 (Method Not Allowed) ãƒ¬ã‚¹ãƒãƒ³ã‚¹ä¸­ã«å­˜åœ¨ã—ãªã‘ã‚Œã°ãªã‚Šã¾ã›ã‚“ã€‚
 
 .. attribute:: cache_control
 
-   Cache-Control ’¥¸’¥§’¥Í’¥é’¥ë’¥Ø’¥Ã’¥À’¥Õ’¥£’¡¼’¥ë’¥É’¤Ï’¡¢’¥ê’¥¯’¥¨’¥¹’¥È/’¥ì’¥¹’¥Ý’¥ó’¥¹’Ï¢’º¿’¤Î’´Ö’¤Î’¤¹’¤Ù’¤Æ’¤Î’¥­’¥ã’¥Ã’¥·’¥ó’¥°’¥á’¥«’¥Ë’¥º’¥à’¤¬’½¾’¤ï’¤Ê’¤±’¤ì’¤Ð’¤Ê’¤é’¤Ê’¤¤’»Ø’¼¨’¤ò’µ­’½Ò’¤¹’¤ë’¤¿’¤á’¤Ë’»È’ÍÑ’¤µ’¤ì’¤Þ’¤¹’¡£
+   Cache-Control ã‚¸ã‚§ãƒãƒ©ãƒ«ãƒ˜ãƒƒãƒ€ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã¯ã€ãƒªã‚¯ã‚¨ã‚¹ãƒˆ/ãƒ¬ã‚¹ãƒãƒ³ã‚¹é€£éŽ–ã®é–“ã®ã™ã¹ã¦ã®ã‚­ãƒ£ãƒƒã‚·ãƒ³ã‚°ãƒ¡ã‚«ãƒ‹ã‚ºãƒ ãŒå¾“ã‚ãªã‘ã‚Œã°ãªã‚‰ãªã„æŒ‡ç¤ºã‚’è¨˜è¿°ã™ã‚‹ãŸã‚ã«ä½¿ç”¨ã•ã‚Œã¾ã™ã€‚
 
 .. attribute:: charset
 
-   ’¥ì’¥¹’¥Ý’¥ó’¥¹’¤Î’Ê¸’»ú’¥»’¥Ã’¥È’¤Ç’¤¹’¡£
+   ãƒ¬ã‚¹ãƒãƒ³ã‚¹ã®æ–‡å­—ã‚»ãƒƒãƒˆã§ã™ã€‚
 
 .. attribute:: close()
 
-   ’²Ä’Ç½’¤Ç’¤¢’¤ì’¤Ð’¡¢’¥é’¥Ã’¥×’¤µ’¤ì’¤¿’¥ì’¥¹’¥Ý’¥ó’¥¹’¤ò’¥¯’¥í’¡¼’¥º’¤·’¤Þ’¤¹’¡£
+   å¯èƒ½ã§ã‚ã‚Œã°ã€ãƒ©ãƒƒãƒ—ã•ã‚ŒãŸãƒ¬ã‚¹ãƒãƒ³ã‚¹ã‚’ã‚¯ãƒ­ãƒ¼ã‚ºã—ã¾ã™ã€‚
 
 .. attribute:: content_encoding
 
-   Content-Encoding ’¥¨’¥ó’¥Æ’¥£’¥Æ’¥£’¥Ø’¥Ã’¥À’¥Õ’¥£’¡¼’¥ë’¥É’¤Ï’¡¢’¥á’¥Ç’¥£’¥¢’¥¿’¥¤’¥×’¤Î’½¤’¾þ’»Ò’¤È’¤·’¤Æ’»È’ÍÑ’¤µ’¤ì’¤Þ’¤¹’¡£’¤½’¤Î’ÃÍ’¤Ï’¤É’¤Î’¥³’¥ó’¥Æ’¥ó’¥Ä’¥¨’¥ó’¥³’¡¼’¥Ç’¥£’¥ó’¥°’¤¬’ÄÉ’²Ã’¤Ç’¡¢’¥¨’¥ó’¥Æ’¥£’¥Æ’¥£’¥Ü’¥Ç’¥£’¤Ë’Å¬’ÍÑ’¤µ’¤ì’¤Æ’¤¤’¤ë’¤«’¡¢’¤½’¤·’¤Æ’¤½’¤Î’·ë’²Ì’¡¢ Content-Type ’¥Ø’¥Ã’¥À’¥Õ’¥£’¡¼’¥ë’¥É’¤Ë’¤è’¤Ã’¤Æ’»²’¾È’¤µ’¤ì’¤ë’¥á’¥Ç’¥£’¥¢’¥¿’¥¤’¥×’¤ò’¼è’ÆÀ’¤¹’¤ë’¤Î’¤¿’¤á’¤Ë’¤Ï’¡¢’¤É’¤Î’¥Ç’¥³’¡¼’¥Ç’¥£’¥ó’¥°’¥á’¥«’¥Ë’¥º’¥à’¤¬’Å¬’ÍÑ’¤µ’¤ì’¤Ê’¤±’¤ì’¤Ð’¤Ê’¤é’¤Ê’¤¤’¤Î’¤«’¤ò’¼¨’¤·’¤Þ’¤¹’¡£
+   Content-Encoding ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ãƒ˜ãƒƒãƒ€ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã¯ã€ãƒ¡ãƒ‡ã‚£ã‚¢ã‚¿ã‚¤ãƒ—ã®ä¿®é£¾å­ã¨ã—ã¦ä½¿ç”¨ã•ã‚Œã¾ã™ã€‚ãã®å€¤ã¯ã©ã®ã‚³ãƒ³ãƒ†ãƒ³ãƒ„ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‡ã‚£ãƒ³ã‚°ãŒè¿½åŠ ã§ã€ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ãƒœãƒ‡ã‚£ã«é©ç”¨ã•ã‚Œã¦ã„ã‚‹ã‹ã€ãã—ã¦ãã®çµæžœã€ Content-Type ãƒ˜ãƒƒãƒ€ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã«ã‚ˆã£ã¦å‚ç…§ã•ã‚Œã‚‹ãƒ¡ãƒ‡ã‚£ã‚¢ã‚¿ã‚¤ãƒ—ã‚’å–å¾—ã™ã‚‹ã®ãŸã‚ã«ã¯ã€ã©ã®ãƒ‡ã‚³ãƒ¼ãƒ‡ã‚£ãƒ³ã‚°ãƒ¡ã‚«ãƒ‹ã‚ºãƒ ãŒé©ç”¨ã•ã‚Œãªã‘ã‚Œã°ãªã‚‰ãªã„ã®ã‹ã‚’ç¤ºã—ã¾ã™ã€‚
 
 .. attribute:: content_language
 
-   Content-Language ’¥¨’¥ó’¥Æ’¥£’¥Æ’¥£’¥Ø’¥Ã’¥À’¥Õ’¥£’¡¼’¥ë’¥É’¤Ï’¡¢’ÉÕ’¿ï’¤¹’¤ë’¥¨’¥ó’¥Æ’¥£’¥Æ’¥£’¤Î’ÆÉ’¼Ô’¤Î’¼«’Á³’¸À’¸ì’¤ò’É½’¤·’¤Þ’¤¹’¡£’¤¿’¤À’¤·’¡¢’¥¨’¥ó’¥Æ’¥£’¥Æ’¥£’¥Ü’¥Ç’¥£’¤Ç’»È’¤ï’¤ì’¤Æ’¤¤’¤ë’¸À’¸ì’Á´’Éô’¤È’¤Ï’°ì’Ã×’¤·’¤Ê’¤¤’¤«’¤â’¤·’¤ì’¤Ê’¤¤’¤Î’¤Ç’µ¤’¤ò’¤Ä’¤±’¤Æ’¤¯’¤À’¤µ’¤¤’¡£
+   Content-Language ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ãƒ˜ãƒƒãƒ€ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã¯ã€ä»˜éšã™ã‚‹ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®èª­è€…ã®è‡ªç„¶è¨€èªžã‚’è¡¨ã—ã¾ã™ã€‚ãŸã ã—ã€ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ãƒœãƒ‡ã‚£ã§ä½¿ã‚ã‚Œã¦ã„ã‚‹è¨€èªžå…¨éƒ¨ã¨ã¯ä¸€è‡´ã—ãªã„ã‹ã‚‚ã—ã‚Œãªã„ã®ã§æ°—ã‚’ã¤ã‘ã¦ãã ã•ã„ã€‚
 
 .. attribute:: content_length
 
-   Content-Length ’¥¨’¥ó’¥Æ’¥£’¥Æ’¥£’¥Ø’¥Ã’¥À’¥Õ’¥£’¡¼’¥ë’¥É’¤Ï’¡¢’¼õ’¿®’¼Ô’¤Ë’Á÷’¿®’¤µ’¤ì’¤ë’¥¨’¥ó’¥Æ’¥£’¥Æ’¥£’¥Ü’¥Ç’¥£’¤Î’¥µ’¥¤’¥º’¤ò8’¥Ó’¥Ã’¥È’¤Î10’¿Ê’¿ô’¤Ç’¼¨’¤·’¤Þ’¤¹’¡£HEAD ’¥á’¥½’¥Ã’¥É’¤Î’¾ì’¹ç’¤Ï GET ’¥ê’¥¯’¥¨’¥¹’¥È’¤µ’¤ì’¤¿’¾ì’¹ç’¤Ë’Á÷’¿®’¤µ’¤ì’¤ë’¥¨’¥ó’¥Æ’¥£’¥Æ’¥£’¥Ü’¥Ç’¥£’¤Î’¥µ’¥¤’¥º’¤ò’¼¨’¤·’¤Þ’¤¹’¡£
+   Content-Length ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ãƒ˜ãƒƒãƒ€ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã¯ã€å—ä¿¡è€…ã«é€ä¿¡ã•ã‚Œã‚‹ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ãƒœãƒ‡ã‚£ã®ã‚µã‚¤ã‚ºã‚’8ãƒ“ãƒƒãƒˆã®10é€²æ•°ã§ç¤ºã—ã¾ã™ã€‚HEAD ãƒ¡ã‚½ãƒƒãƒ‰ã®å ´åˆã¯ GET ãƒªã‚¯ã‚¨ã‚¹ãƒˆã•ã‚ŒãŸå ´åˆã«é€ä¿¡ã•ã‚Œã‚‹ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ãƒœãƒ‡ã‚£ã®ã‚µã‚¤ã‚ºã‚’ç¤ºã—ã¾ã™ã€‚
 
 .. attribute:: content_location
 
 
 .. attribute:: content_md5
 
-   Content-MD5 ’¥¨’¥ó’¥Æ’¥£’¥Æ’¥£’¥Ø’¥Ã’¥À’¥Õ’¥£’¡¼’¥ë’¥É(RFC 1864 ’¤Ë’Äê’µÁ)’¤Ï’¡¢’¥¨’¥ó’¥Æ’¥£’¥Æ’¥£’¥Ü’¥Ç’¥£’¤Î’¥¨’¥ó’¥É’¡¦’¥È’¥¥’¡¦’¥¨’¥ó’¥É’¥á’¥Ã’¥»’¡¼’¥¸’¥¤’¥ó’¥Æ’¥°’¥ê’¥Æ’¥£’¥Á’¥§’¥Ã’¥¯ (MIC) ’¤ò’Äó’¶¡’¤¹’¤ë’¤¿’¤á’¤Î’¥¨’¥ó’¥Æ’¥£’¥Æ’¥£’¥Ü’¥Ç’¥£’¤ÎMD5’¥À’¥¤’¥¸’¥§’¥¹’¥È’¤Ç’¤¹’¡£(’Ãí’°Õ’¡§ MIC ’¤Ï’Å¾’Á÷’Ãæ’¤Î’¥¨’¥ó’¥Æ’¥£’¥Æ’¥£’¥Ü’¥Ç’¥£’¤Î’¶ö’È¯’Åª’¤Ê’½ñ’¤­’´¹’¤¨’¤ò’È¯’¸«’¤¹’¤ë’¤Î’¤Ë’¤Ï’Å¬’¤·’¤Æ’¤¤’¤Þ’¤¹’¤¬’¡¢’°­’°Õ’¤¢’¤ë’¹¶’·â’¤Ø’¤Î’ÂÐ’¹³’¼ê’ÃÊ’¤Ë’¤Ï’¤Ê’¤ê’¤Þ’¤»’¤ó’¡Ë
+   Content-MD5 ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ãƒ˜ãƒƒãƒ€ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰(RFC 1864 ã«å®šç¾©)ã¯ã€ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ãƒœãƒ‡ã‚£ã®ã‚¨ãƒ³ãƒ‰ãƒ»ãƒˆã‚¥ãƒ»ã‚¨ãƒ³ãƒ‰ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚¤ãƒ³ãƒ†ã‚°ãƒªãƒ†ã‚£ãƒã‚§ãƒƒã‚¯ (MIC) ã‚’æä¾›ã™ã‚‹ãŸã‚ã®ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ãƒœãƒ‡ã‚£ã®MD5ãƒ€ã‚¤ã‚¸ã‚§ã‚¹ãƒˆã§ã™ã€‚(æ³¨æ„ï¼š MIC ã¯è»¢é€ä¸­ã®ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ãƒœãƒ‡ã‚£ã®å¶ç™ºçš„ãªæ›¸ãæ›ãˆã‚’ç™ºè¦‹ã™ã‚‹ã®ã«ã¯é©ã—ã¦ã„ã¾ã™ãŒã€æ‚ªæ„ã‚ã‚‹æ”»æ’ƒã¸ã®å¯¾æŠ—æ‰‹æ®µã«ã¯ãªã‚Šã¾ã›ã‚“ï¼‰
 
 .. attribute:: content_type
 
-   Content-Type ’¥¨’¥ó’¥Æ’¥£’¥Æ’¥£’¥Ø’¥Ã’¥À’¥Õ’¥£’¡¼’¥ë’¥É’¤Ï’¡¢’¼õ’¿®’¼Ô’¤Ë’Á÷’¿®’¤µ’¤ì’¤ë’¥¨’¥ó’¥Æ’¥£’¥Æ’¥£’¥Ü’¥Ç’¥£’¤Î’¥á’¥Ç’¥£’¥¢’¥¿’¥¤’¥×’¤ò’¼¨’¤·’¤Þ’¤¹’¡£HEAD’¥á’¥½’¥Ã’¥É’¤Î’¾ì’¹ç’¡¢GET ’¥ê’¥¯’¥¨’¥¹’¥È’¤µ’¤ì’¤¿’¾ì’¹ç’¤Ë’Á÷’¿®’¤µ’¤ì’¤ë’¥¨’¥ó’¥Æ’¥£’¥Æ’¥£’¥Ü’¥Ç’¥£’¤Î’¥á’¥Ç’¥£’¥¢’¥¿’¥¤’¥×’¤ò’¼¨’¤·’¤Þ’¤¹’¡£
+   Content-Type ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ãƒ˜ãƒƒãƒ€ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã¯ã€å—ä¿¡è€…ã«é€ä¿¡ã•ã‚Œã‚‹ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ãƒœãƒ‡ã‚£ã®ãƒ¡ãƒ‡ã‚£ã‚¢ã‚¿ã‚¤ãƒ—ã‚’ç¤ºã—ã¾ã™ã€‚HEADãƒ¡ã‚½ãƒƒãƒ‰ã®å ´åˆã€GET ãƒªã‚¯ã‚¨ã‚¹ãƒˆã•ã‚ŒãŸå ´åˆã«é€ä¿¡ã•ã‚Œã‚‹ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ãƒœãƒ‡ã‚£ã®ãƒ¡ãƒ‡ã‚£ã‚¢ã‚¿ã‚¤ãƒ—ã‚’ç¤ºã—ã¾ã™ã€‚
 
 .. attribute:: data
 
-   ’¥ê’¥¯’¥¨’¥¹’¥È’ËÜ’Ê¸’¤Î’Ê¸’»ú’Îó’¤ò’É½’¤·’¤Þ’¤¹’¡£’¤³’¤Î’Â°’À­’¤Ë’¥¢’¥¯’¥»’¥¹’¤¹’¤ë’¤È’¤­’¤Ï’¤¤’¤Ä’¤Ç’¤â’¥ê’¥¯’¥¨’¥¹’¥È’¥¤’¥Æ’¥é’¥Ö’¥ë’¤Ï’¥¨’¥ó’¥³’¡¼’¥É’¤µ’¤ì’¥Õ’¥é’¥Ã’¥È’²½’¤µ’¤ì’¤Æ’¤¤’¤Þ’¤¹’¡£’¥¹’¥È’¥ê’¡¼’¥à’¤¬’µð’Âç’¤Ê’¥Ç’¡¼’¥¿’¤Ç’¤¢’¤ë’¾ì’¹ç’¤Ë’¡¢’ÉÔ’Â¬’¤Î’¿¶’¤ë’Éñ’¤¤’¤ò’°ú’¤­’µ¯’¤³’¤¹’²Ä’Ç½’À­’¤¬’¤¢’¤ê’¤Þ’¤¹’¡£
+   ãƒªã‚¯ã‚¨ã‚¹ãƒˆæœ¬æ–‡ã®æ–‡å­—åˆ—ã‚’è¡¨ã—ã¾ã™ã€‚ã“ã®å±žæ€§ã«ã‚¢ã‚¯ã‚»ã‚¹ã™ã‚‹ã¨ãã¯ã„ã¤ã§ã‚‚ãƒªã‚¯ã‚¨ã‚¹ãƒˆã‚¤ãƒ†ãƒ©ãƒ–ãƒ«ã¯ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã•ã‚Œãƒ•ãƒ©ãƒƒãƒˆåŒ–ã•ã‚Œã¦ã„ã¾ã™ã€‚ã‚¹ãƒˆãƒªãƒ¼ãƒ ãŒå·¨å¤§ãªãƒ‡ãƒ¼ã‚¿ã§ã‚ã‚‹å ´åˆã«ã€ä¸æ¸¬ã®æŒ¯ã‚‹èˆžã„ã‚’å¼•ãèµ·ã“ã™å¯èƒ½æ€§ãŒã‚ã‚Šã¾ã™ã€‚
 
 .. attribute:: date
 
-   Date ’¥¸’¥§’¥Í’¥é’¥ë’¥Ø’¥Ã’¥À’¥Õ’¥£’¡¼’¥ë’¥É’¤Ï’¡¢’¥á’¥Ã’¥»’¡¼’¥¸’¤¬’À¸’À®’¤µ’¤ì’¤¿’Æü’ÉÕ’¤È’»þ’´Ö’¤ò’É½’¤·’¤Þ’¤¹’¡£RFC 822’¤Î orig-date ’¤È’Æ±’¤¸’¥»’¥Þ’¥ó’¥Æ’¥£’¥¯’¥¹’¤ò’¤â’¤Ã’¤Æ’¤¤’¤Þ’¤¹’¡£
+   Date ã‚¸ã‚§ãƒãƒ©ãƒ«ãƒ˜ãƒƒãƒ€ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã¯ã€ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãŒç”Ÿæˆã•ã‚ŒãŸæ—¥ä»˜ã¨æ™‚é–“ã‚’è¡¨ã—ã¾ã™ã€‚RFC 822ã® orig-date ã¨åŒã˜ã‚»ãƒžãƒ³ãƒ†ã‚£ã‚¯ã‚¹ã‚’ã‚‚ã£ã¦ã„ã¾ã™ã€‚
 
 .. attribute:: default_mimetype
 
-   mimetype ’¤¬’Àß’Äê’¤µ’¤ì’¤Æ’¤¤’¤Ê’¤¤’¾ì’¹ç’¤Î’¥Ç’¥Õ’¥©’¥ë’¥È’¤Î mimetype ’¤Ç’¤¹’¡£
+   mimetype ãŒè¨­å®šã•ã‚Œã¦ã„ãªã„å ´åˆã®ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã® mimetype ã§ã™ã€‚
 
 .. attribute:: default_status
 
-   status ’¤¬’Àß’Äê’¤µ’¤ì’¤Æ’¤¤’¤Ê’¤¤’¾ì’¹ç’¤Î’¥Ç’¥Õ’¥©’¥ë’¥È’¤Î status ’¤Ç’¤¹’¡£
+   status ãŒè¨­å®šã•ã‚Œã¦ã„ãªã„å ´åˆã®ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã® status ã§ã™ã€‚
 
 .. method:: delete_cookie(key, path='/', domain=None)
 
-   cookie ’¤ò’ºï’½ü’¤·’¤Þ’¤¹’¡£’¥­’¡¼’¤¬’¤Ê’¤¤’¾ì’¹ç’¤Ï’¡¢’¥Õ’¥§’¡¼’¥ë’¥µ’¥¤’¥ì’¥ó’¥È’¤Ç’¤¹’¡£
+   cookie ã‚’å‰Šé™¤ã—ã¾ã™ã€‚ã‚­ãƒ¼ãŒãªã„å ´åˆã¯ã€ãƒ•ã‚§ãƒ¼ãƒ«ã‚µã‚¤ãƒ¬ãƒ³ãƒˆã§ã™ã€‚
 
-   :param key: ’ºï’½ü’¤µ’¤ì’¤ë cookie ’¤Î’¥­’¡¼(’Ì¾’¾Î)’¤Ç’¤¹’¡£
-   :param path: ’¤â’¤·’ºï’½ü’¤µ’¤ì’¤ë’¤Ù’¤­ cookie ’¤¬’¤¢’¤ë’¥Ñ’¥¹’¤Ë’¸Â’Äê’¤µ’¤ì’¤Æ’¤¤’¤ë’¾ì’¹ç’¡¢’¤½’¤Î’¥Ñ’¥¹’¤ò’»Ø’Äê’¤·’¤Ê’¤±’¤ì’¤Ð’¤Ê’¤ê’¤Þ’¤»’¤ó’¡£
-   :param domain: ’¤â’¤·’ºï’½ü’¤µ’¤ì’¤ë’¤Ù’¤­ cookie ’¤¬’¤¢’¤ë’¥É’¥á’¥¤’¥ó’¤Ë’¸Â’Äê’¤µ’¤ì’¤Æ’¤¤’¤ë’¾ì’¹ç’¡¢’¤½’¤Î’¥É’¥á’¥¤’¥ó’¤ò’»Ø’Äê’¤·’¤Ê’¤±’¤ì’¤Ð’¤Ê’¤ê’¤Þ’¤»’¤ó’¡£
+   :param key: å‰Šé™¤ã•ã‚Œã‚‹ cookie ã®ã‚­ãƒ¼(åç§°)ã§ã™ã€‚
+   :param path: ã‚‚ã—å‰Šé™¤ã•ã‚Œã‚‹ã¹ã cookie ãŒã‚ã‚‹ãƒ‘ã‚¹ã«é™å®šã•ã‚Œã¦ã„ã‚‹å ´åˆã€ãã®ãƒ‘ã‚¹ã‚’æŒ‡å®šã—ãªã‘ã‚Œã°ãªã‚Šã¾ã›ã‚“ã€‚
+   :param domain: ã‚‚ã—å‰Šé™¤ã•ã‚Œã‚‹ã¹ã cookie ãŒã‚ã‚‹ãƒ‰ãƒ¡ã‚¤ãƒ³ã«é™å®šã•ã‚Œã¦ã„ã‚‹å ´åˆã€ãã®ãƒ‰ãƒ¡ã‚¤ãƒ³ã‚’æŒ‡å®šã—ãªã‘ã‚Œã°ãªã‚Šã¾ã›ã‚“ã€‚
 
 .. attribute:: direct_passthrough
 
-   ’¤â’¤·’¡¢’¥ì’¥¹’¥Ý’¥ó’¥¹’¥ª’¥Ö’¥¸’¥§’¥¯’¥È’¤¬ WSGI ’¥¢’¥×’¥ê’¥±’¡¼’¥·’¥ç’¥ó’¤È’¤·’¤Æ’»È’ÍÑ’¤µ’¤ì’¤ë’Á°’¤Ë ``direct_passthrough=True`` ’¤¬’¥ì’¥¹’¥Ý’¥ó’¥¹’¥ª’¥Ö’¥¸’¥§’¥¯’¥È’¤Ë’ÅÏ’¤µ’¤ì’¤ë’¤«’¡¢’¤¢’¤ë’¤¤’¤Ï’¡¢’¤³’¤Î’Â°’À­’¤¬ ``True`` ’¤Ë’¥»’¥Ã’¥È’¤µ’¤ì’¤ë’¤«’¤·’¤¿’¾ì’¹ç’¡¢’¥é’¥Ã’¥×’¤µ’¤ì’¤¿’¥¤’¥Æ’¥ì’¡¼’¥¿’¤Ï’ÊÑ’¹¹’¤Ê’¤·’¤Ç’ÊÖ’¤µ’¤ì’¤Þ’¤¹’¡£’¤³’¤ì’¤Ë’¤è’¤Ã’¤Æ’¡¢’ÆÃ’ÊÌ’¤Ê ``wsgi.file_wrapper`` ’¤ò’¥ì’¥¹’¥Ý’¥ó’¥¹’¥ª’¥Ö’¥¸’¥§’¥¯’¥È’¤Ë’ÅÏ’¤¹’¤³’¤È’¤¬’¤Ç’¤­’¤Þ’¤¹’¡£’¾Ü’¤·’¤¯’¤Ï `wrap_file() <http://werkzeug.pocoo.org/documentation/dev/wsgi.html#werkzeug.wrap_file>`_ ’¤ò’»²’¾È’¤·’¤Æ’¤¯’¤À’¤µ’¤¤’¡£
+   ã‚‚ã—ã€ãƒ¬ã‚¹ãƒãƒ³ã‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒ WSGI ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã¨ã—ã¦ä½¿ç”¨ã•ã‚Œã‚‹å‰ã« ``direct_passthrough=True`` ãŒãƒ¬ã‚¹ãƒãƒ³ã‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«æ¸¡ã•ã‚Œã‚‹ã‹ã€ã‚ã‚‹ã„ã¯ã€ã“ã®å±žæ€§ãŒ ``True`` ã«ã‚»ãƒƒãƒˆã•ã‚Œã‚‹ã‹ã—ãŸå ´åˆã€ãƒ©ãƒƒãƒ—ã•ã‚ŒãŸã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿ã¯å¤‰æ›´ãªã—ã§è¿”ã•ã‚Œã¾ã™ã€‚ã“ã‚Œã«ã‚ˆã£ã¦ã€ç‰¹åˆ¥ãª ``wsgi.file_wrapper`` ã‚’ãƒ¬ã‚¹ãƒãƒ³ã‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«æ¸¡ã™ã“ã¨ãŒã§ãã¾ã™ã€‚è©³ã—ãã¯ `wrap_file() <http://werkzeug.pocoo.org/documentation/dev/wsgi.html#werkzeug.wrap_file>`_ ã‚’å‚ç…§ã—ã¦ãã ã•ã„ã€‚
 
 .. attribute:: expires
 
-   Expire ’¥¨’¥ó’¥Æ’¥£’¥Æ’¥£’¥Ø’¥Ã’¥À’¥Õ’¥£’¡¼’¥ë’¥É’¤Ï’¥ì’¥¹’¥Ý’¥ó’¥¹’¤¬’¸Å’¤¯’¤Ê’¤ë’¤È’¸«’¤Ê’¤µ’¤ì’¤ë’»þ’ÅÀ’¤Î’Æü’ÉÕ’¤È’»þ’´Ö’¤ò’É½’¤·’¤Þ’¤¹’¡£’ÄÌ’¾ï’¡¢’¥­’¥ã’¥Ã’¥·’¥å’¤Ï’¡¢’¸Å’¤¤’¥­’¥ã’¥Ã’¥·’¥å’¥¨’¥ó’¥È’¥ê’¤ò’ÊÖ’¤µ’¤Ê’¤¤’¤Ç’¤·’¤ç’¤¦’¡£
+   Expire ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ãƒ˜ãƒƒãƒ€ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã¯ãƒ¬ã‚¹ãƒãƒ³ã‚¹ãŒå¤ããªã‚‹ã¨è¦‹ãªã•ã‚Œã‚‹æ™‚ç‚¹ã®æ—¥ä»˜ã¨æ™‚é–“ã‚’è¡¨ã—ã¾ã™ã€‚é€šå¸¸ã€ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã¯ã€å¤ã„ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚¨ãƒ³ãƒˆãƒªã‚’è¿”ã•ãªã„ã§ã—ã‚‡ã†ã€‚
 
 .. method:: fix_headers(environ)
 
-   ’¥ì’¥¹’¥Ý’¥ó’¥¹’¤Î’³«’»Ï’¤Î’Ä¾’Á°’¤Ë’¼«’Æ°’Åª’¤Ë’¸Æ’¤Ó’½Ð’¤µ’¤ì’¡¢’¥Ø’¥Ã’¥À’¤Î’¤è’¤¯’¤¢’¤ë’´Ö’°ã’¤¤’¤ò’½¤’Àµ’¤·’¤Þ’¤¹’¡£’Îã’¤¨’¤Ð’¡¢’¥í’¥±’¡¼’¥·’¥ç’¥ó’¥Ø’¥Ã’¥À’¤Ï’¥ë’¡¼’¥ÈURL’¤È’·ë’¹ç’¤µ’¤ì’¤Þ’¤¹’¡£
+   ãƒ¬ã‚¹ãƒãƒ³ã‚¹ã®é–‹å§‹ã®ç›´å‰ã«è‡ªå‹•çš„ã«å‘¼ã³å‡ºã•ã‚Œã€ãƒ˜ãƒƒãƒ€ã®ã‚ˆãã‚ã‚‹é–“é•ã„ã‚’ä¿®æ­£ã—ã¾ã™ã€‚ä¾‹ãˆã°ã€ãƒ­ã‚±ãƒ¼ã‚·ãƒ§ãƒ³ãƒ˜ãƒƒãƒ€ã¯ãƒ«ãƒ¼ãƒˆURLã¨çµåˆã•ã‚Œã¾ã™ã€‚
 
-   :param envirion: ’½¤’Àµ’¤Î’Å¬’ÍÑ’¤Ë’»È’¤ï’¤ì’¤ë’¥ê’¥¯’¥¨’¥¹’¥È’¤ÎWSGI’´Ä’¶­
+   :param envirion: ä¿®æ­£ã®é©ç”¨ã«ä½¿ã‚ã‚Œã‚‹ãƒªã‚¯ã‚¨ã‚¹ãƒˆã®WSGIç’°å¢ƒ
 
 .. classmethod:: force_type(response, environ=None)
 
-   WSGI ’¥ì’¥¹’¥Ý’¥ó’¥¹’¤¬’¸½’ºß’¤Î’·¿’¤Î’¥ì’¥¹’¥Ý’¥ó’¥¹’¥ª’¥Ö’¥¸’¥§’¥¯’¥È’¤Ç’¤¢’¤ë’¤³’¤È’¤ò’¶¯’À©’¤·’¤Þ’¤¹’¡£Werkzeug ’¤Ï’¥¨’¥¯’¥»’¥×’¥·’¥ç’¥ó’¤Î’¤è’¤¦’¤Ê’Â¿’¤¯’¤Î’¥·’¥Á’¥å’¥¨’¡¼’¥·’¥ç’¥ó’¤Ç’Æâ’Éô’Åª’¤Ë’¤Ï ``BaseResponse`` ’¤ò’»È’¤¤’¤Þ’¤¹’¡£’¤â’¤·’¥¨’¥¯’¥»’¥×’¥·’¥ç’¥ó’¤Ë ``get_response`` ’¤ò’¸Æ’¤Ö’¤Î’¤Ç’¤¢’¤ì’¤Ð’¡¢’¤¿’¤È’¤¨’¡¢’¥«’¥¹’¥¿’¥à’¥µ’¥Ö’¥¯’¥é’¥¹’¤ò’»È’¤Ã’¤Æ’¤¤’¤¿’¤È’¤·’¤Æ’¤â’¡¢’ÄÌ’¾ï’¤Î ``BaseResponse`` ’¥ª’¥Ö’¥¸’¥§’¥¯’¥È’¤ò’ÊÖ’¤µ’¤ì’¤ë’¤Ç’¤·’¤ç’¤¦’¡£
+   WSGI ãƒ¬ã‚¹ãƒãƒ³ã‚¹ãŒç¾åœ¨ã®åž‹ã®ãƒ¬ã‚¹ãƒãƒ³ã‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã§ã‚ã‚‹ã“ã¨ã‚’å¼·åˆ¶ã—ã¾ã™ã€‚Werkzeug ã¯ã‚¨ã‚¯ã‚»ãƒ—ã‚·ãƒ§ãƒ³ã®ã‚ˆã†ãªå¤šãã®ã‚·ãƒãƒ¥ã‚¨ãƒ¼ã‚·ãƒ§ãƒ³ã§å†…éƒ¨çš„ã«ã¯ ``BaseResponse`` ã‚’ä½¿ã„ã¾ã™ã€‚ã‚‚ã—ã‚¨ã‚¯ã‚»ãƒ—ã‚·ãƒ§ãƒ³ã« ``get_response`` ã‚’å‘¼ã¶ã®ã§ã‚ã‚Œã°ã€ãŸã¨ãˆã€ã‚«ã‚¹ã‚¿ãƒ ã‚µãƒ–ã‚¯ãƒ©ã‚¹ã‚’ä½¿ã£ã¦ã„ãŸã¨ã—ã¦ã‚‚ã€é€šå¸¸ã® ``BaseResponse`` ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’è¿”ã•ã‚Œã‚‹ã§ã—ã‚‡ã†ã€‚
 
-   ’¤³’¤Î’¥á’¥½’¥Ã’¥É’¤Ï’Í¿’¤¨’¤é’¤ì’¤ë’¥ì’¥¹’¥Ý’¥ó’¥¹’¤Î’Êý’¤ò’¶¯’À©’¤Ç’¤­’¤Þ’¤¹’¡£’¤Þ’¤¿’¡¢ envrion ’¤¬’Í¿’¤¨’¤é’¤ì’¤ì’¤Ð’¡¢WSGI ’¥³’¡¼’¥é’¥Ö’¥ë’¤ò’Ç¤’°Õ’¤Î’¥ì’¥¹’¥Ý’¥ó’¥¹’¥ª’¥Ö’¥¸’¥§’¥¯’¥È’¤Ë’¥³’¥ó’¥Ð’¡¼’¥È’¤¹’¤ë’¤Ç’¤·’¤ç’¤¦’¡£
+   ã“ã®ãƒ¡ã‚½ãƒƒãƒ‰ã¯ä¸Žãˆã‚‰ã‚Œã‚‹ãƒ¬ã‚¹ãƒãƒ³ã‚¹ã®åž‹ã‚’å¼·åˆ¶ã§ãã¾ã™ã€‚ã¾ãŸã€ envrion ãŒä¸Žãˆã‚‰ã‚Œã‚Œã°ã€WSGI ã‚³ãƒ¼ãƒ©ãƒ–ãƒ«ã‚’ä»»æ„ã®ãƒ¬ã‚¹ãƒãƒ³ã‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«ã‚³ãƒ³ãƒãƒ¼ãƒˆã™ã‚‹ã§ã—ã‚‡ã†ã€‚
 
-   ’¤³’¤ì’¤Ï’¡¢’¥á’¥¤’¥ó’¥Ç’¥£’¥¹’¥Ñ’¥Ã’¥Á’¥ã’¤Ç’¥ì’¥¹’¥Ý’¥ó’¥¹’¤ò’¥Ý’¥¹’¥È’¥×’¥í’¥»’¥¹’¤·’¡¢’¥µ’¥Ö’¥¯’¥é’¥¹’¤Ë’¤è’¤Ã’¤Æ’Äó’¶¡’¤µ’¤ì’¤ë’µ¡’Ç½’¤ò’»È’¤¤’¤¿’¤¤’¾ì’¹ç’¤Ë’ÆÃ’¤Ë’Í­’ÍÑ’¤Ç’¤¹’¡£
+   ã“ã‚Œã¯ã€ãƒ¡ã‚¤ãƒ³ãƒ‡ã‚£ã‚¹ãƒ‘ãƒƒãƒãƒ£ã§ãƒ¬ã‚¹ãƒãƒ³ã‚¹ã‚’ãƒã‚¹ãƒˆãƒ—ãƒ­ã‚»ã‚¹ã—ã€ã‚µãƒ–ã‚¯ãƒ©ã‚¹ã«ã‚ˆã£ã¦æä¾›ã•ã‚Œã‚‹æ©Ÿèƒ½ã‚’ä½¿ã„ãŸã„å ´åˆã«ç‰¹ã«æœ‰ç”¨ã§ã™ã€‚
 
-   ’²Ä’Ç½’¤Ê’¸Â’¤ê’Å¬’ÀÚ’¤Ë’¥ì’¥¹’¥Ý’¥ó’¥¹’¥ª’¥Ö’¥¸’¥§’¥¯’¥È’¤ò’ÊÑ’¹¹’¤¹’¤ë’¤³’¤È’¤ò’³Ð’¤¨’¤Æ’¤ª’¤¤’¤Æ’¤¯’¤À’¤µ’¤¤’¡£
+   å¯èƒ½ãªé™ã‚Šé©åˆ‡ã«ãƒ¬ã‚¹ãƒãƒ³ã‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å¤‰æ›´ã™ã‚‹ã“ã¨ã‚’è¦šãˆã¦ãŠã„ã¦ãã ã•ã„ã€‚
 
-   :param response: ’¥ì’¥¹’¥Ý’¥ó’¥¹’¥ª’¥Ö’¥¸’¥§’¥¯’¥È’¡¢’¤Þ’¤¿’¤Ï’¡¢wsgi ’¥¢’¥×’¥ê’¥±’¡¼’¥·’¥ç’¥ó
-   :param environ: WSGI ’´Ä’¶­’¥ª’¥Ö’¥¸’¥§’¥¯’¥È
+   :param response: ãƒ¬ã‚¹ãƒãƒ³ã‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã€ã¾ãŸã¯ã€wsgi ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³
+   :param environ: WSGI ç’°å¢ƒã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
    
    
-.. method:: freeze()
-
-   TODO
-
 .. classmethod:: from_app(app, environ, buffered=False)
 
-   TODO
-   
-.. attribute:: get_app_iter
+   ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã®å‡ºåŠ›ã‹ã‚‰æ–°ã—ã„ãƒ¬ã‚¹ãƒãƒ³ã‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ä½œæˆã—ã¾ã™ã€‚ã“ã‚Œã¯ã€å¸¸ã«ã‚¸ã‚§ãƒãƒ¬ãƒ¼ã‚¿ã‚’è¿”ã™ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã§å‘¼ã³å‡ºã™ã¨ã†ã¾ãã„ãã¾ã™ã€‚ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã¯ ``start_response`` é–¢æ•°ãŒè¿”ã™ ``write()`` ã‚³ãƒ¼ãƒ©ãƒ–ãƒ«ã‚’ä½¿ã†ã‹ã‚‚ã—ã‚Œã¾ã›ã‚“ã€‚ã“nã®ãƒ¡ã‚½ãƒƒãƒ‰ã¯ãã®ã‚ˆã†ãªã‚±ãƒ¼ã‚¹ã‚’è‡ªå‹•çš„ã«è§£æ±ºã—ã‚ˆã†ã¨ã—ã¾ã™ã€‚ã—ã‹ã—ã€æœŸå¾…ã—ãŸå‡ºåŠ›ã‚’å¾—ã‚‰ã‚Œãªã„å ´åˆã¯ã€ ``buffered`` ã« ``True`` ã‚’ã‚»ãƒƒãƒˆã—ãƒãƒƒãƒ•ã‚¡ãƒªãƒ³ã‚°ã‚’å¼·åˆ¶ã™ã¹ãã§ã™ã€‚
 
-   TODO
+   :param app: å®Ÿè¡Œã•ã‚Œã‚‹ WSGI ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã§ã™ã€‚
+   :param environ: å†å®Ÿè¡Œã•ã‚Œã‚‹ WSGI ç’°å¢ƒã§ã™ã€‚
+   :param buffered: ãƒãƒƒãƒ•ã‚¡ãƒªãƒ³ã‚°ã‚’å¼·åˆ¶ã™ã‚‹ã«ã¯ ``True`` ã‚’ã‚»ãƒƒãƒˆã—ã¾ã™ã€‚
+   :rtype: ãƒ¬ã‚¹ãƒãƒ³ã‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
    
-.. attribute:: get_etag
+.. method:: get_app_iter(environ)
 
-   TODO
+   ä¸Žãˆã‚‰ã‚ŒãŸ environ ã«å¯¾ã™ã‚‹ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿ã‚’è¿”ã—ã¾ã™ã€‚ãƒªã‚¯ã‚¨ã‚¹ãƒˆãƒ¡ã‚½ãƒƒãƒ‰ã¨ç¾åœ¨ã®ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã‚³ãƒ¼ãƒ‰æ¬¡ç¬¬ã§ã€æˆ»ã‚Šå€¤ã¯ç©ºã®ãƒ¬ã‚¹ãƒãƒ³ã‚¹ã«ãªã‚‹ã§hãã†ã€‚
+
+   ã‚‚ã—ã€ãƒªã‚¯ã‚¨ã‚¹ãƒˆãƒ¡ã‚½ãƒƒãƒ‰ãŒ ``HEAD`` ã§ã‚ã‚‹ã‹ã€ã¾ãŸã¯ã€ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã‚³ãƒ¼ãƒ‰ãŒ HTTP ã®ä»•æ§˜ãŒç©ºã®ãƒ¬ã‚¹ãƒãƒ³ã‚¹ã‚’è¦æ±‚ã™ã‚‹ç¯„å›²ã§ã‚ã‚‹å ´åˆã¯ã€ç©ºã®ã‚¤ãƒ†ãƒ©ãƒ–ãƒ«ãŒè¿”ã•ã‚Œã¾ã™ã€‚
+
+   :param environ: ãƒªã‚¯ã‚¨ã‚¹ãƒˆã® WSGI ç’°å¢ƒã§ã™ã€‚
+   :rtype: ãƒ¬ã‚¹ãƒãƒ³ã‚¹ã‚¤ãƒ†ãƒ©ãƒ–ãƒ«ã§ã™ã€‚
    
-.. attribute:: get_wsgi_headers
+.. method:: get_etag()
 
-   TODO
+   ``(etag, is_weak)`` ã®å½¢å¼ã®ã‚¿ãƒ—ãƒ«ã‚’è¿”ã—ã¾ã™ã€‚ã€€Etag ãŒãªã„å ´åˆã¯ã€æˆ»ã‚Šå€¤ã¯ ``(None, None)`` ã§ã™ã€‚
    
-.. attribute:: get_wsgi_response
+.. method:: get_wsgi_headers(environ)
 
-   TODO
+   ã“ã®ãƒ¡ã‚½ãƒƒãƒ‰ã¯ã€ãƒ¬ã‚¹ãƒãƒ³ã‚¹ãŒé–‹å§‹ã•ã‚Œã‚‹ç›´å‰ã«è‡ªå‹•çš„ã«å‘¼ã³å‡ºã•ã‚Œã€ä¸Žãˆã‚‰ã‚ŒãŸç’°å¢ƒç”¨ã«ä¿®æ­£ã—ãŸãƒ˜ãƒƒãƒ€ã‚’è¿”ã—ã¾ã™ã€‚å¿…è¦ã§ã‚ã‚Œã°ã€ã„ãã¤ã‹ã®ä¿®æ­£ã‚’é©ç”¨ã—ã¦ãƒ¬ã‚¹ãƒãƒ³ã‚¹ã‹ã‚‰ãƒ˜ãƒƒãƒ€ã®ã‚³ãƒ”ãƒ¼ã‚’è¿”ã—ã¾ã™ã€‚
+
+   ä¾‹ãˆã°ã€ãƒ­ã‚±ãƒ¼ã‚·ãƒ§ãƒ³ãƒ˜ãƒƒãƒ€ï¼ˆã‚‚ã—ã‚ã‚Œã°ï¼‰ã¯ç’°å¢ƒã®ãƒ«ãƒ¼ãƒˆURLã¨çµåˆã•ã‚Œã¾ã™ã€‚ã¾ãŸã€ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã‚³ãƒ¼ãƒ‰ã«ã‚ˆã£ã¦ã¯ã‚³ãƒ³ãƒ†ãƒ³ãƒ„é•·ã¯è‡ªå‹•çš„ã«0ãŒã‚»ãƒƒãƒˆã•ã‚Œã¾ã™ã€‚
+
+   :param envrion: ãƒªã‚¯ã‚¨ã‚¹ãƒˆã® WSGI ç’°å¢ƒã§ã™ã€‚
+   :rtype: æ–°ã—ã„ãƒ˜ãƒƒãƒ€ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’è¿”ã—ã¾ã™ã€‚
    
-.. attribute:: header_list
+.. method:: get_wsgi_response(environ)
 
-   TODO
+   æœ€çµ‚çš„ãª WSGI ãƒ¬ã‚¹ãƒãƒ³ã‚¹ã‚’ã‚¿ãƒ—ãƒ«ã§è¿”ã—ã¾ã™ã€‚ã‚¿ãƒ—ãƒ«ã®æœ€åˆã®é …ç›®ã¯ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿ã§ã™ã€‚ï¼’ç•ªç›®ã¯ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã§ã€ï¼“ç•ªç›®ã¯ãƒªã‚¹ãƒˆã®ãƒ˜ãƒƒãƒ€ã§ã™ã€‚è¿”ã•ã‚ŒãŸãƒ¬ã‚¹ãƒãƒ³ã‚¹ã¯ä¸Žãˆã‚‰ã‚ŒãŸç’°å¢ƒå‘ã‘ã«ä½œã‚‰ã‚Œã¾ã™ã€‚ä¾‹ãˆã°ã€ WSGI ç’°å¢ƒã®ãƒªã‚¯ã‚¨ã‚¹ãƒˆãƒ¡ã‚½ãƒƒãƒ‰ãŒ ``HEAD`` ã§ã‚ã‚‹å ´åˆã€ãƒ¬ã‚¹ãƒãƒ³ã‚¹ã¯ç©ºã«ãªã‚Šã€ãƒ˜ãƒƒãƒ€ã¨ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã‚³ãƒ¼ãƒ‰ã ã‘ãŒã‚ã‚‹ã§ã—ã‚‡ã†ã€‚
+
+   :param environ: ãƒªã‚¯ã‚¨ã‚¹ãƒˆã® WSGI ç’°å¢ƒã§ã™ã€‚
+   :rtype: ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿ã€ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã€ãƒ˜ãƒƒãƒ€ã®ã‚¿ãƒ—ãƒ«ã§ã™ã€‚
    
 .. attribute:: headers
 
-   ’¥ì’¥¹’¥Ý’¥ó’¥¹’¥Ø’¥Ã’¥À’¤ò’É½’¤¹ ``Headers`` ’¥ª’¥Ö’¥¸’¥§’¥¯’¥È’¤Ç’¤¹’¡£
+   ãƒ¬ã‚¹ãƒãƒ³ã‚¹ãƒ˜ãƒƒãƒ€ã‚’è¡¨ã™ ``Headers`` ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã§ã™ã€‚
 
 .. attribute:: is_streamed
 
-   ’¤â’¤·’¡¢’¥ì’¥¹’¥Ý’¥ó’¥¹’¤¬’¥¹’¥È’¥ê’¡¼’¥à’¤Î’¾ì’¹ç’¡Ê’¥ì’¥¹’¥Ý’¥ó’¥¹’¤¬’Ä¹’¤µ’¤Î’¾ð’Êó’¤ò’¤â’¤Ã’¤¿’¥¤’¥Æ’¥é’¥Ö’¥ë’¤Ç’¤Ê’¤¤’¾ì’¹ç’¡Ë’¡¢’¤³’¤Î’Â°’À­’¤Ï ``True`` ’¤Ë’¤Ê’¤ê’¤Þ’¤¹’¡£’¤³’¤Î’¾ì’¹ç’¡¢streamd ’¤Ï’¥¤’¥Æ’¥ì’¡¼’¥·’¥ç’¥ó’¤Î’¿ô’¤Ë’¤Ä’¤¤’¤Æ’¤Î’¾ð’Êó’¤ò’»ý’¤¿’¤Ê’¤¤’¤È’¤¤’¤¦’¤³’¤È’¤ò’°Õ’Ì£’¤·’¤Þ’¤¹’¡£’¥¸’¥§’¥Í’¥ì’¡¼’¥¿’¤¬’¥ì’¥¹’¥Ý’¥ó’¥¹’¥ª’¥Ö’¥¸’¥§’¥¯’¥È’¤Ë’°ú’¤­’·Ñ’¤¬’¤ì’¤ë’¾ì’¹ç’¡¢’ÄÌ’¾ï ``True`` ’¤Ë’¤Ê’¤ê’¤Þ’¤¹’¡£
+   ã‚‚ã—ã€ãƒ¬ã‚¹ãƒãƒ³ã‚¹ãŒã‚¹ãƒˆãƒªãƒ¼ãƒ ã®å ´åˆï¼ˆãƒ¬ã‚¹ãƒãƒ³ã‚¹ãŒé•·ã•ã®æƒ…å ±ã‚’ã‚‚ã£ãŸã‚¤ãƒ†ãƒ©ãƒ–ãƒ«ã§ãªã„å ´åˆï¼‰ã€ã“ã®å±žæ€§ã¯ ``True`` ã«ãªã‚Šã¾ã™ã€‚ã“ã®å ´åˆã€streamd ã¯ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³ã®æ•°ã«ã¤ã„ã¦ã®æƒ…å ±ã‚’æŒãŸãªã„ã¨ã„ã†ã“ã¨ã‚’æ„å‘³ã—ã¾ã™ã€‚ã‚¸ã‚§ãƒãƒ¬ãƒ¼ã‚¿ãŒãƒ¬ã‚¹ãƒãƒ³ã‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«å¼•ãç¶™ãŒã‚Œã‚‹å ´åˆã€é€šå¸¸ ``True`` ã«ãªã‚Šã¾ã™ã€‚
 
 .. method:: iter_encoded(charset=None)
 
-   ’»Ø’Äê’¤µ’¤ì’¤¿’¥¨’¥ó’¥³’¡¼’¥Ç’¥£’¥ó’¥°’¤Ç’¥¨’¥ó’¥³’¡¼’¥É’¤µ’¤ì’¤¿’¥ì’¥¹’¥Ý’¥ó’¥¹’¤Î’¥¤’¥Æ’¥ì’¡¼’¥¿’¤ò’ÊÖ’¤·’¤Þ’¤¹’¡£’¥¨’¥ó’¥³’¡¼’¥Ç’¥£’¥ó’¥°’¤¬’»Ø’Äê’¤µ’¤ì’¤Æ’¤¤’¤Ê’¤¤’¾ì’¹ç’¡¢’¥¯’¥é’¥¹’¤Î’¥¨’¥ó’¥³’¡¼’¥Ç’¥£’¥ó’¥°’¤¬’»È’¤ï’¤ì’¤Þ’¤¹’¡£’¥Ð’¥¤’¥È’¥¹’¥È’¥ê’¥ó’¥°’¥Ç’¡¼’¥¿’¤Ï’¥¨’¥ó’¥³’¡¼’¥É’¤µ’¤ì’¤Ê’¤¤’¤³’¤È’¤Ë’Ãí’°Õ’¤·’¤Æ’¤¯’¤À’¤µ’¤¤’¡£’¤â’¤·’¥ì’¥¹’¥Ý’¥ó’¥¹’¥ª’¥Ö’¥¸’¥§’¥¯’¥È’¤¬ WSGI ’¥¢’¥×’¥ê’¥±’¡¼’¥·’¥ç’¥ó’¤È’¤·’¤Æ’¸Æ’¤Ó’½Ð’¤µ’¤ì’¤ë’¾ì’¹ç’¡¢’¤³’¤Î’¥á’¥½’¥Ã’¥É’¤Î’Ìá’¤ê’ÃÍ’¤Ï ``direct_passthrough`` ’¤¬’Í­’¸ú’¤Ê’¾ì’¹ç’¤ò’¤Î’¤¾’¤­’¡¢’¥¢’¥×’¥ê’¥±’¡¼’¥·’¥ç’¥ó’¥¤’¥Æ’¥ì’¡¼’¥¿’¤È’¤·’¤Æ’»È’ÍÑ’¤µ’¤ì’¤Þ’¤¹’¡£
+   æŒ‡å®šã•ã‚ŒãŸã‚¨ãƒ³ã‚³ãƒ¼ãƒ‡ã‚£ãƒ³ã‚°ã§ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã•ã‚ŒãŸãƒ¬ã‚¹ãƒãƒ³ã‚¹ã®ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿ã‚’è¿”ã—ã¾ã™ã€‚ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‡ã‚£ãƒ³ã‚°ãŒæŒ‡å®šã•ã‚Œã¦ã„ãªã„å ´åˆã€ã‚¯ãƒ©ã‚¹ã®ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‡ã‚£ãƒ³ã‚°ãŒä½¿ã‚ã‚Œã¾ã™ã€‚ãƒã‚¤ãƒˆã‚¹ãƒˆãƒªãƒ³ã‚°ãƒ‡ãƒ¼ã‚¿ã¯ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã•ã‚Œãªã„ã“ã¨ã«æ³¨æ„ã—ã¦ãã ã•ã„ã€‚ã‚‚ã—ãƒ¬ã‚¹ãƒãƒ³ã‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒ WSGI ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã¨ã—ã¦å‘¼ã³å‡ºã•ã‚Œã‚‹å ´åˆã€ã“ã®ãƒ¡ã‚½ãƒƒãƒ‰ã®æˆ»ã‚Šå€¤ã¯ ``direct_passthrough`` ãŒæœ‰åŠ¹ãªå ´åˆã‚’ã®ãžãã€ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿ã¨ã—ã¦ä½¿ç”¨ã•ã‚Œã¾ã™ã€‚
 
 .. attribute:: last_modified
 
-   Last-Modified ’¥¨’¥ó’¥Æ’¥£’¥Æ’¥£’¥Ø’¥Ã’¥À’¥Õ’¥£’¡¼’¥ë’¥É’¤Ï’¡¢’¥ª’¥ê’¥¸’¥ó’¥µ’¡¼’¥Ð’¡¼’¤¬’¥Ð’¥ê’¥¢’¥ó’¥È’¤¬’ºÇ’¸å’¤Ë’¹¹’¿·’¤µ’¤ì’¤¿’¤È’¹Í’¤¨’¤ë’Æü’ÉÕ’¤È’»þ’´Ö’¤ò’É½’¤·’¤Þ’¤¹’¡£
+   Last-Modified ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ãƒ˜ãƒƒãƒ€ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã¯ã€ã‚ªãƒªã‚¸ãƒ³ã‚µãƒ¼ãƒãƒ¼ãŒãƒãƒªã‚¢ãƒ³ãƒˆãŒæœ€å¾Œã«æ›´æ–°ã•ã‚ŒãŸã¨è€ƒãˆã‚‹æ—¥ä»˜ã¨æ™‚é–“ã‚’è¡¨ã—ã¾ã™ã€‚
 
 .. attribute:: location
 
-   Location ’¥ì’¥¹’¥Ý’¥ó’¥¹’¥Ø’¥Ã’¥À’¥Õ’¥£’¡¼’¥ë’¥É’¤Ï’¡¢’¥ê’¥¯’¥¨’¥¹’¥È’¤Î’´°’Î»’¡¢’¤Þ’¤¿’¤Ï’¡¢’¿·’¤·’¤¤’¥ê’¥½’¡¼’¥¹’¤Î’¼±’ÊÌ’¤Î’¤¿’¤á’¤Ë’¡¢’¼õ’¿®’¼Ô’¤ò Request-URI ’°Ê’³°’¤Î’¾ì’½ê’¤Ë’¥ê’¥À’¥¤’¥ì’¥¯’¥È’¤¹’¤ë’¤Î’¤Ë’»È’¤ï’¤ì’¤Þ’¤¹’¡£
+   Location ãƒ¬ã‚¹ãƒãƒ³ã‚¹ãƒ˜ãƒƒãƒ€ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã¯ã€ãƒªã‚¯ã‚¨ã‚¹ãƒˆã®å®Œäº†ã€ã¾ãŸã¯ã€æ–°ã—ã„ãƒªã‚½ãƒ¼ã‚¹ã®è­˜åˆ¥ã®ãŸã‚ã«ã€å—ä¿¡è€…ã‚’ Request-URI ä»¥å¤–ã®å ´æ‰€ã«ãƒªãƒ€ã‚¤ãƒ¬ã‚¯ãƒˆã™ã‚‹ã®ã«ä½¿ã‚ã‚Œã¾ã™ã€‚
 
 .. method:: make_conditional(request_or_envrion)
 
-   
+   ãƒªã‚¯ã‚¨ã‚¹ãƒˆã«å¯¾ã™ã‚‹ãƒ¬ã‚¹ãƒãƒ³ã‚¹ã‚³ãƒ³ãƒ‡ã‚£ã‚·ãƒ§ãƒŠãƒ«ã‚’ç”Ÿæˆã—ã¾ã™ã€‚ã“ã®ãƒ¡ã‚½ãƒƒãƒ‰ã¯ãƒ¬ã‚¹ãƒãƒ³ã‚¹ç”¨ã® etag ãŒæ—¢ã«å®šç¾©ã•ã‚Œã¦ã„ã‚‹å ´åˆã«æ©Ÿèƒ½ã—ã¾ã™ã€‚ ``add_etag`` ãƒ¡ã‚½ãƒƒãƒ‰ã‚’ä½¿ã£ã¦ etag ã‚’è¿½åŠ ã§ãã¾ã™ã€‚ etag ãªã—ã§å‘¼ã³å‡ºã•ã‚ŒãŸå ´åˆã€date ãƒ˜ãƒƒãƒ€ã‚’ã‚»ãƒƒãƒˆã™ã‚‹ã ã‘ã§ã™ã€‚
 
+   ã“ã®ãƒ¡ã‚½ãƒƒãƒ‰ã¯ã€ãƒªã‚¯ã‚¨ã‚¹ãƒˆã‹ envrion ä¸­ã®ãƒªã‚¯ã‚¨ã‚¹ãƒˆãƒ¡ã‚½ãƒƒãƒ‰ãŒ ``GET`` ã‹ ``HEAD`` ä»¥å¤–ã®å ´åˆã€ä½•ã‚‚ã—ã¾ã›ã‚“ã€‚
+
+   ``return resp.make_conditional(req)`` ã¨æ›¸ã‘ã°ã€è‡ªåˆ†è‡ªèº«ã‚’è¿”ã—ã¾ã™ãŒã€é…ç½®æ¸ˆã¿ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¯æ›¸ãæ›ãˆã‚‰ã‚Œrå¢—ã™ã€‚
+
+   :param request_or_environ: ãƒ¬ã‚¹ãƒãƒ³ã‚¹ã‚³ãƒ³ãƒ‡ã‚£ã‚·ãƒ§ãƒŠãƒ«ã‚’å†åº¦ä½œæˆã™ã‚‹ã®ã«ä½¿ã†ãƒªã‚¯ã‚¨ã‚¹ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‹ WSGI ç’°å¢ƒã€‚
+
+   
 .. attribute:: mimetype
 
-   ``content-type`` ’¤È’»÷’¤Æ’¤¤’¤Þ’¤¹’¤¬’¡¢’¥Ñ’¥é’¥á’¡¼’¥¿’¡Ê’Îã’¡§’Ê¸’»ú’¥»’¥Ã’¥È’¡¢’·¿’¤Ê’¤É’¡Ë’¤¬’¤¢’¤ê’¤Þ’¤»’¤ó’¡£’Îã’¤¨’¤Ð’¡¢’¥³’¥ó’¥Æ’¥ó’¥È’¥¿’¥¤’¥×’¤¬ ``text/html; charset=utf-8`` ’¤Î’¾ì’¹ç’¡¢mimetype’¤Ï ``'text/html'`` ’¤È’¤Ê’¤ê’¤Þ’¤¹’¡£
+   ``content-type`` ã¨ä¼¼ã¦ã„ã¾ã™ãŒã€ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ï¼ˆä¾‹ï¼šæ–‡å­—ã‚»ãƒƒãƒˆã€åž‹ãªã©ï¼‰ãŒã‚ã‚Šã¾ã›ã‚“ã€‚ä¾‹ãˆã°ã€ã‚³ãƒ³ãƒ†ãƒ³ãƒˆã‚¿ã‚¤ãƒ—ãŒ ``text/html; charset=utf-8`` ã®å ´åˆã€mimetypeã¯ ``'text/html'`` ã¨ãªã‚Šã¾ã™ã€‚
 
 .. attribute:: mimetype_params
 
-   mimtype’¥Ñ’¥é’¥á’¡¼’¥¿’¤¬’¥Ç’¥£’¥¯’¥·’¥ç’¥Ê’¥ê’¤Ç’³Ê’Ç¼’¤µ’¤ì’¤Æ’¤¤’¤Þ’¤¹’¡£’Îã’¤¨’¤Ð’¡¢’¥³’¥ó’¥Æ’¥ó’¥È’¥¿’¥¤’¥×’¤¬ ``text/html; charset=utf-8`` ’¤Î’¾ì’¹ç’¡¢’¥Ñ’¥é’¥á’¡¼’¥¿’¤Ï ``{'charset': 'utf-8'}`` ’¤Î’¤è’¤¦’¤Ë’¤Ê’¤Ã’¤Æ’¤¤’¤Þ’¤¹’¡£
+   mimtypeãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãŒãƒ‡ã‚£ã‚¯ã‚·ãƒ§ãƒŠãƒªã§æ ¼ç´ã•ã‚Œã¦ã„ã¾ã™ã€‚ä¾‹ãˆã°ã€ã‚³ãƒ³ãƒ†ãƒ³ãƒˆã‚¿ã‚¤ãƒ—ãŒ ``text/html; charset=utf-8`` ã®å ´åˆã€ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã¯ ``{'charset': 'utf-8'}`` ã®ã‚ˆã†ã«ãªã£ã¦ã„ã¾ã™ã€‚
 
 .. attribute:: response
 
-   ’¥¢’¥×’¥ê’¥±’¡¼’¥·’¥ç’¥ó’¥¤’¥Æ’¥ì’¡¼’¥¿’¤Ç’¤¹’¡£’Ê¸’»ú’Îó’¤Ç’¹½’À®’¤µ’¤ì’¤Æ’¤¤’¤ì’¤Ð’¥ê’¥¹’¥È’¤Ë’¤Ê’¤ê’¡¢’¤½’¤ì’°Ê’³°’¤Ç’¤Ï’¡¢’¥¢’¥×’¥ê’¥±’¡¼’¥·’¥ç’¥ó’¥¤’¥Æ’¥ì’¡¼’¥¿’¤È’¤·’¤Æ’Äó’¶¡’¤µ’¤ì’¤Þ’¤¹’¡£
+   ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿ã§ã™ã€‚æ–‡å­—åˆ—ã§æ§‹æˆã•ã‚Œã¦ã„ã‚Œã°ãƒªã‚¹ãƒˆã«ãªã‚Šã€ãã‚Œä»¥å¤–ã§ã¯ã€ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿ã¨ã—ã¦æä¾›ã•ã‚Œã¾ã™ã€‚
 
 .. attribute:: retry_after
 
-   TODO
-   
-.. attribute:: set_cookie
+   Retry-Afterãƒ¬ã‚¹ãƒãƒ³ã‚¹ãƒ˜ãƒƒãƒ€ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã¯ã€ãƒªã‚¯ã‚¨ã‚¹ãƒˆã—ã¦ã„ã‚‹ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆã«ã‚µãƒ¼ãƒ“ã‚¹ãŒã©ã®ãã‚‰ã„ã®æ™‚é–“åˆ©ç”¨ã§ããªã„ã‹ã‚’ç¤ºã™ãŸã‚ã« 503 (Service Unavailable) ãƒ¬ã‚¹ãƒãƒ³ã‚¹ã¨ã¨ã‚‚ã«ä½¿ã‚ã‚Œã¾ã™ã€‚
 
-   TODO
+.. method:: set_cookie (key, value='', max_age=None, expires=None, path='/', domain=None, secure=None, httponly=False)
 
+   cookieã‚’ã‚»ãƒƒãƒˆã—ã¾ã™ã€‚ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã¯ã€Python ã‚¹ã‚¿ãƒ³ãƒ€ãƒ¼ãƒ‰ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã® cookie ``Morsel`` ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¨åŒã˜ã§ã™ãŒã€ unicodeã®ãƒ‡ãƒ¼ã‚¿ã‚‚å¯ã§ã™ã€‚
+
+   :param key: ã‚»ãƒƒãƒˆã•ã‚Œã‚‹cookieã®ã‚­ãƒ¼ã§ã™ã€‚
+   :param value: cookie ã®å€¤ã§ã™ã€‚
+   :param max_age: ç§’æ•°ã§ã‚ã‚‹ã¹ãã§ã™ã€‚cookie ãŒã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆã®ãƒ–ãƒ©ã‚¦ã‚¶ã‚»ãƒƒã‚·ãƒ§ãƒ³ã¨åŒã˜ãã‚‰ã„é•·ãç¶šãã¹ãã§ã‚ã‚‹å ´åˆã¯ã€ ``None`` (ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤) ã§ã™ã€‚
+   :param domain: ã‚¯ãƒ­ã‚¹ãƒ‰ãƒ¡ã‚¤ãƒ³cookieã‚’ã‚»ãƒƒãƒˆã—ãŸã„å ´åˆã«ä½¿ã„ã¾ã™ã€‚ä¾‹ãˆã°ã€ ``domain=".exmaple.com" ã¯ "www.example.com" ã¨ "foo.example.com" ãƒ‰ãƒ¡ã‚¤ãƒ³ã‹ã‚‰èª­ã¿è¾¼ã‚ã‚‹ cookie ã‚’ã‚»ãƒƒãƒˆã™ã‚‹ã§ã—ã‚‡ã†ã€‚ãã†ã§ãªã„å ´åˆã¯ã€ã‚»ãƒƒãƒˆã—ãŸãƒ‰ãƒ¡ã‚¤ãƒ³ã®ã¿ã‹ã‚‰èª­ã¿è¾¼ã‚€ã“ã¨ãŒã§ãã‚‹ã§ã—ã‚‡ã†ã€‚
+   :param path: cookie ã®ãƒ‘ã‚¹ã‚’åˆ¶é™ã—ã¾ã™ã€‚ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã§ã¯ã€ãƒ‰ãƒ¡ã‚¤ãƒ³å…¨ä½“ã§ã™ã€‚
+      
 .. attribute:: set_etag
 
-   TODO
+   etag ã‚’ã‚»ãƒƒãƒˆã—ã¾ã™ã€‚ã‚‚ã—ã€å¤ã„ã®ãŒã‚ã‚Œã°ä¸Šæ›¸ãã—ã¾ã™ã€‚
    
 .. attribute:: status
 
-   ’Ê¸’»ú’Îó’¤Î’¥¹’¥Æ’¡¼’¥¿’¥¹’¤«’¡¢’À°’¿ô’ÃÍ’¤Î’¥¹’¥Æ’¡¼’¥¿’¥¹’¥³’¡¼’¥É’¤ò’ÅÏ’¤·’¤Þ’¤¹’¡£
+   æ–‡å­—åˆ—ã®ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã‹ã€æ•´æ•°å€¤ã®ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã‚³ãƒ¼ãƒ‰ã‚’æ¸¡ã—ã¾ã™ã€‚
 
 .. attribute:: status_code
 
-   ’¥ì’¥¹’¥Ý’¥ó’¥¹’¥¹’¥Æ’¡¼’¥¿’¥¹’¤Ç’¤¹’¡£’À°’¿ô’ÃÍ’¤Ç’¤¹’¡£
+   ãƒ¬ã‚¹ãƒãƒ³ã‚¹ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã§ã™ã€‚æ•´æ•°å€¤ã§ã™ã€‚
 
 .. attribute:: stream
 
-   todo
+   æ›¸ãè¾¼ã¿å°‚ç”¨ã®ãƒ¬ã‚¹ãƒãƒ³ã‚¹ã‚¤ãƒ†ãƒ©ãƒ–ãƒ«ã§ã™ã€‚
 
 .. attribute:: vary
 
-   todo
+   Vary ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã¯ã€ãƒ¬ã‚¹ãƒãƒ³ã‚¹ãŒæ–°ã—ã„ã‚‚ã®ã§ã‚ã‚‹é–“ã€ã‚­ãƒ£ãƒƒã‚·ãƒ¥ãŒãã®ãƒ¬ã‚¹ãƒãƒ³ã‚¹ã‚’ãƒªãƒ´ã‚¡ãƒªãƒ‡ãƒ¼ã‚·ãƒ§ãƒ³ãªã—ã«å¾Œç¶šã®ãƒªã‚¯ã‚¨ã‚¹ãƒˆã¸ã®å¿œç­”ã«ä½¿ã†ã“ã¨ã‚’è¨±å¯ã•ã‚Œã¦ã„ã‚‹ã‹å¦ã‹ã‚’å®Œå…¨ã«æ±ºå®šã™ã‚‹ãƒªã‚¯ã‚¨ã‚¹ãƒˆãƒ˜ãƒƒãƒ€ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®é›†åˆã‚’ç¤ºã—ã¾ã™ã€‚
    
 .. attribute:: www_authenticate
 
-   todo
+   ãƒ‘ãƒ¼ã‚¹ã•ã‚ŒãŸãƒ•ã‚©ãƒ¼ãƒ ã® ``www-authenticate`` ãƒ˜ãƒƒãƒ€ã§ã™ã€‚
 
 
 
 
 
 
-’À¸’À®’Êý’Ë¡
+ç”Ÿæˆæ–¹æ³•
 --------
 
-’¥ì’¥¹’¥Ý’¥ó’¥¹’¥ª’¥Ö’¥¸’¥§’¥¯’¥È’¤Ï’¡¢ ``werkzeug.Response`` ’¥¯’¥é’¥¹’¤Î’¥¤’¥ó’¥¹’¥¿’¥ó’¥¹’¤Ç’¤¹’¡£Kay ’¤Ë’¤Ï’¡¢’¥ì’¥¹’¥Ý’¥ó’¥¹’¤ò’À¸’À®’¤¹’¤ë’¤¿’¤á’¤Î’´Ø’¿ô’¤¬’ÍÑ’°Õ’¤µ’¤ì’¤Æ’¤¤’¤Þ’¤¹’¡£
+ãƒ¬ã‚¹ãƒãƒ³ã‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¯ã€ ``werkzeug.Response`` ã‚¯ãƒ©ã‚¹ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã§ã™ã€‚Kay ã«ã¯ã€ãƒ¬ã‚¹ãƒãƒ³ã‚¹ã‚’ç”Ÿæˆã™ã‚‹ãŸã‚ã®é–¢æ•°ãŒç”¨æ„ã•ã‚Œã¦ã„ã¾ã™ã€‚
 
 
 .. function:: render_to_response(template, context, mimetype='text/html', processors=None)
 
-   HTML’¥Ú’¡¼’¥¸’¤Î’¥ì’¥ó’¥À’¥ê’¥ó’¥°
+   HTMLãƒšãƒ¼ã‚¸ã®ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°
 
-   :param template: ’¥Æ’¥ó’¥×’¥ì’¡¼’¥È
-   :param context: ’¥³’¥ó’¥Æ’¥­’¥¹’¥È
+   :param template: ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ
+   :param context: ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆ
    :param mimetype: mimetype
-   :param processors: ’¥³’¥ó’¥Æ’¥­’¥¹’¥È’¥×’¥í’¥»’¥Ã’¥µ
-   :rtype: ’¥ì’¥¹’¥Ý’¥ó’¥¹’¥ª’¥Ö’¥¸’¥§’¥¯’¥È
+   :param processors: ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆãƒ—ãƒ­ã‚»ãƒƒã‚µ
+   :rtype: ãƒ¬ã‚¹ãƒãƒ³ã‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 
 .. function:: render_error(e)
 
-   ’¥¨’¥é’¡¼’¥Ú’¡¼’¥¸’¤Î’¥ì’¥ó’¥À’¥ê’¥ó’¥°
+   ã‚¨ãƒ©ãƒ¼ãƒšãƒ¼ã‚¸ã®ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°
 
-   :param e: ’¥¨’¥¯’¥»’¥×’¥·’¥ç’¥ó’¥ª’¥Ö’¥¸’¥§’¥¯’¥È
-   :rtype: ’¥ì’¥¹’¥Ý’¥ó’¥¹’¥ª’¥Ö’¥¸’¥§’¥¯’¥È
+   :param e: ã‚¨ã‚¯ã‚»ãƒ—ã‚·ãƒ§ãƒ³ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+   :rtype: ãƒ¬ã‚¹ãƒãƒ³ã‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 
 
 
