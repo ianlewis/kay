@@ -394,23 +394,33 @@ GETメソッドのパラメータ取得するには、以下のように記述�
 
 .. attribute:: expires
 
-   TODO
+   Expire エンティティヘッダフィールドはレスポンスが古くなると見なされる時点の日付と時間を表します。通常、キャッシュは、古いキャッシュエントリを返さないでしょう。
 
-.. attribute:: fix_headers
+.. method:: fix_headers(environ)
 
-   TODO
+   レスポンスの開始の直前に自動的に呼び出され、ヘッダのよくある間違いを修正します。例えば、ロケーションヘッダはルートURLと結合されます。
 
-.. method:: force_type()
+   :param envirion: 修正の適用に使われるリクエストのWSGI環境
 
-   todo
+.. classmethod:: force_type(response, environ=None)
+
+   WSGI レスポンスが現在の型のレスポンスオブジェクトであることを強制します。Werkzeug はエクセプションのような多くのシチュエーションで内部的には ``BaseResponse`` を使います。もしエクセプションに ``get_response`` を呼ぶのであれば、たとえ、カスタムサブクラスを使っていたとしても、通常の ``BaseResponse`` オブジェクトを返されるでしょう。
+
+   このメソッドは与えられるレスポンスの方を強制できます。また、 envrion が与えられれば、WSGI コーラブルを任意のレスポンスオブジェクトにコンバートするでしょう。
+
+   これは、メインディスパッチャでレスポンスをポストプロセスし、サブクラスによって提供される機能を使いたい場合に特に有用です。
+
+   可能な限り適切にレスポンスオブジェクトを変更することを覚えておいてください。
+
+   :param response: レスポンスオブジェクト、または、wsgi アプリケーション
+   :param environ: WSGI 環境オブジェクト
+   
    
 .. method:: freeze()
 
-   pickleされるレスポンスオブジェクトを作成する場合は、このメソッドを呼び出してください。
-
    TODO
 
-.. method:: from_app(app, environ, buffered=False)
+.. classmethod:: from_app(app, environ, buffered=False)
 
    TODO
    
