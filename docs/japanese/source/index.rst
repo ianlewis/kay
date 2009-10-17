@@ -8,13 +8,11 @@ Kay ドキュメントへようこそ
 目次:
 
 .. toctree::
+   :numbered:
    :maxdepth: 1
 
    tutorial
-
-.. toctree::   
-   :maxdepth: 2
-
+   settings
    manage_py
    urlmapping
    auth
@@ -22,7 +20,10 @@ Kay ドキュメントへようこそ
    forms-usage
    i18n
    dump_restore
-
+   request_response
+   
+   
+   
 Indices and tables
 ==================
 

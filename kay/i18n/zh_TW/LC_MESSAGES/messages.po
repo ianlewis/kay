@@ -7,24 +7,28 @@ msgstr ""
 "Project-Id-Version:  kay-0.0.0\n"
 "Report-Msgid-Bugs-To: tmatsuo@candit.jp\n"
 "POT-Creation-Date: 2009-05-15 14:07+0900\n"
-"PO-Revision-Date: 2009-09-23 01:24+0900\n"
+"PO-Revision-Date: 2009-10-17 02:53+0900\n"
 "Last-Translator: TsungWei Hu <marr.tw AT gmail.com>\n"
 "Language-Team: Takashi Matsuo <tmatsuo@candit.jp>\n"
 "Plural-Forms: nplurals=1; plural=0\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 0.9.4\n"
+"Generated-By: Babel None\n"
 
-#: kay/auth/forms.py:14
+#: kay/app.py:335 kay/utils/decorators.py:155
+msgid "Appengine might be under maintenance."
+msgstr ""
+
+#: kay/auth/forms.py:16
 msgid "user name"
 msgstr ""
 
-#: kay/auth/forms.py:17
+#: kay/auth/forms.py:18
 msgid "password"
 msgstr ""
 
-#: kay/auth/views.py:32
+#: kay/auth/views.py:64
 msgid "Failed to login."
 msgstr ""
 
@@ -32,11 +36,15 @@ msgstr ""
 msgid "Kay Login"
 msgstr ""
 
-#: kay/auth/templates/loginform.html:27
+#: kay/auth/templates/loginform.html:15
+msgid "Kay Login Form"
+msgstr ""
+
+#: kay/auth/templates/loginform.html:23
 msgid "Login"
 msgstr ""
 
-#: kay/i18n/__init__.py:328
+#: kay/i18n/__init__.py:335
 msgid "now"
 msgstr "現在"
 
