@@ -1,66 +1,66 @@
 ==============================================
-уГкуВпуВиуВ╣уГИуВкуГЦуВ╕уВзуВпуГИуБиуГмуВ╣уГЭуГ│уВ╣уВкуГЦуВ╕уВзуВпуГИ
+ТеъТепТеиТе╣Те╚ТекТе╓Те╕ТезТепТе╚Тд╚ТеьТе╣Те▌ТеєТе╣ТекТе╓Те╕ТезТепТе╚
 ==============================================
 
-цжВшжБ
+Т│╡Т═╫
 ====
 
-Kay уБпуАБWSGI уБлц║ЦцЛауБЧуБЯ Werkzeug уБоуГкуВпуВиуВ╣уГИуВкуГЦуВ╕уВзуВпуГИуАБуБКуВИуБ│уАБуГмуВ╣уГЭуГ│уВ╣уВкуГЦуВ╕уВзуВпуГИуВТцОбчФиуБЧуБжуБДуБ╛уБЩуАВKay уБпуАБуГЦуГйуВжуВ╢уБЛуВЙуВвуВпуВ╗уВ╣уБХуВМуВЛуБиуГкуВпуВиуВ╣уГИуВкуГЦуВ╕уВзуВпуГИуВТчФЯцИРуБЧуАБURLуГЮуГГуГФуГ│уВ░уБлуВИуБгуБжчЙ╣хоЪуБЧуБЯviewщЦвцХ░уБлц╕буБЧуБ╛уБЩуАВviewщЦвцХ░уБпчммя╝Сх╝ХцХ░уБлуГкуВпуВиуВ╣уГИуВкуГЦуВ╕уВзуВпуГИуВТуБиуВКуАБуГмуВ╣уГЭуГ│уВ╣уВкуГЦуВ╕уВзуВпуГИуВТчФЯцИРуБЧуБжш┐ФуБЩх┐ЕшжБуБМуБВуВКуБ╛уБЩуАВуБУуБУуБзуБпуАБуГкуВпуВиуВ╣уГИуВкуГЦуВ╕уВзуВпуГИуАБуБКуВИуБ│уАБуГмуВ╣уГЭуГ│уВ╣уВкуГЦуВ╕уВзуВпуГИуБоцзЛцИРуБлуБдуБДуБжшкмцШОуБЧуБ╛уБЩуАВ
+Kay Тд╧ТбвWSGI Тд╦Т╜рТ╡ЄТд╖Тд┐ Werkzeug Тд╬ТеъТепТеиТе╣Те╚ТекТе╓Те╕ТезТепТе╚ТбвТдкТдшТд╙ТбвТеьТе╣Те▌ТеєТе╣ТекТе╓Те╕ТезТепТе╚ТдЄТ║╬Т═╤Тд╖Тд╞ТддТд▐Тд╣ТбгKay Тд╧ТбвТе╓ТещТежТе╢ТдлТдщТевТепТе╗Те╣Тд╡ТдьТдыТд╚ТеъТепТеиТе╣Те╚ТекТе╓Те╕ТезТепТе╚ТдЄТ└╕Т└оТд╖ТбвURLТе▐Те├Те╘ТеєТе░Тд╦ТдшТд├Тд╞Т╞├Т─ъТд╖Тд┐viewТ┤╪Т┐ЇТд╦Т┼╧Тд╖Тд▐Тд╣ТбгviewТ┤╪Т┐ЇТд╧Т┬шТг▒Т░·Т┐ЇТд╦ТеъТепТеиТе╣Те╚ТекТе╓Те╕ТезТепТе╚ТдЄТд╚ТдъТбвТеьТе╣Те▌ТеєТе╣ТекТе╓Те╕ТезТепТе╚ТдЄТ└╕Т└оТд╖Тд╞Т╩╓Тд╣Т╔мТ═╫ТдмТдвТдъТд▐Тд╣ТбгТд│Тд│Тд╟Тд╧ТбвТеъТепТеиТе╣Те╚ТекТе╓Те╕ТезТепТе╚ТбвТдкТдшТд╙ТбвТеьТе╣Те▌ТеєТе╣ТекТе╓Те╕ТезТепТе╚Тд╬Т╣╜Т└оТд╦Тд─ТддТд╞Т└тТ╠└Тд╖Тд▐Тд╣Тбг
 
 
-уГкуВпуВиуВ╣уГИуВкуГЦуВ╕уВзуВпуГИ
+ТеъТепТеиТе╣Те╚ТекТе╓Те╕ТезТепТе╚
 ======================
 
-* viewщЦвцХ░уБпуАБуГкуВпуВиуВ╣уГИуВкуГЦуВ╕уВзуВпуГИуВТх╝ХцХ░уБлуБиуВКуБ╛уБЩуАВ
-* уГкуВпуВиуВ╣уГИуВкуГЦуВ╕уВзуВпуГИуБпшкнуБ┐ш╛╝уБ┐х░ВчФиуБзуБЩуАВхдЙцЫ┤уБпши▒хПпуБХуВМуБжуБДуБ╛уБЫуВУуАВ
-* уГЗуГХуВйуГлуГИуБзуБпуАБуГкуВпуВиуВ╣уГИуВкуГЦуВ╕уВзуВпуГИуБоуГЖуВнуВ╣уГИуГЗуГ╝уВ┐уБпуБЩуБ╣уБж ``UTF-8`` уБзуВиуГ│уВ│уГ╝уГЙуБХуВМуБжуБДуБ╛уБЩуАВ
+* viewТ┤╪Т┐ЇТд╧ТбвТеъТепТеиТе╣Те╚ТекТе╓Те╕ТезТепТе╚ТдЄТ░·Т┐ЇТд╦Тд╚ТдъТд▐Тд╣Тбг
+* ТеъТепТеиТе╣Те╚ТекТе╓Те╕ТезТепТе╚Тд╧Т╞╔Тд▀Т╣■Тд▀Т└ьТ═╤Тд╟Тд╣ТбгТ╩╤Т╣╣Тд╧Т╡ЎТ▓─Тд╡ТдьТд╞ТддТд▐Тд╗ТдєТбг
+* Те╟Те╒ТейТеыТе╚Тд╟Тд╧ТбвТеъТепТеиТе╣Те╚ТекТе╓Те╕ТезТепТе╚Тд╬Те╞ТенТе╣Те╚Те╟Тб╝Те┐Тд╧Тд╣Тд┘Тд╞ ``UTF-8`` Тд╟ТеиТеєТе│Тб╝Те╔Тд╡ТдьТд╞ТддТд▐Тд╣Тбг
 
 
-х▒ЮцАзуБиуГбуВ╜уГГуГЙ
+Т┬░Т└нТд╚ТесТе╜Те├Те╔
 --------------
 
-уГкуВпуВиуВ╣уГИуВкуГЦуВ╕уВзуВпуГИуБпф╗еф╕ЛуБох▒ЮцАзуАБуБКуВИуБ│уГбуВ╜уГГуГЙуВТцМБуБгуБжуБДуБ╛уБЩуАВ
+ТеъТепТеиТе╣Те╚ТекТе╓Те╕ТезТепТе╚Тд╧Т░╩Т▓╝Тд╬Т┬░Т└нТбвТдкТдшТд╙ТесТе╜Те├Те╔ТдЄТ╗¤Тд├Тд╞ТддТд▐Тд╣Тбг
 
 .. method:: _get_file_stream(total_content_length, content_type, filename=None, content_length=None)
 
-   уГХуВбуВдуГлуВвуГГуГЧуГнуГ╝уГЙуБоуВ╣уГИуГкуГ╝уГауВТхПЦх╛ЧуБЩуВЛуБЯуВБуБлхС╝уБ░уВМуБ╛уБЩуАВ
+   Те╒ТебТедТеыТевТе├Те╫ТеэТб╝Те╔Тд╬Те╣Те╚ТеъТб╝ТерТдЄТ╝шТ╞└Тд╣ТдыТд┐ТдсТд╦Т╕╞Тд╨ТдьТд▐Тд╣Тбг
 
-   уБУуВМуБпуАБуГХуВбуВдуГлуБоуВИуБЖуБкцЫ╕уБНш╛╝уБ┐уАБшкнуБ┐ш╛╝уБ┐уАБуБиуВВуБлхПпшГ╜уБк ``read()`` , ``readline()`` , ``seek()`` уГбуВ╜уГГуГЙуВВуБгуБЯуГХуВбуВдуГлуБоуВИуБЖуБкуВпуГйуВ╣уВТцПРф╛ЫуБЧуБкуБСуВМуБ░уБкуВКуБ╛уБЫуВУуАВ
+   Тд│ТдьТд╧ТбвТе╒ТебТедТеыТд╬ТдшТджТд╩Т╜ёТднТ╣■Тд▀ТбвТ╞╔Тд▀Т╣■Тд▀ТбвТд╚ТдтТд╦Т▓─Т╟╜Тд╩ ``read()`` , ``readline()`` , ``seek()`` ТесТе╜Те├Те╔ТдтТд├Тд┐Те╒ТебТедТеыТд╬ТдшТджТд╩ТепТещТе╣ТдЄТ─єТ╢бТд╖Тд╩Тд▒ТдьТд╨Тд╩ТдъТд▐Тд╗ТдєТбг
 
-   ч╖ПуВ│уГ│уГЖуГ│уГДщХ╖уБМ 500KB уВТш╢ЕуБИуВЛха┤хРИуАБуГЗуГХуВйуГлуГИуБохоЯшгЕуБзуБпф╕АцЩВуГХуВбуВдуГлуВТш┐ФуБЧуБ╛уБЩуАВхдЪуБПуБоуГЦуГйуВжуВ╢уБМч╖ПуВ│уГ│уГЖуГ│уГДщХ╖уБоуБ┐уВТцПРф╛ЫуБЩуВЛуБауБСуБзуАБуГХуВбуВдуГлуБоуВ│уГ│уГЖуГ│уГДщХ╖уВТцПРф╛ЫуБЧуБкуБДуБЛуВЙуБзуБЩуАВ
+   Т┴эТе│ТеєТе╞ТеєТе─Т─╣Тдм 500KB ТдЄТ─╢ТдиТдыТ╛ьТ╣чТбвТе╟Те╒ТейТеыТе╚Тд╬Т╝┬Т┴їТд╟Тд╧Т░ьТ╗■Те╒ТебТедТеыТдЄТ╩╓Тд╖Тд▐Тд╣ТбгТ┬┐ТдпТд╬Те╓ТещТежТе╢ТдмТ┴эТе│ТеєТе╞ТеєТе─Т─╣Тд╬Тд▀ТдЄТ─єТ╢бТд╣ТдыТд└Тд▒Тд╟ТбвТе╒ТебТедТеыТд╬Те│ТеєТе╞ТеєТе─Т─╣ТдЄТ─єТ╢бТд╖Тд╩ТддТдлТдщТд╟Тд╣Тбг
 
-   :param total_content_length: уГкуВпуВиуВ╣уГИф╕нуБоуБЩуБ╣уБжуБоуГЗуГ╝уВ┐уБоч╖ПуВ│уГ│уГЖуГ│уГДщХ╖уБзуБЩуАВуБУуБохАдуБпхнШхЬиуБЩуВЛуБУуБиуБМф┐Эши╝уБХуВМуБжуБДуБ╛уБЩуАВ
-   :param content_type: уВвуГГуГЧуГнуГ╝уГЙуБХуВМуБЯуГХуВбуВдуГлуБо mimetype уБзуБЩуАВ
-   :param filename: уВвуГГуГЧуГнуГ╝уГЙуБХуВМуБЯуГХуВбуВдуГлуБоуГХуВбуВдуГлхРНуБзуБЩуАВуБКуБЭуВЙуБП ``None`` уБзуБЩуАВ
-   :param content_length: уГХуВбуВдуГлуБощХ╖уБХуБзуБЩуАВWebуГЦуГйуВжуВ╢уБМуБУуБохАдуВТцПРф╛ЫуБЧуБкуБДуБЯуВБуАБщАЪх╕╕уБпцПРф╛ЫуБХуВМуБ╛уБЫуВУуАВ
+   :param total_content_length: ТеъТепТеиТе╣Те╚Т├цТд╬Тд╣Тд┘Тд╞Тд╬Те╟Тб╝Те┐Тд╬Т┴эТе│ТеєТе╞ТеєТе─Т─╣Тд╟Тд╣ТбгТд│Тд╬Т├═Тд╧Т┬╕Т║▀Тд╣ТдыТд│Тд╚ТдмТ╩▌Т╛┌Тд╡ТдьТд╞ТддТд▐Тд╣Тбг
+   :param content_type: ТевТе├Те╫ТеэТб╝Те╔Тд╡ТдьТд┐Те╒ТебТедТеыТд╬ mimetype Тд╟Тд╣Тбг
+   :param filename: ТевТе├Те╫ТеэТб╝Те╔Тд╡ТдьТд┐Те╒ТебТедТеыТд╬Те╒ТебТедТеыТ╠╛Тд╟Тд╣ТбгТдкТд╜ТдщТдп ``None`` Тд╟Тд╣Тбг
+   :param content_length: Те╒ТебТедТеыТд╬Т─╣Тд╡Тд╟Тд╣ТбгWebТе╓ТещТежТе╢ТдмТд│Тд╬Т├═ТдЄТ─єТ╢бТд╖Тд╩ТддТд┐ТдсТбвТ─╠Т╛яТд╧Т─єТ╢бТд╡ТдьТд▐Тд╗ТдєТбг
 
 .. method:: _form_parsing_failed(error)
 
-   уГХуВйуГ╝уГауГЗуГ╝уВ┐уБоуГСуГ╝уВ╣уБлхд▒цХЧуБЧуБЯуВЙхС╝уБ░уВМуБ╛уБЩуАВуБУуБоуГбуВ╜уГГуГЙуБпуАБчП╛хЬиуБзуБпуГЮуГлуГБуГСуГ╝уГИуВвуГГуГЧуГнуГ╝уГЙуБМхд▒цХЧуБЧуБЯуБиуБНуБоуБ┐хС╝уБ│хЗ║уБХуВМуБ╛уБЩуАВуГЗуГХуВйуГлуГИуБзуБпуБкуБлуВВуБЧуБ╛уБЫуВУуАВ
+   Те╒ТейТб╝ТерТе╟Тб╝Те┐Тд╬Те╤Тб╝Те╣Тд╦Т╝║Т╟╘Тд╖Тд┐ТдщТ╕╞Тд╨ТдьТд▐Тд╣ТбгТд│Тд╬ТесТе╜Те├Те╔Тд╧ТбвТ╕╜Т║▀Тд╟Тд╧Те▐ТеыТе┴Те╤Тб╝Те╚ТевТе├Те╫ТеэТб╝Те╔ТдмТ╝║Т╟╘Тд╖Тд┐Тд╚ТднТд╬Тд▀Т╕╞Тд╙Т╜╨Тд╡ТдьТд▐Тд╣ТбгТе╟Те╒ТейТеыТе╚Тд╟Тд╧Тд╩Тд╦ТдтТд╖Тд▐Тд╗ТдєТбг
    
 .. attribute:: accept_charsets
 
-   уВпуГйуВдуВвуГ│уГИуБМуВ╡уГЭуГ╝уГИуБЧуБжуБДуВЛцЦЗхнЧуВ╗уГГуГИуБоуГкуВ╣уГИуБзуБЩуАВ `CharsetAcceptуАА<http://werkzeug.pocoo.org/documentation/0.5.1/datastructures.html#werkzeug.CharsetAccept>`_ уВкуГЦуВ╕уВзуВпуГИуБиуБЧуБжцПРф╛ЫуБХуВМуБ╛уБЩуАВ
+   ТепТещТедТевТеєТе╚ТдмТе╡Те▌Тб╝Те╚Тд╖Тд╞ТддТдыТ╩╕Т╗·Те╗Те├Те╚Тд╬ТеъТе╣Те╚Тд╟Тд╣Тбг `CharsetAcceptТбб<http://werkzeug.pocoo.org/documentation/0.5.1/datastructures.html#werkzeug.CharsetAccept>`_ ТекТе╓Те╕ТезТепТе╚Тд╚Тд╖Тд╞Т─єТ╢бТд╡ТдьТд▐Тд╣Тбг
 
 .. attribute:: accept_encodings
 
-   уВпуГйуВдуВвуГ│уГИуБМши▒хо╣уБЧуБжуБДуВЛуВиуГ│уВ│уГ╝уГЗуВгуГ│уВ░уБоуГкуВ╣уГИуБзуБЩуАВHTTP уБочФишкЮуБлуБКуБДуБжуАБgzipуБоуВИуБЖуБкуВиуГ│уВ│уГ╝уГЗуВгуГ│уВ░уБохЬзч╕оуБзуБЩуАВ цЦЗхнЧуВ╗уГГуГИуБлуБдуБДуБжуБп ``accept_charsets`` уВТхПВчЕзуБЧуБжф╕ЛуБХуБДуАВ
+   ТепТещТедТевТеєТе╚ТдмТ╡ЎТ═╞Тд╖Тд╞ТддТдыТеиТеєТе│Тб╝Те╟ТегТеєТе░Тд╬ТеъТе╣Те╚Тд╟Тд╣ТбгHTTP Тд╬Т═╤Т╕ьТд╦ТдкТддТд╞ТбвgzipТд╬ТдшТджТд╩ТеиТеєТе│Тб╝Те╟ТегТеєТе░Тд╬Т░╡Т╜╠Тд╟Тд╣Тбг Т╩╕Т╗·Те╗Те├Те╚Тд╦Тд─ТддТд╞Тд╧ ``accept_charsets`` ТдЄТ╗▓Т╛╚Тд╖Тд╞Т▓╝Тд╡ТддТбг
 
 .. attribute:: accept_languages
 
-   уВпуГйуВдуВвуГ│уГИуБМши▒хо╣уБЧуБжуБДуВЛшиАшкЮуБоуГкуВ╣уГИуБзуБЩуАВ `LanguageAccept <http://werkzeug.pocoo.org/documentation/0.5.1/datastructures.html#werkzeug.LanguageAccept>`_ уВкуГЦуВ╕уВзуВпуГИуБиуБЧуБжцПРф╛ЫуБХуВМуБ╛уБЩуАВ
+   ТепТещТедТевТеєТе╚ТдмТ╡ЎТ═╞Тд╖Тд╞ТддТдыТ╕└Т╕ьТд╬ТеъТе╣Те╚Тд╟Тд╣Тбг `LanguageAccept <http://werkzeug.pocoo.org/documentation/0.5.1/datastructures.html#werkzeug.LanguageAccept>`_ ТекТе╓Те╕ТезТепТе╚Тд╚Тд╖Тд╞Т─єТ╢бТд╡ТдьТд▐Тд╣Тбг
 
 .. attribute:: accept_mimetypes
 
-   уВпуГйуВдуВвуГ│уГИуБМуВ╡уГЭуГ╝уГИуБЧуБжуБДуВЛ mimetype уБоуГкуВ╣уГИуБзуБЩуАВ `MIMEAccept <http://werkzeug.pocoo.org/documentation/0.5.1/datastructures.html#werkzeug.MIMEAccept>`_ уВкуГЦуВ╕уВзуВпуГИуБиуБЧуБжцПРф╛ЫуБХуВМуБ╛уБЩуАВ
+   ТепТещТедТевТеєТе╚ТдмТе╡Те▌Тб╝Те╚Тд╖Тд╞ТддТды mimetype Тд╬ТеъТе╣Те╚Тд╟Тд╣Тбг `MIMEAccept <http://werkzeug.pocoo.org/documentation/0.5.1/datastructures.html#werkzeug.MIMEAccept>`_ ТекТе╓Те╕ТезТепТе╚Тд╚Тд╖Тд╞Т─єТ╢бТд╡ТдьТд▐Тд╣Тбг
 
 .. attribute:: access_route
 
-   уГХуВйуГпуГ╝уГЙуГШуГГуГАуБМуБВуВЛха┤хРИуАБуВпуГйуВдуВвуГ│уГИуБоIPуБЛуВЙуВ╡уГ╝уГРуБочЫ┤хЙНуБоуГЧуГнуВнуВ╖уВ╡уГ╝уГРуБ╛уБзуБоIPуВвуГЙуГмуВ╣уБоуГкуВ╣уГИуБМца╝ч┤НуБХуВМуБ╛уБЩуАВ
+   Те╒ТейТеяТб╝Те╔Те╪Те├Те└ТдмТдвТдыТ╛ьТ╣чТбвТепТещТедТевТеєТе╚Тд╬IPТдлТдщТе╡Тб╝Те╨Тд╬Т─╛Т┴░Тд╬Те╫ТеэТенТе╖Те╡Тб╝Те╨Тд▐Тд╟Тд╬IPТевТе╔ТеьТе╣Тд╬ТеъТе╣Те╚ТдмТ│╩Т╟╝Тд╡ТдьТд▐Тд╣Тбг
   
 .. classmethod:: application(f)
 
-   уГкуВпуВиуВ╣уГИуВТчммя╝Сх╝ХцХ░уБлуБиуВЛхПЧуБСхПЦуВЛуГмуВ╣уГЭуГ│уГАуБиуБЧуБжуАБщЦвцХ░уВТуГЗуВ│уГмуГ╝уГИуБзуБНуБ╛уБЩуАВ ``responder`` уГЗуВ│уГмуГ╝уВ┐уБоуВИуБЖуБлцйЯшГ╜уБЧуБ╛уБЩуБМуАБщЦвцХ░уБпчммя╝Сх╝ХцХ░уБлуГкуВпуВиуВ╣уГИуВкуГЦуВ╕уВзуВпуГИуВТуБиуВКуБ╛уБЩуАВ
+   ТеъТепТеиТе╣Те╚ТдЄТ┬шТг▒Т░·Т┐ЇТд╦Тд╚ТдыТ╝їТд▒Т╝шТдыТеьТе╣Те▌ТеєТе└Тд╚Тд╖Тд╞ТбвТ┤╪Т┐ЇТдЄТе╟Те│ТеьТб╝Те╚Тд╟ТднТд▐Тд╣Тбг ``responder`` Те╟Те│ТеьТб╝Те┐Тд╬ТдшТджТд╦Т╡бТ╟╜Тд╖Тд▐Тд╣ТдмТбвТ┤╪Т┐ЇТд╧Т┬шТг▒Т░·Т┐ЇТд╦ТеъТепТеиТе╣Те╚ТекТе╓Те╕ТезТепТе╚ТдЄТд╚ТдъТд▐Тд╣Тбг
 
    .. code-block:: python
 
@@ -74,97 +74,97 @@ Kay уБпуАБWSGI уБлц║ЦцЛауБЧуБЯ Werkzeug уБоуГкуВпуВиуВ╣уГИуВкуГЦуВ╕уВзуВпуГИуАБу
 
 .. attribute:: args
 
-   уГСуГ╝уВ╣уБХуВМуБЯURLуГСуГйуГбуГ╝уВ┐уБзуБЩуАВ `ImmutableMultiDict <http://werkzeug.pocoo.org/documentation/0.5.1/datastructures.html#werkzeug.ImmutableMultiDict>`_ уБлца╝ч┤НуБХуВМуБ╛уБЩуАВ
+   Те╤Тб╝Те╣Тд╡ТдьТд┐URLТе╤ТещТесТб╝Те┐Тд╟Тд╣Тбг `ImmutableMultiDict <http://werkzeug.pocoo.org/documentation/0.5.1/datastructures.html#werkzeug.ImmutableMultiDict>`_ Тд╦Т│╩Т╟╝Тд╡ТдьТд▐Тд╣Тбг
 
 .. attribute:: authorization
 
-   уГСуГ╝уВ╣уБХуВМуБЯуГХуВйуГ╝уГауБоф╕нуБо ``Authorization`` уВкуГЦуВ╕уВзуВпуГИуБзуБЩуАВ
+   Те╤Тб╝Те╣Тд╡ТдьТд┐Те╒ТейТб╝ТерТд╬Т├цТд╬ ``Authorization`` ТекТе╓Те╕ТезТепТе╚Тд╟Тд╣Тбг
 
 .. attribute:: base_url
 
-   ``url`` уБиф╝╝уБжуБДуБ╛уБЩуБМуАБуВпуВиуГкцЦЗхнЧхИЧуБМчЬБуБЛуВМуБжуБДуБ╛уБЩуАВ
+   ``url`` Тд╚Т╗ўТд╞ТддТд▐Тд╣ТдмТбвТепТеиТеъТ╩╕Т╗·Т╬єТдмТ╛╩ТдлТдьТд╞ТддТд▐Тд╣Тбг
 
 .. attribute:: cache_control
 
-   хПЧф┐буБЧуБЯуВнуГгуГГуВ╖уГеуВ│уГ│уГИуГнуГ╝уГлуГШуГГуГАуВТ `RequestCacheControl <http://werkzeug.pocoo.org/documentation/0.5.1/datastructures.html#werkzeug.RequestCacheControl>`_ уВкуГЦуВ╕уВзуВпуГИуБиуБЧуБжцПРф╛ЫуБЧуБ╛уБЩуАВ
+   Т╝їТ┐оТд╖Тд┐ТенТеуТе├Те╖ТехТе│ТеєТе╚ТеэТб╝ТеыТе╪Те├Те└ТдЄ `RequestCacheControl <http://werkzeug.pocoo.org/documentation/0.5.1/datastructures.html#werkzeug.RequestCacheControl>`_ ТекТе╓Те╕ТезТепТе╚Тд╚Тд╖Тд╞Т─єТ╢бТд╖Тд▐Тд╣Тбг
 
 .. attribute:: charset
 
-   уГкуВпуВиуВ╣уГИуБоцЦЗхнЧуВ╗уГГуГИуБзуБЩуАВуГЗуГХуВйуГлуГИхАдуБп ``UTF-8`` уБзуБЩуАВ
+   ТеъТепТеиТе╣Те╚Тд╬Т╩╕Т╗·Те╗Те├Те╚Тд╟Тд╣ТбгТе╟Те╒ТейТеыТе╚Т├═Тд╧ ``UTF-8`` Тд╟Тд╣Тбг
 
 .. attribute:: content_length
 
-   Content-Length уВиуГ│уГЖуВгуГЖуВгуГШуГГуГАуГХуВгуГ╝уГлуГЙуБпуАБхПЧф┐бшАЕуБлщАБф┐буБХуВМуВЛуВиуГ│уГЖуВгуГЖуВгуГЬуГЗуВгуБоуВ╡уВдуВ║уВТчд║уБЧуБ╛уБЩуАВHEAD уГбуВ╜уГГуГЙуБоха┤хРИуБп GET уГкуВпуВиуВ╣уГИуБХуВМуБЯха┤хРИуБлщАБф┐буБХуВМуВЛуВиуГ│уГЖуВгуГЖуВгуГЬуГЗуВгуБоуВ╡уВдуВ║уВТчд║уБЧуБ╛уБЩуАВ
+   Content-Length ТеиТеєТе╞ТегТе╞ТегТе╪Те├Те└Те╒ТегТб╝ТеыТе╔Тд╧ТбвТ╝їТ┐оТ╝╘Тд╦Т┴ўТ┐оТд╡ТдьТдыТеиТеєТе╞ТегТе╞ТегТе▄Те╟ТегТд╬Те╡ТедТе║ТдЄТ╝иТд╖Тд▐Тд╣ТбгHEAD ТесТе╜Те├Те╔Тд╬Т╛ьТ╣чТд╧ GET ТеъТепТеиТе╣Те╚Тд╡ТдьТд┐Т╛ьТ╣чТд╦Т┴ўТ┐оТд╡ТдьТдыТеиТеєТе╞ТегТе╞ТегТе▄Те╟ТегТд╬Те╡ТедТе║ТдЄТ╝иТд╖Тд▐Тд╣Тбг
 
 .. attribute:: content_type
 
-   Content-Type уВиуГ│уГЖуВгуГЖуВгуГШуГГуГАуГХуВгуГ╝уГлуГЙуБпуАБхПЧф┐бшАЕуБлщАБф┐буБХуВМуВЛуВиуГ│уГЖуВгуГЖуВгуГЬуГЗуВгуБоуГбуГЗуВгуВвуВ┐уВдуГЧуВТчд║уБЧуБ╛уБЩуАВHEADуГбуВ╜уГГуГЙуБоха┤хРИуАБGET уГкуВпуВиуВ╣уГИуБХуВМуБЯха┤хРИуБлщАБф┐буБХуВМуВЛуВиуГ│уГЖуВгуГЖуВгуГЬуГЗуВгуБоуГбуГЗуВгуВвуВ┐уВдуГЧуВТчд║уБЧуБ╛уБЩуАВ
+   Content-Type ТеиТеєТе╞ТегТе╞ТегТе╪Те├Те└Те╒ТегТб╝ТеыТе╔Тд╧ТбвТ╝їТ┐оТ╝╘Тд╦Т┴ўТ┐оТд╡ТдьТдыТеиТеєТе╞ТегТе╞ТегТе▄Те╟ТегТд╬ТесТе╟ТегТевТе┐ТедТе╫ТдЄТ╝иТд╖Тд▐Тд╣ТбгHEADТесТе╜Те├Те╔Тд╬Т╛ьТ╣чТбвGET ТеъТепТеиТе╣Те╚Тд╡ТдьТд┐Т╛ьТ╣чТд╦Т┴ўТ┐оТд╡ТдьТдыТеиТеєТе╞ТегТе╞ТегТе▄Те╟ТегТд╬ТесТе╟ТегТевТе┐ТедТе╫ТдЄТ╝иТд╖Тд▐Тд╣Тбг
 
 .. attribute:: cookies
 
-   уГЗуВгуВпуВ╖уГзуГКуГкуБиуБЧуБжуАБcookieуБохАдуВТцЙ▒уБЖуБУуБиуБМуБзуБНуБ╛уБЩуАВ
+   Те╟ТегТепТе╖ТечТе╩ТеъТд╚Тд╖Тд╞ТбвcookieТд╬Т├═ТдЄТ░╖ТджТд│Тд╚ТдмТд╟ТднТд▐Тд╣Тбг
 
 .. attribute:: data
 
-   уГРуГГуГХуВбуГкуГ│уВ░уБХуВМуБЯуВпуГйуВдуВвуГ│уГИуБЛуВЙуБохЕехКЫуГЗуГ╝уВ┐уВТцЦЗхнЧхИЧуБлшкнуБ┐ш╛╝уБ┐уБ╛уБЩуАВцЩощАЪуБп ``data`` уБлуВвуВпуВ╗уВ╣уБЩуВЛцЦ╣ц│ХуБиуБЧуБжуБпуВИуБПуБкуБДцЦ╣ц│ХуБзуБЩуАВуВпуГйуВдуВвуГ│уГИуБМуАБуВ╡уГ╝уГРуБоуГбуГвуГкуБлхХПщбМуВТх╝ХуБНш╡╖уБУуБЩуБЯуВБуБлуАБф╜ХхНБуГбуВмуГРуВдуГИуВВуБоуГЗуГ╝уВ┐уВТщАБуВЛуБУуБиуБМуБзуБНуБжуБЧуБ╛уБЖуБЯуВБуБзуБЩуАВ
+   Те╨Те├Те╒ТебТеъТеєТе░Тд╡ТдьТд┐ТепТещТедТевТеєТе╚ТдлТдщТд╬Т╞■Т╬╧Те╟Тб╝Те┐ТдЄТ╩╕Т╗·Т╬єТд╦Т╞╔Тд▀Т╣■Тд▀Тд▐Тд╣ТбгТ╔сТ─╠Тд╧ ``data`` Тд╦ТевТепТе╗Те╣Тд╣ТдыТ╩¤Т╦бТд╚Тд╖Тд╞Тд╧ТдшТдпТд╩ТддТ╩¤Т╦бТд╟Тд╣ТбгТепТещТедТевТеєТе╚ТдмТбвТе╡Тб╝Те╨Тд╬ТесТетТеъТд╦Т╠фТ┬ъТдЄТ░·ТднТ╡пТд│Тд╣Тд┐ТдсТд╦ТбвТ▓┐Т╜╜ТесТемТе╨ТедТе╚ТдтТд╬Те╟Тб╝Те┐ТдЄТ┴ўТдыТд│Тд╚ТдмТд╟ТднТд╞Тд╖Тд▐ТджТд┐ТдсТд╟Тд╣Тбг
 
-   уБУуВМуВТщБ┐уБСуВЛуБлуБпуАБ ``content_length`` уВТхЕИуБлуГБуВзуГГуВпуБЧуБжуБПуБауБХуБДуАВ
+   Тд│ТдьТдЄТ╚ЄТд▒ТдыТд╦Тд╧Тбв ``content_length`` ТдЄТ└шТд╦Те┴ТезТе├ТепТд╖Тд╞ТдпТд└Тд╡ТддТбг
 
 .. attribute:: date
 
-   Date уВ╕уВзуГНуГйуГлуГШуГГуГАуГХуВгуГ╝уГлуГЙуБпуАБуГбуГГуВ╗уГ╝уВ╕уБМчФЯцИРуБХуВМуБЯцЧеф╗ШуБицЩВщЦУуВТшбиуБЧуБ╛уБЩуАВRFC 822уБо orig-date уБихРМуБШуВ╗уГЮуГ│уГЖуВгуВпуВ╣уВТуВВуБгуБжуБДуБ╛уБЩуАВ
+   Date Те╕ТезТе═ТещТеыТе╪Те├Те└Те╒ТегТб╝ТеыТе╔Тд╧ТбвТесТе├Те╗Тб╝Те╕ТдмТ└╕Т└оТд╡ТдьТд┐Т╞№Т╔╒Тд╚Т╗■Т┤╓ТдЄТ╔╜Тд╖Тд▐Тд╣ТбгRFC 822Тд╬ orig-date Тд╚Т╞▒Тд╕Те╗Те▐ТеєТе╞ТегТепТе╣ТдЄТдтТд├Тд╞ТддТд▐Тд╣Тбг
 
 .. attribute:: encoding_errors
 
-   уВиуГйуГ╝уГПуГ│уГЙуГкуГ│уВ░уГЧуГнуВ╖уГ╝уВ╕уГгуБзуБЩуАВуГЗуГХуВйуГлуГИхАдуБп ``ignore`` уБзуБЩуАВ
+   ТеиТещТб╝Те╧ТеєТе╔ТеъТеєТе░Те╫ТеэТе╖Тб╝Те╕ТеуТд╟Тд╣ТбгТе╟Те╒ТейТеыТе╚Т├═Тд╧ ``ignore`` Тд╟Тд╣Тбг
 
 .. attribute:: environ
 
-   уГкуВпуВиуВ╣уГИуВкуГЦуВ╕уВзуВпуГИуБМуГЗуГ╝уВ┐уВТхПЦуВКцЙ▒уБЖуБЯуВБуБо WSGIчТ░хвГ уБзуБЩуАВ
+   ТеъТепТеиТе╣Те╚ТекТе╓Те╕ТезТепТе╚ТдмТе╟Тб╝Те┐ТдЄТ╝шТдъТ░╖ТджТд┐ТдсТд╬ WSGIТ┤─Т╢н Тд╟Тд╣Тбг
 
 .. attribute:: files
 
-   уВвуГГуГЧуГнуГ╝уГЙуБХуВМуБЯуБЩуБ╣уБжуБоуГХуВбуВдуГлуВТца╝ч┤НуБЧуБЯ ``MultiDict`` уВкуГЦуВ╕уВзуВпуГИуБзуБЩуАВ ``files`` уБоуБЭуВМуБЮуВМуБоуВнуГ╝уБп ``<input type="file" name="">`` уБоnameуБзуБЩуАВуБЭуВМуБЮуВМуБохАдуБп Werkzeug уБо ``FileStorage`` уВкуГЦуВ╕уВзуВпуГИуБзуБЩуАВ
+   ТевТе├Те╫ТеэТб╝Те╔Тд╡ТдьТд┐Тд╣Тд┘Тд╞Тд╬Те╒ТебТедТеыТдЄТ│╩Т╟╝Тд╖Тд┐ ``MultiDict`` ТекТе╓Те╕ТезТепТе╚Тд╟Тд╣Тбг ``files`` Тд╬Тд╜ТдьТд╛ТдьТд╬ТенТб╝Тд╧ ``<input type="file" name="">`` Тд╬nameТд╟Тд╣ТбгТд╜ТдьТд╛ТдьТд╬Т├═Тд╧ Werkzeug Тд╬ ``FileStorage`` ТекТе╓Те╕ТезТепТе╚Тд╟Тд╣Тбг
 
-   ``files`` уБпуАБуГкуВпуВиуВ╣уГИуГбуВ╜уГГуГЙуБМ ``POST`` уБЛуАБ ``PUT`` уБзуАБуГЭуВ╣уГИуБХуВМуБЯ ``<form>`` уБМ ``enctype="multipart/form-data`` уВТцМБуБдха┤хРИуБоуБ┐уАБуГЗуГ╝уВ┐уВТцМБуБбуБ╛уБЩуАВуБЭуБЖуБзуБкуБДха┤хРИуБпчй║уБзуБЩуАВ
+   ``files`` Тд╧ТбвТеъТепТеиТе╣Те╚ТесТе╜Те├Те╔Тдм ``POST`` ТдлТбв ``PUT`` Тд╟ТбвТе▌Те╣Те╚Тд╡ТдьТд┐ ``<form>`` Тдм ``enctype="multipart/form-data`` ТдЄТ╗¤Тд─Т╛ьТ╣чТд╬Тд▀ТбвТе╟Тб╝Те┐ТдЄТ╗¤Тд┴Тд▐Тд╣ТбгТд╜ТджТд╟Тд╩ТддТ╛ьТ╣чТд╧Т╢їТд╟Тд╣Тбг
 
 .. attribute:: form
 
-   уГХуВйуГ╝уГауБоуГСуГйуГбуГ╝уВ┐уБзуБЩуАВчП╛чК╢уАБуБУуБощЦвцХ░уБМш┐ФуБЩуГЗуВгуВпуВ╖уГзуГКуГкуБоф╕нш║луБМуВ╡уГЦуГЯуГГуГИуБХуВМуБЯуГХуВйуГ╝уГауГЗуГ╝уВ┐уБихРМуБШщаЖх║ПуБЛуБйуБЖуБЛуБпф┐Эши╝уБХуВМуБжуБДуБ╛уБЫуВУуАВ
+   Те╒ТейТб╝ТерТд╬Те╤ТещТесТб╝Те┐Тд╟Тд╣ТбгТ╕╜Т╛їТбвТд│Тд╬Т┤╪Т┐ЇТдмТ╩╓Тд╣Те╟ТегТепТе╖ТечТе╩ТеъТд╬Т├цТ┐╚ТдмТе╡Те╓Те▀Те├Те╚Тд╡ТдьТд┐Те╒ТейТб╝ТерТе╟Тб╝Те┐Тд╚Т╞▒Тд╕Т╜чТ╜°ТдлТд╔ТджТдлТд╧Т╩▌Т╛┌Тд╡ТдьТд╞ТддТд▐Тд╗ТдєТбг
 
   .. seealso:: :doc:`forms-usage`
 
 .. classmethod:: from_values(*args, **kwargs)
 
-   цПРф╛ЫуБХуВМуБЯхАдуВТуВВуБиуБлуАБуГкуВпуВиуВ╣уГИуВкуГЦуВ╕уВзуВпуГИуВТцЦ░уБЯуБлчФЯцИРуБЧуБ╛уБЩуАВуВВуБЧ `environ` уБМф╕ОуБИуВЙуВМуБжуБДуВМуБ░уАБф╕Нш╢│уБЧуБжуБДуВЛхАдуБпуБЭуБУуБЛуВЙцПРф╛ЫуБХуВМуБ╛уБЩуАВURL уБЛуВЙуБоуГкуВпуВиуВ╣уГИуВТуВ╖уГЯуГеуГмуГ╝уГИуБЩуВЛх┐ЕшжБуБМуБВуВЛха┤хРИуАБч░бхНШуБкуВ╣уВпуГкуГЧуГИуВТцЫ╕уБПуБоуБлуБпуБУуБоуГбуВ╜уГГуГЙуБпф╛┐хИйуБзуБЩуАВуБЯуБауБЧуАБуБУуБоуГбуВ╜уГГуГЙуВТуГжуГЛуГГуГИуГЖуВ╣уГИуБлуБпф╜┐чФиуБЧуБкуБДуБзуБПуБауБХуБДуАВуГХуГлцйЯшГ╜уБоуВпуГйуВдуВвуГ│уГИуВкуГЦуВ╕уВзуВпуГИ( ``Client`` )уБМуБВуВКуАБуГЮуГлуГБуГСуГ╝уГИуБоуГкуВпуВиуВ╣уГИуБочФЯцИРуАБcookieуБоуВ╡уГЭуГ╝уГИуБкуБйуБМхПпшГ╜уБзуБЩуАВ
+   Т─єТ╢бТд╡ТдьТд┐Т├═ТдЄТдтТд╚Тд╦ТбвТеъТепТеиТе╣Те╚ТекТе╓Те╕ТезТепТе╚ТдЄТ┐╖Тд┐Тд╦Т└╕Т└оТд╖Тд▐Тд╣ТбгТдтТд╖ `environ` ТдмТ═┐ТдиТдщТдьТд╞ТддТдьТд╨ТбвТ╔╘Т┬нТд╖Тд╞ТддТдыТ├═Тд╧Тд╜Тд│ТдлТдщТ─єТ╢бТд╡ТдьТд▐Тд╣ТбгURL ТдлТдщТд╬ТеъТепТеиТе╣Те╚ТдЄТе╖Те▀ТехТеьТб╝Те╚Тд╣ТдыТ╔мТ═╫ТдмТдвТдыТ╛ьТ╣чТбвТ┤╩Т├▒Тд╩Те╣ТепТеъТе╫Те╚ТдЄТ╜ёТдпТд╬Тд╦Тд╧Тд│Тд╬ТесТе╜Те├Те╔Тд╧Т╩╪Т═°Тд╟Тд╣ТбгТд┐Тд└Тд╖ТбвТд│Тд╬ТесТе╜Те├Те╔ТдЄТецТе╦Те├Те╚Те╞Те╣Те╚Тд╦Тд╧Т╗╚Т═╤Тд╖Тд╩ТддТд╟ТдпТд└Тд╡ТддТбгТе╒ТеыТ╡бТ╟╜Тд╬ТепТещТедТевТеєТе╚ТекТе╓Те╕ТезТепТе╚( ``Client`` )ТдмТдвТдъТбвТе▐ТеыТе┴Те╤Тб╝Те╚Тд╬ТеъТепТеиТе╣Те╚Тд╬Т└╕Т└оТбвcookieТд╬Те╡Те▌Тб╝Те╚Тд╩Тд╔ТдмТ▓─Т╟╜Тд╟Тд╣Тбг
   
 .. attribute:: headers
 
-   WSGI чТ░хвГчФ▒цЭеуБоуГШуГГуГАуБзуБЩуАВхдЙцЫ┤ф╕НхПпуБо `EnvironHeaders <http://werkzeug.pocoo.org/documentation/0.5.1/datastructures.html#werkzeug.EnvironHeaders>`_ уБзуБЩуАВ
+   WSGI Т┤─Т╢нТ═│Т═шТд╬Те╪Те├Те└Тд╟Тд╣ТбгТ╩╤Т╣╣Т╔╘Т▓─Тд╬ `EnvironHeaders <http://werkzeug.pocoo.org/documentation/0.5.1/datastructures.html#werkzeug.EnvironHeaders>`_ Тд╟Тд╣Тбг
 
 .. attribute:: host
 
-   уГЫуВ╣уГИуБзуБЩуАВхПЦх╛ЧхПпшГ╜уБзуБВуВМуБ░уГЭуГ╝уГИуВВхРлуБ┐уБ╛уБЩуАВ
+   Те█Те╣Те╚Тд╟Тд╣ТбгТ╝шТ╞└Т▓─Т╟╜Тд╟ТдвТдьТд╨Те▌Тб╝Те╚ТдтТ┤▐Тд▀Тд▐Тд╣Тбг
 
 .. attribute:: host_url
 
-   уВ╣уВнуГ╝уГахРНуБдуБНуБоуГЫуВ╣уГИуБзуБЩуАВ
+   Те╣ТенТб╝ТерТ╠╛Тд─ТднТд╬Те█Те╣Те╚Тд╟Тд╣Тбг
 
 .. attribute:: if_match
 
-   If-Match уГШуГГуГАф╕нуБоуБЩуБ╣уБжуБоetags уВТца╝ч┤НуБЧуБЯуВкуГЦуВ╕уВзуВпуГИуБзуБЩуАВ  
+   If-Match Те╪Те├Те└Т├цТд╬Тд╣Тд┘Тд╞Тд╬etags ТдЄТ│╩Т╟╝Тд╖Тд┐ТекТе╓Те╕ТезТепТе╚Тд╟Тд╣Тбг  
 
 .. attribute:: if_modified_since
 
-   уГСуГ╝уВ╣уБХуВМуБЯ ``If-Modified_Since`` уГШуГГуГАуБМ ``datetime`` уВкуГЦуВ╕уВзуВпуГИуБЧуБжца╝ч┤НуБХуВМуБжуБДуБ╛уБЩуАВ
+   Те╤Тб╝Те╣Тд╡ТдьТд┐ ``If-Modified_Since`` Те╪Те├Те└Тдм ``datetime`` ТекТе╓Те╕ТезТепТе╚Тд╖Тд╞Т│╩Т╟╝Тд╡ТдьТд╞ТддТд▐Тд╣Тбг
 
 .. attribute:: if_none_match
 
-   ``If-None-Match`` уГШуГГуГАф╕нуБоуБЩуБ╣уБжуБоetagsуВТца╝ч┤НуБЧуБЯуВкуГЦуВ╕уВзуВпуГИуБзуБЩуАВ  
+   ``If-None-Match`` Те╪Те├Те└Т├цТд╬Тд╣Тд┘Тд╞Тд╬etagsТдЄТ│╩Т╟╝Тд╖Тд┐ТекТе╓Те╕ТезТепТе╚Тд╟Тд╣Тбг  
 
 .. attribute:: if_unmodified_since
 
-   уГСуГ╝уВ╣уБХуВМуБЯ ``If-Unmodified_Since`` уГШуГГуГАуБМ ``datetime`` уВкуГЦуВ╕уВзуВпуГИуБЧуБжца╝ч┤НуБХуВМуБжуБДуБ╛уБЩуАВ
+   Те╤Тб╝Те╣Тд╡ТдьТд┐ ``If-Unmodified_Since`` Те╪Те├Те└Тдм ``datetime`` ТекТе╓Те╕ТезТепТе╚Тд╖Тд╞Т│╩Т╟╝Тд╡ТдьТд╞ТддТд▐Тд╣Тбг
   
 .. attribute:: input_stream
 
@@ -172,131 +172,131 @@ Kay уБпуАБWSGI уБлц║ЦцЛауБЧуБЯ Werkzeug уБоуГкуВпуВиуВ╣уГИуВкуГЦуВ╕уВзуВпуГИуАБу
 
 .. attribute:: is_behind_proxy
 
-   HTTP уГЧуГнуВнуВ╖уБох╛МуВНуБзуВвуГЧуГкуВ▒уГ╝уВ╖уГзуГ│уБМш╡╖хЛХуБЧуБжуБДуВЛха┤хРИуБл ``True`` уБиуБкуВКуБ╛уБЩуАВ
+   HTTP Те╫ТеэТенТе╖Тд╬Т╕хТдэТд╟ТевТе╫ТеъТе▒Тб╝Те╖ТечТеєТдмТ╡пТ╞░Тд╖Тд╞ТддТдыТ╛ьТ╣чТд╦ ``True`` Тд╚Тд╩ТдъТд▐Тд╣Тбг
 
 .. attribute:: is_multiprocess
 
-   шдЗцХ░уБоуГЧуГнуВ╗уВ╣уВТчФЯцИРуБЧуБжуБДуВЛ WSGI уВ╡уГ╝уГРуБлуВИуБгуБжуВвуГЧуГкуВ▒уГ╝уВ╖уГзуГ│уБМцПРф╛ЫуБХуВМуБжуБДуВЛха┤хРИуБл ``True`` уБиуБкуВЛуГЦуГ╝уГлхАдуБзуБЩуАВ
+   Т╩гТ┐ЇТд╬Те╫ТеэТе╗Те╣ТдЄТ└╕Т└оТд╖Тд╞ТддТды WSGI Те╡Тб╝Те╨Тд╦ТдшТд├Тд╞ТевТе╫ТеъТе▒Тб╝Те╖ТечТеєТдмТ─єТ╢бТд╡ТдьТд╞ТддТдыТ╛ьТ╣чТд╦ ``True`` Тд╚Тд╩ТдыТе╓Тб╝ТеыТ├═Тд╟Тд╣Тбг
 
 .. attribute:: is_multithread
 
-   уГЮуГлуГБуВ╣уГмуГГуГЙуБо WSGI уВ╡уГ╝уГРуБлуВИуБгуБжуВвуГЧуГкуВ▒уГ╝уВ╖уГзуГ│уБМцПРф╛ЫуБХуВМуБжуБДуВЛха┤хРИуБл ``True`` уБиуБкуВЛуГЦуГ╝уГлхАдуБзуБЩуАВ
+   Те▐ТеыТе┴Те╣ТеьТе├Те╔Тд╬ WSGI Те╡Тб╝Те╨Тд╦ТдшТд├Тд╞ТевТе╫ТеъТе▒Тб╝Те╖ТечТеєТдмТ─єТ╢бТд╡ТдьТд╞ТддТдыТ╛ьТ╣чТд╦ ``True`` Тд╚Тд╩ТдыТе╓Тб╝ТеыТ├═Тд╟Тд╣Тбг
 
 .. attribute:: is_run_once
 
-   уВвуГЧуГкуВ▒уГ╝уВ╖уГзуГ│уБМуГЧуГнуВ╗уВ╣уБочФЯхнШцЬЯщЦУф╕нуБлф╕Ах║жуБауБСхоЯшбМуБзуБВуВНуБЖха┤хРИуБп ``True`` уБлуБкуВЛуГЦуГ╝уГлхАдуБзуБЩуАВф╛ЛуБИуБ░ CGI уБоуВИуБЖуБкха┤хРИуБлуБВуБЯуВКуБ╛уБЩуБМуАБф╕Ах║жуБауБСхоЯшбМуБХуВМуВЛуБУуБиуБпф┐Эши╝уБХуВМуБжуБДуБ╛уБЫуВУуАВ
+   ТевТе╫ТеъТе▒Тб╝Те╖ТечТеєТдмТе╫ТеэТе╗Те╣Тд╬Т└╕Т┬╕Т┤№Т┤╓Т├цТд╦Т░ьТ┼┘Тд└Тд▒Т╝┬Т╣╘Тд╟ТдвТдэТджТ╛ьТ╣чТд╧ ``True`` Тд╦Тд╩ТдыТе╓Тб╝ТеыТ├═Тд╟Тд╣ТбгТ╬уТдиТд╨ CGI Тд╬ТдшТджТд╩Т╛ьТ╣чТд╦ТдвТд┐ТдъТд▐Тд╣ТдмТбвТ░ьТ┼┘Тд└Тд▒Т╝┬Т╣╘Тд╡ТдьТдыТд│Тд╚Тд╧Т╩▌Т╛┌Тд╡ТдьТд╞ТддТд▐Тд╗ТдєТбг
 
 .. attribute:: is_secure
 
-   уВ╗уВнуГеуВвуБкуГкуВпуВиуВ╣уГИуБоха┤хРИ ``True`` уБиуБкуВКуБ╛уБЩуАВ
+   Те╗ТенТехТевТд╩ТеъТепТеиТе╣Те╚Тд╬Т╛ьТ╣ч ``True`` Тд╚Тд╩ТдъТд▐Тд╣Тбг
 
 .. attribute:: is_xhr
 
-   уГкуВпуВиуВ╣уГИуБМ JavaScript XMLHttpRequest уВТф╗ЛуБЧуБжчЩ║шбМуБХуВМуБЯха┤хРИуАБ ``True`` уБлуБкуВКуБ╛уБЩуАВуГйуВдуГЦуГйуГкуБМ ``X-Requested-With`` уГШуГГуГАуВТуВ╡уГЭуГ╝уГИуБЧуАБ ``XMLHttpRequest`` уВТуВ╗уГГуГИуБЧуБжуБДуВЛха┤хРИуБоуБ┐цйЯшГ╜уБЧуБ╛уБЩуАВprototype, jQuery, MochikitуБкуБйуБМф╕КшиШуВТуВ╡уГЭуГ╝уГИуБЧуБжуБДуБ╛уБЩуАВ
+   ТеъТепТеиТе╣Те╚Тдм JavaScript XMLHttpRequest ТдЄТ▓ЁТд╖Тд╞Т╚пТ╣╘Тд╡ТдьТд┐Т╛ьТ╣чТбв ``True`` Тд╦Тд╩ТдъТд▐Тд╣ТбгТещТедТе╓ТещТеъТдм ``X-Requested-With`` Те╪Те├Те└ТдЄТе╡Те▌Тб╝Те╚Тд╖Тбв ``XMLHttpRequest`` ТдЄТе╗Те├Те╚Тд╖Тд╞ТддТдыТ╛ьТ╣чТд╬Тд▀Т╡бТ╟╜Тд╖Тд▐Тд╣Тбгprototype, jQuery, MochikitТд╩Тд╔ТдмТ╛хТ╡нТдЄТе╡Те▌Тб╝Те╚Тд╖Тд╞ТддТд▐Тд╣Тбг
 
 .. attribute:: lang
 
-   уГЦуГйуВжуВ╢уБошиАшкЮшинхоЪуБзуБЩуАВ
+   Те╓ТещТежТе╢Тд╬Т╕└Т╕ьТ└▀Т─ъТд╟Тд╣Тбг
 
 .. attribute:: max_content_length
 
-   уВ│уГ│уГЖуГ│уГИщХ╖уБоцЬАхдзхАдуБзуБЩуАВуБУуБохАдуБпуГХуВйуГ╝уГауГЗуГ╝уВ┐уВТуГСуГ╝уВ╣уБЩуВЛщЦвцХ░( `parse_form_data() <http://werkzeug.pocoo.org/documentation/dev/http.html#werkzeug.parse_form_data>`_ )уБлц╕буБХуВМуБ╛уБЩуАВхАдуБМуВ╗уГГуГИуБХуВМуБжуБДуБжуАБ ``form`` уВД ``file`` х▒ЮцАзуБлуВвуВпуВ╗уВ╣уБХуВМуАБцМЗхоЪуБЧуБЯхАдуВТш╢ЕуБИуВЛш╗вщАБуБМуБВуБгуБжуГСуГ╝уВ╣уБМхд▒цХЧуБЩуВЛха┤хРИуАБ `RequestEntityTooLarge <http://werkzeug.pocoo.org/documentation/dev/exceptions.html#werkzeug.exceptions.RequestEntityTooLarge>`_ уВиуВпуВ╗уГЧуВ╖уГзуГ│уБМуБВуБМуВКуБ╛уБЩуАВ
+   Те│ТеєТе╞ТеєТе╚Т─╣Тд╬Т║╟Т┬чТ├═Тд╟Тд╣ТбгТд│Тд╬Т├═Тд╧Те╒ТейТб╝ТерТе╟Тб╝Те┐ТдЄТе╤Тб╝Те╣Тд╣ТдыТ┤╪Т┐Ї( `parse_form_data() <http://werkzeug.pocoo.org/documentation/dev/http.html#werkzeug.parse_form_data>`_ )Тд╦Т┼╧Тд╡ТдьТд▐Тд╣ТбгТ├═ТдмТе╗Те├Те╚Тд╡ТдьТд╞ТддТд╞Тбв ``form`` Тдф ``file`` Т┬░Т└нТд╦ТевТепТе╗Те╣Тд╡ТдьТбвТ╗╪Т─ъТд╖Тд┐Т├═ТдЄТ─╢ТдиТдыТ┼╛Т┴ўТдмТдвТд├Тд╞Те╤Тб╝Те╣ТдмТ╝║Т╟╘Тд╣ТдыТ╛ьТ╣чТбв `RequestEntityTooLarge <http://werkzeug.pocoo.org/documentation/dev/exceptions.html#werkzeug.exceptions.RequestEntityTooLarge>`_ ТеиТепТе╗Те╫Те╖ТечТеєТдмТдвТдмТдъТд▐Тд╣Тбг
 
 .. attribute:: max_form_memory_size
 
-   уГХуВйуГ╝уГауГХуВгуГ╝уГлуГЙуБоцЬАхдзуВ╡уВдуВ║уБзуБЩуАВуБУуБохАдуБпуГХуВйуГ╝уГауГЗуГ╝уВ┐уВТуГСуГ╝уВ╣уБЩуВЛщЦвцХ░( `parse_form_data() <http://werkzeug.pocoo.org/documentation/dev/http.html#werkzeug.parse_form_data>`_ )уБлц╕буБХуВМуБ╛уБЩуАВхАдуБМуВ╗уГГуГИуБХуВМуБжуБДуБжуАБ ``form`` уВД ``file`` х▒ЮцАзуБлуВвуВпуВ╗уВ╣уБХуВМуАБуГЭуВ╣уГИуГЗуГ╝уВ┐чФиуБоуГбуГвуГкуГ╝уГЗуГ╝уВ┐уБМцМЗхоЪуБЧуБЯхАдуВТш╢ЕуБИуВЛуБиуАБ `RequestEntityTooLarge <http://werkzeug.pocoo.org/documentation/dev/exceptions.html#werkzeug.exceptions.RequestEntityTooLarge>`_ уВиуВпуВ╗уГЧуВ╖уГзуГ│уБМуБВуБМуВКуБ╛уБЩуАВ
+   Те╒ТейТб╝ТерТе╒ТегТб╝ТеыТе╔Тд╬Т║╟Т┬чТе╡ТедТе║Тд╟Тд╣ТбгТд│Тд╬Т├═Тд╧Те╒ТейТб╝ТерТе╟Тб╝Те┐ТдЄТе╤Тб╝Те╣Тд╣ТдыТ┤╪Т┐Ї( `parse_form_data() <http://werkzeug.pocoo.org/documentation/dev/http.html#werkzeug.parse_form_data>`_ )Тд╦Т┼╧Тд╡ТдьТд▐Тд╣ТбгТ├═ТдмТе╗Те├Те╚Тд╡ТдьТд╞ТддТд╞Тбв ``form`` Тдф ``file`` Т┬░Т└нТд╦ТевТепТе╗Те╣Тд╡ТдьТбвТе▌Те╣Те╚Те╟Тб╝Те┐Т═╤Тд╬ТесТетТеъТб╝Те╟Тб╝Те┐ТдмТ╗╪Т─ъТд╖Тд┐Т├═ТдЄТ─╢ТдиТдыТд╚Тбв `RequestEntityTooLarge <http://werkzeug.pocoo.org/documentation/dev/exceptions.html#werkzeug.exceptions.RequestEntityTooLarge>`_ ТеиТепТе╗Те╫Те╖ТечТеєТдмТдвТдмТдъТд▐Тд╣Тбг
 
 .. attribute:: max_forwards
 
-   Max-Forwards уГкуВпуВиуВ╣уГИуГШуГГуГАуГХуВгуГ╝уГлуГЙуБпуАБ TRACE уБи OPTIONS уГбуВ╜уГГуГЙуБлуАБуГкуВпуВиуВ╣уГИуВТхИеуБоуВ╡уГ╝уГРуБ╕уГХуВйуГпуГ╝уГЙуБЩуВЛуГЧуГнуВнуВ╖уВДуВ▓уГ╝уГИуВжуВзуВдуБоцХ░уВТхИ╢щЩРуБЩуВЛф╗Хч╡ДуБ┐уВТцПРф╛ЫуБЧуБ╛уБЩуАВ
+   Max-Forwards ТеъТепТеиТе╣Те╚Те╪Те├Те└Те╒ТегТб╝ТеыТе╔Тд╧Тбв TRACE Тд╚ OPTIONS ТесТе╜Те├Те╔Тд╦ТбвТеъТепТеиТе╣Те╚ТдЄТ╩╠Тд╬Те╡Тб╝Те╨Тд╪Те╒ТейТеяТб╝Те╔Тд╣ТдыТе╫ТеэТенТе╖ТдфТе▓Тб╝Те╚ТежТезТедТд╬Т┐ЇТдЄТ└йТ╕┬Тд╣ТдыТ╗┼Т┴╚Тд▀ТдЄТ─єТ╢бТд╖Тд▐Тд╣Тбг
 
 .. attribute:: method
 
-   HTTPуГбуВ╜уГГуГЙуБзуБЩуАВ ``GET`` or ``POST``
+   HTTPТесТе╜Те├Те╔Тд╟Тд╣Тбг ``GET`` or ``POST``
 
 .. attribute:: mimetype
 
-   ``content-type`` уБиф╝╝уБжуБДуБ╛уБЩуБМуАБуГСуГйуГбуГ╝уВ┐я╝Иф╛Ля╝ЪцЦЗхнЧуВ╗уГГуГИуАБхЮЛуБкуБйя╝ЙуБМуБВуВКуБ╛уБЫуВУуАВф╛ЛуБИуБ░уАБуВ│уГ│уГЖуГ│уГИуВ┐уВдуГЧуБМ ``text/html; charset=utf-8`` уБоха┤хРИуАБmimetypeуБп ``'text/html'`` уБиуБкуВКуБ╛уБЩуАВ
+   ``content-type`` Тд╚Т╗ўТд╞ТддТд▐Тд╣ТдмТбвТе╤ТещТесТб╝Те┐Тб╩Т╬уТбзТ╩╕Т╗·Те╗Те├Те╚ТбвТ╖┐Тд╩Тд╔Тб╦ТдмТдвТдъТд▐Тд╗ТдєТбгТ╬уТдиТд╨ТбвТе│ТеєТе╞ТеєТе╚Те┐ТедТе╫Тдм ``text/html; charset=utf-8`` Тд╬Т╛ьТ╣чТбвmimetypeТд╧ ``'text/html'`` Тд╚Тд╩ТдъТд▐Тд╣Тбг
 
 .. attribute:: mimetype_params
 
-   mimetypeуГСуГйуГбуГ╝уВ┐уБМуГЗуВгуВпуВ╖уГзуГКуГкуБзца╝ч┤НуБХуВМуБжуБДуБ╛уБЩуАВф╛ЛуБИуБ░уАБуВ│уГ│уГЖуГ│уГИуВ┐уВдуГЧуБМ ``text/html; charset=utf-8`` уБоха┤хРИуАБуГСуГйуГбуГ╝уВ┐уБп ``{'charset': 'utf-8'}`` уБоуВИуБЖуБлуБкуБгуБжуБДуБ╛уБЩуАВ
+   mimetypeТе╤ТещТесТб╝Те┐ТдмТе╟ТегТепТе╖ТечТе╩ТеъТд╟Т│╩Т╟╝Тд╡ТдьТд╞ТддТд▐Тд╣ТбгТ╬уТдиТд╨ТбвТе│ТеєТе╞ТеєТе╚Те┐ТедТе╫Тдм ``text/html; charset=utf-8`` Тд╬Т╛ьТ╣чТбвТе╤ТещТесТб╝Те┐Тд╧ ``{'charset': 'utf-8'}`` Тд╬ТдшТджТд╦Тд╩Тд├Тд╞ТддТд▐Тд╣Тбг
 
 .. attribute:: path
 
-  уГкуВпуВиуВ╣уГИуБХуВМуБЯуГСуВ╣уБМUnicodeуБзца╝ч┤НуБХуВМуБ╛уБЩуАВWSGIчТ░хвГуБоуГСуВ╣уБихРМуБШуВИуБЖуБкуВВуБоуБзуБЩуБМуАБх╕╕уБлуВ╣уГйуГГуВ╖уГеуБМхРлуБ╛уВМуБ╛уБЩуАВуГлуГ╝уГИуБ╕уБохп╛уБЩуВЛуВвуВпуВ╗уВ╣уБзуВВхРМцзШуБзуБЩуАВ
+  ТеъТепТеиТе╣Те╚Тд╡ТдьТд┐Те╤Те╣ТдмUnicodeТд╟Т│╩Т╟╝Тд╡ТдьТд▐Тд╣ТбгWSGIТ┤─Т╢нТд╬Те╤Те╣Тд╚Т╞▒Тд╕ТдшТджТд╩ТдтТд╬Тд╟Тд╣ТдмТбвТ╛яТд╦Те╣ТещТе├Те╖ТехТдмТ┤▐Тд▐ТдьТд▐Тд╣ТбгТеыТб╝Те╚Тд╪Тд╬Т┬╨Тд╣ТдыТевТепТе╗Те╣Тд╟ТдтТ╞▒Т══Тд╟Тд╣Тбг
 
 .. attribute:: pragma
 
-   PragmaуВ╕уВзуГНуГйуГлуГШуГГуГАуГХуВгуГ╝уГлуГЙуБпуАБуГкуВпуВиуВ╣уГИ/уГмуВ╣уГЭуГ│уВ╣щАгщОЦф╕нуБоуБВуВЙуВЖуВЛхПЧф┐бшАЕуБлуВВщБйчФиуБХуВМуВЛуБзуБВуВНуБЖхоЯшгЕуБочЙ╣хИеуБкцМЗчд║уВТчд║уБЩуБЯуВБуБлф╜┐уВПуВМуБ╛уБЩуАВхЕиуБжуБо pragma цМЗчд║хнРуБпуАБуГЧуГнуГИуВ│уГлуБошжЦчВ╣уБЛуВЙшжЛуВМуБ░уВкуГЧуВ╖уГзуГКуГлуБкцМпуВЛшИЮуБДуВТцМЗхоЪуБЧуБ╛уБЩуБМуАБуБЭуБоцМпуВЛшИЮуБДуБМцМЗчд║хнРуБиф╕АшЗ┤уБЧуБжуБДуВЛуБУуБиуВТшжБц▒ВуБЩуВЛуВ╖уВ╣уГЖуГауБМуБВуВЛуБЛуВВуБЧуВМуБ╛уБЫуВУуАВ
+   PragmaТе╕ТезТе═ТещТеыТе╪Те├Те└Те╒ТегТб╝ТеыТе╔Тд╧ТбвТеъТепТеиТе╣Те╚/ТеьТе╣Те▌ТеєТе╣Т╧вТ║┐Т├цТд╬ТдвТдщТдцТдыТ╝їТ┐оТ╝╘Тд╦ТдтТ┼мТ═╤Тд╡ТдьТдыТд╟ТдвТдэТджТ╝┬Т┴їТд╬Т╞├Т╩╠Тд╩Т╗╪Т╝иТдЄТ╝иТд╣Тд┐ТдсТд╦Т╗╚ТдяТдьТд▐Тд╣ТбгТ┴┤Тд╞Тд╬ pragma Т╗╪Т╝иТ╗╥Тд╧ТбвТе╫ТеэТе╚Те│ТеыТд╬Т╗ыТ┼└ТдлТдщТ╕лТдьТд╨ТекТе╫Те╖ТечТе╩ТеыТд╩Т┐╢ТдыТ╔ёТддТдЄТ╗╪Т─ъТд╖Тд▐Тд╣ТдмТбвТд╜Тд╬Т┐╢ТдыТ╔ёТддТдмТ╗╪Т╝иТ╗╥Тд╚Т░ьТ├╫Тд╖Тд╞ТддТдыТд│Тд╚ТдЄТ═╫Т╡сТд╣ТдыТе╖Те╣Те╞ТерТдмТдвТдыТдлТдтТд╖ТдьТд▐Тд╗ТдєТбг
   
 
 .. attribute:: query_string
 
-   URLуГСуГйуГбуГ╝уВ┐уБзуБЩуАВуГРуВдуГИуВ╣уГИуГкуГ│уВ░уБзца╝ч┤НуБХуВМуБжуБДуБ╛уБЩуАВ
+   URLТе╤ТещТесТб╝Те┐Тд╟Тд╣ТбгТе╨ТедТе╚Те╣Те╚ТеъТеєТе░Тд╟Т│╩Т╟╝Тд╡ТдьТд╞ТддТд▐Тд╣Тбг
 
 .. attribute:: referrer
 
-   Referer[хОЯцЦЗуГЮуГЮ] уГкуВпуВиуВ╣уГИуГШуГГуГАуГХуВгуГ╝уГлуГЙуБпуАБуВ╡уГ╝уГРуБохИйчЫКуБоуБЯуВБуБлуАБ Request-URI уБМхПЦх╛ЧуБХуВМуБЯуГкуВ╜уГ╝уВ╣уБоуВвуГЙуГмуВ╣ (URI) уВТуВпуГйуВдуВвуГ│уГИуБлчд║уБХуБЫуБ╛уБЩуАВ
+   Referer[Т╕╢Т╩╕Те▐Те▐] ТеъТепТеиТе╣Те╚Те╪Те├Те└Те╒ТегТб╝ТеыТе╔Тд╧ТбвТе╡Тб╝Те╨Тд╬Т═°Т▒╫Тд╬Тд┐ТдсТд╦Тбв Request-URI ТдмТ╝шТ╞└Тд╡ТдьТд┐ТеъТе╜Тб╝Те╣Тд╬ТевТе╔ТеьТе╣ (URI) ТдЄТепТещТедТевТеєТе╚Тд╦Т╝иТд╡Тд╗Тд▐Тд╣Тбг
 
 .. attribute:: remote_addr
 
-   уВпуГйуВдуВвуГ│уГИуБоуГкуГвуГ╝уГИуВвуГЙуГмуВ╣уБзуБЩуАВ
+   ТепТещТедТевТеєТе╚Тд╬ТеъТетТб╝Те╚ТевТе╔ТеьТе╣Тд╟Тд╣Тбг
 
 .. attribute:: remote_user
 
-   уГжуГ╝уВ╢шкНши╝уВТцЬЙхК╣уБлуБЧуБжуБДуВЛха┤хРИуАБуГжуГ╝уВ╢хРНуБМца╝ч┤НуБХуВМуБ╛уБЩуАВ
+   ТецТб╝Те╢Т╟зТ╛┌ТдЄТ═нТ╕·Тд╦Тд╖Тд╞ТддТдыТ╛ьТ╣чТбвТецТб╝Те╢Т╠╛ТдмТ│╩Т╟╝Тд╡ТдьТд▐Тд╣Тбг
 
 .. attribute:: script_root
 
-   цЬлх░╛уБоуВ╣уГйуГГуВ╖уГеуВТхПЦуВКщЩдуБДуБЯуАБуВ╣уВпуГкуГЧуГИуБоуГлуГ╝уГИуГСуВ╣уБзуБЩуАВ
+   Т╦ЎТ╚°Тд╬Те╣ТещТе├Те╖ТехТдЄТ╝шТдъТ╜№ТддТд┐ТбвТе╣ТепТеъТе╫Те╚Тд╬ТеыТб╝Те╚Те╤Те╣Тд╟Тд╣Тбг
 
 .. attribute:: session
 
-   уВ╗уГГуВ╖уГзуГ│уГЗуГ╝уВ┐уБМца╝ч┤НуБХуВМуБжуБДуБ╛уБЩуАВуВ╗уГГуВ╖уГзуГ│цйЯшГ╜уВТцЬЙхК╣уБлуБЩуВЛуБиф╜┐чФиуБзуБНуБ╛уБЩуАВ
+   Те╗Те├Те╖ТечТеєТе╟Тб╝Те┐ТдмТ│╩Т╟╝Тд╡ТдьТд╞ТддТд▐Тд╣ТбгТе╗Те├Те╖ТечТеєТ╡бТ╟╜ТдЄТ═нТ╕·Тд╦Тд╣ТдыТд╚Т╗╚Т═╤Тд╟ТднТд▐Тд╣Тбг
 
   .. seealso:: :doc:`session`
 
 .. attribute:: shallow
 
-   уГкуВпуВиуВ╣уГИуБМenvironуБоshallow copyуБзуБВуВЛха┤хРИуАБ ``True`` уБМца╝ч┤НуБХуВМуБжуБДуБ╛уБЩуАВ
+   ТеъТепТеиТе╣Те╚ТдмenvironТд╬shallow copyТд╟ТдвТдыТ╛ьТ╣чТбв ``True`` ТдмТ│╩Т╟╝Тд╡ТдьТд╞ТддТд▐Тд╣Тбг
 
 .. attribute:: stream
 
-   уВВуБЧуВ╡уГЦуГЯуГГуГИуБХуВМуБЯуГЗуГ╝уВ┐уБМшдЗцХ░уБоуГСуГ╝уГИуВТуВВуБЯуБкуБДуБЛуАБurlуВиуГ│уВ│уГ╝уГЙуБХуВМуБЯуГХуВйуГ╝уГауГЗуГ╝уВ┐уБзуБкуБСуВМуБ░уАБуГСуГ╝уВ╣уБХуВМуБЯуВ╣уГИуГкуГ╝уГауБМца╝ч┤НуБХуВМуБ╛уБЩуАВуБУуБоуВ╣уГИуГкуГ╝уГауБпуГСуГ╝уВ╣уБХуВМуБЯх╛МуБлуАБуГХуВйуГ╝уГауГЗуГ╝уВ┐уГСуГ╝уВ╡уГвуВ╕уГеуГ╝уГлуБлуВИуБгуБжцоЛуБХуВМуБЯуВ╣уГИуГкуГ╝уГауБзуБЩуАВTODO
+   ТдтТд╖Те╡Те╓Те▀Те├Те╚Тд╡ТдьТд┐Те╟Тб╝Те┐ТдмТ╩гТ┐ЇТд╬Те╤Тб╝Те╚ТдЄТдтТд┐Тд╩ТддТдлТбвurlТеиТеєТе│Тб╝Те╔Тд╡ТдьТд┐Те╒ТейТб╝ТерТе╟Тб╝Те┐Тд╟Тд╩Тд▒ТдьТд╨ТбвТе╤Тб╝Те╣Тд╡ТдьТд┐Те╣Те╚ТеъТб╝ТерТдмТ│╩Т╟╝Тд╡ТдьТд▐Тд╣ТбгТд│Тд╬Те╣Те╚ТеъТб╝ТерТд╧Те╤Тб╝Те╣Тд╡ТдьТд┐Т╕хТд╦ТбвТе╒ТейТб╝ТерТе╟Тб╝Те┐Те╤Тб╝Те╡ТетТе╕ТехТб╝ТеыТд╦ТдшТд├Тд╞Т╗─Тд╡ТдьТд┐Те╣Те╚ТеъТб╝ТерТд╟Тд╣ТбгTODO
 
 .. attribute:: url
 
-   уГкуГвуГ╝уГИуВвуГЙуГмуВ╣уБзуБЩуАВ
+   ТеъТетТб╝Те╚ТевТе╔ТеьТе╣Тд╟Тд╣Тбг
 
 .. attribute:: url_charset
 
-   URLуБлф╜┐уВПуВМуВЛцЦЗхнЧуВ╗уГГуГИуБзуБЩуАВуГЗуГХуВйуГлуГИуБп ``charset`` уБохАдуБлуБкуБгуБжуБДуБ╛уБЩуАВ
+   URLТд╦Т╗╚ТдяТдьТдыТ╩╕Т╗·Те╗Те├Те╚Тд╟Тд╣ТбгТе╟Те╒ТейТеыТе╚Тд╧ ``charset`` Тд╬Т├═Тд╦Тд╩Тд├Тд╞ТддТд▐Тд╣Тбг
 
 .. attribute:: url_root
 
-   уГЫуВ╣уГИуГНуГ╝уГауБоуБдуБДуБЯхоМхЕиуБкURLуБзуБЩуАВуБУуВМуБпуВвуГЧуГкуВ▒уГ╝уВ╖уГзуГ│уГлуГ╝уГИуБзуБЩуАВ
+   Те█Те╣Те╚Те═Тб╝ТерТд╬Тд─ТддТд┐Т┤░Т┴┤Тд╩URLТд╟Тд╣ТбгТд│ТдьТд╧ТевТе╫ТеъТе▒Тб╝Те╖ТечТеєТеыТб╝Те╚Тд╟Тд╣Тбг
 
 .. attribute:: user
 
-   уГжуГ╝уВ╢шкНши╝уВТцЬЙхК╣уБлуБЧуБжуБДуВЛха┤хРИуАБ ``settings.py`` уБо ``AUTH_USER_MODEL`` уБзцМЗхоЪуБЧуБЯуГжуГ╝уВ╢уВкуГЦуВ╕уВзуВпуГИуБМца╝ч┤НуБХуВМуБ╛уБЩуАВ
+   ТецТб╝Те╢Т╟зТ╛┌ТдЄТ═нТ╕·Тд╦Тд╖Тд╞ТддТдыТ╛ьТ╣чТбв ``settings.py`` Тд╬ ``AUTH_USER_MODEL`` Тд╟Т╗╪Т─ъТд╖Тд┐ТецТб╝Те╢ТекТе╓Те╕ТезТепТе╚ТдмТ│╩Т╟╝Тд╡ТдьТд▐Тд╣Тбг
 
   .. seealso:: :doc:`auth`
 
 .. attribute:: user_agent
 
-   чП╛хЬиуБоуГжуГ╝уВ╢уВиуГ╝уВ╕уВзуГ│уГИуБзуБЩуАВ
+   Т╕╜Т║▀Тд╬ТецТб╝Те╢ТеиТб╝Те╕ТезТеєТе╚Тд╟Тд╣Тбг
 
 .. attribute:: values
 
-   ``args`` уВД ``form`` уБоуБЯуВБуБоуАБуГЗуВгуВпуВ╖уГзуГКуГкуБзуБЩуАВ
+   ``args`` Тдф ``form`` Тд╬Тд┐ТдсТд╬ТбвТе╟ТегТепТе╖ТечТе╩ТеъТд╟Тд╣Тбг
 
 
 
-уГСуГйуГбуГ╝уВ┐уБохПЦх╛Ч
+Те╤ТещТесТб╝Те┐Тд╬Т╝шТ╞└
 ----------------
 
-GETуГбуВ╜уГГуГЙуБоуГСуГйуГбуГ╝уВ┐хПЦх╛ЧуБЩуВЛуБлуБпуАБф╗еф╕ЛуБоуВИуБЖуБлшиШш┐░уБЧуБ╛уБЩуАВ
+GETТесТе╜Те├Те╔Тд╬Те╤ТещТесТб╝Те┐Т╝шТ╞└Тд╣ТдыТд╦Тд╧ТбвТ░╩Т▓╝Тд╬ТдшТджТд╦Т╡нТ╜╥Тд╖Тд▐Тд╣Тбг
 
 .. code-block:: python
 
@@ -304,116 +304,116 @@ GETуГбуВ╜уГГуГЙуБоуГСуГйуГбуГ╝уВ┐хПЦх╛ЧуБЩуВЛуБлуБпуАБф╗еф╕ЛуБоуВИуБЖуБлшиШш┐░уБ
 
 
 
-уГмуВ╣уГЭуГ│уВ╣уВкуГЦуВ╕уВзуВпуГИ
+ТеьТе╣Те▌ТеєТе╣ТекТе╓Те╕ТезТепТе╚
 ======================
 
-* viewщЦвцХ░уБпуАБх┐ЕуБЪуГмуВ╣уГЭуГ│уВ╣уВкуГЦуВ╕уВзуВпуГИуВТш┐ФуБЩх┐ЕшжБуБМуБВуВКуБ╛уБЩуАВ
+* viewТ┤╪Т┐ЇТд╧ТбвТ╔мТд║ТеьТе╣Те▌ТеєТе╣ТекТе╓Те╕ТезТепТе╚ТдЄТ╩╓Тд╣Т╔мТ═╫ТдмТдвТдъТд▐Тд╣Тбг
 
-х▒ЮцАзуБиуГбуВ╜уГГуГЙ
+Т┬░Т└нТд╚ТесТе╜Те├Те╔
 --------------
 
-уГмуВ╣уГЭуГ│уВ╣уВкуГЦуВ╕уВзуВпуГИуБпф╗еф╕ЛуБох▒ЮцАзуАБуБКуВИуБ│уАБуГбуВ╜уГГуГЙуВТцМБуБгуБжуБДуБ╛уБЩуАВ
+ТеьТе╣Те▌ТеєТе╣ТекТе╓Те╕ТезТепТе╚Тд╧Т░╩Т▓╝Тд╬Т┬░Т└нТбвТдкТдшТд╙ТбвТесТе╜Те├Те╔ТдЄТ╗¤Тд├Тд╞ТддТд▐Тд╣Тбг
 
 
 .. method:: add_etag(overwrite=False, weak=False)
 
-   чП╛хЬиуБоуВкуГЦуВ╕уВзуВпуГИуБл etag уВТш┐╜хКауБЧуБ╛уБЩуАВ   
+   Т╕╜Т║▀Тд╬ТекТе╓Те╕ТезТепТе╚Тд╦ etag ТдЄТ─╔Т▓├Тд╖Тд▐Тд╣Тбг   
 
 .. attribute:: age
    
-   Age уГмуВ╣уГЭуГ│уВ╣уГШуГГуГАуБпуАБуВкуГкуВ╕уГ│уВ╡уГ╝уГРуБлуБКуБДуБжуГмуВ╣уГЭуГ│уВ╣я╝ИуБ╛уБЯуБпуАБуБЭуБохЖНцдЬши╝уБМ) уБМчФЯцИРуБХуВМуБжуБЛуВЙуБоуАБщАБф┐бшАЕуБоцОихоЪч╡МщБОцЩВщЦУуВТчд║уБЧуБ╛уБЩуАВ
+   Age ТеьТе╣Те▌ТеєТе╣Те╪Те├Те└Тд╧ТбвТекТеъТе╕ТеєТе╡Тб╝Те╨Тд╦ТдкТддТд╞ТеьТе╣Те▌ТеєТе╣Тб╩Тд▐Тд┐Тд╧ТбвТд╜Тд╬Т║╞Т╕бТ╛┌Тдм) ТдмТ└╕Т└оТд╡ТдьТд╞ТдлТдщТд╬ТбвТ┴ўТ┐оТ╝╘Тд╬Т┐фТ─ъТ╖╨Т▓сТ╗■Т┤╓ТдЄТ╝иТд╖Тд▐Тд╣Тбг
 
-   Age уБохАдуБпуАБш▓ахАдуБзуБкуБД10щА▓цХ░уБоцХ┤цХ░уБзуАБчзТуБзцЩВщЦУуВТшбиуБЧуБ╛уБЩуАВ
+   Age Тд╬Т├═Тд╧ТбвТ╔щТ├═Тд╟Тд╩Тдд10Т┐╩Т┐ЇТд╬Т└░Т┐ЇТд╟ТбвТ╔├Тд╟Т╗■Т┤╓ТдЄТ╔╜Тд╖Тд▐Тд╣Тбг
 
 .. attribute:: allow
 
-   Allow уВиуГ│уГЖуВгуГЖуВгуГШуГГуГАуГХуВгуГ╝уГлуГЙуБпуАБ Request-URI уБлуВИуБгуБжшнШхИеуБХуВМуБЯуГкуВ╜уГ╝уВ╣уБлуВИуБгуБжуВ╡уГЭуГ╝уГИуБХуВМуБжуБДуВЛуГбуВ╜уГГуГЙуБоуВ╗уГГуГИуВТчд║уБЧуБ╛уБЩуАВуБУуБоуГХуВгуГ╝уГлуГЙуБочЫочЪДуБпуАБуГкуВ╜уГ╝уВ╣уБлщЦвуБЩуВЛцЬЙхК╣уБкуГбуВ╜уГГуГЙуВТхПЧф┐бшАЕуБлхО│хпЖуБлчЯеуВЙуБЫуВЛуБУуБиуБзуБЩуАВAllow уГШуГГуГАуБп 405 (Method Not Allowed) уГмуВ╣уГЭуГ│уВ╣ф╕нуБлхнШхЬиуБЧуБкуБСуВМуБ░уБкуВКуБ╛уБЫуВУуАВ
+   Allow ТеиТеєТе╞ТегТе╞ТегТе╪Те├Те└Те╒ТегТб╝ТеыТе╔Тд╧Тбв Request-URI Тд╦ТдшТд├Тд╞Т╝▒Т╩╠Тд╡ТдьТд┐ТеъТе╜Тб╝Те╣Тд╦ТдшТд├Тд╞Те╡Те▌Тб╝Те╚Тд╡ТдьТд╞ТддТдыТесТе╜Те├Те╔Тд╬Те╗Те├Те╚ТдЄТ╝иТд╖Тд▐Тд╣ТбгТд│Тд╬Те╒ТегТб╝ТеыТе╔Тд╬Т╠▄Т┼кТд╧ТбвТеъТе╜Тб╝Те╣Тд╦Т┤╪Тд╣ТдыТ═нТ╕·Тд╩ТесТе╜Те├Те╔ТдЄТ╝їТ┐оТ╝╘Тд╦Т╕╖Т╠йТд╦Т├╬ТдщТд╗ТдыТд│Тд╚Тд╟Тд╣ТбгAllow Те╪Те├Те└Тд╧ 405 (Method Not Allowed) ТеьТе╣Те▌ТеєТе╣Т├цТд╦Т┬╕Т║▀Тд╖Тд╩Тд▒ТдьТд╨Тд╩ТдъТд▐Тд╗ТдєТбг
 
 .. attribute:: cache_control
 
-   Cache-Control уВ╕уВзуГНуГйуГлуГШуГГуГАуГХуВгуГ╝уГлуГЙуБпуАБуГкуВпуВиуВ╣уГИ/уГмуВ╣уГЭуГ│уВ╣щАгщОЦуБощЦУуБоуБЩуБ╣уБжуБоуВнуГгуГГуВ╖уГ│уВ░уГбуВлуГЛуВ║уГауБМх╛УуВПуБкуБСуВМуБ░уБкуВЙуБкуБДцМЗчд║уВТшиШш┐░уБЩуВЛуБЯуВБуБлф╜┐чФиуБХуВМуБ╛уБЩуАВ
+   Cache-Control Те╕ТезТе═ТещТеыТе╪Те├Те└Те╒ТегТб╝ТеыТе╔Тд╧ТбвТеъТепТеиТе╣Те╚/ТеьТе╣Те▌ТеєТе╣Т╧вТ║┐Тд╬Т┤╓Тд╬Тд╣Тд┘Тд╞Тд╬ТенТеуТе├Те╖ТеєТе░ТесТелТе╦Те║ТерТдмТ╜╛ТдяТд╩Тд▒ТдьТд╨Тд╩ТдщТд╩ТддТ╗╪Т╝иТдЄТ╡нТ╜╥Тд╣ТдыТд┐ТдсТд╦Т╗╚Т═╤Тд╡ТдьТд▐Тд╣Тбг
 
 .. attribute:: charset
 
-   уГмуВ╣уГЭуГ│уВ╣уБоцЦЗхнЧуВ╗уГГуГИуБзуБЩуАВ
+   ТеьТе╣Те▌ТеєТе╣Тд╬Т╩╕Т╗·Те╗Те├Те╚Тд╟Тд╣Тбг
 
 .. attribute:: close()
 
-   хПпшГ╜уБзуБВуВМуБ░уАБуГйуГГуГЧуБХуВМуБЯуГмуВ╣уГЭуГ│уВ╣уВТуВпуГнуГ╝уВ║уБЧуБ╛уБЩуАВ
+   Т▓─Т╟╜Тд╟ТдвТдьТд╨ТбвТещТе├Те╫Тд╡ТдьТд┐ТеьТе╣Те▌ТеєТе╣ТдЄТепТеэТб╝Те║Тд╖Тд▐Тд╣Тбг
 
 .. attribute:: content_encoding
 
-   Content-Encoding уВиуГ│уГЖуВгуГЖуВгуГШуГГуГАуГХуВгуГ╝уГлуГЙуБпуАБуГбуГЗуВгуВвуВ┐уВдуГЧуБоф┐ощг╛хнРуБиуБЧуБжф╜┐чФиуБХуВМуБ╛уБЩуАВуБЭуБохАдуБпуБйуБоуВ│уГ│уГЖуГ│уГДуВиуГ│уВ│уГ╝уГЗуВгуГ│уВ░уБМш┐╜хКауБзуАБуВиуГ│уГЖуВгуГЖуВгуГЬуГЗуВгуБлщБйчФиуБХуВМуБжуБДуВЛуБЛуАБуБЭуБЧуБжуБЭуБоч╡РцЮЬуАБ Content-Type уГШуГГуГАуГХуВгуГ╝уГлуГЙуБлуВИуБгуБжхПВчЕзуБХуВМуВЛуГбуГЗуВгуВвуВ┐уВдуГЧуВТхПЦх╛ЧуБЩуВЛуБоуБЯуВБуБлуБпуАБуБйуБоуГЗуВ│уГ╝уГЗуВгуГ│уВ░уГбуВлуГЛуВ║уГауБМщБйчФиуБХуВМуБкуБСуВМуБ░уБкуВЙуБкуБДуБоуБЛуВТчд║уБЧуБ╛уБЩуАВ
+   Content-Encoding ТеиТеєТе╞ТегТе╞ТегТе╪Те├Те└Те╒ТегТб╝ТеыТе╔Тд╧ТбвТесТе╟ТегТевТе┐ТедТе╫Тд╬Т╜дТ╛■Т╗╥Тд╚Тд╖Тд╞Т╗╚Т═╤Тд╡ТдьТд▐Тд╣ТбгТд╜Тд╬Т├═Тд╧Тд╔Тд╬Те│ТеєТе╞ТеєТе─ТеиТеєТе│Тб╝Те╟ТегТеєТе░ТдмТ─╔Т▓├Тд╟ТбвТеиТеєТе╞ТегТе╞ТегТе▄Те╟ТегТд╦Т┼мТ═╤Тд╡ТдьТд╞ТддТдыТдлТбвТд╜Тд╖Тд╞Тд╜Тд╬Т╖ыТ▓╠Тбв Content-Type Те╪Те├Те└Те╒ТегТб╝ТеыТе╔Тд╦ТдшТд├Тд╞Т╗▓Т╛╚Тд╡ТдьТдыТесТе╟ТегТевТе┐ТедТе╫ТдЄТ╝шТ╞└Тд╣ТдыТд╬Тд┐ТдсТд╦Тд╧ТбвТд╔Тд╬Те╟Те│Тб╝Те╟ТегТеєТе░ТесТелТе╦Те║ТерТдмТ┼мТ═╤Тд╡ТдьТд╩Тд▒ТдьТд╨Тд╩ТдщТд╩ТддТд╬ТдлТдЄТ╝иТд╖Тд▐Тд╣Тбг
 
 .. attribute:: content_language
 
-   Content-Language уВиуГ│уГЖуВгуГЖуВгуГШуГГуГАуГХуВгуГ╝уГлуГЙуБпуАБф╗ШщЪПуБЩуВЛуВиуГ│уГЖуВгуГЖуВгуБошкншАЕуБошЗкчД╢шиАшкЮуВТшбиуБЧуБ╛уБЩуАВуБЯуБауБЧуАБуВиуГ│уГЖуВгуГЖуВгуГЬуГЗуВгуБзф╜┐уВПуВМуБжуБДуВЛшиАшкЮхЕищГиуБиуБпф╕АшЗ┤уБЧуБкуБДуБЛуВВуБЧуВМуБкуБДуБоуБзц░ЧуВТуБдуБСуБжуБПуБауБХуБДуАВ
+   Content-Language ТеиТеєТе╞ТегТе╞ТегТе╪Те├Те└Те╒ТегТб╝ТеыТе╔Тд╧ТбвТ╔╒Т┐яТд╣ТдыТеиТеєТе╞ТегТе╞ТегТд╬Т╞╔Т╝╘Тд╬Т╝лТ┴│Т╕└Т╕ьТдЄТ╔╜Тд╖Тд▐Тд╣ТбгТд┐Тд└Тд╖ТбвТеиТеєТе╞ТегТе╞ТегТе▄Те╟ТегТд╟Т╗╚ТдяТдьТд╞ТддТдыТ╕└Т╕ьТ┴┤Т╔ЇТд╚Тд╧Т░ьТ├╫Тд╖Тд╩ТддТдлТдтТд╖ТдьТд╩ТддТд╬Тд╟Т╡дТдЄТд─Тд▒Тд╞ТдпТд└Тд╡ТддТбг
 
 .. attribute:: content_length
 
-   Content-Length уВиуГ│уГЖуВгуГЖуВгуГШуГГуГАуГХуВгуГ╝уГлуГЙуБпуАБхПЧф┐бшАЕуБлщАБф┐буБХуВМуВЛуВиуГ│уГЖуВгуГЖуВгуГЬуГЗуВгуБоуВ╡уВдуВ║уВТ8уГУуГГуГИуБо10щА▓цХ░уБзчд║уБЧуБ╛уБЩуАВHEAD уГбуВ╜уГГуГЙуБоха┤хРИуБп GET уГкуВпуВиуВ╣уГИуБХуВМуБЯха┤хРИуБлщАБф┐буБХуВМуВЛуВиуГ│уГЖуВгуГЖуВгуГЬуГЗуВгуБоуВ╡уВдуВ║уВТчд║уБЧуБ╛уБЩуАВ
+   Content-Length ТеиТеєТе╞ТегТе╞ТегТе╪Те├Те└Те╒ТегТб╝ТеыТе╔Тд╧ТбвТ╝їТ┐оТ╝╘Тд╦Т┴ўТ┐оТд╡ТдьТдыТеиТеєТе╞ТегТе╞ТегТе▄Те╟ТегТд╬Те╡ТедТе║ТдЄ8Те╙Те├Те╚Тд╬10Т┐╩Т┐ЇТд╟Т╝иТд╖Тд▐Тд╣ТбгHEAD ТесТе╜Те├Те╔Тд╬Т╛ьТ╣чТд╧ GET ТеъТепТеиТе╣Те╚Тд╡ТдьТд┐Т╛ьТ╣чТд╦Т┴ўТ┐оТд╡ТдьТдыТеиТеєТе╞ТегТе╞ТегТе▄Те╟ТегТд╬Те╡ТедТе║ТдЄТ╝иТд╖Тд▐Тд╣Тбг
 
 .. attribute:: content_location
 
 
 .. attribute:: content_md5
 
-   Content-MD5 уВиуГ│уГЖуВгуГЖуВгуГШуГГуГАуГХуВгуГ╝уГлуГЙ(RFC 1864 уБлхоЪч╛й)уБпуАБуВиуГ│уГЖуВгуГЖуВгуГЬуГЗуВгуБоуВиуГ│уГЙуГ╗уГИуВеуГ╗уВиуГ│уГЙуГбуГГуВ╗уГ╝уВ╕уВдуГ│уГЖуВ░уГкуГЖуВгуГБуВзуГГуВп (MIC) уВТцПРф╛ЫуБЩуВЛуБЯуВБуБоуВиуГ│уГЖуВгуГЖуВгуГЬуГЗуВгуБоMD5уГАуВдуВ╕уВзуВ╣уГИуБзуБЩуАВ(ц│ицДПя╝Ъ MIC уБпш╗вщАБф╕нуБоуВиуГ│уГЖуВгуГЖуВгуГЬуГЗуВгуБохБ╢чЩ║чЪДуБкцЫ╕уБНцПЫуБИуВТчЩ║шжЛуБЩуВЛуБоуБлуБпщБйуБЧуБжуБДуБ╛уБЩуБМуАБцВкцДПуБВуВЛцФ╗цТГуБ╕уБохп╛цКЧцЙЛцо╡уБлуБпуБкуВКуБ╛уБЫуВУя╝Й
+   Content-MD5 ТеиТеєТе╞ТегТе╞ТегТе╪Те├Те└Те╒ТегТб╝ТеыТе╔(RFC 1864 Тд╦Т─ъТ╡┴)Тд╧ТбвТеиТеєТе╞ТегТе╞ТегТе▄Те╟ТегТд╬ТеиТеєТе╔ТбжТе╚ТееТбжТеиТеєТе╔ТесТе├Те╗Тб╝Те╕ТедТеєТе╞Те░ТеъТе╞ТегТе┴ТезТе├Теп (MIC) ТдЄТ─єТ╢бТд╣ТдыТд┐ТдсТд╬ТеиТеєТе╞ТегТе╞ТегТе▄Те╟ТегТд╬MD5Те└ТедТе╕ТезТе╣Те╚Тд╟Тд╣Тбг(Т├эТ░╒Тбз MIC Тд╧Т┼╛Т┴ўТ├цТд╬ТеиТеєТе╞ТегТе╞ТегТе▄Те╟ТегТд╬Т╢ЎТ╚пТ┼кТд╩Т╜ёТднТ┤╣ТдиТдЄТ╚пТ╕лТд╣ТдыТд╬Тд╦Тд╧Т┼мТд╖Тд╞ТддТд▐Тд╣ТдмТбвТ░нТ░╒ТдвТдыТ╣╢Т╖тТд╪Тд╬Т┬╨Т╣│Т╝ъТ├╩Тд╦Тд╧Тд╩ТдъТд▐Тд╗ТдєТб╦
 
 .. attribute:: content_type
 
-   Content-Type уВиуГ│уГЖуВгуГЖуВгуГШуГГуГАуГХуВгуГ╝уГлуГЙуБпуАБхПЧф┐бшАЕуБлщАБф┐буБХуВМуВЛуВиуГ│уГЖуВгуГЖуВгуГЬуГЗуВгуБоуГбуГЗуВгуВвуВ┐уВдуГЧуВТчд║уБЧуБ╛уБЩуАВHEADуГбуВ╜уГГуГЙуБоха┤хРИуАБGET уГкуВпуВиуВ╣уГИуБХуВМуБЯха┤хРИуБлщАБф┐буБХуВМуВЛуВиуГ│уГЖуВгуГЖуВгуГЬуГЗуВгуБоуГбуГЗуВгуВвуВ┐уВдуГЧуВТчд║уБЧуБ╛уБЩуАВ
+   Content-Type ТеиТеєТе╞ТегТе╞ТегТе╪Те├Те└Те╒ТегТб╝ТеыТе╔Тд╧ТбвТ╝їТ┐оТ╝╘Тд╦Т┴ўТ┐оТд╡ТдьТдыТеиТеєТе╞ТегТе╞ТегТе▄Те╟ТегТд╬ТесТе╟ТегТевТе┐ТедТе╫ТдЄТ╝иТд╖Тд▐Тд╣ТбгHEADТесТе╜Те├Те╔Тд╬Т╛ьТ╣чТбвGET ТеъТепТеиТе╣Те╚Тд╡ТдьТд┐Т╛ьТ╣чТд╦Т┴ўТ┐оТд╡ТдьТдыТеиТеєТе╞ТегТе╞ТегТе▄Те╟ТегТд╬ТесТе╟ТегТевТе┐ТедТе╫ТдЄТ╝иТд╖Тд▐Тд╣Тбг
 
 .. attribute:: data
 
-   уГкуВпуВиуВ╣уГИцЬмцЦЗуБоцЦЗхнЧхИЧуВТшбиуБЧуБ╛уБЩуАВуБУуБох▒ЮцАзуБлуВвуВпуВ╗уВ╣уБЩуВЛуБиуБНуБпуБДуБдуБзуВВуГкуВпуВиуВ╣уГИуВдуГЖуГйуГЦуГлуБпуВиуГ│уВ│уГ╝уГЙуБХуВМуГХуГйуГГуГИхМЦуБХуВМуБжуБДуБ╛уБЩуАВуВ╣уГИуГкуГ╝уГауБМх╖ихдзуБкуГЗуГ╝уВ┐уБзуБВуВЛха┤хРИуБлуАБф╕Нц╕муБоцМпуВЛшИЮуБДуВТх╝ХуБНш╡╖уБУуБЩхПпшГ╜цАзуБМуБВуВКуБ╛уБЩуАВ
+   ТеъТепТеиТе╣Те╚Т╦▄Т╩╕Тд╬Т╩╕Т╗·Т╬єТдЄТ╔╜Тд╖Тд▐Тд╣ТбгТд│Тд╬Т┬░Т└нТд╦ТевТепТе╗Те╣Тд╣ТдыТд╚ТднТд╧ТддТд─Тд╟ТдтТеъТепТеиТе╣Те╚ТедТе╞ТещТе╓ТеыТд╧ТеиТеєТе│Тб╝Те╔Тд╡ТдьТе╒ТещТе├Те╚Т▓╜Тд╡ТдьТд╞ТддТд▐Тд╣ТбгТе╣Те╚ТеъТб╝ТерТдмТ╡ЁТ┬чТд╩Те╟Тб╝Те┐Тд╟ТдвТдыТ╛ьТ╣чТд╦ТбвТ╔╘Т┬мТд╬Т┐╢ТдыТ╔ёТддТдЄТ░·ТднТ╡пТд│Тд╣Т▓─Т╟╜Т└нТдмТдвТдъТд▐Тд╣Тбг
 
 .. attribute:: date
 
-   Date уВ╕уВзуГНуГйуГлуГШуГГуГАуГХуВгуГ╝уГлуГЙуБпуАБуГбуГГуВ╗уГ╝уВ╕уБМчФЯцИРуБХуВМуБЯцЧеф╗ШуБицЩВщЦУуВТшбиуБЧуБ╛уБЩуАВRFC 822уБо orig-date уБихРМуБШуВ╗уГЮуГ│уГЖуВгуВпуВ╣уВТуВВуБгуБжуБДуБ╛уБЩуАВ
+   Date Те╕ТезТе═ТещТеыТе╪Те├Те└Те╒ТегТб╝ТеыТе╔Тд╧ТбвТесТе├Те╗Тб╝Те╕ТдмТ└╕Т└оТд╡ТдьТд┐Т╞№Т╔╒Тд╚Т╗■Т┤╓ТдЄТ╔╜Тд╖Тд▐Тд╣ТбгRFC 822Тд╬ orig-date Тд╚Т╞▒Тд╕Те╗Те▐ТеєТе╞ТегТепТе╣ТдЄТдтТд├Тд╞ТддТд▐Тд╣Тбг
 
 .. attribute:: default_mimetype
 
-   mimetype уБМшинхоЪуБХуВМуБжуБДуБкуБДха┤хРИуБоуГЗуГХуВйуГлуГИуБо mimetype уБзуБЩуАВ
+   mimetype ТдмТ└▀Т─ъТд╡ТдьТд╞ТддТд╩ТддТ╛ьТ╣чТд╬Те╟Те╒ТейТеыТе╚Тд╬ mimetype Тд╟Тд╣Тбг
 
 .. attribute:: default_status
 
-   status уБМшинхоЪуБХуВМуБжуБДуБкуБДха┤хРИуБоуГЗуГХуВйуГлуГИуБо status уБзуБЩуАВ
+   status ТдмТ└▀Т─ъТд╡ТдьТд╞ТддТд╩ТддТ╛ьТ╣чТд╬Те╟Те╒ТейТеыТе╚Тд╬ status Тд╟Тд╣Тбг
 
 .. method:: delete_cookie(key, path='/', domain=None)
 
-   cookie уВТхЙКщЩдуБЧуБ╛уБЩуАВуВнуГ╝уБМуБкуБДха┤хРИуБпуАБуГХуВзуГ╝уГлуВ╡уВдуГмуГ│уГИуБзуБЩуАВ
+   cookie ТдЄТ║яТ╜№Тд╖Тд▐Тд╣ТбгТенТб╝ТдмТд╩ТддТ╛ьТ╣чТд╧ТбвТе╒ТезТб╝ТеыТе╡ТедТеьТеєТе╚Тд╟Тд╣Тбг
 
-   :param key: хЙКщЩдуБХуВМуВЛ cookie уБоуВнуГ╝(хРНчз░)уБзуБЩуАВ
-   :param path: уВВуБЧхЙКщЩдуБХуВМуВЛуБ╣уБН cookie уБМуБВуВЛуГСуВ╣уБлщЩРхоЪуБХуВМуБжуБДуВЛха┤хРИуАБуБЭуБоуГСуВ╣уВТцМЗхоЪуБЧуБкуБСуВМуБ░уБкуВКуБ╛уБЫуВУуАВ
-   :param domain: уВВуБЧхЙКщЩдуБХуВМуВЛуБ╣уБН cookie уБМуБВуВЛуГЙуГбуВдуГ│уБлщЩРхоЪуБХуВМуБжуБДуВЛха┤хРИуАБуБЭуБоуГЙуГбуВдуГ│уВТцМЗхоЪуБЧуБкуБСуВМуБ░уБкуВКуБ╛уБЫуВУуАВ
+   :param key: Т║яТ╜№Тд╡ТдьТды cookie Тд╬ТенТб╝(Т╠╛Т╛╬)Тд╟Тд╣Тбг
+   :param path: ТдтТд╖Т║яТ╜№Тд╡ТдьТдыТд┘Тдн cookie ТдмТдвТдыТе╤Те╣Тд╦Т╕┬Т─ъТд╡ТдьТд╞ТддТдыТ╛ьТ╣чТбвТд╜Тд╬Те╤Те╣ТдЄТ╗╪Т─ъТд╖Тд╩Тд▒ТдьТд╨Тд╩ТдъТд▐Тд╗ТдєТбг
+   :param domain: ТдтТд╖Т║яТ╜№Тд╡ТдьТдыТд┘Тдн cookie ТдмТдвТдыТе╔ТесТедТеєТд╦Т╕┬Т─ъТд╡ТдьТд╞ТддТдыТ╛ьТ╣чТбвТд╜Тд╬Те╔ТесТедТеєТдЄТ╗╪Т─ъТд╖Тд╩Тд▒ТдьТд╨Тд╩ТдъТд▐Тд╗ТдєТбг
 
 .. attribute:: direct_passthrough
 
-   уВВуБЧуАБуГмуВ╣уГЭуГ│уВ╣уВкуГЦуВ╕уВзуВпуГИуБМ WSGI уВвуГЧуГкуВ▒уГ╝уВ╖уГзуГ│уБиуБЧуБжф╜┐чФиуБХуВМуВЛхЙНуБл ``direct_passthrough=True`` уБМуГмуВ╣уГЭуГ│уВ╣уВкуГЦуВ╕уВзуВпуГИуБлц╕буБХуВМуВЛуБЛуАБуБВуВЛуБДуБпуАБуБУуБох▒ЮцАзуБМ ``True`` уБлуВ╗уГГуГИуБХуВМуВЛуБЛуБЧуБЯха┤хРИуАБуГйуГГуГЧуБХуВМуБЯуВдуГЖуГмуГ╝уВ┐уБпхдЙцЫ┤уБкуБЧуБзш┐ФуБХуВМуБ╛уБЩуАВуБУуВМуБлуВИуБгуБжуАБчЙ╣хИеуБк ``wsgi.file_wrapper`` уВТуГмуВ╣уГЭуГ│уВ╣уВкуГЦуВ╕уВзуВпуГИуБлц╕буБЩуБУуБиуБМуБзуБНуБ╛уБЩуАВшй│уБЧуБПуБп `wrap_file() <http://werkzeug.pocoo.org/documentation/dev/wsgi.html#werkzeug.wrap_file>`_ уВТхПВчЕзуБЧуБжуБПуБауБХуБДуАВ
+   ТдтТд╖ТбвТеьТе╣Те▌ТеєТе╣ТекТе╓Те╕ТезТепТе╚Тдм WSGI ТевТе╫ТеъТе▒Тб╝Те╖ТечТеєТд╚Тд╖Тд╞Т╗╚Т═╤Тд╡ТдьТдыТ┴░Тд╦ ``direct_passthrough=True`` ТдмТеьТе╣Те▌ТеєТе╣ТекТе╓Те╕ТезТепТе╚Тд╦Т┼╧Тд╡ТдьТдыТдлТбвТдвТдыТддТд╧ТбвТд│Тд╬Т┬░Т└нТдм ``True`` Тд╦Те╗Те├Те╚Тд╡ТдьТдыТдлТд╖Тд┐Т╛ьТ╣чТбвТещТе├Те╫Тд╡ТдьТд┐ТедТе╞ТеьТб╝Те┐Тд╧Т╩╤Т╣╣Тд╩Тд╖Тд╟Т╩╓Тд╡ТдьТд▐Тд╣ТбгТд│ТдьТд╦ТдшТд├Тд╞ТбвТ╞├Т╩╠Тд╩ ``wsgi.file_wrapper`` ТдЄТеьТе╣Те▌ТеєТе╣ТекТе╓Те╕ТезТепТе╚Тд╦Т┼╧Тд╣Тд│Тд╚ТдмТд╟ТднТд▐Тд╣ТбгТ╛▄Тд╖ТдпТд╧ `wrap_file() <http://werkzeug.pocoo.org/documentation/dev/wsgi.html#werkzeug.wrap_file>`_ ТдЄТ╗▓Т╛╚Тд╖Тд╞ТдпТд└Тд╡ТддТбг
 
 .. attribute:: expires
 
-   Expire уВиуГ│уГЖуВгуГЖуВгуГШуГГуГАуГХуВгуГ╝уГлуГЙуБпуГмуВ╣уГЭуГ│уВ╣уБМхПдуБПуБкуВЛуБишжЛуБкуБХуВМуВЛцЩВчВ╣уБоцЧеф╗ШуБицЩВщЦУуВТшбиуБЧуБ╛уБЩуАВщАЪх╕╕уАБуВнуГгуГГуВ╖уГеуБпуАБхПдуБДуВнуГгуГГуВ╖уГеуВиуГ│уГИуГкуВТш┐ФуБХуБкуБДуБзуБЧуВЗуБЖуАВ
+   Expire ТеиТеєТе╞ТегТе╞ТегТе╪Те├Те└Те╒ТегТб╝ТеыТе╔Тд╧ТеьТе╣Те▌ТеєТе╣ТдмТ╕┼ТдпТд╩ТдыТд╚Т╕лТд╩Тд╡ТдьТдыТ╗■Т┼└Тд╬Т╞№Т╔╒Тд╚Т╗■Т┤╓ТдЄТ╔╜Тд╖Тд▐Тд╣ТбгТ─╠Т╛яТбвТенТеуТе├Те╖ТехТд╧ТбвТ╕┼ТддТенТеуТе├Те╖ТехТеиТеєТе╚ТеъТдЄТ╩╓Тд╡Тд╩ТддТд╟Тд╖ТдчТджТбг
 
 .. method:: fix_headers(environ)
 
-   уГмуВ╣уГЭуГ│уВ╣уБощЦЛхзЛуБочЫ┤хЙНуБлшЗкхЛХчЪДуБлхС╝уБ│хЗ║уБХуВМуАБуГШуГГуГАуБоуВИуБПуБВуВЛщЦУщБХуБДуВТф┐оцнгуБЧуБ╛уБЩуАВф╛ЛуБИуБ░уАБуГнуВ▒уГ╝уВ╖уГзуГ│уГШуГГуГАуБпуГлуГ╝уГИURLуБич╡РхРИуБХуВМуБ╛уБЩуАВ
+   ТеьТе╣Те▌ТеєТе╣Тд╬Т│лТ╗╧Тд╬Т─╛Т┴░Тд╦Т╝лТ╞░Т┼кТд╦Т╕╞Тд╙Т╜╨Тд╡ТдьТбвТе╪Те├Те└Тд╬ТдшТдпТдвТдыТ┤╓Т░уТддТдЄТ╜дТ└╡Тд╖Тд▐Тд╣ТбгТ╬уТдиТд╨ТбвТеэТе▒Тб╝Те╖ТечТеєТе╪Те├Те└Тд╧ТеыТб╝Те╚URLТд╚Т╖ыТ╣чТд╡ТдьТд▐Тд╣Тбг
 
-   :param envirion: ф┐оцнгуБощБйчФиуБлф╜┐уВПуВМуВЛуГкуВпуВиуВ╣уГИуБоWSGIчТ░хвГ
+   :param envirion: Т╜дТ└╡Тд╬Т┼мТ═╤Тд╦Т╗╚ТдяТдьТдыТеъТепТеиТе╣Те╚Тд╬WSGIТ┤─Т╢н
 
 .. classmethod:: force_type(response, environ=None)
 
-   WSGI уГмуВ╣уГЭуГ│уВ╣уБМчП╛хЬиуБохЮЛуБоуГмуВ╣уГЭуГ│уВ╣уВкуГЦуВ╕уВзуВпуГИуБзуБВуВЛуБУуБиуВТх╝╖хИ╢уБЧуБ╛уБЩуАВWerkzeug уБпуВиуВпуВ╗уГЧуВ╖уГзуГ│уБоуВИуБЖуБкхдЪуБПуБоуВ╖уГБуГеуВиуГ╝уВ╖уГзуГ│уБзхЖЕщГичЪДуБлуБп ``BaseResponse`` уВТф╜┐уБДуБ╛уБЩуАВуВВуБЧуВиуВпуВ╗уГЧуВ╖уГзуГ│уБл ``get_response`` уВТхС╝уБ╢уБоуБзуБВуВМуБ░уАБуБЯуБиуБИуАБуВлуВ╣уВ┐уГауВ╡уГЦуВпуГйуВ╣уВТф╜┐уБгуБжуБДуБЯуБиуБЧуБжуВВуАБщАЪх╕╕уБо ``BaseResponse`` уВкуГЦуВ╕уВзуВпуГИуВТш┐ФуБХуВМуВЛуБзуБЧуВЗуБЖуАВ
+   WSGI ТеьТе╣Те▌ТеєТе╣ТдмТ╕╜Т║▀Тд╬Т╖┐Тд╬ТеьТе╣Те▌ТеєТе╣ТекТе╓Те╕ТезТепТе╚Тд╟ТдвТдыТд│Тд╚ТдЄТ╢пТ└йТд╖Тд▐Тд╣ТбгWerkzeug Тд╧ТеиТепТе╗Те╫Те╖ТечТеєТд╬ТдшТджТд╩Т┬┐ТдпТд╬Те╖Те┴ТехТеиТб╝Те╖ТечТеєТд╟Т╞тТ╔ЇТ┼кТд╦Тд╧ ``BaseResponse`` ТдЄТ╗╚ТддТд▐Тд╣ТбгТдтТд╖ТеиТепТе╗Те╫Те╖ТечТеєТд╦ ``get_response`` ТдЄТ╕╞Тд╓Тд╬Тд╟ТдвТдьТд╨ТбвТд┐Тд╚ТдиТбвТелТе╣Те┐ТерТе╡Те╓ТепТещТе╣ТдЄТ╗╚Тд├Тд╞ТддТд┐Тд╚Тд╖Тд╞ТдтТбвТ─╠Т╛яТд╬ ``BaseResponse`` ТекТе╓Те╕ТезТепТе╚ТдЄТ╩╓Тд╡ТдьТдыТд╟Тд╖ТдчТджТбг
 
-   уБУуБоуГбуВ╜уГГуГЙуБпф╕ОуБИуВЙуВМуВЛуГмуВ╣уГЭуГ│уВ╣уБоцЦ╣уВТх╝╖хИ╢уБзуБНуБ╛уБЩуАВуБ╛уБЯуАБ envrion уБМф╕ОуБИуВЙуВМуВМуБ░уАБWSGI уВ│уГ╝уГйуГЦуГлуВТф╗╗цДПуБоуГмуВ╣уГЭуГ│уВ╣уВкуГЦуВ╕уВзуВпуГИуБлуВ│уГ│уГРуГ╝уГИуБЩуВЛуБзуБЧуВЗуБЖуАВ
+   Тд│Тд╬ТесТе╜Те├Те╔Тд╧Т═┐ТдиТдщТдьТдыТеьТе╣Те▌ТеєТе╣Тд╬Т╩¤ТдЄТ╢пТ└йТд╟ТднТд▐Тд╣ТбгТд▐Тд┐Тбв envrion ТдмТ═┐ТдиТдщТдьТдьТд╨ТбвWSGI Те│Тб╝ТещТе╓ТеыТдЄТ╟дТ░╒Тд╬ТеьТе╣Те▌ТеєТе╣ТекТе╓Те╕ТезТепТе╚Тд╦Те│ТеєТе╨Тб╝Те╚Тд╣ТдыТд╟Тд╖ТдчТджТбг
 
-   уБУуВМуБпуАБуГбуВдуГ│уГЗуВгуВ╣уГСуГГуГБуГгуБзуГмуВ╣уГЭуГ│уВ╣уВТуГЭуВ╣уГИуГЧуГнуВ╗уВ╣уБЧуАБуВ╡уГЦуВпуГйуВ╣уБлуВИуБгуБжцПРф╛ЫуБХуВМуВЛцйЯшГ╜уВТф╜┐уБДуБЯуБДха┤хРИуБлчЙ╣уБлцЬЙчФиуБзуБЩуАВ
+   Тд│ТдьТд╧ТбвТесТедТеєТе╟ТегТе╣Те╤Те├Те┴ТеуТд╟ТеьТе╣Те▌ТеєТе╣ТдЄТе▌Те╣Те╚Те╫ТеэТе╗Те╣Тд╖ТбвТе╡Те╓ТепТещТе╣Тд╦ТдшТд├Тд╞Т─єТ╢бТд╡ТдьТдыТ╡бТ╟╜ТдЄТ╗╚ТддТд┐ТддТ╛ьТ╣чТд╦Т╞├Тд╦Т═нТ═╤Тд╟Тд╣Тбг
 
-   хПпшГ╜уБкщЩРуВКщБйхИЗуБлуГмуВ╣уГЭуГ│уВ╣уВкуГЦуВ╕уВзуВпуГИуВТхдЙцЫ┤уБЩуВЛуБУуБиуВТшжЪуБИуБжуБКуБДуБжуБПуБауБХуБДуАВ
+   Т▓─Т╟╜Тд╩Т╕┬ТдъТ┼мТ└┌Тд╦ТеьТе╣Те▌ТеєТе╣ТекТе╓Те╕ТезТепТе╚ТдЄТ╩╤Т╣╣Тд╣ТдыТд│Тд╚ТдЄТ│╨ТдиТд╞ТдкТддТд╞ТдпТд└Тд╡ТддТбг
 
-   :param response: уГмуВ╣уГЭуГ│уВ╣уВкуГЦуВ╕уВзуВпуГИуАБуБ╛уБЯуБпуАБwsgi уВвуГЧуГкуВ▒уГ╝уВ╖уГзуГ│
-   :param environ: WSGI чТ░хвГуВкуГЦуВ╕уВзуВпуГИ
+   :param response: ТеьТе╣Те▌ТеєТе╣ТекТе╓Те╕ТезТепТе╚ТбвТд▐Тд┐Тд╧Тбвwsgi ТевТе╫ТеъТе▒Тб╝Те╖ТечТеє
+   :param environ: WSGI Т┤─Т╢нТекТе╓Те╕ТезТепТе╚
    
    
 .. method:: freeze()
@@ -425,47 +425,60 @@ GETуГбуВ╜уГГуГЙуБоуГСуГйуГбуГ╝уВ┐хПЦх╛ЧуБЩуВЛуБлуБпуАБф╗еф╕ЛуБоуВИуБЖуБлшиШш┐░уБ
    TODO
    
 .. attribute:: get_app_iter
+
+   TODO
+   
 .. attribute:: get_etag
+
+   TODO
+   
 .. attribute:: get_wsgi_headers
+
+   TODO
+   
 .. attribute:: get_wsgi_response
+
+   TODO
+   
 .. attribute:: header_list
+
+   TODO
+   
 .. attribute:: headers
 
-   уГмуВ╣уГЭуГ│уВ╣уГШуГГуГАуВТшбиуБЩ ``Headers`` уВкуГЦуВ╕уВзуВпуГИуБзуБЩуАВ
+   ТеьТе╣Те▌ТеєТе╣Те╪Те├Те└ТдЄТ╔╜Тд╣ ``Headers`` ТекТе╓Те╕ТезТепТе╚Тд╟Тд╣Тбг
 
 .. attribute:: is_streamed
 
-   уВВуБЧуАБуГмуВ╣уГЭуГ│уВ╣уБМуВ╣уГИуГкуГ╝уГауБоха┤хРИя╝ИуГмуВ╣уГЭуГ│уВ╣уБМщХ╖уБХуБоцГЕха▒уВТуВВуБгуБЯуВдуГЖуГйуГЦуГлуБзуБкуБДха┤хРИя╝ЙуАБуБУуБох▒ЮцАзуБп ``True`` уБлуБкуВКуБ╛уБЩуАВуБУуБоха┤хРИуАБstreamd уБпуВдуГЖуГмуГ╝уВ╖уГзуГ│уБоцХ░уБлуБдуБДуБжуБоцГЕха▒уВТцМБуБЯуБкуБДуБиуБДуБЖуБУуБиуВТцДПхС│уБЧуБ╛уБЩуАВуВ╕уВзуГНуГмуГ╝уВ┐уБМуГмуВ╣уГЭуГ│уВ╣уВкуГЦуВ╕уВзуВпуГИуБлх╝ХуБНч╢ЩуБМуВМуВЛха┤хРИуАБщАЪх╕╕ ``True`` уБлуБкуВКуБ╛уБЩуАВ
-
-   TODO
+   ТдтТд╖ТбвТеьТе╣Те▌ТеєТе╣ТдмТе╣Те╚ТеъТб╝ТерТд╬Т╛ьТ╣чТб╩ТеьТе╣Те▌ТеєТе╣ТдмТ─╣Тд╡Тд╬Т╛ЁТ╩єТдЄТдтТд├Тд┐ТедТе╞ТещТе╓ТеыТд╟Тд╩ТддТ╛ьТ╣чТб╦ТбвТд│Тд╬Т┬░Т└нТд╧ ``True`` Тд╦Тд╩ТдъТд▐Тд╣ТбгТд│Тд╬Т╛ьТ╣чТбвstreamd Тд╧ТедТе╞ТеьТб╝Те╖ТечТеєТд╬Т┐ЇТд╦Тд─ТддТд╞Тд╬Т╛ЁТ╩єТдЄТ╗¤Тд┐Тд╩ТддТд╚ТддТджТд│Тд╚ТдЄТ░╒Т╠гТд╖Тд▐Тд╣ТбгТе╕ТезТе═ТеьТб╝Те┐ТдмТеьТе╣Те▌ТеєТе╣ТекТе╓Те╕ТезТепТе╚Тд╦Т░·ТднТ╖╤ТдмТдьТдыТ╛ьТ╣чТбвТ─╠Т╛я ``True`` Тд╦Тд╩ТдъТд▐Тд╣Тбг
 
 .. method:: iter_encoded(charset=None)
 
-   TODO
+   Т╗╪Т─ъТд╡ТдьТд┐ТеиТеєТе│Тб╝Те╟ТегТеєТе░Тд╟ТеиТеєТе│Тб╝Те╔Тд╡ТдьТд┐ТеьТе╣Те▌ТеєТе╣Тд╬ТедТе╞ТеьТб╝Те┐ТдЄТ╩╓Тд╖Тд▐Тд╣ТбгТеиТеєТе│Тб╝Те╟ТегТеєТе░ТдмТ╗╪Т─ъТд╡ТдьТд╞ТддТд╩ТддТ╛ьТ╣чТбвТепТещТе╣Тд╬ТеиТеєТе│Тб╝Те╟ТегТеєТе░ТдмТ╗╚ТдяТдьТд▐Тд╣ТбгТе╨ТедТе╚Те╣Те╚ТеъТеєТе░Те╟Тб╝Те┐Тд╧ТеиТеєТе│Тб╝Те╔Тд╡ТдьТд╩ТддТд│Тд╚Тд╦Т├эТ░╒Тд╖Тд╞ТдпТд└Тд╡ТддТбгТдтТд╖ТеьТе╣Те▌ТеєТе╣ТекТе╓Те╕ТезТепТе╚Тдм WSGI ТевТе╫ТеъТе▒Тб╝Те╖ТечТеєТд╚Тд╖Тд╞Т╕╞Тд╙Т╜╨Тд╡ТдьТдыТ╛ьТ╣чТбвТд│Тд╬ТесТе╜Те├Те╔Тд╬Т╠сТдъТ├═Тд╧ ``direct_passthrough`` ТдмТ═нТ╕·Тд╩Т╛ьТ╣чТдЄТд╬Тд╛ТднТбвТевТе╫ТеъТе▒Тб╝Те╖ТечТеєТедТе╞ТеьТб╝Те┐Тд╚Тд╖Тд╞Т╗╚Т═╤Тд╡ТдьТд▐Тд╣Тбг
 
 .. attribute:: last_modified
 
-   Last-Modified уВиуГ│уГЖуВгуГЖуВгуГШуГГуГАуГХуВгуГ╝уГлуГЙуБпуАБуВкуГкуВ╕уГ│уВ╡уГ╝уГРуГ╝уБМуГРуГкуВвуГ│уГИуБМцЬАх╛МуБлцЫ┤цЦ░уБХуВМуБЯуБишАГуБИуВЛцЧеф╗ШуБицЩВщЦУуВТшбиуБЧуБ╛уБЩуАВ
+   Last-Modified ТеиТеєТе╞ТегТе╞ТегТе╪Те├Те└Те╒ТегТб╝ТеыТе╔Тд╧ТбвТекТеъТе╕ТеєТе╡Тб╝Те╨Тб╝ТдмТе╨ТеъТевТеєТе╚ТдмТ║╟Т╕хТд╦Т╣╣Т┐╖Тд╡ТдьТд┐Тд╚Т╣═ТдиТдыТ╞№Т╔╒Тд╚Т╗■Т┤╓ТдЄТ╔╜Тд╖Тд▐Тд╣Тбг
 
 .. attribute:: location
 
-   Location уГмуВ╣уГЭуГ│уВ╣уГШуГГуГАуГХуВгуГ╝уГлуГЙуБпуАБуГкуВпуВиуВ╣уГИуБохоМф║ЖуАБуБ╛уБЯуБпуАБцЦ░уБЧуБДуГкуВ╜уГ╝уВ╣уБошнШхИеуБоуБЯуВБуБлуАБхПЧф┐бшАЕуВТ Request-URI ф╗ехдЦуБоха┤цЙАуБлуГкуГАуВдуГмуВпуГИуБЩуВЛуБоуБлф╜┐уВПуВМуБ╛уБЩуАВ
+   Location ТеьТе╣Те▌ТеєТе╣Те╪Те├Те└Те╒ТегТб╝ТеыТе╔Тд╧ТбвТеъТепТеиТе╣Те╚Тд╬Т┤░Т╬╗ТбвТд▐Тд┐Тд╧ТбвТ┐╖Тд╖ТддТеъТе╜Тб╝Те╣Тд╬Т╝▒Т╩╠Тд╬Тд┐ТдсТд╦ТбвТ╝їТ┐оТ╝╘ТдЄ Request-URI Т░╩Т│░Тд╬Т╛ьТ╜ъТд╦ТеъТе└ТедТеьТепТе╚Тд╣ТдыТд╬Тд╦Т╗╚ТдяТдьТд▐Тд╣Тбг
 
 .. method:: make_conditional(request_or_envrion)
 
-   TODO
+   
 
 .. attribute:: mimetype
 
-   ``content-type`` уБиф╝╝уБжуБДуБ╛уБЩуБМуАБуГСуГйуГбуГ╝уВ┐я╝Иф╛Ля╝ЪцЦЗхнЧуВ╗уГГуГИуАБхЮЛуБкуБйя╝ЙуБМуБВуВКуБ╛уБЫуВУуАВф╛ЛуБИуБ░уАБуВ│уГ│уГЖуГ│уГИуВ┐уВдуГЧуБМ ``text/html; charset=utf-8`` уБоха┤хРИуАБmimetypeуБп ``'text/html'`` уБиуБкуВКуБ╛уБЩуАВ
+   ``content-type`` Тд╚Т╗ўТд╞ТддТд▐Тд╣ТдмТбвТе╤ТещТесТб╝Те┐Тб╩Т╬уТбзТ╩╕Т╗·Те╗Те├Те╚ТбвТ╖┐Тд╩Тд╔Тб╦ТдмТдвТдъТд▐Тд╗ТдєТбгТ╬уТдиТд╨ТбвТе│ТеєТе╞ТеєТе╚Те┐ТедТе╫Тдм ``text/html; charset=utf-8`` Тд╬Т╛ьТ╣чТбвmimetypeТд╧ ``'text/html'`` Тд╚Тд╩ТдъТд▐Тд╣Тбг
 
 .. attribute:: mimetype_params
 
-   mimtypeуГСуГйуГбуГ╝уВ┐уБМуГЗуВгуВпуВ╖уГзуГКуГкуБзца╝ч┤НуБХуВМуБжуБДуБ╛уБЩуАВф╛ЛуБИуБ░уАБуВ│уГ│уГЖуГ│уГИуВ┐уВдуГЧуБМ ``text/html; charset=utf-8`` уБоха┤хРИуАБуГСуГйуГбуГ╝уВ┐уБп ``{'charset': 'utf-8'}`` уБоуВИуБЖуБлуБкуБгуБжуБДуБ╛уБЩуАВ
+   mimtypeТе╤ТещТесТб╝Те┐ТдмТе╟ТегТепТе╖ТечТе╩ТеъТд╟Т│╩Т╟╝Тд╡ТдьТд╞ТддТд▐Тд╣ТбгТ╬уТдиТд╨ТбвТе│ТеєТе╞ТеєТе╚Те┐ТедТе╫Тдм ``text/html; charset=utf-8`` Тд╬Т╛ьТ╣чТбвТе╤ТещТесТб╝Те┐Тд╧ ``{'charset': 'utf-8'}`` Тд╬ТдшТджТд╦Тд╩Тд├Тд╞ТддТд▐Тд╣Тбг
 
 .. attribute:: response
 
-   уВвуГЧуГкуВ▒уГ╝уВ╖уГзуГ│уВдуГЖуГмуГ╝уВ┐уБзуБЩуАВцЦЗхнЧхИЧуБзцзЛцИРуБХуВМуБжуБДуВМуБ░уГкуВ╣уГИуБлуБкуВКуАБуБЭуВМф╗ехдЦуБзуБпуАБуВвуГЧуГкуВ▒уГ╝уВ╖уГзуГ│уВдуГЖуГмуГ╝уВ┐уБиуБЧуБжцПРф╛ЫуБХуВМуБ╛уБЩуАВ
+   ТевТе╫ТеъТе▒Тб╝Те╖ТечТеєТедТе╞ТеьТб╝Те┐Тд╟Тд╣ТбгТ╩╕Т╗·Т╬єТд╟Т╣╜Т└оТд╡ТдьТд╞ТддТдьТд╨ТеъТе╣Те╚Тд╦Тд╩ТдъТбвТд╜ТдьТ░╩Т│░Тд╟Тд╧ТбвТевТе╫ТеъТе▒Тб╝Те╖ТечТеєТедТе╞ТеьТб╝Те┐Тд╚Тд╖Тд╞Т─єТ╢бТд╡ТдьТд▐Тд╣Тбг
 
 .. attribute:: retry_after
 
@@ -481,11 +494,11 @@ GETуГбуВ╜уГГуГЙуБоуГСуГйуГбуГ╝уВ┐хПЦх╛ЧуБЩуВЛуБлуБпуАБф╗еф╕ЛуБоуВИуБЖуБлшиШш┐░уБ
    
 .. attribute:: status
 
-   цЦЗхнЧхИЧуБоуВ╣уГЖуГ╝уВ┐уВ╣уБЛуАБцХ┤цХ░хАдуБоуВ╣уГЖуГ╝уВ┐уВ╣уВ│уГ╝уГЙуВТц╕буБЧуБ╛уБЩуАВ
+   Т╩╕Т╗·Т╬єТд╬Те╣Те╞Тб╝Те┐Те╣ТдлТбвТ└░Т┐ЇТ├═Тд╬Те╣Те╞Тб╝Те┐Те╣Те│Тб╝Те╔ТдЄТ┼╧Тд╖Тд▐Тд╣Тбг
 
 .. attribute:: status_code
 
-   уГмуВ╣уГЭуГ│уВ╣уВ╣уГЖуГ╝уВ┐уВ╣уБзуБЩуАВцХ┤цХ░хАдуБзуБЩуАВ
+   ТеьТе╣Те▌ТеєТе╣Те╣Те╞Тб╝Те┐Те╣Тд╟Тд╣ТбгТ└░Т┐ЇТ├═Тд╟Тд╣Тбг
 
 .. attribute:: stream
 
@@ -504,28 +517,28 @@ GETуГбуВ╜уГГуГЙуБоуГСуГйуГбуГ╝уВ┐хПЦх╛ЧуБЩуВЛуБлуБпуАБф╗еф╕ЛуБоуВИуБЖуБлшиШш┐░уБ
 
 
 
-чФЯцИРцЦ╣ц│Х
+Т└╕Т└оТ╩¤Т╦б
 --------
 
-уГмуВ╣уГЭуГ│уВ╣уВкуГЦуВ╕уВзуВпуГИуБпуАБ ``werkzeug.Response`` уВпуГйуВ╣уБоуВдуГ│уВ╣уВ┐уГ│уВ╣уБзуБЩуАВKay уБлуБпуАБуГмуВ╣уГЭуГ│уВ╣уВТчФЯцИРуБЩуВЛуБЯуВБуБощЦвцХ░уБМчФицДПуБХуВМуБжуБДуБ╛уБЩуАВ
+ТеьТе╣Те▌ТеєТе╣ТекТе╓Те╕ТезТепТе╚Тд╧Тбв ``werkzeug.Response`` ТепТещТе╣Тд╬ТедТеєТе╣Те┐ТеєТе╣Тд╟Тд╣ТбгKay Тд╦Тд╧ТбвТеьТе╣Те▌ТеєТе╣ТдЄТ└╕Т└оТд╣ТдыТд┐ТдсТд╬Т┤╪Т┐ЇТдмТ═╤Т░╒Тд╡ТдьТд╞ТддТд▐Тд╣Тбг
 
 
 .. function:: render_to_response(template, context, mimetype='text/html', processors=None)
 
-   HTMLуГЪуГ╝уВ╕уБоуГмуГ│уГАуГкуГ│уВ░
+   HTMLТе┌Тб╝Те╕Тд╬ТеьТеєТе└ТеъТеєТе░
 
-   :param template: уГЖуГ│уГЧуГмуГ╝уГИ
-   :param context: уВ│уГ│уГЖуВнуВ╣уГИ
+   :param template: Те╞ТеєТе╫ТеьТб╝Те╚
+   :param context: Те│ТеєТе╞ТенТе╣Те╚
    :param mimetype: mimetype
-   :param processors: уВ│уГ│уГЖуВнуВ╣уГИуГЧуГнуВ╗уГГуВ╡
-   :rtype: уГмуВ╣уГЭуГ│уВ╣уВкуГЦуВ╕уВзуВпуГИ
+   :param processors: Те│ТеєТе╞ТенТе╣Те╚Те╫ТеэТе╗Те├Те╡
+   :rtype: ТеьТе╣Те▌ТеєТе╣ТекТе╓Те╕ТезТепТе╚
 
 .. function:: render_error(e)
 
-   уВиуГйуГ╝уГЪуГ╝уВ╕уБоуГмуГ│уГАуГкуГ│уВ░
+   ТеиТещТб╝Те┌Тб╝Те╕Тд╬ТеьТеєТе└ТеъТеєТе░
 
-   :param e: уВиуВпуВ╗уГЧуВ╖уГзуГ│уВкуГЦуВ╕уВзуВпуГИ
-   :rtype: уГмуВ╣уГЭуГ│уВ╣уВкуГЦуВ╕уВзуВпуГИ
+   :param e: ТеиТепТе╗Те╫Те╖ТечТеєТекТе╓Те╕ТезТепТе╚
+   :rtype: ТеьТе╣Те▌ТеєТе╣ТекТе╓Те╕ТезТепТе╚
 
 
 
