@@ -390,10 +390,8 @@ GETメソッドのパラメータ取得するには、以下のように記述�
 
 .. attribute:: direct_passthrough
 
-   もし、WSGI アプリケーションとしてのレスポンスオブジェクトが使用される前に、 ``direct_passthrough=True`` がレスポンスオブジェクトに渡されるか、この属性が ``True`` にセットされるかしたた場合、イテレータは変更なしで返されます。これによって、特別な ``wsgi.file_wrapper`` をレスポンスオブジェクトに渡すことができます。詳しくは ``wrap_file()`` を参照してください。
+   もし、レスポンスオブジェクトが WSGI アプリケーションとして使用される前に ``direct_passthrough=True`` がレスポンスオブジェクトに渡されるか、あるいは、この属性が ``True`` にセットされるかした場合、ラップされたイテレータは変更なしで返されます。これによって、特別な ``wsgi.file_wrapper`` をレスポンスオブジェクトに渡すことができます。詳しくは `wrap_file() <http://werkzeug.pocoo.org/documentation/dev/wsgi.html#werkzeug.wrap_file>`_ を参照してください。
 
-   TODO
-  
 .. attribute:: expires
 
    TODO
