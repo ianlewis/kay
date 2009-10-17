@@ -68,8 +68,8 @@ Kay は、WSGI に準拠した Werkzeug のリクエストオブジェクト、�
 	  def my_wsgi_app(request):
    	  	  return Response('Hello World!')
 
-   :param f: the WSGI callable to decorate
-   :rtype: a new WSGI callable
+   :param f: デコレートする WSGI コーラブル
+   :rtype: 新しい WSGI コーラブル
 
 
 .. attribute:: args
@@ -126,7 +126,7 @@ Kay は、WSGI に準拠した Werkzeug のリクエストオブジェクト、�
 
    アップロードされたすべてのファイルを格納した ``MultiDict`` オブジェクトです。 ``files`` のそれぞれのキーは ``<input type="file" name="">`` のnameです。それぞれの値は Werkzeug の ``FileStorage`` オブジェクトです。
 
-   ``files`` は、リクエストメソッドが ``POST`` か、 ``PUT`` で、ポストされた ``<form>`` が ``enctype="multipart/form-data`` を持つ場合のみ、データを持ちます。そうでない場合は空です。
+   ``files`` は、リクエストメソッドが ``POST`` か ``PUT`` で、ポストされた ``<form>`` が ``enctype="multipart/form-data"`` を持つ場合のみデータを持ちます。そうでない場合は空です。
 
 .. attribute:: form
 
