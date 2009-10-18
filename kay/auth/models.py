@@ -26,7 +26,7 @@ class User(db.Model):
   is_admin = db.BooleanProperty(required=True, default=False)
 
   created = db.DateTimeProperty(auto_now_add=True)
-  last_login = db.DateTimeProperty(auto_now=True)
+  updated = db.DateTimeProperty(auto_now=True)
 
   def __unicode__(self):
     return unicode(self.email)
@@ -48,16 +48,7 @@ class User(db.Model):
   def __ne__(self, obj):
     return not self.__eq__(obj)
 
-class DatastoreUser(User):
-  """
-  Use DatastoreUser.get_key_name(user_name) as key_name for this model.
-  """
-  user_name = db.StringProperty(required=True)
-  password = db.StringProperty(required=True)
-
-  def __unicode__(self):
-    return unicode(self.user_name)
-
+class DatastoreUserDBOperationMixin(object):
   @classmethod
   def get_key_name(cls, user_name):
     return 'u:%s' % user_name
@@ -72,6 +63,16 @@ class DatastoreUser(User):
   def set_password(self, raw_password):
     self.password = crypto.gen_pwhash(raw_password)
     return self.put()
+
+class DatastoreUser(User, DatastoreUserDBOperationMixin):
+  """
+  Use DatastoreUser.get_key_name(user_name) as key_name for this model.
+  """
+  user_name = db.StringProperty(required=True)
+  password = db.StringProperty(required=True)
+
+  def __unicode__(self):
+    return unicode(self.user_name)
 
 
 class GoogleUser(User):
@@ -89,6 +90,16 @@ class GoogleUser(User):
     else:
       return self.key() == obj.key()
 
+class HybridUser(GoogleUser, DatastoreUserDBOperationMixin):
+  """GoogleUser/DatastoreUser hybrid model.
+  """
+  user_name = db.StringProperty(required=False)
+  password = db.StringProperty(required=False)
+
+  def __unicode__(self):
+    if self.user_name:
+      return unicode(self.user_name)
+    return unicode(self.email)
 
 class AnonymousUser(object):
   __slots__ = ('is_admin')

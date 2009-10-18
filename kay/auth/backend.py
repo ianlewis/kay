@@ -10,6 +10,7 @@ Kay authentication backends.
 """
 
 from google.appengine.ext import db
+from google.appengine.api import users
 from werkzeug.urls import url_quote_plus
 from werkzeug.utils import import_string
 
@@ -21,7 +22,58 @@ from kay.utils import (
 from kay.auth.models import AnonymousUser
 from kay.misc import get_appid
 
+class GoogleBackend(object):
+  def get_user(self, request):
+    from kay.auth.models import AnonymousUser
+    try:
+      auth_model_class = import_string(settings.AUTH_USER_MODEL)
+    except (ImportError, AttributeError), e:
+      raise ImproperlyConfigured, \
+          'Failed to import %s: "%s".' % (settings.AUTH_USER_MODEL, e)
+    user = users.get_current_user()
+    if user:
+      key_name = '_%s' % user.user_id()
+      email = user.email()
+      is_current_user_admin = users.is_current_user_admin()
+      def txn():
+        entity = auth_model_class.get_by_key_name(key_name)
+        if entity is None:
+          entity = auth_model_class(
+            key_name=key_name,
+            email=email,
+            is_admin=is_current_user_admin,
+          )
+          entity.put()
+        else:
+          update_user = False
+          if entity.is_admin != is_current_user_admin:
+            entity.is_admin = is_current_user_admin
+            update_user = True
+          if entity.email != email:
+            entity.email = email
+            update_user = True
+          if update_user:
+            entity.put()
+        return entity
+      return db.run_in_transaction(txn)
+    else:
+      return AnonymousUser()
+
+  def create_login_url(self, url):
+    return users.create_login_url(url)
+
+  def create_logout_url(self, url):
+    return users.create_logout_url(url)
+      
+
 class DatastoreBackend(object):
+  def __init__(self):
+    if not 'kay.sessions.middleware.SessionMiddleware' in \
+          settings.MIDDLEWARE_CLASSES:
+      raise ImproperlyConfigured(
+        "The Kay authentication middleware requires session middleware to "
+        "be installed. Edit your MIDDLEWARE_CLASSES setting to insert "
+        "'kay.sessions.middleware.SessionMiddleware'.")
   
   def get_user(self, request):
     if request.session.has_key('_user'):

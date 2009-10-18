@@ -109,7 +109,6 @@ def url_for(endpoint, **args):
   return rv
 
 def create_auth_url(url, action):
-  # TODO: Change implementation according to auth backend settings.
   if url is None:
     url = local.request.url
   method_name = 'create_%s_url' % action
