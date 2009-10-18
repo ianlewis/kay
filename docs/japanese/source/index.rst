@@ -12,9 +12,11 @@ Kay ドキュメントへようこそ
    :maxdepth: 1
 
    tutorial
+   debugging
    settings
    manage_py
    urlmapping
+   templates
    auth
    session
    forms-usage

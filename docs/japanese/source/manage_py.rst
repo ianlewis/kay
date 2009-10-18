@@ -491,18 +491,3 @@ potファイルで翻訳ファイルを更新します。
 
    翻訳の完成度合いを出力します。
 
-
-   
-.. _wxadmin:
-
-manage.py wxadmin
------------------
-
-管理用のGUI画面を立ち上げます。
-
-.. code-block:: bash
-
-   $ python manage.py wxadmin
-
-  
-
