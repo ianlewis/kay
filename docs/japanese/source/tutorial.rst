@@ -2,6 +2,8 @@
 Kay チュートリアル
 ==================
 
+まずは簡単な掲示板を作るチュートリアルをご紹介します。
+
 準備
 ----
 
@@ -86,6 +88,7 @@ macports の python25 を使うばあいは、他に下記もインストール�
 アプリケーションが出来たら ``settings.py`` を編集して、プロジェクトに登録します。
 ``settings.py`` の ``INSTALLED_APPS`` に ``myapp`` を登録します。必要なら ``APP_MOUNT_POINTS`` も登録します。下記の例では、アプリケーションをルート URL にマウントする例です。
 ``APP_MOUNT_POINTS`` を設定しない場合は ``/myapp`` というようにアプリケーション名 URL にマウントされます。
+なお、ここでは ``kay.auth`` というアプリケーションも一緒に登録しています。
 
 settings.py
 
@@ -96,6 +99,7 @@ settings.py
   #..
 
   INSTALLED_APPS = (
+    'kay.auth',
     'myapp',
   )
 
@@ -353,7 +357,7 @@ myapp/views.py
 			       'comments': comments})
 
 先程定義したモデルクラスを import するのを忘れないようにしましょう。
-``Comment.all().order('-created').fetch(100)`` では、データストアから最新 100 件のコメントを取得しています。そのリストを ``render_to_response`` に渡しています。
+``Comment.all().order('-created').fetch(100)`` では、データストアから最新 100 件のコメントを取得しています。そのリストを ``render_to_response`` に渡しています。 :func:`kay.utils.render_to_response` も参照してください。
 
 myapp/templates/index.html
 
@@ -378,7 +382,7 @@ myapp/templates/index.html
   <div>
   {% for comment in comments %}
   <hr/>
-  {{ comment.body }}
+  {{ comment.body }}&nbsp;by&nbsp;<i>{{ comment.user }}</i>
   {% endfor %}
   </div>
   </body>
@@ -436,6 +440,8 @@ myapp/views.py
 			       'form': form.as_widget()})
 
 
+POST 値にアクセスするには ``request.form`` を使用します。GET のパラメーターは ``request.args`` で取得できます。またアップロードされたファイルにアクセスするには ``request.files`` を使用します。
+
 myapp/templates/index.html
 
 .. code-block:: html
@@ -444,4 +450,5 @@ myapp/templates/index.html
   {{ form.render()|safe }}
   </div>
 
-ここまでで、コメントを投稿できるようになります。
+ここまでで、コメントを投稿できるようになります。コメントの脇には誰が投稿したかも表示されますね。
+
