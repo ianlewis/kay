@@ -17,6 +17,7 @@ from werkzeug.utils import import_string
 from kay.conf import settings
 from kay.auth.models import DatastoreUser
 from kay.utils.crypto import gen_pwhash
+from kay.utils import local
 
 class AuthError(Exception):
   pass
@@ -27,8 +28,30 @@ class DuplicateKeyError(AuthError):
 def process_context(request):
   return {'user': request.user}
 
+def login(request, **credentials):
+    """
+    If the given credentials are valid, return a User object.
+    """
+    backend = local.app.auth_backend
+    try:
+        user = backend.login(request, **credentials)
+    except TypeError:
+        # This backend doesn't accept these credentials as arguments. Try the next one.
+        pass
+    return user or False
 
-def create_new_user(user_name, password, is_admin=False):
+def logout(request):
+    """
+    Removes the authenticated user's ID from the request and flushes their
+    session data.
+    """
+    from kay.sessions import flush_session
+    flush_session(request)
+    if hasattr(request, 'user'):
+        from kay.auth.models import AnonymousUser
+        request.user = AnonymousUser()
+
+def create_new_user(user_name, password=None, **kwargs):
   try:
     auth_model = import_string(settings.AUTH_USER_MODEL)
   except (ImportError, AttributeError), e:
@@ -40,8 +63,14 @@ def create_new_user(user_name, password, is_admin=False):
     if user:
       raise DuplicateKeyError("An user: %s is already registered." % user_name)
     new_user = auth_model(key_name=auth_model.get_key_name(user_name),
-                          user_name=user_name, password=gen_pwhash(password),
-                          is_admin=is_admin)
-    new_user.put()
+                          user_name=user_name, password="temporary",
+                          **kwargs)
+
+    if password:
+        new_user.set_password(password)
+    else:
+        new_user.set_unusable_password()
+    # set_password/set_unusable_password calls put()
+    #new_user.put()
     return new_user
   return db.run_in_transaction(txn)

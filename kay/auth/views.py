@@ -42,14 +42,16 @@ def post_session(request):
     
 
 def login(request):
+  from kay.auth import login
+
   next = unquote_plus(request.values.get("next"))
   owned_domain_hack = request.values.get("owned_domain_hack")
   message = ""
   form = LoginForm()
   if request.method == "POST":
     if form.validate(request.form):
-      result = local.app.auth_backend.login(user_name=form.data['user_name'],
-                                            password=form.data['password'])
+      result = login(request, user_name=form.data['user_name'],
+                              password=form.data['password'])
       if result:
         if owned_domain_hack == 'True':
           original_host_url = unquote_plus(
@@ -67,6 +69,8 @@ def login(request):
                              "message": message})
 
 def logout(request):
+  from kay.auth import logout
+
+  logout(request)
   next = request.values.get("next")
-  local.app.auth_backend.logout()
   return redirect(unquote_plus(next))
