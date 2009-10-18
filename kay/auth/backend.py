@@ -64,6 +64,9 @@ class GoogleBackend(object):
 
   def create_logout_url(self, url):
     return users.create_logout_url(url)
+
+  def login(self, request, user_name, password):
+    return
       
 
 class DatastoreBackend(object):
@@ -87,19 +90,13 @@ class DatastoreBackend(object):
   def create_logout_url(self, url):
     return url_for("auth/logout", next=url_quote_plus(url))
 
-  def logout(self):
-    try:
-      del local.request.session['_user']
-    except:
-      pass
-
   def store_user(self, user):
     from kay.sessions import renew_session
     renew_session(local.request)
     local.request.session['_user'] = user.key()
     return True
 
-  def login(self, user_name, password):
+  def login(self, request, user_name, password):
     try:
       auth_model_class = import_string(settings.AUTH_USER_MODEL)
     except (ImportError, AttributeError), e:
