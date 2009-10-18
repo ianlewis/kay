@@ -104,3 +104,5 @@ class SecureCookieSessionStore(object):
   def get_data(self, session):
     return session.serialize()
 
+  def delete(self, session):
+    return True

@@ -11,28 +11,27 @@ Kay application for sessions.
 
 NO_SESSION = 'nosession'
 
+from werkzeug.utils import import_string
 from kay.conf import settings
 
-def renew_session(request):
-  # TODO: Handle other session backends
-  if settings.SESSION_STORE == 'kay.sessions.sessionstore.GAESessionStore':
-    from kay.sessions.sessionstore import GAESessionStore
-    session_store = GAESessionStore()
-    oldsession = request.session
-    request.session = session_store.new()
-    # TODO: more efficiently
+def _renew_session(request, copy_data=True):
+  store_cls = import_string(settings.SESSION_STORE)
+  session_store = store_cls()
+  oldsession = request.session
+  request.session = session_store.new()
+  # TODO: more efficiently
+  if copy_data:
     for key, val in oldsession.iteritems():
       request.session[key] = val
-    session_store.delete(oldsession)
+  else:
+    request.session.modified = True
+  session_store.delete(oldsession)
+
+def renew_session(request):
+  _renew_session(request)
 
 def flush_session(request):
-  # TODO: Handle other session backends
-  if settings.SESSION_STORE == 'kay.sessions.sessionstore.GAESessionStore':
-    from kay.sessions.sessionstore import GAESessionStore
-    session_store = GAESessionStore()
-    oldsession = request.session
-    request.session = session_store.new()
-    session_store.delete(oldsession)
+  _renew_session(request, copy_data=False)
 
 class NoSessionMixin(object):
   nosession = True
