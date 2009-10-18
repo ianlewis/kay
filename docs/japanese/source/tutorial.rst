@@ -447,7 +447,7 @@ myapp/templates/index.html
 .. code-block:: html
 
   <div>
-  {{ form.render()|safe }}
+  {{ form()|safe }}
   </div>
 
 ここまでで、コメントを投稿できるようになります。コメントの脇には誰が投稿したかも表示されますね。
