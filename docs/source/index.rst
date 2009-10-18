@@ -8,12 +8,13 @@ Welcome to kay's documentation!
 Contents:
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :glob:
 
    quickstart
    manage_py
    urlmapping
+   templates
    auth
    session
    forms-usage
