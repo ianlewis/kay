@@ -7,8 +7,8 @@ def root(context, environment=environment):
     l__ = context.resolve('_')
     if 0: yield None
     yield u'<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">\n<html>\n  <head>\n    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">\n    <title>%s</title>\n  </head>\n  <body>\n    <div id="message">\n      %s\n    </div>\n  </body>\n</html>' % (
-        context.call(l__, 'Under Maintenance'), 
-        l_message, 
+        escape(context.call(l__, 'Under Maintenance')), 
+        escape(l_message), 
     )
 
 blocks = {}

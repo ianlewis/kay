@@ -12,7 +12,9 @@ def root(context, environment=environment):
         yield event
     for event in context.blocks['js'][0](context):
         yield event
-    yield u'</head>\n  <body>\n    '
+    yield u'</head>'
+    for event in context.blocks['bodytag'][0](context):
+        yield event
     for event in context.blocks['content'][0](context):
         yield event
     yield u'\n  </body>\n</html>'
@@ -23,7 +25,7 @@ def block_content(context, environment=environment):
     t_1 = environment.filters['safe']
     if 0: yield None
     yield u'\n    <div id="message">\n      %s\n    </div>\n    <div id="loginform">\n      ' % (
-        l_message, 
+        escape(l_message), 
     )
     def macro():
         t_2 = []
@@ -32,7 +34,7 @@ def block_content(context, environment=environment):
         pass
         t_2.extend((
             u'\n      <fieldset>\n        <legend>', 
-            to_string(context.call(l__, 'Kay Login Form')), 
+            escape(context.call(l__, 'Kay Login Form')), 
             u'</legend>\n        ', 
         ))
         l_field = missing
@@ -40,23 +42,27 @@ def block_content(context, environment=environment):
             pass
             t_2.extend((
                 u'\n        <p>\n          ', 
-                to_string(t_1(context.call(environment.getattr(l_field, 'label')))), 
+                escape(t_1(context.call(environment.getattr(l_field, 'label')))), 
                 u'\n          ', 
-                to_string(t_1(context.call(environment.getattr(l_field, 'render')))), 
+                escape(t_1(context.call(environment.getattr(l_field, 'render')))), 
                 u'\n          ', 
-                to_string(t_1(context.call(environment.getattr(l_field, 'errors')))), 
+                escape(t_1(context.call(environment.getattr(l_field, 'errors')))), 
                 u'\n        </p>\n        ', 
             ))
         l_field = missing
         t_2.extend((
             u'\n        ', 
-            to_string(t_1(context.call(environment.getattr(l_form, 'default_actions'), label=context.call(l__, 'Login')))), 
+            escape(t_1(context.call(environment.getattr(l_form, 'default_actions'), label=context.call(l__, 'Login')))), 
             u'\n      </fieldset>\n      ', 
         ))
-        return concat(t_2)
+        return Markup(concat(t_2))
     caller = Macro(environment, macro, None, (), (), False, False, False)
     yield context.call(l_form, caller=caller)
     yield u'\n    </div>\n    '
+
+def block_bodytag(context, environment=environment):
+    if 0: yield None
+    yield u'<body>'
 
 def block_js(context, environment=environment):
     if 0: yield None
@@ -69,5 +75,5 @@ def block_css(context, environment=environment):
 def block_title(context, environment=environment):
     if 0: yield None
 
-blocks = {'content': block_content, 'js': block_js, 'css': block_css, 'title': block_title}
-debug_info = '1=7&5=8&6=11&8=13&10=15&12=16&31=18&12=20&14=26&17=28&19=35&20=39&22=43&23=45&24=47&26=51&27=53&17=58&29=59&8=61&6=65&5=69'
+blocks = {'content': block_content, 'bodytag': block_bodytag, 'js': block_js, 'css': block_css, 'title': block_title}
+debug_info = '1=7&5=8&6=11&8=13&10=15&11=16&12=18&31=20&12=22&14=28&17=30&19=37&20=41&22=45&23=47&24=49&26=53&27=55&17=60&29=61&11=63&8=67&6=71&5=75'

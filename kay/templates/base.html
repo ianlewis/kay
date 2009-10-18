@@ -8,7 +8,7 @@
     {%- block js %}
     {% endblock js -%}
   </head>
-  <body>
+  {%- block bodytag %}<body>{% endblock bodytag -%}
     {% block content %}
     <div id="message">
       {{ message }}

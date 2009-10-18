@@ -9,10 +9,10 @@ def root(context, environment=environment):
     t_1 = environment.filters['e']
     if 0: yield None
     yield u'<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">\n<html>\n<title>%s&nbsp;%s</title>\n<h1>%s</h1>\n%s\n</html>' % (
-        l_code, 
-        t_1(l_name), 
-        t_1(l_name), 
-        l_description, 
+        escape(l_code), 
+        escape(t_1(l_name)), 
+        escape(t_1(l_name)), 
+        escape(l_description), 
     )
 
 blocks = {}

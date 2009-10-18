@@ -17,7 +17,7 @@ def block_content(context, environment=environment):
     t_1 = environment.filters['safe']
     if 0: yield None
     yield u'\n    <div id="message">\n      %s\n    </div>\n    <div id="loginform">\n      ' % (
-        l_message, 
+        escape(l_message), 
     )
     def macro():
         t_2 = []
@@ -26,7 +26,7 @@ def block_content(context, environment=environment):
         pass
         t_2.extend((
             u'\n      <fieldset>\n        <legend>', 
-            to_string(context.call(l__, 'Kay Login Form')), 
+            escape(context.call(l__, 'Kay Login Form')), 
             u'</legend>\n        ', 
         ))
         l_field = missing
@@ -34,35 +34,39 @@ def block_content(context, environment=environment):
             pass
             t_2.extend((
                 u'\n        <p>\n          ', 
-                to_string(t_1(context.call(environment.getattr(l_field, 'label')))), 
+                escape(t_1(context.call(environment.getattr(l_field, 'label')))), 
                 u'\n          ', 
-                to_string(t_1(context.call(environment.getattr(l_field, 'render')))), 
+                escape(t_1(context.call(environment.getattr(l_field, 'render')))), 
                 u'\n          ', 
-                to_string(t_1(context.call(environment.getattr(l_field, 'errors')))), 
+                escape(t_1(context.call(environment.getattr(l_field, 'errors')))), 
                 u'\n        </p>\n        ', 
             ))
         l_field = missing
         t_2.extend((
             u'\n        ', 
-            to_string(t_1(context.call(environment.getattr(l_form, 'default_actions'), label=context.call(l__, 'Login')))), 
+            escape(t_1(context.call(environment.getattr(l_form, 'default_actions'), label=context.call(l__, 'Login')))), 
             u'\n      </fieldset>\n      ', 
         ))
-        return concat(t_2)
+        return Markup(concat(t_2))
     caller = Macro(environment, macro, None, (), (), False, False, False)
     yield context.call(l_form, caller=caller)
     yield u'\n    </div>\n'
+
+def block_bodytag(context, environment=environment):
+    if 0: yield None
+    yield u'<body onload="document.forms[0].user_name.focus();">'
 
 def block_css(context, environment=environment):
     l_internal_media_url = context.resolve('internal_media_url')
     if 0: yield None
     yield u'\n<link rel="stylesheet" type="text/css" href="%s/css/style.css" />\n' % (
-        l_internal_media_url, 
+        escape(l_internal_media_url), 
     )
 
 def block_title(context, environment=environment):
     l__ = context.resolve('_')
     if 0: yield None
-    yield to_string(context.call(l__, 'Kay Login'))
+    yield escape(context.call(l__, 'Kay Login'))
 
-blocks = {'content': block_content, 'css': block_css, 'title': block_title}
-debug_info = '1=8&6=14&8=20&11=22&13=29&14=33&16=37&17=39&18=41&20=45&21=47&11=52&23=53&3=55&4=59&2=62'
+blocks = {'content': block_content, 'bodytag': block_bodytag, 'css': block_css, 'title': block_title}
+debug_info = '1=8&7=14&9=20&12=22&14=29&15=33&17=37&18=39&19=41&21=45&22=47&12=52&24=53&6=55&3=59&4=63&2=66'
