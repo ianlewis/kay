@@ -220,13 +220,13 @@ Kayアプリケーションの基本的な設定はプロジェクトディレ�
    .. code-block:: python
 
      MIDDLEWARE_CLASSES = (
-       'kay.auth.middleware.GoogleAuthenticationMiddleware',
+       'kay.auth.middleware.AuthenticationMiddleware',
      )
 
 	  
 .. attribute:: AUTH_USER_BACKEND
 
-   ユーザ認証で使用するバックエンドクラスを指定します。デフォルト値は ``kay.auth.backend.DatastoreBackend`` です。
+   ユーザ認証で使用するバックエンドクラスを指定します。デフォルト値は ``kay.auth.backend.GoogleBackend`` です。
 
    .. seealso:: :doc:`auth`
 
