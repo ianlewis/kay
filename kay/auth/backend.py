@@ -74,7 +74,7 @@ class DatastoreBackend(object):
     if not 'kay.sessions.middleware.SessionMiddleware' in \
           settings.MIDDLEWARE_CLASSES:
       raise ImproperlyConfigured(
-        "The Kay authentication middleware requires session middleware to "
+        "The DatastoreBackend requires session middleware to "
         "be installed. Edit your MIDDLEWARE_CLASSES setting to insert "
         "'kay.sessions.middleware.SessionMiddleware'.")
   
