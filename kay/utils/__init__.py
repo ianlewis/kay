@@ -145,13 +145,19 @@ def reverse(endpoint, _external=False, method='GET', **values):
 
 def render_error(e):
   from jinja2.exceptions import TemplateNotFound
+  from jinja2 import Markup
   try:
     template = local.app.jinja2_env.get_template("%d.html" % e.code)
   except TemplateNotFound:
     template = local.app.jinja2_env.get_template("_internal/defaulterror.html")
+  if local.app.jinja2_env.autoescape:
+    description = Markup(e.description)
+  else:
+    description = e.description
   return Response(
         template.render(
-          {"code": e.code, "name": e.name, "description": e.description}),
+          {"code": e.code, "name": e.name,
+           "description": description}),
         content_type="text/html; charset=utf-8",
         status=e.code)
 
