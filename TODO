@@ -5,10 +5,7 @@ TODO
 kay
 ---
 
-* Write documentations about modules, middlewares, jinja2 howtos,
-  etc..
-
-* Add a document about SecureCookieSessionStore.
+* Write documentations about modules, middlewares, etc..
 
 * Capability for compressing css and js media with i18n.
 
