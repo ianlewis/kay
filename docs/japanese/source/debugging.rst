@@ -16,12 +16,12 @@ Kay には Werkzeug のデバッガが塔載されており、ローカルの開
 
 開発サーバー上で例外が発生すると下記のような画面になります。
 
-.. image:: debugger.png
+.. image:: images/debugger.png
    :scale: 80
 
 traceback の各段階ごとに例外の発生した位置とソースコードが表示されます。ソースコードの行にマウスカーソルを合わせると、下記のようなアイコンがその行の右端に表示されます。
 
-.. image:: debugger-icons.png
+.. image:: images/debugger-icons.png
 
 左側のアイコンをクリックするとコンソールが表示されます。右側のアイコンをクリックするとソースコードを見る事ができます。
 
@@ -30,7 +30,7 @@ traceback の各段階ごとに例外の発生した位置とソースコード�
 
 コンソール起動時の画面は下記のようになっています。
 
-.. image:: debugger-console-startup.png
+.. image:: images/debugger-console-startup.png
    :scale: 80
 
 このコンソールでは、トレースバック発生時のフレーム情報を使用して Python コードを実行する事ができるので、デバッグの助けになります。
@@ -61,7 +61,7 @@ traceback の各段階ごとに例外の発生した位置とソースコード�
 
 ソースコード表示するアイコンをクリックすると下記のようにソースコードを表示する事ができます。問題が起きた行がハイライトされているのがわかります。
 
-.. image:: debugger-view-source.png
+.. image:: images/debugger-view-source.png
    :scale: 80
 
 ``View Source`` と表記されたタイトル部分をクリックすると、ソースコードを非表示にできます。
@@ -72,12 +72,12 @@ traceback の各段階ごとに例外の発生した位置とソースコード�
 
 トレースバックをメールに貼り付けたりする時には、下記のタイトル部分をクリックすると便利です。
 
-.. image:: debugger-traceback-title.png
+.. image:: images/debugger-traceback-title.png
    :scale: 80
 
 クリックするとトレースバックの表示方法を、デバッガ／プレーンテキストに交互に変更します。下記はプレーンテキストでトレースバックを表示した画面です。
 
-.. image:: debugger-plaintext-view.png
+.. image:: images/debugger-plaintext-view.png
    :scale: 80
 
 トレースバックの送信
@@ -85,12 +85,12 @@ traceback の各段階ごとに例外の発生した位置とソースコード�
 
 トレースバックをプレーンテキストで表示している時には、「create paste」というボタンがでてきます。このボタンをクリックすろとインターネット上のペーストサービスにトレースバックをペーストする事ができます。ペーストに成功するとそのペーストへのリンクが表示されます。
 
-.. image:: debugger-paste-succeed.png
+.. image:: images/debugger-paste-succeed.png
    :scale: 80
 
 下記はペーストサービスの画面です。
 
-.. image:: debugger-paste-service.png
+.. image:: images/debugger-paste-service.png
    :scale: 80
 
 

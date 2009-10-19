@@ -12,6 +12,7 @@ Contents:
   :maxdepth: 1
 
   quickstart
+  debugging
   manage_py
   urlmapping
   templates
