@@ -8,18 +8,19 @@ Welcome to kay's documentation!
 Contents:
 
 .. toctree::
-   :maxdepth: 1
-   :glob:
+  :numbered:
+  :maxdepth: 1
 
-   quickstart
-   manage_py
-   urlmapping
-   templates
-   auth
-   session
-   forms-usage
-   i18n
-   dump_restore
+  quickstart
+  manage_py
+  urlmapping
+  templates
+  auth
+  session
+  forms-usage
+  i18n
+  dump_restore
+  test
 
 Indices and tables
 ==================
