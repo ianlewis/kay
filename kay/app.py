@@ -185,13 +185,15 @@ class KayApp(object):
     loader = PrefixLoader(per_app_loaders)
     if self.app_settings.TEMPLATE_DIRS:
       target_dirs = list(self.app_settings.TEMPLATE_DIRS)
-      target_dirs.append("kay/templates")
-      target = [d.replace("templates", template_dirname)
-                for d in target_dirs]
-      import kay
-      base_loader = FileSystemLoader(
-        [os.path.join(kay.PROJECT_DIR, d) for d in target])
-      loader = ChoiceLoader([base_loader, loader])
+    else:
+      target_dirs = []
+    target_dirs.append("kay/templates")
+    target = [d.replace("templates", template_dirname)
+              for d in target_dirs]
+    import kay
+    base_loader = FileSystemLoader(
+      [os.path.join(kay.PROJECT_DIR, d) for d in target])
+    loader = ChoiceLoader([base_loader, loader])
     env_dict = {}
     env_dict.update(self.app_settings.JINJA2_ENVIRONMENT_KWARGS)
     jinja2_ext = []
