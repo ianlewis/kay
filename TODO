@@ -5,7 +5,11 @@ TODO
 kay
 ---
 
-* Write documentations about modules, middlewares, etc..
+* Write documentations about
+
+  * utils module
+  * middlewares
+  * how to write your views(including XMPPHandler and MailHander)
 
 * Capability for compressing css and js media with i18n.
 
