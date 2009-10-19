@@ -20,6 +20,7 @@ from kay.utils import (
   local, render_to_response, url_for,
 )
 from kay.i18n import lazy_gettext as _
+from kay.cache.decorators import no_cache
 
 from forms import LoginForm
 
@@ -41,6 +42,7 @@ def post_session(request):
   return Response("Error")
     
 
+@no_cache
 def login(request):
   from kay.auth import login
 
@@ -68,6 +70,7 @@ def login(request):
                             {"form": form.as_widget(),
                              "message": message})
 
+@no_cache
 def logout(request):
   from kay.auth import logout
 
