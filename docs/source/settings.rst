@@ -7,6 +7,10 @@ Settings Config File
 This is a list of available settings that can be modified
 to customize the behavior of your application.
 
+
+Items
+=====
+
 .. attribute:: INSTALLED_APPS
 
    This tupple must contain application names you want to
