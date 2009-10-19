@@ -83,6 +83,8 @@ You can test your views by ``werkzeug.Client``. Currently, there is no
 handy way for parsing Response (in above example, I use re module for
 this), so you need to do this manually.
 
+.. seealso:: `Werkzeug test utitilies <http://werkzeug.pocoo.org/documentation/0.5.1/test.html>`_
+
 Here is an output of these tests. In this example, we can see the test
 names by using ``-v2`` option.
 

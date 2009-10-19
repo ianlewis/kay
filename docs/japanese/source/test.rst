@@ -74,6 +74,8 @@ myapp/tests/__init__.py:
 
 ``werkzeug.Client`` クラスを使用すればアプリケーションの動きをテストできます。現在のところ、Response の解析は手動で(上記の例では re モジュールを使用しています)行うことになります。
 
+.. seealso:: `Werkzeug test utitilies <http://werkzeug.pocoo.org/documentation/0.5.1/test.html>`_
+
 これらのテストを実行すると下記のように出力されます。ここでは -v2 でテスト名も表示しています。
 
 .. code-block:: bash
