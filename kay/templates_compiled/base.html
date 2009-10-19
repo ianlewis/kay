@@ -20,45 +20,8 @@ def root(context, environment=environment):
     yield u'\n  </body>\n</html>'
 
 def block_content(context, environment=environment):
-    l_message = context.resolve('message')
-    l_form = context.resolve('form')
-    t_1 = environment.filters['safe']
     if 0: yield None
-    yield u'\n    <div id="message">\n      %s\n    </div>\n    <div id="loginform">\n      ' % (
-        escape(l_message), 
-    )
-    def macro():
-        t_2 = []
-        l_form = context.resolve('form')
-        l__ = context.resolve('_')
-        pass
-        t_2.extend((
-            u'\n      <fieldset>\n        <legend>', 
-            escape(context.call(l__, 'Kay Login Form')), 
-            u'</legend>\n        ', 
-        ))
-        l_field = missing
-        for l_field in l_form:
-            pass
-            t_2.extend((
-                u'\n        <p>\n          ', 
-                escape(t_1(context.call(environment.getattr(l_field, 'label')))), 
-                u'\n          ', 
-                escape(t_1(context.call(environment.getattr(l_field, 'render')))), 
-                u'\n          ', 
-                escape(t_1(context.call(environment.getattr(l_field, 'errors')))), 
-                u'\n        </p>\n        ', 
-            ))
-        l_field = missing
-        t_2.extend((
-            u'\n        ', 
-            escape(t_1(context.call(environment.getattr(l_form, 'default_actions'), label=context.call(l__, 'Login')))), 
-            u'\n      </fieldset>\n      ', 
-        ))
-        return Markup(concat(t_2))
-    caller = Macro(environment, macro, None, (), (), False, False, False)
-    yield context.call(l_form, caller=caller)
-    yield u'\n    </div>\n    '
+    yield u'\n    '
 
 def block_bodytag(context, environment=environment):
     if 0: yield None
@@ -79,4 +42,4 @@ def block_title(context, environment=environment):
     if 0: yield None
 
 blocks = {'content': block_content, 'bodytag': block_bodytag, 'js': block_js, 'css': block_css, 'title': block_title}
-debug_info = '1=7&5=8&6=11&9=13&11=15&12=16&13=18&32=20&13=22&15=28&18=30&20=37&21=41&23=45&24=47&25=49&27=53&28=55&18=60&30=61&12=63&9=67&6=71&7=75&5=78'
+debug_info = '1=7&5=8&6=11&9=13&11=15&12=16&13=18&14=20&13=22&12=26&9=30&6=34&7=38&5=41'
