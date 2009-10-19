@@ -69,11 +69,14 @@ def block_js(context, environment=environment):
     yield u'\n    '
 
 def block_css(context, environment=environment):
+    l_internal_media_url = context.resolve('internal_media_url')
     if 0: yield None
-    yield u'\n    '
+    yield u'\n    <link rel="stylesheet" type="text/css" href="%s/css/style.css" />\n    ' % (
+        escape(l_internal_media_url), 
+    )
 
 def block_title(context, environment=environment):
     if 0: yield None
 
 blocks = {'content': block_content, 'bodytag': block_bodytag, 'js': block_js, 'css': block_css, 'title': block_title}
-debug_info = '1=7&5=8&6=11&8=13&10=15&11=16&12=18&31=20&12=22&14=28&17=30&19=37&20=41&22=45&23=47&24=49&26=53&27=55&17=60&29=61&11=63&8=67&6=71&5=75'
+debug_info = '1=7&5=8&6=11&9=13&11=15&12=16&13=18&32=20&13=22&15=28&18=30&20=37&21=41&23=45&24=47&25=49&27=53&28=55&18=60&30=61&12=63&9=67&6=71&7=75&5=78'
