@@ -111,7 +111,7 @@ the post succeeds, a link for that paste will be shown.
 .. image:: images/debugger-paste-succeed.png
    :scale: 80
 
-Here is a screenshot of the pasteservice.
+Here is a screenshot of the paste service.
 
 .. image:: images/debugger-paste-service.png
    :scale: 80
