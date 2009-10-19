@@ -13,8 +13,7 @@ Kay-0.3.0 - October ??, 2009
   - Added handler for InboundMail
   - Capability for customizing Jinja2 environ
   - Now views can be defined as strings for lazy loading
-  - Users can migrate data from an appid to another one with one
-    command execution
+  - Users can migrate data from an appid to another one very easily
   - Added kay.auth.GoogleBackend
   - More documentations available
   - Added --all option to i18n related scripts
