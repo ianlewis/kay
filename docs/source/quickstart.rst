@@ -291,151 +291,149 @@ Remove this decorator after checking of the operation,
 Model Definition
 ----------------
 
+Now we will make our application to let us to post comments to datastore. Firstly we will define a model to save a comment.
 
-You can handle i18n like following. For the details of i18n, please
-refer to :doc:`i18n`.
+myapp/models.py
+
+.. code-block:: python
+
+  # -*- coding: utf-8 -*-
+  # myapp.models
+
+  from google.appengine.ext import db
+
+  # Create your models here.
+
+  class Comment(db.Model):
+    user = db.ReferenceProperty()
+    body = db.TextProperty(required=True)
+    created = db.DateTimeProperty(auto_now_add=True)
+
+We define this model by creating the class inherits ``google.appengine.ext.db.Model``. You can define properties by defining class variables. Now we will define to save the user in ``user``, the content in ``body``, and the posted date in ``created``.
+
+Let's save data in this model. You can use Kay shell tool to save data.
 
 .. code-block:: bash
 
-   $ python manage.py extract_messages hello
-   $ python manage.py add_translations hello -l ja
-   $ vi hello/i18n/ja/LC_MESSAGES/messages.po
-   $ python manage.py compile_translations hello
+  $ python manage.py shell
+  Running on Kay-0.0.0
+  In [1]: c1 = Comment(body='Hello, guestbook')
+  In [2]: c1.put()
+  Out [2]: datastore_types.Key.from_path(u'myapp_comment', 1, _app_id_namespace=u'myproject')
+  In [3]: c1.body
+  Out[3]: u'Hello, guestbook'
+  In [4]: ^D
+  Do you really want to exit ([y]/n)? y
 
-You can also merge newly added catalogue into your translations as
-follows.
+^D means Ctrl + D.
+Note that If you forget ``put()`` you cannot save data. Check if data was saved by run the development server and go to http://localhost:8080/_ah/admin/
 
-.. code-block:: bash
 
-   $ python manage.py extract_messages hello
-   $ python manage.py update_translations hello -l ja
-   $ vi hello/i18n/ja/LC_MESSAGES/messages.po
-   $ python manage.py compile_translations hello
+Display Data
+------------
 
-Shell tools
------------
+Display the Comment you saved lately. Edit 2 files below.
 
-Invoking ``python manage.py shell`` gives you python (or ipython if
-available) shell session with the same DatastoreFileStub settings of
-local dev server. For the details of manage.py commands, please
-refer to :doc:`manage_py`.
 
-**Note:**
-
-  The local dev server reads datastore data file only on startup. So,
-  the dev server will never notice about the datastore operation on
-  your bash session. You must restart your dev server for
-  reflecting the result of the bash sessions.
-
-Invoking ``python manage.py rshell`` is the same as above except for
-using RemoteDatastore stub. You can access the data on the
-production server.
-
-**Note:**
-  
-Please be careful when you use this feature as you will be
-interacting with live data.
-
-Datastore
----------
-
-You must use GAE models directly. You can use kay.utils.forms for
-form handling. You can construct a form automatically from the model
-definition with kay.utils.forms.modelform.ModelForm. For the details
-of how to use forms, please refer to :doc:`forms-usage`.
-
-By default, db.Model.kind() returns ('model's app name' + _ + 'model
-name').lower(). So when you see the management bash, there will
-be 'appname_modelname' style kind names . Please don't be surprised
-with those names.
-
-You can change this behaviour by settings ADD_APP_PREFIX_TO_KIND to
-False in your settings.py.
-
-The experimental db_hook feature is now available in kay's repository.
-To use this feature, you have to set USE_DB_HOOK to True in your top level
-settings.py file. Also you have to register your hooks beforehands
-somewhere in your code. I recommend you to do this in
-appname/__init__.py because Kay always load this file on startup as
-long as appname is on your INSTALLED_APPS. Here is an example for
-registering a hook that logs dumpped represantation of the saved
-entry and whether this operation is creating a new entity or
-updating an existing entity.
+myapp/views.py
 
 .. code-block:: python
 
-  import logging
+  # -*- coding: utf-8 -*-
+  # myapp.views
+  # ...
+  # ...
+  from models import Comment
 
-  from kay.utils import db_hook
-  from kay.utils.db_hook import put_type
+  # Create your views here.
 
-  from hoge.models import Entry
+  def index(request):
+    comments = Comment.all().order('-created').fetch(100)
+    return render_to_response('myapp/index.html',
+			      {'message': _('Hello'),
+			       'comments': comments})
 
-  def log_instance(entity, put_type_id):
-    from kay.utils.repr import dump
-    logging.info(dump(entity))
-    logging.info("put_type: %s" % put_type.get_name(put_type_id))
+Don't forget to import the Model class you defined earlier.
+``Comment.all().order('-created').fetch(100)`` get latest 100 comments from datastore. And pass the list to ``render_to_response``. Please refer to :func:`kay.utils.render_to_response`.
 
-  register_post_save_hook(log_instance, Entry)
+myapp/templates/index.html
+
+.. code-block:: html
+
+  <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+    "http://www.w3.org/TR/html4/loose.dtd">
+  <html>
+  <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Top Page - myapp</title>
+  </head>
+  <body>
+  <div id="greeting">
+  {% if request.user.is_anonymous() %}
+  <a href="{{ create_login_url() }}">login</a>
+  {% else %}
+  Hello {{ request.user }}! <a href="{{ create_logout_url() }}">logout</a>
+  {% endif %}
+  </div>
+  {{ message }}
+  <div>
+  {% for comment in comments %}
+  <hr/>
+  {{ comment.body }}&nbsp;by&nbsp;<i>{{ comment.user }}</i>
+  {% endfor %}
+  </div>
+  </body>
+  </html>
+
+Add a new div under the place displays ``messages``.
+Between ``{% for ... %}`` and ``{% endfor %}`` is loops. Now we just display ``comment.body``.
 
 
-Forms
------
+Comment Form
+------------
 
-To define form class, you will need to define a class that extends
-kay.utils.forms.Form. For example the code bellow will give you the
-form contains two text fields with different validators.
+Let's make our application to submit comments。Creata a new file named ``forms.py`` for html form.
+
+myapp/forms.py
+
 
 .. code-block:: python
 
-    from kay.utils.forms import Form
-    class PersonForm(Form):
-      name = TextField(required=True)
-      age = IntegerField()
+  # -*- coding: utf-8 -*-
+  # myapp.views
+  #...
+  #...
+  from models import Comment
+  from forms import CommentForm
+
+  # Create your views here.
+
+  def index(request):
+    comments = Comment.all().order('-created').fetch(100)
+    form = CommentForm()
+    if request.method == 'POST':
+      if form.validate(request.form):
+	if request.user.is_authenticated():
+	  user = request.user
+	else:
+	  user = None
+	new_comment = Comment(body=form['comment'],user=user)
+	new_comment.put()
+	return redirect('/')
+    return render_to_response('myapp/index.html',
+			      {'message': _('Hello'),
+			       'comments': comments,
+			       'form': form.as_widget()})
 
 
-You can use this form in your view like following.
- 
-.. code-block:: python
+You can use ``request.form`` to access the POST value, ``request.args`` to access the GET parameters, and ``request.files`` to access to the uploaded files.
 
-    from forms import PersonForm
-    form = PersonForm()
-    if request.method == 'POST'
-      if form.validate(request.form, request.files):
-        name = form['name']
-	age = form['age']
-        do something with valid form ...
-      else:
-        do something with invalid form ...
+myapp/templates/index.html
 
+.. code-block:: html
 
-You can also use ModelForm to create a form automatically from Model
-class.
+  <div>
+  {{ form()|safe }}
+  </div>
 
-.. code-block:: python
-
-    from google.appengine.ext import db
-
-    class MyModel(db.Model):
-      name = db.StringProperty(required=True)
-      age = db.IntegerProperty()
-
-    from kay.utils.forms.modelform import ModelForm
-
-    class MyForm(ModelForm):
-      class Meta:
-        model = MyModel
-
-Questions and Bug Reports
--------------------------
-
-* Please visit Kay framework google group.
-  http://groups.google.com/group/kay-users
-  
-* Or, contact the project leader directly.
-  Takashi Matsuo <tmatsuo@candit.jp>
-
-* Code site
-  http://code.google.com/p/kay-framework/
-
-Have fun!
+At this point you can post a comment. The name who posted it will be also displayed beside the comment.
