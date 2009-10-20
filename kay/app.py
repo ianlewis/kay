@@ -226,9 +226,9 @@ class KayApp(object):
     """
     Initialize translations with specified language.
     """
-    from kay.i18n import load_translations
     global translations_cache
     if self.app_settings.USE_I18N:
+      from kay.i18n import load_translations
       translations = translations_cache.get("trans:%s:%s" %
                                             (self.app_settings.APP_NAME, lang),
                                             None)
