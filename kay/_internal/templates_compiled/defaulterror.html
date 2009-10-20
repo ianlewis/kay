@@ -1,0 +1,19 @@
+from __future__ import division
+from jinja2.runtime import LoopContext, TemplateReference, Macro, Markup, TemplateRuntimeError, missing, concat, escape, markup_join, unicode_join, to_string, TemplateNotFound
+name = '/defaulterror.html'
+
+def root(context, environment=environment):
+    l_code = context.resolve('code')
+    l_name = context.resolve('name')
+    l_description = context.resolve('description')
+    t_1 = environment.filters['e']
+    if 0: yield None
+    yield u'<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">\n<html>\n<title>%s&nbsp;%s</title>\n<h1>%s</h1>\n%s\n</html>' % (
+        escape(l_code), 
+        escape(t_1(l_name)), 
+        escape(t_1(l_name)), 
+        escape(l_description), 
+    )
+
+blocks = {}
+debug_info = '1=11&3=12&4=14&5=15'

@@ -8,20 +8,22 @@ Kay ドキュメントへようこそ
 目次:
 
 .. toctree::
-   :numbered:
-   :maxdepth: 1
+  :numbered:
+  :maxdepth: 1
 
-   tutorial
-   settings
-   manage_py
-   urlmapping
-   auth
-   session
-   forms-usage
-   i18n
-   dump_restore
-   request_response
-   
+  tutorial
+  debugging
+  settings
+  manage_py
+  urlmapping
+  templates
+  auth
+  session
+  forms-usage
+  i18n
+  dump_restore
+  request_response
+  test
    
    
 Indices and tables

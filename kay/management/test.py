@@ -28,6 +28,7 @@ import unittest
 
 APP_ID = u'test'
 os.environ['APPLICATION_ID'] = APP_ID
+os.environ['USER_EMAIL'] = ''
 
 import kay
 kay.setup()

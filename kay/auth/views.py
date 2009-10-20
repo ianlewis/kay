@@ -20,6 +20,7 @@ from kay.utils import (
   local, render_to_response, url_for,
 )
 from kay.i18n import lazy_gettext as _
+from kay.cache.decorators import no_cache
 
 from forms import LoginForm
 
@@ -41,15 +42,18 @@ def post_session(request):
   return Response("Error")
     
 
+@no_cache
 def login(request):
+  from kay.auth import login
+
   next = unquote_plus(request.values.get("next"))
   owned_domain_hack = request.values.get("owned_domain_hack")
   message = ""
   form = LoginForm()
   if request.method == "POST":
     if form.validate(request.form):
-      result = local.app.auth_backend.login(user_name=form.data['user_name'],
-                                            password=form.data['password'])
+      result = login(request, user_name=form.data['user_name'],
+                              password=form.data['password'])
       if result:
         if owned_domain_hack == 'True':
           original_host_url = unquote_plus(
@@ -66,7 +70,10 @@ def login(request):
                             {"form": form.as_widget(),
                              "message": message})
 
+@no_cache
 def logout(request):
+  from kay.auth import logout
+
+  logout(request)
   next = request.values.get("next")
-  local.app.auth_backend.logout()
   return redirect(unquote_plus(next))

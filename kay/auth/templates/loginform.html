@@ -1,11 +1,7 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>{{_('Kay Login')}}</title>
-    <link rel="stylesheet" type="text/css" href="{{ internal_media_url }}/css/style.css" />
-  </head>
-  <body>
+{% extends 'base.html' %}
+{% block title %}{{_('Kay Login')}}{% endblock title %}
+{%- block bodytag %}<body onload="document.forms[0].user_name.focus();">{% endblock bodytag -%}
+{% block content %}
     <div id="message">
       {{ message }}
     </div>
@@ -24,5 +20,4 @@
       </fieldset>
       {% endcall %}
     </div>
-  </body>
-</html>
+{% endblock content %}

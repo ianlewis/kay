@@ -26,12 +26,6 @@ class LazyUser(object):
 
 class AuthenticationMiddleware(object):
   def process_request(self, request):
-    if not 'kay.sessions.middleware.SessionMiddleware' in \
-          settings.MIDDLEWARE_CLASSES:
-      raise ImproperlyConfigured(
-        "The Kay authentication middleware requires session middleware to "
-        "be installed. Edit your MIDDLEWARE_CLASSES setting to insert "
-        "'kay.sessions.middleware.SessionMiddleware'.")
     request.__class__.user = LazyUser()
     return None
 

@@ -14,7 +14,7 @@ a symlink beforehand like following:
 
 
 Let's Get Started
------------
+-----------------
 
 If you'd like to use kay's development version, you can create a new
 project by following these steps:
@@ -48,10 +48,11 @@ settings.py. For the details of how to define urls and views for your
 application, please refer to :doc:`urlmapping`.
 
 settings.py:
+
 .. code-block:: python
 
   INSTALLED_APPS = (
-    'hello'
+    'hello',
   )
 
 Run your application
@@ -206,7 +207,7 @@ class.
         model = MyModel
 
 Questions and Bug Reports
-------------------------
+-------------------------
 
 * Please visit Kay framework google group.
   http://groups.google.com/group/kay-users

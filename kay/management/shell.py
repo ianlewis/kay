@@ -292,7 +292,7 @@ def create_user(user_name=('u', ''), password=('P', ''), is_admin=('A', False),
                                      host, secure=secure)
   remote_api_stub.MaybeInvokeAuthentication()
   try:
-    create_new_user(user_name, password, is_admin)
+    create_new_user(user_name, password, is_admin=is_admin)
     print_status('A new user: %s successfully created.' % user_name)
     sys.exit(0)
   except DuplicateKeyError, e:

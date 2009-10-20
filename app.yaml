@@ -7,33 +7,27 @@ handlers:
 - url: /favicon.ico
   static_files: favicon.ico
   upload: favicon.ico
-  secure: optional
 
 - url: /media
   static_dir: media
-  secure: optional
 
 - url: /_media
   static_dir: kay/media
-  secure: optional
 
 - url: /_kay/.*
   script: kay/main.py
   login: admin
-  secure: optional
 
 - url: /_ah/queue/deferred
-    script: $PYTHON_LIB/google/appengine/ext/deferred/
-    login: admin
+  script: $PYTHON_LIB/google/appengine/ext/deferred/
+  login: admin
 
 - url: /remote_api
   script: $PYTHON_LIB/google/appengine/ext/remote_api/handler.py
   login: admin
-  secure: optional
 
 - url: /.*
   script: kay/main.py
-  secure: optional
 
 skip_files: |
   ^(.*/)?(

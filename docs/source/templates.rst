@@ -15,9 +15,7 @@ each time it is rendered.
 Writing Templates
 -----------------------
 
-Writing templates is covered in depth by the ``Jinja2 Template Designer Documentation`` found at::
-
-  http://jinja.pocoo.org/2/documentation/templates
+Writing templates is covered in depth by the `Jinja2 Template Designer Documentation <http://jinja.pocoo.org/2/documentation/templates>`_.
 
 Context Processors
 -----------------------
@@ -36,28 +34,30 @@ adds a variable to the context and a second processor adds a
 variable with the same name, the second will override the first.
 The default processors are explained below.
 
-kay.context_processors.request
-===================================
+.. currentmodule:: kay.context_processors
+
+.. function:: request()
+
 Adds the ``Request`` object the the template context with the name request.
 
-kay.context_processors.url_functions
-========================================
+.. function:: url_functions()
+
 This request context adds a number of useful url functions to the template
 context (``url_for``, ``reverse``, ``create_login_url``, ``create_logout_url``)
 
-kay.context_processors.i18n
-========================================
+.. function:: i18n()
+
 This processor adds the current language_code to the template context
 with the name langugage_code.
 
-kay.context_processors.media_url
-========================================
-Adds the current ``MEDIA_URL`` to the template context with the name media_url.
+.. function:: media_url()
+
+Adds the current :attr:`settings.MEDIA_URL` value to the template context with the name media_url.
+
 
 Template Loading
 --------------------------
-You can tell Kay where your templates are located by using the ``TEMPLATE_DIRS`` setting
-in your ``settings.py``. This should be set to a list or tuple of strings that
+You can tell Kay where your templates are located by using the :attr:`settings.TEMPLATE_DIRS` setting. This should be set to a list or tuple of strings that
 contain relative paths from your project base directory to your template directory(ies). 
 Example:
 
@@ -75,8 +75,8 @@ Extensions & Filters
 --------------------------
 
 Kay allows you to use Jinja2 extensions. You can set which Jinja2 extensions you
-would like to use in your ``settings.py`` under the setting ``JINJA2_EXTENSIONS``.
-Filters are added the same way using the ``JINJA2_FILTERS`` setting. However, the
+would like to use in :attr:`settings.JINJA2_EXTENSIONS`.
+Filters are added the same way using the :attr:`settings.JINJA2_FILTERS` setting. However, the
 ``JINJA2_FILTERS`` setting is specified as a dictionary whose keys are the
 names given to the added filters. Example:
 

@@ -76,9 +76,9 @@ SUBMOUNT_APPS = (
 
 MIDDLEWARE_CLASSES = (
   'kay.sessions.middleware.SessionMiddleware',
-  'kay.auth.middleware.GoogleAuthenticationMiddleware',
+  'kay.auth.middleware.AuthenticationMiddleware',
 )
 
-AUTH_USER_BACKEND = 'kay.auth.backend.DatastoreBackend'
+AUTH_USER_BACKEND = 'kay.auth.backend.GoogleBackend'
 AUTH_USER_MODEL = 'kay.auth.models.GoogleUser'
 USE_DB_HOOK = False
