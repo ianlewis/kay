@@ -10,12 +10,24 @@ Kay-0.3.0 - October ??, 2009
   - Added CacheMiddleware and cache_page decorator
   - Added FragmentCache jinja2 extension
   - Added SecureCookieSessionStore
+  - Added handler for InboundMail
   - Capability for customizing Jinja2 environ
-  - Allow users to pass kwargs to the constructor of jinja2.Environment
-  - Now views can be defined as strings
-  - Users can migrate data from an appid to another one easily
+  - Now views can be defined as strings for lazy loading
+  - Users can migrate data from an appid to another one very easily
   - Added kay.auth.GoogleBackend
   - More documentations available
+  - Added --all option to i18n related scripts
+
+  - Notice about this release
+
+    - GoogleAuthenticationMiddleware is obsolete. Please migrate it to
+      AuthenticationMiddleware and GoogleBackend combination. See URL
+      bellow for more details:
+      http://kay-docs.shehas.net/auth.html#using-google-account-authentication
+
+    - Changed options of some i18n related scripts. Please refer to
+      URL bellow for more details:
+      http://kay-docs.shehas.net/manage_py.html
 
 Kay-0.2.0 - September 23, 2009
 ==============================
