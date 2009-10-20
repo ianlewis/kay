@@ -21,9 +21,13 @@ Kay-0.3.0 - October ??, 2009
   - Notice about this release
 
     - GoogleAuthenticationMiddleware is obsolete. Please migrate it to
-      AuthenticationMiddleware and GoogleBackend combination.
+      AuthenticationMiddleware and GoogleBackend combination. See URL
+      bellow for more details:
+      http://kay-docs.shehas.net/auth.html#using-google-account-authentication
+
     - Changed options of some i18n related scripts. Please refer to
-      kay documentation site for more details.
+      URL bellow for more details:
+      http://kay-docs.shehas.net/manage_py.html
 
 Kay-0.2.0 - September 23, 2009
 ==============================
