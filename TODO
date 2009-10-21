@@ -2,14 +2,18 @@
 TODO
 ====
 
-kay
----
+Documentation
+-------------
 
 * Write documentations about
 
   * utils module
   * middlewares
   * how to write your views(including XMPPHandler and MailHander)
+  * caching
+
+kay
+---
 
 * Capability for compressing css and js media with i18n.
 
@@ -41,12 +45,5 @@ kay.utils.forms
 ---------------
 
 * Form.freeze() method could be useful in some cases.
-
-
-Local GUI datastore administration tool
----------------------------------------
-
-* An implementation using wxpython is the first option. Using
-  pyqt/Adobe air/tkinter would be also fine.
 
 
