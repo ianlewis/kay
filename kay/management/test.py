@@ -70,7 +70,7 @@ def runtest(target='', verbosity=0):
       try:
         tests_mod = import_string("%s.tests" % app_name)
       except (ImportError, AttributeError), e:
-        logging.debug("Loading module %s.tests failed: '%s'." % 
+        logging.error("Loading module %s.tests failed: '%s'." % 
                       (app_name, e))
       else:
         suite.addTest(unittest.defaultTestLoader.loadTestsFromModule(
