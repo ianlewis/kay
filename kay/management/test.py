@@ -29,6 +29,8 @@ import unittest
 APP_ID = u'test'
 os.environ['APPLICATION_ID'] = APP_ID
 os.environ['USER_EMAIL'] = ''
+os.environ['SERVER_NAME'] = 'localhost'
+os.environ['SERVER_PORT'] = '80'
 
 import kay
 kay.setup()
