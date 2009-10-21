@@ -194,7 +194,7 @@ myapp/templates/index.html
   </body>
   </html>
 
-``message`` that is passed to `` render_to_response`` as the second argument ``render_to_response`` will be displayed in the ``{{ message }}`` field.
+``message`` that is passed to ``render_to_response`` as the second argument ``render_to_response`` will be displayed in the ``{{ message }}`` field.
 
 
 URL Mapping
