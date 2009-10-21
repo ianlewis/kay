@@ -67,6 +67,8 @@ def runtest(target='', verbosity=0):
         tests_mod))
   else:
     for app_name in settings.INSTALLED_APPS:
+      if app_name.startswith('kay.'):
+        continue
       try:
         tests_mod = import_string("%s.tests" % app_name)
       except (ImportError, AttributeError), e:
