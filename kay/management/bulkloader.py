@@ -108,7 +108,12 @@ def dump_or_restore_all(help, data_set_name, app_id, url, directory, op):
         args.extend(backup_mod.dump_options[kind])
     except:
       pass
-    results[key] = bulkloader.main(args)
+    try:
+      results[key] = bulkloader.main(args)
+    except bulkloader.FileNotFoundError, e:
+      print_status("File not found, skipped: %s" % e)
+      results[key] = -1
+      continue
     logging.getLogger('google.appengine.tools.bulkloader').handlers = []
   sys.exit(0)
 

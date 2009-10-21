@@ -55,13 +55,10 @@ from datetime import datetime
 from time import strptime
 from weakref import WeakKeyDictionary
 
-from babel import Locale, dates, UnknownLocaleError
-from babel.support import Translations as TranslationsBase
 from pytz import timezone, UTC
 from werkzeug.exceptions import NotFound
 from werkzeug.urls import url_quote_plus
 from werkzeug.utils import import_string
-import simplejson
 
 import kay
 from kay import utils
@@ -86,9 +83,9 @@ def create_lang_url(lang=None, url=None):
 
 def load_translations(locale):
   """Load the translation for a locale.  If a locale does not exist
-  the return value a fake translation object.  If the locale is unknown
-  a `UnknownLocaleError` is raised.
+  the return value a fake translation object.
   """
+  from kay.i18n.translations import KayTranslations
   domain = "messages"
   ret = KayTranslations.load(utils.get_kay_locale_path(), locale, domain)
   def _merge(path):
@@ -114,35 +111,6 @@ def load_translations(locale):
   if os.path.isdir(target):
     ret = _merge(target)
   return ret
-
-
-class KayTranslations(TranslationsBase):
-  gettext = TranslationsBase.ugettext
-  ngettext = TranslationsBase.ungettext
-
-  def __init__(self, fileobj=None, locale=None):
-    self.lang = locale
-    self._catalog = {}
-    TranslationsBase.__init__(self, fileobj=fileobj)
-    if not hasattr(self, "plural"):
-      self.plural = lambda n: int(n != 1)
-
-
-  @classmethod
-  def load(cls, path, locale=None, domain='messages'):
-    """Load the translations from the given path."""
-    catalog = os.path.join(path, str(Locale.parse(locale)), 'LC_MESSAGES',
-                           domain + '.mo')
-    if os.path.isfile(catalog):
-      return KayTranslations(fileobj=open(catalog, 'rb'), locale=locale)
-    else:
-      return KayTranslations(fileobj=None, locale=locale)
-
-  def merge(self, other):
-    self._catalog.update(other._catalog)
-
-  def __nonzero__(self):
-    return bool(self._catalog)
 
 
 class KayNullTranslations(NullTranslations):
