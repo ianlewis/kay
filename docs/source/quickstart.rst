@@ -194,7 +194,7 @@ myapp/templates/index.html
   </body>
   </html>
 
-``message`` that is passed to ``render_to_response`` as the second argument ``render_to_response`` will be displayed in the ``{{ message }}`` field.
+``message`` that is passed to :func:`kay.utils.render_to_response` as the second argument :func:`kay.utils.render_to_response` will be displayed in the ``{{ message }}`` field.
 
 
 URL Mapping
@@ -354,7 +354,7 @@ myapp/views.py
 			       'comments': comments})
 
 Don't forget to import the Model class you defined earlier.
-``Comment.all().order('-created').fetch(100)`` get latest 100 comments from datastore. And pass the list to ``render_to_response``. Please refer to :func:`kay.utils.render_to_response`.
+``Comment.all().order('-created').fetch(100)`` get latest 100 comments from datastore. And pass the list to :func:`kay.utils.render_to_response`.
 
 myapp/templates/index.html
 
