@@ -7,17 +7,18 @@ Kay framework - Release Notes
 
 Kay-0.3.0 - October ??, 2009
 =============================
-  - Added CacheMiddleware and cache_page decorator
-  - Added FragmentCache jinja2 extension
-  - Added SecureCookieSessionStore
+
+  - Added CacheMiddleware, cache_page decorator and FragmentCache
+    jinja2 extension.
+  - Added SecureCookieSessionStore.
   - Added handler for InboundMail
   - Capability for customizing Jinja2 environ
   - Now views can be defined as strings for lazy loading
   - Users can migrate data from an appid to another one very easily
   - Added kay.auth.GoogleBackend
-  - More documentations available
-  - Added --all option to i18n related scripts
-
+  - More documentations available. 
+  - Added --all option to i18n related scripts.
+  - Fixed testing environment was partially broken.
   - Notice about this release
 
     - GoogleAuthenticationMiddleware is obsolete. Please migrate it to
