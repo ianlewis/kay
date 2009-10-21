@@ -13,11 +13,14 @@ kay
 
 * Capability for compressing css and js media with i18n.
 
+* The way to determine kay.PROJECT_DIR and implementation of
+  kay.utils.get_project_path() are not portable. needfix.
+
 
 kay.auth
 --------
 
-* Implement ChoiceAuthBackend.
+* Incorporate Ian's ChoiceBackend.
 
 
 kay.utils.forms
