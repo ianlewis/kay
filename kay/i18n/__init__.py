@@ -59,7 +59,6 @@ from pytz import timezone, UTC
 from werkzeug.exceptions import NotFound
 from werkzeug.urls import url_quote_plus
 from werkzeug.utils import import_string
-import simplejson
 
 import kay
 from kay import utils
