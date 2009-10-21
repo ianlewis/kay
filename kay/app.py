@@ -371,7 +371,11 @@ class KayApp(object):
   def _get_traceback(self, exc_info):
     "Helper function to return the traceback as a string"
     import traceback
-    return '\n'.join(traceback.format_exception(*(exc_info or sys.exc_info())))
+    ret = '\n'.join(traceback.format_exception(*(exc_info or sys.exc_info())))
+    try:
+      return ret.decode('utf-8')
+    except UnicodeDecodeError:
+      return ret
 
   def __call__(self, environ, start_response):
     kay.setup_syspath()
