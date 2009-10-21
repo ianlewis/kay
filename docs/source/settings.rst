@@ -90,44 +90,49 @@ Items
    
 .. attribute:: CACHE_MIDDLEWARE_SECONDS
 
-   viewの関数が返したHTMLレスポンスのキャッシュの有効時間を設定（単位：秒）します。デフォルト値は ``3600`` （1時間）です。
+   Specify how long to remain caches of HTML responses that views returned. The default is ``3600`` (1 hour).
 
    
 .. attribute:: CACHE_MIDDLEWARE_NAMESPACE
 
-   上記のキャッシュのネームペースを指定します。デフォルト値は ``CACHE_MIDDLEWARE`` です。
-
+   Specify the namespace of HTML response cache. The default is ``CACHE_MIDDLEWARE``.
+   
    
 .. attribute:: CACHE_MIDDLEWARE_ANONYMOUS_ONLY
 
-   上記のキャッシュをログインしていない時のみ適用するかどうかを設定します。デフォルト値は ``True`` です。
+   If set to ``True``, HTML response cache will remain only while user login. The default is ``True``.
 
    
 .. attribute:: ADD_APP_PREFIX_TO_KIND
 
-   ``db.Model.kind()`` メソッドにアプリケーション名の prefix を付けるかどうかを設定します。有効にする場合は ``True``, 無効にする場合は ``False`` を設定します。デフォルト値は ``True`` です。有効にすると ``kind()`` の値は ``applicaion名_model名`` (全て小文字に変換される)となります。
+   If set to ``True``, you can add an application prefix to ``db.Model.kind()`` method.
+   The value of ``kind()`` will set to be ``applicationname_modelname`` (uncapitalized).
 
    
 .. attribute:: ROOT_URL_MODULE
 
-   Kayでは各アプリケーション配下の ``urls.py`` 以外に、URL設定ファイルをもつことができます。ここにはURLファイルのモジュール名を設定します。デフォルト値は ``urls`` です。
+   You can have another URL settings file other than ``urls.py`` of each application.
+   Specify the URL file's module name here. The default is ``urls``.
 
    
 .. attribute:: MEDIA_URL
 
-   メディアファイルのパスを指定します。デフォルト値は ``/media`` です。
+   Specify the path to media files. The defautl is ``/media``.
 
    
 .. attribute:: INTERNAL_MEDIA_URL
 
-   ``kay.auth`` など bundle アプリが使用するメディアファイルを保存するパスを指定します。デフォルト値は ``/_media`` です。
-
+   Specify the path to media files directory that bundle applications (e.g. ``kay.auto`` ) use.
+   The default is ``/_media``.
+   
    
 .. attribute:: ADMINS
 
-   管理者のユーザ名とメールアドレスをタプルで設定します。サーバー上で例外が発生した場合、ここで設定したメールアドレスにトレースバックが送信されます。デバッグ設定が無効（ ``DEBUG=False`` ）の場合のみ機能します。
+   Specify the administrator's username and email address in this tuple.
+   If some exception occurs on the server, Kay send the traceback to this email address.
+   This function works when you disable Debug ( ``DEBUG=False`` ).
 
-   （設定例）
+   （setting example）
 
    .. code-block:: python
 
@@ -146,7 +151,7 @@ Items
 
 .. attribute:: USE_I18N
 
-   国際化の有効/無効を設定します。 ``True`` で有効、 ``False`` で無効になります。デフォルト値は ``True`` です。
+   If set to ``True``, i18n works. The default is ``True``.
 
    .. seealso:: :doc:`i18n`
 
@@ -159,7 +164,9 @@ Items
 
 .. attribute:: APP_MOUNT_POINTS
 
-   この辞書にはそれぞれのアプリケーションにアクセスするためのURLパスを指定します。アプリケーションがキー、URLパスが値となります。未設定のアプリに対しては、 ``/アプリのモジュール名`` が自動的に設定されます。
+   Specify the URL path to access each application in this dictionary.
+   The key is the applicaion and the value is the URL path.
+   If not specified, the URL path will be set ``/application's module name`` by default.
 
    .. code-block:: python
 
@@ -186,13 +193,13 @@ Items
 
 .. attribute:: JINJA2_FILTERS
 
-    A dictionary of filter name to callable filters that are automatically
-    loaded into the Jinja2 environment.
+   A dictionary of filter name to callable filters that are automatically
+   loaded into the Jinja2 environment.
 
 	  
 .. attribute:: JINJA2_ENVIRONMENT_KWARGS
 
-   Jinja2のコンストラクタに渡すキーワード引数を指定できます。デフォルト値は以下のとおりです。
+   Specify the keyword arguments passed to Jinja2 contructor. The default is following.
 
    .. code-block:: python
 
@@ -224,20 +231,23 @@ Items
 	  
 .. attribute:: AUTH_USER_BACKEND
 
-   ユーザ認証で使用するバックエンドクラスを指定します。デフォルト値は ``kay.auth.backend.GoogleBackend`` です。
-
+   Specify the backend class for user authentication. The defautl is ``kay.auth.backend.GoogleBackend``.
+   
    .. seealso:: :doc:`auth`
 
    
 .. attribute:: AUTH_USER_MODEL
 
-   バックエンドで認証されたユーザデータを保存するクラスを指定します。 ``GoogleUser`` を継承したユーザクラスを認証に使う場合などはここに設定する必要があります。デフォルト値は ``kay.auth.models.GoogleUser`` です。
+   Specify the model class for saving the user data authenticated by the backend.
+   When you use the user class inherited ``GoogleUser`` for authentication, you have to set it here.
+   The defautl is ``kay.auth.models.GoogleUser``.
 
    .. seealso:: :doc:`auth`
 
    
 .. attribute:: USE_DB_HOOK
 
-   DBフックの有効/無効を設定します。Djangoのシグナルに相当します。DBに対して何らかのアクションがあった場合に起動させる処理がある場合は ``True`` を設定します。DBフックについてあまり詳しくない場合は ``False`` を指定してください。
-
-
+   If set to ``True``, DB hook is enabled. DB hook is similar to Django's signal.
+   You can run some processes when datastore is accessed.
+   If you are unfamiliar with DB hook, you should set this to ``False``.
+   The default is ``False``.
