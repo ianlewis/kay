@@ -116,6 +116,18 @@ Here is a screenshot of the paste service.
 .. image:: images/debugger-paste-service.png
    :scale: 80
 
+Exception in Jinja2 template
+----------------------------
+
+If an exception occurs in Jinja2 template, you will see wired
+traceback on the debugger. That is because of the restriction of
+appengine( can not use ctypes). For a workaround, we can patch
+dev_appserver.py in appengine SDK.
+
+After adding 'gestalt' and '_ctypes' to the list
+``_WHITE_LIST_C_MODULES``, you can see normal tracebacks on the
+debugger.
+
 
 Using pdb
 =========

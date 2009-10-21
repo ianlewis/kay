@@ -93,6 +93,12 @@ traceback の各段階ごとに例外の発生した位置とソースコード�
 .. image:: images/debugger-paste-service.png
    :scale: 80
 
+Jinja2 テンプレートでの例外
+----------------------------
+
+Jinja2 テンプレート中で例外が起きると、デバッガー上で妙なトレースバックを見る事になります。これは appengine の ctypes が使用できない制約によるものです。回避策としては appengine SDK の dev_appserver.py にパッチを当てる方法があります。
+
+'gestalt' と '_ctypes' を ``_WHITE_LIST_C_MODULES`` リストに加えればきちんとトレースバックが表示されます。
 
 pdb を使用する
 ==============
