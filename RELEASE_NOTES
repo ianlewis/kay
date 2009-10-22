@@ -30,6 +30,14 @@ Kay-0.3.0 - October ??, 2009
       URL bellow for more details:
       http://kay-docs.shehas.net/manage_py.html
 
+    - Changed the way to detect where is the project directory. You
+      need to add following 2 lines of code to the settings.py file in
+      former created applications.
+
+      import os
+      PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
+
+
 Kay-0.2.0 - September 23, 2009
 ==============================
 

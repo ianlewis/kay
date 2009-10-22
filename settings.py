@@ -10,7 +10,6 @@ A sample of kay settings.
 """
 
 import os
-
 PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
 
 DEFAULT_TIMEZONE = 'Asia/Tokyo'
