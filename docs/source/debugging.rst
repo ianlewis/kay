@@ -138,7 +138,7 @@ your program will stop. You can see a pdb prompt on the console in
 which you invoked ``manage.py runserver``.
 
 For example, you can execute your program step by step with a command
-``step``. For more details how to use pdf, please refer to following
+``step``. For more details how to use pdb, please refer to following
 URL:
 
 * http://www.python.org/doc/2.5.4/lib/debugger-commands.html
