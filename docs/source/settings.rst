@@ -13,12 +13,12 @@ Items
 
 .. attribute:: APP_NAME
 
-   Specify the application name. Default value is ``kay_main``.
+   Specify the application name. The default is ``kay_main``.
 
    
 .. attribute:: DEFAULT_TIMEZONE
 
-   Specify the default local timezone in string, e.g: 'Asia/Tokyo' The default is ``Asia/Tokyo``. If it's not specified Kay automatically set ``UTC``. You can get the valid TimeZone list by reffering to ``kay/lib/pytz/all_timezone``.
+   Specify the default local timezone in string, e.g: 'Asia/Tokyo'. The default is ``Asia/Tokyo``. If it's not specified Kay automatically set ``UTC``. You can get the valid TimeZone list by reffering ``kay/lib/pytz/all_timezone``.
 
 
 .. attribute:: DEBUG
