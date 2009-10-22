@@ -191,7 +191,7 @@ manage.py create_user
 
 .. cmdoption:: -h, --host host
 
-   対象となるアプリケーションをホスト名で指定します。デフォルト値は ``settings.py`` の ``APPLICATION_ID`` です。
+   対象となるアプリケーションをホスト名で指定します。デフォルト値は ``app-id.appspot.com`` です。
 
 .. cmdoption:: -p, --path path
 
