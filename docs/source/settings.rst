@@ -13,12 +13,12 @@ Items
 
 .. attribute:: APP_NAME
 
-   Specify the application name. The default is ``kay_main``.
+   The application name. The default is ``kay_main``.
 
    
 .. attribute:: DEFAULT_TIMEZONE
 
-   Specify the default local timezone in string, e.g: 'Asia/Tokyo'. The default is ``Asia/Tokyo``. If it's not specified Kay automatically set ``UTC``. You can get the valid TimeZone list by reffering to ``kay/lib/pytz/all_timezone``.
+   The default local timezone in string, e.g: 'Asia/Tokyo'. The default is ``Asia/Tokyo``. If it's not specified Kay automatically set ``UTC``. You can get the valid TimeZone list by reffering to ``kay/lib/pytz/all_timezone``.
 
 
 .. attribute:: DEBUG
@@ -58,44 +58,45 @@ Items
    
 .. attribute:: SECRET_KEY
 
-   Specify the seed to create hash value. The default is ``ReplaceItWithSecretString``. Please be sure to rewrite it.
+   The seed to generate a hash value. The default is ``ReplaceItWithSecretString``. Please be sure to rewrite this.
 
 
 .. attribute:: SESSION_PREFIX
 
-   Specify the prefix of session name. The default is ``gaesess:``.
+   The prefix of session name. The default is ``gaesess:``.
 
    
 .. attribute:: COOKIE_AGE
 
-   Specify the cookie age. The defautl is ``1209600`` (2 weeks).
+   The cookie's age. The default is ``1209600`` seconds (2 weeks).
 
    
 .. attribute:: COOKIE_NAME
 
-   Specify the cookie name. The default is ``KAY_SESSION``.
+   The cookie's name. The default is ``KAY_SESSION``.
 
    
 .. attribute:: SESSION_MEMCACHE_AGE
 
-   Specify the session information age. The default is ``3600`` (1 hour).
+   The session information's age. The default is ``3600`` seconds (1 hour).
 
    
 .. attribute:: LANG_COOKIE_NAME
 
-   Specify the name of the cookie for the language. The default is ``hl``.
-   If i18n is enabled Kay will display pages in the language specified with this cookie,
-   otherwise identify the language from Accept-Language setting of the browser.
+   The cookie's name for the language. The default is ``hl``.
+   If i18n is enabled, Kay will display pages in the language specified with this cookie.
+   Otherwise Kay identifies the language from Accept-Language setting of the browser.
 
    
 .. attribute:: CACHE_MIDDLEWARE_SECONDS
 
-   Specify how long to remain caches of HTML responses that views returned. The default is ``3600`` (1 hour).
+   Specify how long to remain caches of HTML responses that views returned.
+   The default is ``3600`` (1 hour).
 
    
 .. attribute:: CACHE_MIDDLEWARE_NAMESPACE
 
-   Specify the namespace of HTML response cache. The default is ``CACHE_MIDDLEWARE``.
+   The namespace of HTML response cache. The default is ``CACHE_MIDDLEWARE``.
    
    
 .. attribute:: CACHE_MIDDLEWARE_ANONYMOUS_ONLY
@@ -121,12 +122,12 @@ Items
    
 .. attribute:: MEDIA_URL
 
-   Specify the path to media files. The defautl is ``/media``.
+   The path to media files. The defautl is ``/media``.
 
    
 .. attribute:: INTERNAL_MEDIA_URL
 
-   Specify the path to media files directory that bundle applications (e.g. ``kay.auto`` ) use.
+   The path to media files directory that bundle applications (e.g. ``kay.auto`` ) use.
    The default is ``/_media``.
    
    
@@ -136,7 +137,7 @@ Items
    If some exception occurs on the server, Kay send the traceback to this email address.
    This function works when you disable Debug ( ``DEBUG=False`` ).
 
-   （setting example）
+   (setting example)
 
    .. code-block:: python
 
@@ -203,7 +204,7 @@ Items
 	  
 .. attribute:: JINJA2_ENVIRONMENT_KWARGS
 
-   Specify the keyword arguments passed to Jinja2 contructor. The default is following.
+   The keyword arguments passed to Jinja2 contructor. The default is following.
 
    .. code-block:: python
 
@@ -218,7 +219,7 @@ Items
    imported and loaded into the Jinja2 environment.
 
 
- .. attribute:: SUBMOUNT_APPS
+.. attribute:: SUBMOUNT_APPS
 
    If you'd like to run applications with entirely-differnt settings, you can set them here. The default is an empty tuple.
    
@@ -235,16 +236,16 @@ Items
 	  
 .. attribute:: AUTH_USER_BACKEND
 
-   Specify the backend class for user authentication. The defautl is ``kay.auth.backend.GoogleBackend``.
+   The backend class for user authentication. The default is ``kay.auth.backend.GoogleBackend``.
    
    .. seealso:: :doc:`auth`
 
    
 .. attribute:: AUTH_USER_MODEL
 
-   Specify the model class for saving the user data authenticated by the backend.
-   When you use the user class inherited ``GoogleUser`` for authentication, you have to set it here.
-   The defautl is ``kay.auth.models.GoogleUser``.
+   The model class for saving the user data authenticated by the backend.
+   When you use the user class inherites from ``GoogleUser`` for authentication,
+   you have to set it here. The defautl is ``kay.auth.models.GoogleUser``.
 
    .. seealso:: :doc:`auth`
 
