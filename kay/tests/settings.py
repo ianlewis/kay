@@ -8,6 +8,7 @@ Kay test settings.
 """
 
 DEBUG = False
+ROOT_URL_MODULE = 'kay.tests.globalurls'
 
 INSTALLED_APPS = (
   'kay.tests',

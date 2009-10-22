@@ -9,9 +9,6 @@ A sample of kay settings.
 :license: BSD, see LICENSE for more details.
 """
 
-import os
-PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
-
 DEFAULT_TIMEZONE = 'Asia/Tokyo'
 DEBUG = True
 PROFILE = False

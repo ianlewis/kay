@@ -43,7 +43,7 @@ def set_trace():
 
 def get_kay_locale_path():
   import kay
-  return os.path.join(kay.PROJECT_DIR, 'kay', 'i18n')
+  return os.path.join(kay.KAY_DIR, 'i18n')
 
 
 def get_timezone(tzname):
