@@ -28,7 +28,7 @@ try:
 except ImportError:
   from sha import new as sha1
 
-from werkzeug import html, escape, cached_property, MultiDict
+from werkzeug import escape, cached_property, MultiDict
 from google.appengine.ext import db
 
 from kay.utils import get_request, url_for
@@ -43,6 +43,17 @@ from kay.utils.datastructures import OrderedDict, missing
 _last_position_hint = -1
 _position_hint_lock = Lock()
 
+class HtmlProxy(object):
+  def __getattr__(self, name):
+    from kay.conf import settings
+    if settings.FORMS_FORCE_XHTML:
+      from werkzeug import xhtml
+      return getattr(xhtml, name)
+    else:
+      from werkzeug import html
+      return getattr(html, name)
+
+html = HtmlProxy()
 
 def fill_dict(_dict, **kwargs):
   """A helper to fill the dict passed with the items passed as keyword
