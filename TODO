@@ -17,6 +17,11 @@ kay
 
 * Capability for compressing css and js media with i18n.
 
+* It could be better than now to installing Kay to somewhere on the
+  system paths.
+
+* A script for buildout.
+
 * The way to determine kay.PROJECT_DIR and implementation of
   kay.utils.get_project_path() are not portable. needfix.
 
