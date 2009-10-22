@@ -38,7 +38,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Kay ドキュメント'
+project = u'Kay'
 copyright = u'2009, Takashi Matsuo'
 
 # The version info for the project you're documenting, acts as replacement for
