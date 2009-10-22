@@ -132,9 +132,9 @@ debugger.
 Using pdb
 =========
 
-You can also use pdf for debugging in dev environment. If you invoke
+You can also use pdb for debugging in dev environment. If you invoke
 :func:`kay.utils.set_trace` anywhere on your code, the execution of
-your program will stop. You can see a pdf prompt on the console in
+your program will stop. You can see a pdb prompt on the console in
 which you invoked ``manage.py runserver``.
 
 For example, you can execute your program step by step with a command
