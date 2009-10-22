@@ -13,10 +13,12 @@ Kay framework.
 import os
 import sys
 
+import settings
+
 __version__ = "0.3.0"
 
 KAY_DIR = os.path.abspath(os.path.dirname(__file__))
-PROJECT_DIR = os.path.dirname(KAY_DIR)
+PROJECT_DIR = settings.PROJECT_DIR
 LIB_DIR = os.path.join(KAY_DIR, 'lib')
 PROJECT_LIB_DIR = os.path.join(PROJECT_DIR, 'lib')
 
