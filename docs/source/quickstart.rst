@@ -14,33 +14,35 @@ Please install the softwares below.
 * Kay Framework
 * ipython (recommended)
 
-If you'd like to use MacPort's python25 in macports, you also need to install the softwares below.
+If you'd like to use MacPort's python25, you also need to install
+following software:
 
 * py25-hashlib
 * py25-socket-ssl
 * py25-pil
 * py25-ipython (recommended)
 
-This time we use the Kay repository version. To do that you need Mercurial.
+This time we use the Kay repository version. To do so, you need
+Mercurial installed on your system.
 
 * mercurial
 
-You can clone it as follows.
+You can clone Kay repository version as follows.
 
 .. code-block:: bash
 
   $ hg clone https://kay-framework.googlecode.com/hg/ kay
 
-If you'd like to use Kay release version, download the newest
-version from http://code.google.com/p/kay-framework/downloads/list and extract it as follows:
+If you'd like to use Kay release version, download the newest version from
+http://code.google.com/p/kay-framework/downloads/list and extract it as follows:
 
 .. code-block:: bash
 
    $ tar zxvf kay-VERSION.tar.gz
 
 
-If you installed a zip package of appengine SDK, you need to create
-a symlink beforehand like following:
+If you installl an appengine SDK zip package, you need to create a
+symlink beforehand like following:
 
 .. code-block:: bash
 
@@ -65,12 +67,17 @@ Create the skelton of the project directory with Kay's ``manage.py`` script.
 
    1 directory, 4 files
 
-On the platform supports symbolic link system, ``kay`` directory and the symblic link to ``manage.py`` will be created. If you move them to another directory, your project may not work. In that case you need create it again.
+On the platform supports symbolic link system, ``kay`` directory and
+the symblic link to ``manage.py`` will be created.  If you move them
+to another directory, your project may not work.  In that case you
+need create the symlink again.
+
 
 Create an application
 ---------------------
 
-Go into ``myproject`` directory and let's create an application. Following example shows how to create ``myappp`` application.
+Go into ``myproject`` directory and create an application. Following
+example shows how to create ``myappp`` application.
 
 .. code-block:: bash
 
@@ -87,8 +94,14 @@ Go into ``myproject`` directory and let's create an application. Following examp
 
    1 directory, 5 files
 
-The application have been created, you then edit ``settings.py`` to register it to the project. If you need you can also register it to ``APP_MOUNT_POINTS``. The following example mount it to the root URL.
-If you don't edit ``APP_MOUNT_POINTS``, the application will be mounted on the URL has its' own name like ``/myapp``. Additionaly we also regist ``kay.auth`` application.
+After the application is created, you need to edit ``settings.py`` for
+registering it to the project. You can also register it to
+``APP_MOUNT_POINTS`` for changing which URL this application is
+mounted at if you need to. The following example shows you how to
+mount it at the root URL(/).  If you don't edit ``APP_MOUNT_POINTS``,
+the application will be mounted at the URL that has its' own name with
+leading slash like ``/myapp`` or ``/auth``.  In this example, we
+registered ``kay.auth`` application as well.
 
 settings.py
 
@@ -108,12 +121,14 @@ settings.py
   }
 
 
-As you know, ``INSTALLED_APPS`` is a tuple and ``APP_MOUNT_POINTS`` is a dict.
+As you know, ``INSTALLED_APPS`` is a tuple and ``APP_MOUNT_POINTS`` is
+a dict.
 
 Move your application
 ---------------------
 
-Let's run the application you created. The following command will run a development server.
+Let's run the application you've just created. You can run a
+development server with a following command:
 
 .. code-block:: bash
 
@@ -123,25 +138,29 @@ Let's run the application you created. The following command will run a developm
   ...
   INFO     ... Running application myproject on port 8080: http://localhost:8080
 
-Now, call up a browser and go to http://localhost:8080/. You should see `"hello"` or `"こんにちは"`.
+Then, launch your web browser and go to http://localhost:8080/. You
+should see `"hello"` or `"こんにちは"`.
 
 
 Upload to GAE
 -------------
 
-In order to upload your application to GAE you need set the ``appid`` to ``application`` in ``app.yaml`` and use the following command.
+Edit the ``app.yaml`` file, then change the value of the
+``application:`` to your registered application ID.  To upload your
+application to GAE, you can execute a following command.
 
 .. code-block:: bash
 
   $ python manage.py appcfg update
 
-If uploading is successed you can access to http://your-appid.appspot.com/
+If succesfully uploaded, now you can see your application running on
+GAE at http://your-appid.appspot.com/.
 
 
 Template/View
 -------------
 
-Let's see the default view and template.
+Let's look at the default view and the template.
 
 
 myapp/views.py
@@ -176,7 +195,14 @@ myapp/views.py
     return render_to_response('myapp/index.html', {'message': _('Hello')})
 
 	
-One default view is defined. ``render_to_response`` function receives the template's name as the first argument. You can pass an dictionary which is passed to the template as second argument to it. The ``_()`` function marks strings for i18n and works when the page is displayed. The template indicated by ``myapp/index.html`` actually exists ``myapp/templates/index.html`` (Note that ``/templates/`` is nestled).
+One default view is already defined. ``render_to_response`` function
+receives a template's name as the first argument. You can pass a
+dictionary as the second argument. That dictionary will be passed to
+the template.  ``_()`` function marks strings for i18n extraction and
+replaces with transalted text when pages are rendered.
+``myapp/index.html`` template's real path on your system is
+``myapp/templates/index.html`` (Note that ``/templates/`` is nestled).
+
 
 myapp/templates/index.html
 
@@ -194,13 +220,15 @@ myapp/templates/index.html
   </body>
   </html>
 
-``message`` that is passed to :func:`kay.utils.render_to_response` as the second argument :func:`kay.utils.render_to_response` will be displayed in the ``{{ message }}`` field.
+{{ message }} will be replaced with a value in the context dictionally
+with a key ``message``.  
 
 
 URL Mapping
 -----------
 
-Next we will see the file that configures the correspondance between URLs and views.
+Next, look at the file that configures the mapping between URLs and
+views.
 
 myapp/urls.py
 
@@ -228,19 +256,30 @@ myapp/urls.py
   }
 
 
-``make_rules()`` funtion and ``all_views`` dictionary defined in ``urls.py`` will be automatically corrected and configured by Kay.
+Kay will automatically collect and configure the ``make_rules()``
+funtion and the ``all_views`` dictionary defined in ``urls.py`` in
+apps directory.
 
-``make_rules`` corresponds the ``'/'`` URL to the ``'myapp/index'`` endpoint. ``all_views`` corresponds the ``'myapp/index'`` endpoint to the ``myapp.views.index`` function.
+The ``make_rules()`` function binds the ``'/'`` URL to the
+``'myapp/index'`` endpoint.  The ``all_views`` dictionary binds the
+``'myapp/index'`` endpoint to the ``myapp.views.index`` function.
 
-These will allow the application to call ``myapp.views.index``,  When ``'/'`` is accessed
+Thus it will allow the application to call ``myapp.views.index``, when
+``'/'`` is accessed.
+
+``'/'`` -> ``'myapp/index'`` -> ``myapp.views.index``
 
 
 User Authentication
 -------------------
 
-There are some ways to use user authentication. In this chapter we will use the authentication with Google Account. ``settings.py`` is configured to use Google Account Authenticaion by default. So you don't need to configure any settings.
+There are some ways how to authenticate users. Now we will
+authenticate users with Google Accounts.  By default, ``settings.py``
+is configured to use Google Account Authenticaion.  So you don't need
+to edit ``settings.py`` in this case.
 
-If you edit ``myapp/templates/index.html`` as follows, you can use user authentication.
+If you edit ``myapp/templates/index.html`` as follows, you can use
+user authentication.
 
 .. code-block:: html
 
@@ -263,13 +302,17 @@ If you edit ``myapp/templates/index.html`` as follows, you can use user authenti
   </body>
   </html>
 
-Above code shows the link to login form if the user doesn't login, otherwise shows user's Email address and logout link.
+If the user hasn't signed in, above code shows a link to login form.
+Otherwise it shows the user's Email address and a logout link.
 
-Let's try in the development environment and GAE.
+Let's try this user authentication code both on the development
+environment and GAE.
 
-In this step, the user can view ``myapp.index`` without login. How can we to allow the user view when s/he logins?
+For now, any user will be able to browse ``myapp.index`` without
+singning in. How can we allow users to browse this page only when they
+are signed in?
 
-Using decorator as follows enables to do that.
+You can use a decorator to do so, as follows:
 
 .. code-block:: python
 
@@ -283,15 +326,18 @@ Using decorator as follows enables to do that.
   def index(request):
     return render_to_response('myapp/index.html', {'message': _('Hello')})
 
-If you decorate the view with ``login_required`` decorator, you allow the user to view that.
+If you decorate the view with a ``login_required`` decorator, only
+signed-in users will be able to browse the page.
 
-Remove this decorator after checking of the operation,
+Once you check the operation, remove this decorator.
 
 
 Model Definition
 ----------------
 
-Now we will make our application to let us to post comments to datastore. Firstly we will define a model to save a comment.
+Now let's make the application to let users posting comments and to
+store it into the datastore. Firstly let's define a model to store
+comments.
 
 myapp/models.py
 
@@ -309,9 +355,13 @@ myapp/models.py
     body = db.TextProperty(required=True)
     created = db.DateTimeProperty(auto_now_add=True)
 
-We define this model by creating the class inherits ``google.appengine.ext.db.Model``. You can define properties by defining class variables. Now we will define to save the user in ``user``, the content in ``body``, and the posted date in ``created``.
+You can define a model by making a Python class that inherits from the
+``google.appengine.ext.db.Model`` class.  You can also define
+properties by putting class attributes on the model class.  Define the
+``user`` property to store comment's owner, ``body`` property for
+storing the content, and ``created`` property stores the posted date.
 
-Let's save data in this model. You can use Kay shell tool to save data.
+Let's store data in this model. You can use Kay's shell tool for it.
 
 .. code-block:: bash
 
@@ -326,14 +376,16 @@ Let's save data in this model. You can use Kay shell tool to save data.
   Do you really want to exit ([y]/n)? y
 
 ^D means Ctrl + D.
-Note that If you forget ``put()`` you cannot save data. Check if data was saved by run the development server and go to http://localhost:8080/_ah/admin/
+Note that if you forget to run ``put()``, you cannot have data saved.
+Check if the data was saved by running a development server and check
+following URL: http://localhost:8080/_ah/admin/
 
 
 Display Data
 ------------
 
-Display the Comment you saved lately. Edit 2 files below.
-
+Let's display the Comment you've just stored. Edit two files as
+follows:
 
 myapp/views.py
 
@@ -354,7 +406,9 @@ myapp/views.py
 			       'comments': comments})
 
 Don't forget to import the Model class you defined earlier.
-``Comment.all().order('-created').fetch(100)`` get latest 100 comments from datastore. And pass the list to :func:`kay.utils.render_to_response`.
+``Comment.all().order('-created').fetch(100)`` returns a list contains
+the latest 100 comments from datastore. We pass this list to
+:func:`kay.utils.render_to_response`.
 
 myapp/templates/index.html
 
@@ -385,17 +439,18 @@ myapp/templates/index.html
   </body>
   </html>
 
-Add a new div under the place displays ``messages``.
-Between ``{% for ... %}`` and ``{% endfor %}`` is loops. Now we just display ``comment.body``.
+Add a new div element next to the ``message`` line. The code between
+``{% for ... %}`` and ``{% endfor %}`` is a loop. In this loop, we
+display just ``comment.body``.
 
 
 Comment Form
 ------------
 
-Let's make our application to submit comments。Creata a new file named ``forms.py`` for html form.
+Let's add a feature to submit comments. Create a new file named
+``forms.py`` for a html form.
 
 myapp/forms.py
-
 
 .. code-block:: python
 
@@ -426,7 +481,9 @@ myapp/forms.py
 			       'form': form.as_widget()})
 
 
-You can use ``request.form`` to access the POST value, ``request.args`` to access the GET parameters, and ``request.files`` to access to the uploaded files.
+You can use ``request.form`` to access the POST value,
+``request.args`` to access the GET parameters, and ``request.files``
+to access to the uploaded files.
 
 myapp/templates/index.html
 
@@ -436,4 +493,5 @@ myapp/templates/index.html
   {{ form()|safe }}
   </div>
 
-At this point you can post a comment. The name who posted it will be also displayed beside the comment.
+Now, you can post a comment. The username of the poster will be also
+displayed beside it.
