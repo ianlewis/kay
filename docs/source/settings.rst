@@ -108,6 +108,10 @@ Items
    If set to ``True``, you can add an application prefix to ``db.Model.kind()`` method.
    The value of ``kind()`` will set to be ``applicationname_modelname`` (uncapitalized).
 
+.. attribute:: FORMS_USE_XHTML
+
+   If set to ``True``, :mod:`kay.utils.forms` renders forms in an
+   xhtml comliant manner. The default is ``False``.
    
 .. attribute:: ROOT_URL_MODULE
 

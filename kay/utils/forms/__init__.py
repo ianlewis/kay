@@ -46,7 +46,7 @@ _position_hint_lock = Lock()
 class HtmlProxy(object):
   def __getattr__(self, name):
     from kay.conf import settings
-    if settings.FORMS_FORCE_XHTML:
+    if settings.FORMS_USE_XHTML:
       from werkzeug import xhtml
       return getattr(xhtml, name)
     else:
