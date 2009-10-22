@@ -41,12 +41,9 @@ def set_trace():
                      stdout=sys.__stdout__)
   debugger.set_trace(sys._getframe().f_back)
 
-def get_project_path():
-  return os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
-
-
 def get_kay_locale_path():
-  return os.path.join(get_project_path(), 'kay', 'i18n')
+  import kay
+  return os.path.join(kay.KAY_DIR, 'i18n')
 
 
 def get_timezone(tzname):

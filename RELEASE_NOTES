@@ -19,6 +19,7 @@ Kay-0.3.0 - October ??, 2009
   - More documentations available. 
   - Added --all option to i18n related scripts.
   - Fixed testing environment was partially broken.
+  - Allow users to choose a xhtml renderer on form rendering.
   - Notice about this release
 
     - GoogleAuthenticationMiddleware is obsolete. Please migrate it to
@@ -29,6 +30,7 @@ Kay-0.3.0 - October ??, 2009
     - Changed options of some i18n related scripts. Please refer to
       URL bellow for more details:
       http://kay-docs.shehas.net/manage_py.html
+
 
 Kay-0.2.0 - September 23, 2009
 ==============================

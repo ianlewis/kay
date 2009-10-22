@@ -18,7 +18,7 @@ Items
    
 .. attribute:: DEFAULT_TIMEZONE
 
-   Specify the default local timezone in string, e.g: 'Asia/Tokyo'. The default is ``Asia/Tokyo``. If it's not specified Kay automatically set ``UTC``. You can get the valid TimeZone list by reffering ``kay/lib/pytz/all_timezone``.
+   Specify the default local timezone in string, e.g: 'Asia/Tokyo'. The default is ``Asia/Tokyo``. If it's not specified Kay automatically set ``UTC``. You can get the valid TimeZone list by reffering to ``kay/lib/pytz/all_timezone``.
 
 
 .. attribute:: DEBUG
@@ -108,6 +108,10 @@ Items
    If set to ``True``, you can add an application prefix to ``db.Model.kind()`` method.
    The value of ``kind()`` will set to be ``applicationname_modelname`` (uncapitalized).
 
+.. attribute:: FORMS_USE_XHTML
+
+   If set to ``True``, :mod:`kay.utils.forms` renders forms in an
+   xhtml comliant manner. The default is ``False``.
    
 .. attribute:: ROOT_URL_MODULE
 

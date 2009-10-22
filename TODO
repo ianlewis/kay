@@ -22,10 +22,6 @@ kay
 
 * A script for buildout.
 
-* The way to determine kay.PROJECT_DIR and implementation of
-  kay.utils.get_project_path() are not portable. needfix.
-
-
 kay.auth
 --------
 

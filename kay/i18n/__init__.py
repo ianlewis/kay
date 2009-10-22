@@ -107,9 +107,12 @@ def load_translations(locale):
     if os.path.isdir(apppath):
       ret = _merge(apppath)
   # Add I18N_DIR
-  target = os.path.join(kay.PROJECT_DIR, local.app.app_settings.I18N_DIR)
-  if os.path.isdir(target):
-    ret = _merge(target)
+  try:
+    target = os.path.join(kay.PROJECT_DIR, local.app.app_settings.I18N_DIR)
+    if os.path.isdir(target):
+      ret = _merge(target)
+  except AttributeError:
+    pass
   return ret
 
 

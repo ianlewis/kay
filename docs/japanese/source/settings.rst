@@ -96,6 +96,10 @@ Kayアプリケーションの基本的な設定はプロジェクトディレ�
 
    ``db.Model.kind()`` メソッドにアプリケーション名の prefix を付けるかどうかを設定します。有効にする場合は ``True``, 無効にする場合は ``False`` を設定します。デフォルト値は ``True`` です。有効にすると ``kind()`` の値は ``applicaion名_model名`` (全て小文字に変換される)となります。
 
+.. attribute:: FORMS_USE_XHTML
+
+   ``True`` にセットすると :mod:`kay.utils.forms` は xhtml としてフォームをレンダリングします。 デフォルト値は ``False`` です。
+
    
 .. attribute:: ROOT_URL_MODULE
 
