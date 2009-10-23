@@ -100,6 +100,9 @@ Jinja2 テンプレート中で例外が起きると、デバッガー上で妙�
 
 'gestalt' と '_ctypes' を ``_WHITE_LIST_C_MODULES`` リストに加えればきちんとトレースバックが表示されます。
 
+しかし、python dictribution の中には ctypes が壊れているものもあり(例えば最近の macports の python25)、上記の方法では動きません。このような場合は別途インストールされた(Kay にバンドルされたものでは無く) jinja2 ディレクトリから _speedups.so を ``kay/lib/jinja2`` にコピーして '_speedups' を ``_WHITE_LIST_C_MODULES`` に加えれば動くようになります。MacOSX を使っているなら、コンパイル済みの _speedups.so を手に入れる一番簡単な方法は py25-jinja2 を macports でインストールする事です。
+
+
 pdb を使用する
 ==============
 

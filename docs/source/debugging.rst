@@ -128,6 +128,14 @@ After adding 'gestalt' and '_ctypes' to the list
 ``_WHITE_LIST_C_MODULES``, you can see normal tracebacks on the
 debugger.
 
+Having said that, some python distribution has a broken ctypes(ex:
+recent python25 in macports), and above workaround won't work with
+broken ctypes. In such a case, copying _speedups.so into the directory
+``kay/lib/jinja2`` from another jinja2 installation(not from bundled
+in Kay), and adding '_speedups' to the list ``_WHITE_LIST_C_MODULES``
+could be another workaround. If you're using MacOSX, the easiest way
+to get compiled _speedups.so is to install py25-jinja2 with macports.
+
 
 Using pdb
 =========
