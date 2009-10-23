@@ -124,6 +124,9 @@ with key_names. For this purpose, perhaps you can use
 ``create_new_entity()`` classmethod for creating an entitie with
 randomly generated uuid as its key_name.
 
+It seems that appengine team is working on implementing support for
+restoring to another appid. So I'll keep my eye on it.
+
 Corresponds with dumping/restoring failure
 ------------------------------------------
 
