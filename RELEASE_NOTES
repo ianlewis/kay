@@ -19,7 +19,7 @@ Kay-0.3.0 - October ??, 2009
   - More documentations available. 
   - Added --all option to i18n related scripts.
   - Fixed testing environment was partially broken.
-  - Allow users to choose a xhtml renderer on rendering forms.
+  - Allow users to choose a xhtml renderer for rendering forms.
   - Notice about this release
 
     - GoogleAuthenticationMiddleware is obsolete. Please migrate it to
