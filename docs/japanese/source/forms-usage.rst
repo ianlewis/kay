@@ -248,7 +248,7 @@ Widget は callable で、call するとレンダーされた HTML form が得�
 フォームヴァリデーションのカスタマイズ
 --------------------------------------
 
-特定のフィールドにヴァリデーション用のメソッドを設定するには、``validate_FIELDNAME`` という形式のメソッドを定義します。例えば ``password`` フィールドのデータが十分安全かどうかを確かめるためには ``validate_password`` メソッドをフォームクラスへ定義します。もしヴァリデーションが失敗したら、適切なエラーメッセージと共に ``ValidationError`` を発生させる必要があります。
+特定のフィールドにヴァリデーション用のメソッドを設定するには、``validate_FIELDNAME`` という形式のメソッドを定義します。例えば ``password`` フィールドのデータが十分安全かどうかを確かめるためには ``validate_password`` メソッドをフォームクラスへ定義します。もしヴァリデーションが失敗したら、適切なエラーメッセージと共に :class:`kay.utils.validators.ValidationError` を発生させる必要があります。
 
 下記に例を示します:
 
@@ -263,7 +263,7 @@ Widget は callable で、call するとレンダーされた HTML form が得�
 
     def validate_password(self, value):
       if not stronger_enough(value):
-	raise ValidationError(u"The password you specified is too week.")
+	raise ValidationError(u"The password you specified is too weak.")
 
 パスワードを確認のため再入力させる場合にはどうしたら良いでしょうか。そのためには ``context_validate`` というメソッドを定義して、複数のフィールドに跨がるデータをチェックする必要があります。例:
 
@@ -279,7 +279,7 @@ Widget は callable で、call するとレンダーされた HTML form が得�
 
     def validate_password(self, value):
       if not stronger_enough(value):
-	raise ValidationError(u"The password you specified is too week.")
+	raise ValidationError(u"The password you specified is too weak.")
 
     def context_validate(self, data):
       if data['password'] != data['password_confirm']:

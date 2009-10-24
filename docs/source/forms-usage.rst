@@ -293,8 +293,9 @@ To put validation method on particular field, you can define a method
 named ``validate_FIELDNAME``. e.g. To check if a value submitted as
 ``password`` field is stronger enough, you can set
 ``validate_password`` method in the class definition of the Form. If
-validation fails, you need to raise ValidationError with appropriate
-error message.
+validation fails, you need to raise
+:class:`kay.utils.validators.ValidationError` with appropriate error
+message.
 
 Here's an example:
 
@@ -309,7 +310,7 @@ Here's an example:
 
     def validate_password(self, value):
       if not stronger_enough(value):
-	raise ValidationError(u"The password you specified is too week.")
+	raise ValidationError(u"The password you specified is too weak.")
 
 What if adding a field for password confirmation? To do that, you have
 to check the values among plural fields, creating the method named
@@ -327,7 +328,7 @@ to check the values among plural fields, creating the method named
 
     def validate_password(self, value):
       if not stronger_enough(value):
-	raise ValidationError(u"The password you specified is too week.")
+	raise ValidationError(u"The password you specified is too weak.")
 
     def context_validate(self, data):
       if data['password'] != data['password_confirm']:
