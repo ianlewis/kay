@@ -88,5 +88,34 @@ Response Object
       makes it possible to pass a special `wsgi.file_wrapper` to the response
       object.  See :func:`wrap_file` for more details.
 
+Throwing HTTP exceptions
+------------------------
+
+There are various exceptions in :mod:``werkzeug.exceptions``. Each
+exception's name represents which type of HTTP Error. You can raise
+these exceptions when you want return such errors to the users.
+
+Here are the list of exceptions:
+
+.. currentmodule:: werkzeug.exceptions
+
+.. class:: BadRequest
+.. class:: Unauthorized
+.. class:: Forbidden
+.. class:: NotFound
+.. class:: MethodNotAllowed
+.. class:: NotAcceptable
+.. class:: RequestTimeout
+.. class:: Gone
+.. class:: LengthRequired
+.. class:: PreconditionFailed
+.. class:: RequestEntityTooLarge
+.. class:: RequestURITooLarge
+.. class:: UnsupportedMediaType
+.. class:: InternalServerError
+.. class:: NotImplemented
+.. class:: BadGateway
+.. class:: ServiceUnavailable
+
 	  
 .. seealso:: http://werkzeug.pocoo.org/documentation/dev/wrappers.html
