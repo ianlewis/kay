@@ -83,9 +83,13 @@ from it) to :attr:`settings.AUTH_USER_MODEL` and
 ``kay.auth.backend.DatastoreBackend`` to
 :attr:`settings.AUTH_USER_BACKEND`. AuthenticationMiddleware must be
 placed under SessionMiddleware that is mandatry for this middleware.
+You also need to add ``kay.auth`` to :attr:`settings.INSTALLED_APPS`.
 
 .. code-block:: python
 
+  INSTALLED_APPS = (
+    'kay.auth',
+  )
   MIDDLEWARE_CLASSES = (
     'kay.sessions.middleware.SessionMiddleware',
     'kay.auth.middleware.AuthenticationMiddleware',

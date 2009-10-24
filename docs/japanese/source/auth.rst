@@ -62,9 +62,13 @@ Google Account 認証を使用する
 
 このタイプの認証を使用するには ``kay.auth.middleware.AuthenticationMiddleware`` を :attr:`settings.MIDDLEWARE_CLASSES` に設定し、また :attr:`settings.AUTH_USER_MODEL` には ``kay.auth.models.DatastoreUser`` (又はそれを継承したクラス) を、加えて :attr:`settigns.AUTH_USER_BACKEND` に ``kay.auth.backend.DatastoreBackend`` を設定する必要があります。
 ``AuthenticationMiddleware`` はこのミドルウェアの動作に必要な ``SessionMiddleware`` の下に設定する必要があります。
+また ``kay.auth`` を :attr:`settings.INSTALLED_APPS` に登録する必要もあります。
 
 .. code-block:: python
 
+  INSTALLED_APPS = (
+    'kay.auth',
+  )
   MIDDLEWARE_CLASSES = (
     'kay.sessions.middleware.SessionMiddleware',
     'kay.auth.middleware.AuthenticationMiddleware',
