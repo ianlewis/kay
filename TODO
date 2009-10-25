@@ -7,7 +7,6 @@ Documentation
 
 * Write documentations about
 
-  * utils module
   * middlewares
   * how to write your views(including XMPPHandler and MailHander)
   * caching

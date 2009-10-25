@@ -176,7 +176,7 @@ myapp/views.py
     return render_to_response('myapp/index.html', {'message': _('Hello')})
 
 デフォルトのビューがひとつ定義されています。
-``render_to_response`` 関数は第一引数にテンプレート名を受け取ります。第二引数にはテンプレートに渡す辞書を渡せます。
+:func:`kay.utils.render_to_response()` 関数は第一引数にテンプレート名を受け取ります。第二引数にはテンプレートに渡す辞書を渡せます。
 ``_()`` という関数は国際化のために文字列をマークし、表示の時には実際に国際化するための関数です。
 
 ``myapp/index.html`` が実際に指すテンプレートは、myapp/templates/index.html にあります(/templates/ が間に挟まっている事に注意してください)。
@@ -197,7 +197,7 @@ myapp/templates/index.html
   </body>
   </html>
 
-``{{ message }}`` の部分に ``render_to_response`` の第二引数で渡した ``message`` が表示される事になります。
+``{{ message }}`` の部分に :func:`kay.utils.render_to_response()` の第二引数で渡した ``message`` が表示される事になります。
 
 
 url mapping
@@ -357,7 +357,7 @@ myapp/views.py
 			       'comments': comments})
 
 先程定義したモデルクラスを import するのを忘れないようにしましょう。
-``Comment.all().order('-created').fetch(100)`` では、データストアから最新 100 件のコメントを取得しています。そのリストを ``render_to_response`` に渡しています。 :func:`kay.utils.render_to_response` も参照してください。
+``Comment.all().order('-created').fetch(100)`` では、データストアから最新 100 件のコメントを取得しています。そのリストを ``render_to_response`` に渡しています。 :func:`kay.utils.render_to_response()` も参照してください。
 
 myapp/templates/index.html
 

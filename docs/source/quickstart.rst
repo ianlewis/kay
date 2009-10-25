@@ -195,13 +195,14 @@ myapp/views.py
     return render_to_response('myapp/index.html', {'message': _('Hello')})
 
 	
-One default view is already defined. ``render_to_response`` function
-receives a template's name as the first argument. You can pass a
-dictionary as the second argument. That dictionary will be passed to
-the template.  ``_()`` function marks strings for i18n extraction and
-replaces with transalted text when pages are rendered.
-``myapp/index.html`` template's real path on your system is
-``myapp/templates/index.html`` (Note that ``/templates/`` is nestled).
+One default view is already
+defined. :func:`kay.utils.render_to_response()` function receives a
+template's name as the first argument. You can pass a dictionary as
+the second argument. That dictionary will be passed to the template.
+``_()`` function marks strings for i18n extraction and replaces with
+transalted text when pages are rendered.  ``myapp/index.html``
+template's real path on your system is ``myapp/templates/index.html``
+(Note that ``/templates/`` is nestled).
 
 
 myapp/templates/index.html
@@ -408,7 +409,7 @@ myapp/views.py
 Don't forget to import the Model class you defined earlier.
 ``Comment.all().order('-created').fetch(100)`` returns a list contains
 the latest 100 comments from datastore. We pass this list to
-:func:`kay.utils.render_to_response`.
+:func:`kay.utils.render_to_response()`.
 
 myapp/templates/index.html
 

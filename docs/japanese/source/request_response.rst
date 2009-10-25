@@ -504,17 +504,7 @@ Kay は、WSGI に準拠した Werkzeug のリクエストオブジェクト、�
 --------
 
 レスポンスオブジェクトは、 ``werkzeug.Response`` クラスのインスタンスです。Kay には、レスポンスを生成するための関数が用意されています。
-
-
-.. function:: kay.utils.render_to_response(template, context, mimetype='text/html', processors=None)
-
-   HTMLページのレンダリング
-
-   :param template: テンプレート
-   :param context: コンテキスト
-   :param mimetype: mimetype
-   :param processors: コンテキストプロセッサ
-   :rtype: レスポンスオブジェクト
+:func:`kay.utils.render_to_response`
 
 HTTP エラー
 -----------
@@ -526,6 +516,7 @@ HTTP エラーのリストです。
 
 .. currentmodule:: werkzeug.exceptions
 
+.. class:: HTTPException
 .. class:: BadRequest
 .. class:: Unauthorized
 .. class:: Forbidden

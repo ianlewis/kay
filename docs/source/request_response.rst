@@ -99,6 +99,7 @@ Here are the list of exceptions:
 
 .. currentmodule:: werkzeug.exceptions
 
+.. class:: HTTPException
 .. class:: BadRequest
 .. class:: Unauthorized
 .. class:: Forbidden

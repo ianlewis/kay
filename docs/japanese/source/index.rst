@@ -17,6 +17,7 @@ Kay ドキュメントへようこそ
   manage_py
   urlmapping
   templates
+  utils
   auth
   session
   forms-usage
