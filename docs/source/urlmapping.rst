@@ -5,8 +5,7 @@ URL Mapping
 Overview
 --------
 
-Kay uses Werkzeug for mapping urls and for the request and response
-objects passed to views.
+Kay uses Werkzeug for mapping urls and your views.
 
 For the full details about how to configure url mappings using Werkzeug,
 please see Werkzeug's manual hosted at following URL:
@@ -54,6 +53,8 @@ the default ``urls.py``.
 
   from werkzeug.routing import EndpointPrefix, Rule
 
+  import myapp.views
+
   def make_rules():
     return [
       EndpointPrefix('myapp/', [
@@ -72,6 +73,8 @@ Here is an example which adds ``index2`` view bound to the url
 
   from werkzeug.routing import EndpointPrefix, Rule
 
+  import myapp.views
+
   def make_rules():
     return [
       EndpointPrefix('myapp/', [
@@ -83,4 +86,31 @@ Here is an example which adds ``index2`` view bound to the url
   all_views = {
     'myapp/index': myapp.views.index,
     'myapp/index2': myapp.views.index2,
+  }
+
+In above examples, we defined view functions themselves. To do this,
+we need to import our ``views`` module in urls module. Thus, this
+could cause huge startup costs if your ``views`` module is very big
+and you have many apps in your project. We can define these views as
+string to avoid these costs. It allows Kay to load our views in lazily
+manners.
+
+Here is the re-written version of the last example defining views as
+strings. Don't forget to remove ``import myapp.views`` statement for this to work efficiently.
+
+.. code-block:: python
+
+  from werkzeug.routing import EndpointPrefix, Rule
+
+  def make_rules():
+    return [
+      EndpointPrefix('myapp/', [
+	Rule('/', endpoint='index'),
+	Rule('/index2', endpoint='index2'),
+      ]),
+    ]
+
+  all_views = {
+    'myapp/index': 'myapp.views.index',
+    'myapp/index2': 'myapp.views.index2',
   }

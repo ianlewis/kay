@@ -16,6 +16,7 @@ Kay ドキュメントへようこそ
   settings
   manage_py
   urlmapping
+  views
   templates
   utils
   auth

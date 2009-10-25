@@ -5,6 +5,12 @@ URL マッピング
 概要
 ----
 
+Kay は URL と view を関係付けるのに Werkzeug を使っています。
+
+URL マッピングをどのように編集するかについて更に詳しく知るには、下記の URL にホストされている werkzeug のマニュアルを見ると良いでしょう:
+
+  http://werkzeug.pocoo.org/documentation/0.5.1/routing.html
+
 現バージョンの Kay では ``SUBMOUNT_APP`` 機能を使わない限りは、プロジェクトにつき、ひとつのグローバルな url マッピングとひとつの endpoint-view の対応辞書を持ちます。Kay はこれらの値を、インストールされたアプリケーション( ``settings.py`` での設定によります)から自動的に収集し、グローバルな値として保持します。
 
 どのように動作するか
@@ -26,6 +32,10 @@ Kay は ``appname.urls`` モジュールを検知すると、この ``RuleFactor
 
 .. code-block:: python
 
+  from werkzeug.routing import EndpointPrefix, Rule
+
+  import myapp.views
+
   def make_rules():
     return [
       EndpointPrefix('myapp/', [
@@ -41,6 +51,10 @@ Kay は ``appname.urls`` モジュールを検知すると、この ``RuleFactor
 
 .. code-block:: python
 
+  from werkzeug.routing import EndpointPrefix, Rule
+
+  import myapp.views
+
   def make_rules():
     return [
       EndpointPrefix('myapp/', [
@@ -54,6 +68,24 @@ Kay は ``appname.urls`` モジュールを検知すると、この ``RuleFactor
     'myapp/index2': myapp.views.index2,
   }
 
-これらの url マッピングをどのように編集するかについて更に詳しく知るには、下記の URL にホストされている werkzeug のマニュアルを見ると良いでしょう:
+上記の例では、関数自体を view として定義しています。そのためには、``views`` モジュールをインポートしておく必要があります。しかし ``views`` モジュールがとても大きく、またプロジェクト内にたくさんのアプリケーションが存在する場合などには、このやり方はスタートアップ時の大きなコストにつながる可能性がありますので、このコストを避けるために view を文字列で定義する事もできます。そうする事により、view を必要になった時にはじめて読み込む(遅延ロードする)事ができるようになります。
 
-  http://werkzeug.pocoo.org/documentation/
+最後の例を文字列で view を定義するように書き直したバージョンを下記に示します。ここで注意するのは ``import myapp.views`` の行を削除しないと、遅延ロードの効果が無いという事です。
+
+.. code-block:: python
+
+  from werkzeug.routing import EndpointPrefix, Rule
+
+  def make_rules():
+    return [
+      EndpointPrefix('myapp/', [
+	Rule('/', endpoint='index'),
+	Rule('/index2', endpoint='index2'),
+      ]),
+    ]
+
+  all_views = {
+    'myapp/index': 'myapp.views.index',
+    'myapp/index2': 'myapp.views.index2',
+  }
+
