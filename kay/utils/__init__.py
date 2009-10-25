@@ -11,7 +11,6 @@ Kay utilities.
 
 import os
 import logging
-from datetime import datetime
 
 from google.appengine.api import users
 from google.appengine.api import memcache
@@ -79,9 +78,8 @@ def get_request():
 
 
 def url_for(endpoint, **args):
-  """Get the URL to an endpoint.  The keyword arguments provided are used
-  as URL values.  Unknown URL values are used as keyword argument.
-  Additionally there are some special keyword arguments:
+  """Get the URL to an endpoint. There are some special keyword
+  arguments:
 
   `_anchor`
     This string is used as URL anchor.
@@ -90,13 +88,6 @@ def url_for(endpoint, **args):
     If set to `True` the URL will be generated with the full server name
     and `http://` prefix.
   """
-  if hasattr(endpoint, 'get_url_values'):
-    rv = endpoint.get_url_values()
-    if rv is not None:
-      if isinstance(rv, basestring):
-        return make_external_url(rv)
-      endpoint, updated_args = rv
-      args.update(updated_args)
   anchor = args.pop('_anchor', None)
   external = args.pop('_external', False)
   rv = local.url_adapter.build(endpoint, args,
@@ -121,14 +112,14 @@ def create_auth_url(url, action):
 
 def create_logout_url(url=None):
   """
-  An utility function for jinja2.
+  Get the URL for a logout page.
   """
   return create_auth_url(url, 'logout')
     
 
 def create_login_url(url=None):
   """
-  An utility function for jinja2.
+  Get the URL for a login page.
   """
   return create_auth_url(url, 'login')
 
