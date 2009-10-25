@@ -285,3 +285,83 @@ Widget は callable で、call するとレンダーされた HTML form が得�
       if data['password'] != data['password_confirm']:
 	raise ValidationError(u"The passwords don't match.")
 
+
+Using ModelForm
+---------------
+
+:class:`kay.utils.forms.modelform.ModelForm` is a very convenient
+class for creating a form automatically from particular model
+definition.
+
+Let's say you have a model like bellow:
+
+.. code-block:: python
+
+  class Comment(db.Model):
+    user = db.ReferenceProperty()
+    body = db.StringProperty(required=True)
+    created = db.DateTimeProperty(auto_now_add=True)
+
+You can create a form automatically from above definition like:
+
+.. code-block:: python
+
+  from kay.utils.forms.modelform import ModelForm
+  from myapp.models import Comment
+
+  class CommentForm(ModelForm):
+    class Meta:
+      model = Comment
+      exclude = ('user', 'created')
+
+You can configure your ModelForm's subclass by defining inner class
+named ``Meta``. ``Meta`` class can have these class attributes:
+
+.. class:: Meta
+
+   .. attribute:: model
+
+      Model class to refer to
+
+   .. attribute:: fields
+
+      A list of field names to be included in the form. If ``fields``
+      is set and non empty, properties not listed here are excluded
+      from the form, and following ``exclude`` attribute will be
+      ignored.
+
+   .. attribute:: exclude
+
+      A list of field names to be excluded from the form.
+
+   .. attribute:: help_texts
+
+      A dictionary which has field names as its key and help texts as
+      its values.
+
+Once created, you can use this form as follows:
+
+.. code-block:: python
+
+  from myapp.models import Comment
+  from myapp.forms import CommentForm
+
+  def index(request):
+    comments = Comment.all().order('-created').fetch(100)
+    form = CommentForm()
+    if request.method == 'POST':
+      if form.validate(request.form):
+        if request.user.is_authenticated():
+          user = request.user
+        else:
+          user = None
+        new_comment = form.save(user=user)
+        return redirect('/')
+    return render_to_response('myapp/index.html',
+                              {'comments': comments,
+                               'form': form.as_widget()})
+
+Above code shows how to asign values not specified in the forms on
+saving a new entity with this form. ModelForm.save method accepts
+keyword arguments and these arguments will be passed to the
+constructor of the new entity on creation.
