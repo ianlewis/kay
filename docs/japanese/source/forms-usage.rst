@@ -286,14 +286,12 @@ Widget は callable で、call するとレンダーされた HTML form が得�
 	raise ValidationError(u"The passwords don't match.")
 
 
-Using ModelForm
----------------
+モデルフォームを使う
+--------------------
 
-:class:`kay.utils.forms.modelform.ModelForm` is a very convenient
-class for creating a form automatically from particular model
-definition.
+:class:`kay.utils.forms.modelform.ModelForm` は、特定のモデル定義からフォームを自動生成するのにとても便利なクラスです。
 
-Let's say you have a model like bellow:
+以下のようなモデルがあるとしましょう。
 
 .. code-block:: python
 
@@ -302,7 +300,7 @@ Let's say you have a model like bellow:
     body = db.StringProperty(required=True)
     created = db.DateTimeProperty(auto_now_add=True)
 
-You can create a form automatically from above definition like:
+上記の定義から、フォームを自動生成することができます。
 
 .. code-block:: python
 
@@ -314,32 +312,27 @@ You can create a form automatically from above definition like:
       model = Comment
       exclude = ('user', 'created')
 
-You can configure your ModelForm's subclass by defining inner class
-named ``Meta``. ``Meta`` class can have these class attributes:
+``Meta`` という名前でインナークラスを定義すれば、モデルフォームのサブクラスを設定することもできます。 ``Meta`` クラスは以下のクラス属性をもつことができます。
 
 .. class:: Meta
 
    .. attribute:: model
 
-      Model class to refer to
+      参照するモデルクラス
 
    .. attribute:: fields
 
-      A list of field names to be included in the form. If ``fields``
-      is set and non empty, properties not listed here are excluded
-      from the form, and following ``exclude`` attribute will be
-      ignored.
+   	  フォームに含めるするフィールド名のリスト。 ``fields`` がセットされ、空でなければ、ここに挙げられていないプロパティはフォームから取り除かれ、次の ``exclude`` 属性が無視されます。
 
    .. attribute:: exclude
 
-      A list of field names to be excluded from the form.
+      フォームから取り除くフィールド名のリスト
 
    .. attribute:: help_texts
 
-      A dictionary which has field names as its key and help texts as
-      its values.
+   	  キーにフィールド名、値にヘルプテキストをもったディクショナリ
 
-Once created, you can use this form as follows:
+作成すると、以下のようにしてフォームを使うことができます。
 
 .. code-block:: python
 
@@ -361,7 +354,4 @@ Once created, you can use this form as follows:
                               {'comments': comments,
                                'form': form.as_widget()})
 
-Above code shows how to asign values not specified in the forms on
-saving a new entity with this form. ModelForm.save method accepts
-keyword arguments and these arguments will be passed to the
-constructor of the new entity on creation.
+上記のコードは、このフォームを使って新しいエンティティを保存する際に、フォームで指定されていない値をどうやってエンティティに与えるかを示しています。 ``ModelForm.save`` メソッドは、キーワード引数を受け取り、新しいエンティティのコンストラクタにこれらの引数を渡します。
