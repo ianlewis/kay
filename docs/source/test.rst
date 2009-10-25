@@ -5,8 +5,8 @@ Running Tests
 Overview
 --------
 
-You can test your applications by invoking :option:`manage.py test -t`
-or ``manage.py test`` without any options. ``manage.py`` script sets
+You can test your applications by invoking :option:`manage.py test --target`
+or :ref:`manage.py test` without any options. ``manage.py`` script sets
 up an environment for testing, so you can write your test code
 easily. We will take a quick look on werkzeug's library for testing.
 

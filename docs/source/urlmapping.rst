@@ -22,7 +22,7 @@ ones.
 How does it work?
 -----------------
 
-A newly created application created by the ``manage.py startapp`` command
+A newly created application created by the :command:`manage.py startapp` command
 already has a default ``urls.py`` in it. The ``urls.py`` has a function named
 ``make_rules``, which should return an instance of the ``Werkzeug`` ``RuleFactory``
 or ``Rule`` class.

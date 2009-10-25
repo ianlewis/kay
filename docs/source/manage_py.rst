@@ -27,11 +27,11 @@ This action adds a new language catalogue for specified application.
 
   $ python manage.py add_translation [options]
 
-.. cmdoption:: -a app_name
+.. cmdoption:: -a <app_name>
 
    Specify target app_name.
 
-.. cmdoption:: -l lang
+.. cmdoption:: -l <lang>
 
    Specify language code, e.g) ja/en/fr
 
@@ -124,19 +124,19 @@ Clear all data on appengine using remote APIs.
 
   $ python manage.py clear_datastore
 
-.. cmdoption:: -a, --appid appid
+.. cmdoption:: -a <appid>, --appid <appid>
 
    Specify the target application by ``app-id``. By default this command uses the value of ``application`` in ``app.yaml``.
 
-.. cmdoption:: -h, --host host
+.. cmdoption:: -h <host>, --host <host>
 
    Specify the target application by host. The default is ``app-id.appspot.com``.
 
-.. cmdoption:: -p, --path path
+.. cmdoption:: -p <path>, --path <path>
 
    The path to the remote APIs. The default is ``/remote_api``.
 
-.. cmdoption:: -k, --kinds string    
+.. cmdoption:: -k <kinds>, --kinds <kinds>
 
    Specify the Kind of entity you want to clear. The Kind is ``appname_model`` by default. If not specified all models are targeted.
 
@@ -164,7 +164,7 @@ Compile all i18n cagalog files of the application.
 
   $ python manage.py compile_translations
 
-.. cmdoption:: -t, --target string
+.. cmdoption:: -t <target>, --target <target>
 
    Specify the targeted directory.
 
@@ -185,11 +185,11 @@ Create a new user with remote APIs.
 
   $ python manage.py create_user
 
-.. cmdoption:: -u, --user-name username
+.. cmdoption:: -u <username>, --user-name <username>
 
    Specify the username.
 
-.. cmdoption:: -P, --password password
+.. cmdoption:: -P <password>, --password <password>
 
    Specify the password.
 
@@ -197,15 +197,15 @@ Create a new user with remote APIs.
 
    Give user administrative privileges.
 
-.. cmdoption:: -a, --appid app-id
+.. cmdoption:: -a <app-id>, --appid <app-id>
 
    Specify the target application by ``app-id``. By default this command uses the value of ``application`` in ``app.yaml``.
 
-.. cmdoption:: -h, --host host
+.. cmdoption:: -h <host>, --host <host>
 
    Specify the target application by host. The default is ``app-id.appspot.com``.
 
-.. cmdoption:: -p, --path path
+.. cmdoption:: -p <path>, --path <path>
 
    Specify the path to the remote APIs. The default is ``/remote_api``.
 
@@ -226,19 +226,19 @@ Dump all data from the server.
 
    Display help.
 
-.. cmdoption:: -n, --data-set-name string    
+.. cmdoption:: -n <name>, --data-set-name <datasetname>
 
    Specfy the directory to save logfile and data. The command will make the diretory under ``_backup/``.
 
-.. cmdoption:: -i, --app-id app-id
+.. cmdoption:: -i <app-id>, --app-id <app-id>
 
    Specify the target application by ``app-id``.
 
-.. cmdoption:: -u, --url url
+.. cmdoption:: -u <url>, --url <url>
 
    Specify the target application by url.
 
-.. cmdoption:: -d, --directory directory
+.. cmdoption:: -d <diretory>, --directory <directory>
 
    Specify the diretory to dump data.
 
@@ -257,7 +257,7 @@ Extract the messages for i18n and create pot file.
 
   $ python manage.py extract_messages [options]
 
-.. cmdoption:: -t, --target string
+.. cmdoption:: -t <target>, --target <target>
 
    The target diretory.
 
@@ -265,7 +265,7 @@ Extract the messages for i18n and create pot file.
 
    Target all applications.
 
-.. cmdoption:: -d, --domain domain
+.. cmdoption:: -d <domain>, --domain <domain>
 
    * If set to ``messages``, the target files are Python script files and the template files in the ``templates`` diretory.
    * If set to ``jsmessages``, the target files are JavaScript files.
@@ -312,19 +312,19 @@ Restore all data to the server.
 
    Display help.
 
-.. cmdoption:: -n, --data-set-name datasetname
+.. cmdoption:: -n <datasetname>, --data-set-name <datasetname>
 
    Restore all data in the specified diretory in the ``_backup`` to the server.
 
-.. cmdoption:: -i, --app-id appid
+.. cmdoption:: -i <appid>, --app-id <appid>
 
    Specify the target application by its ``appid``.
 
-.. cmdoption:: -u, --url url
+.. cmdoption:: -u <url>, --url <url>
 
    Specify the target application by its url.
 
-.. cmdoption:: -d, --directory directory
+.. cmdoption:: -d <directory>, --directory <directory>
 
    The diretory that data for restoring exists.
 
@@ -344,15 +344,15 @@ Start a new interactive python session with RemoteDatastore stub.
    $ python manage.py rshell [options]
 
 
-.. cmdoption:: -a, --appid appid
+.. cmdoption:: -a <appid>, --appid <appid>
 
    Specify the target application by its ``appid``
 
-.. cmdoption:: -h, --host host    
+.. cmdoption:: -h <host>, --host <host>
 
    Specify the target application by its host. The default is ``appid.appspot.com``.
 
-.. cmdoption:: -p, --path path
+.. cmdoption:: -p <path>, --path <path>
 
    The path to the remote APIs. The default is ``/remote_api``.
 
@@ -402,11 +402,11 @@ Start a new interactive python session.
    $ python manage.py shell [options]
 
   
-.. cmdoption:: --datastore-path path
+.. cmdoption:: --datastore-path <path>
 
    The path to the datastore.
 
-.. cmdoption:: --history-path path
+.. cmdoption:: --history-path <path>
 
    The path to the hisotry file of queries.
 
@@ -422,7 +422,7 @@ Start a new interactive python session.
 
 
 
-.. _startapp:
+.. program:: manage.py startapp
 
 manage.py startapp
 ------------------
@@ -435,7 +435,7 @@ Create a new application.
 
   
   
-.. _startproject:
+.. program:: manage.py startproject
 
 manage.py startproject
 ----------------------
@@ -467,7 +467,7 @@ Run test for installed applications.
 
    Specify the target application diretory.
 
-.. cmdoption:: -v, --verbosity integer
+.. cmdoption:: -v <verbosity>, --verbosity <verbosity>
 
    Specify the log level of progression with integer. The default is ``0``.
 
@@ -487,7 +487,7 @@ Update translation files using pot file.
 
    $ python manage.py update_translations [options]
 
-.. cmdoption:: -t, --target string
+.. cmdoption:: -t <target>, --target <target>
 
    Specify the targeted directory.
 
@@ -495,7 +495,7 @@ Update translation files using pot file.
 
    Target all application.
 
-.. cmdoption:: -l, --lang lang 
+.. cmdoption:: -l <lang>, --lang <lang>
 
    Specify the language to translate e.g.) -l ja
 
