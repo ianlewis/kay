@@ -21,7 +21,6 @@ from werkzeug import (
 from werkzeug.exceptions import NotFound
 from werkzeug.urls import url_quote
 from werkzeug.utils import import_string
-from pytz import timezone, UTC
 
 from kay.conf import settings
 
@@ -59,6 +58,7 @@ def get_timezone(tzname):
       tz = None
       logging.debug("timezone get failed: %s" % tzname)
   if tz is None:
+    from pytz import timezone
     tz = timezone(tzname)
     memcache.add("tz:%s" % tzname, tz, 86400)
     _timezone_cache['tzname'] = tz
@@ -191,6 +191,7 @@ def get_standard_processors():
 def to_local_timezone(datetime, tzname=settings.DEFAULT_TIMEZONE):
   """Convert a datetime object to the local timezone."""
   if datetime.tzinfo is None:
+    from pytz import UTC
     datetime = datetime.replace(tzinfo=UTC)
   tzinfo = get_timezone(tzname)
   return tzinfo.normalize(datetime.astimezone(tzinfo))
@@ -198,6 +199,7 @@ def to_local_timezone(datetime, tzname=settings.DEFAULT_TIMEZONE):
 
 def to_utc(datetime, tzname=settings.DEFAULT_TIMEZONE):
   """Convert a datetime object to UTC and drop tzinfo."""
+  from pytz import UTC
   if datetime.tzinfo is None:
     datetime = get_timezone(tzname).localize(datetime)
   return datetime.astimezone(UTC).replace(tzinfo=None)
