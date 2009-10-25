@@ -66,6 +66,9 @@ def setup_env(manage_py_env=False):
           EXTRA_PATHS.append(os.path.dirname(path))
           break
     sys.path = EXTRA_PATHS + sys.path
+    # corresponds with another google package
+    if sys.modules.has_key('google'):
+      del sys.modules['google']
     from google.appengine.api import apiproxy_stub_map
   setup()
 
