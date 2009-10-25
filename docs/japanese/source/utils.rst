@@ -1,117 +1,115 @@
-=================
-Utility functions
-=================
+==================
+ユーティリティ関数
+==================
 
 .. module:: kay.utils
 
-There are various useful functions in :mod:`kay.utils`.
+:mod:`kay.utils` には、便利な関数がいろいろ揃っています。
 
 .. function:: set_trace()
 
-   Set pdb's set_trace with appropriate configuration.
+   pdb の set_trace を 適切な設定でセットします。
 
 .. function:: raise_on_dev()
 
-   Raises A RuntimeError only on development environment.
+   開発環境でのみ、ランタイムエラーをあげます。
 
 .. function:: get_timezone(tzname)
 
-   :param tzname: The name of a timezone.
-   :return: datetime.tzinfo inplementation
+   タイムゾーンを取得します。
+   
+   :param tzname: タイムゾーンの名称
+   :return: datetime.tzinfo の実装
 
 .. function:: url_for(endpoint, **args)
 
-   Get the URL to an endpoint. There are some special keyword arguments:
+   エンドポイントへの URL を取得します。特殊なキーワード引数をとります。
 
-     `_anchor`: This string is used as URL anchor.
+     `_anchor`: この文字列は URL アンカーとして使われます。
 
-     `_external`: If set to `True` the URL will be generated with the full server name and `http://` prefix.
+     `_external`: `True` の場合、 フルサーバー名と `http://` プリフィクスつきで、 URL を生成します。
 
-   :param args: Keyword arguments are used for building a URL
-   :return: string representing the URL to an endpoint
+   :param args: キーワード引数は URL を生成するのに使われます。
+   :return: エンドポイントへの URL を表す文字列
 
 .. function:: create_login_url(url=None)
 
-   Get the URL for a login page.
+   ログインページの URL を取得します。
 
-   :param url: The URL which user is redirected after the login process. If none supplied, the current URL will be use.
-   :return: string representing the login URL.   
+   :param url: ユーザがログインした後にリダイレクトされる URL です。未指定の場合、現在の URL が使われます。
+   :return: ログイン URL を表す文字列
 
 .. function:: create_logout_url(url=None)
 
-   Get the URL for a logout page.
+   ログアウトページの URL を取得します。
 
-   :param url: The URL which user is redirected after the logout process. If none supplied, the current URL will be use.
-   :return: string representing the logout URL. 
+   :param url: ユーザがログアウトした後にリダイレクトされる URL です。未指定の場合、現在の URL が使われます。
+   :return: ログアウト URL を表す文字列
 
 .. function:: render_error(e)
 
-   Render an instance of :class:`werkzeug.exceptions.HTTPException`
-   with Jinja2 template.
+   Jinja2 テンプレートを使って、 :class:`werkzeug.exceptions.HTTPException` のインスタンスをレンダリングします。
 
-   :param e: An instance of any subclass of :class:`werkzeug.exceptions.HTTPException`
-   :return: An instance of :class:`werkzeug.Response`
+   :param e: :class:`werkzeug.exceptions.HTTPException` の任意のサブクラスのインスタンスです。
+   :return: :class:`werkzeug.Response` のインスタンス
 
 .. function:: render_to_string(template, context={}, processors=None)
 
-   A function for template rendering adding useful variables to context
-   automatically, according to the CONTEXT_PROCESSORS settings.
-
-   :param template: The pathname of a template.
-   :param context: The context dictionary passed to the template.
-   :param processors: The processors for ondemand use.
-   :return: Rendered string
+   テンプレートレンダリング用の関数です。 :mod:`settings.CONTEXT_PROCESSORS` の設定に従って、
+   コンテキスト用の変数を自動的に追加します。
+   
+   :param template: テンプレートのパス
+   :param context: テンプレートに渡すコンテキストのディクショナリ
+   :param processors: 必要に応じたプロセッサ
+   :return: レンダリングされた文字列
 
 .. function:: render_to_response(template, context, mimetype='text/html', processors=None)
 
-   A function for render html pages.
+   HTML ページをレンダリングするための関数です。
 
-   :param template: The pathname of a template.
-   :param context: The context dictionary passed to the template.
-   :param processors: The processors for ondemand use.
-   :param mimetype: The mimetype of :class:`werkzeug.Response`
-   :return: Rendered response
+   :param template: テンプレートのパス
+   :param context: テンプレートに渡すコンテキストのディクショナリ
+   :param processors: 必要に応じたプロセッサ
+   :param mimetype: :class:`werkzeug.Response` の mimetype
+   :return: レンダリングされた文字列
 
 
 .. function:: to_local_timezone(datetime, tzname=settings.DEFAULT_TIMEZONE)
 
-   Convert a datetime object to the local timezone.
+   datetime オブジェクトをローカルタイムゾーンに変換します。
    
-   :param datetime: datetime object with UTC timezone
-   :param tzname: the name of a timezone
-   :return: datetime.datetime object with new timezone
+   :param datetime: UTC タイムゾーンの datetime オブジェクト
+   :param tzname: タイムゾーンの名称
+   :return: 新しいタイムゾーンの datetime.datetime object
 
 .. function:: to_utc(datetime, tzname=settings.DEFAULT_TIMEZONE)
 
-   Convert a datetime object to UTC and drop tzinfo.
+   datatime オブジェクトを UTC に変換して、 tzinfo を消します。
 
-   :param datetime: datetime object with local timezone
-   :param tzname: the name of a timezone
-   :return: datetime.datetime object with UTC timezone
+   :param datetime: ローカルタイムゾーンの datetime オブジェクト
+   :param tzname: タイムゾーンの名前
+   :return: UTC タイムゾーンの datetime.datetime オブジェクト
 
 .. function:: get_by_key_name_or_404(model_class, key_name)
 
-   Try get the date with given key_name and return it or raise
-   :class:`werkzeug.exceptions.NotFound` when failed.
-
-   :param model_class: the model class
-   :param key_name: the key_name passed to model_class.get_by_key_name
-   :return: an instance of the model class on success
+   与えられたキー名でデータを取得して返します。失敗したら :class:`werkzeug.exceptions.NotFound` をあげます。
+   
+   :param model_class: モデルクラス
+   :param key_name:  model_class.get_by_key_name に渡すキー名
+   :return: 成功した場合は、モデルクラスのインスタンス
 
 .. function:: get_by_id_or_404(model_class, id)
 
-   Try get the date with given id and return it or raise
-   :class:`werkzeug.exceptions.NotFound` when failed.
+   与えられた ID でデータを取得して返します。失敗したら :class:`werkzeug.exceptions.NotFound` をあげます。
 
-   :param model_class: the model class
-   :param id: the id passed to model_class.get_by_id
-   :return: an instance of the model class on success
+   :param model_class: モデルクラス
+   :param key_name:  model_class.get_by_key_id に渡す ID
+   :return: 成功した場合は、モデルクラスのインスタンス
 
 .. function:: get_or_404(model_class, key)
 
-   Try get the date with given key and return it or raise
-   :class:`werkzeug.exceptions.NotFound` when failed.
+   与えられた キー でデータを取得して返します。失敗したら :class:`werkzeug.exceptions.NotFound` をあげます。
 
-   :param model_class: the model class
-   :param id: the key passed to model_class.get
-   :return: an instance of the model class on success
+   :param model_class: モデルクラス
+   :param key_name:  model_class.get に渡す キー
+   :return: 成功した場合は、モデルクラスのインスタンス
