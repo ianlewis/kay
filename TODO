@@ -8,7 +8,8 @@ Documentation
 * Write documentations about
 
   * middlewares
-  * how to write your views(including XMPPHandler and MailHander)
+  * how to write your views(including class based handler
+    e.g. XMPPHandler and MailHandler)
   * caching
 
 kay
