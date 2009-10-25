@@ -1,19 +1,20 @@
-===============
-Defining views 
-===============
+===========
+View の定義
+===========
 
-Overview
-========
+概要
+====
 
-``views.py`` is a module in which you need to write your business
-logic. A single view must be callable, must have request object as a
-first argument, and must return an instance of
-:class:`werkzeug.Response`.
+``views.py`` は、ビジネスロジックを書くために必要なモジュールです。
+view は呼び出し可能であること、第１引数にリクエストオブジェクトをとること、
+:class:`werkzeug.Response` のインスタンスを返すこと、を満たす必要があります。
 
-The simplest view
------------------
 
-Let's look at the simplest view.
+
+いちばん簡単な view
+-------------------
+
+いちばん簡単な view を見てみましょう。
 
 myapp/views.py:
 
@@ -26,8 +27,8 @@ myapp/views.py:
   def index(request):
     return Response("Hello")
 
-It's super easy. What if you want to use html templates for rendering
-pages. Please use ``kay.utils.render_to_response`` for this:
+超簡単ですね。ページのレンダリングに html テンプレートを使いたい場合は、
+``kay.utils.render_to_response`` を使ってください。
 
 myapp/views.py:
 
@@ -42,17 +43,17 @@ myapp/views.py:
   def index(request):
     return render_to_response('myapp/index.html', {'message': 'Hello'})
 
-That's it. Please see :func:`kay.utils.render_to_response` for more
-details.
+これだけです。詳しくは、 :func:`kay.utils.render_to_response` を参照してください。
 
-Class based views
------------------
 
-You can use callable object as a view. For this purpose, you can
-extend :class:`kay.handlers.BaseHandler` and define your own handler
-class.
+クラスベースの view
+-------------------
 
-Here is a example for a simple class based view:
+view には呼び出し可能なオブジェクトを使うことができます。これは、
+:class:`kay.handlers.BaseHandler` を拡張し、自分でハンドラクラスを
+定義することによって可能になります。
+
+簡単なクラスベースの view の例を示します。
 
 .. code-block:: python
 
@@ -85,7 +86,7 @@ Here is a example for a simple class based view:
 
   comment_handler = CommentHandler()
 
-These handler must have one or more methods with a name as the same as
-lower-cased HTTP Methods to corresponds with. It can have ``prepare``
-method to do some task before above methods whatever HTTP method the
-current HTTP request uses.
+このハンドラは HTTP メソッドを小文字で書いたのと同名のメソッドを
+ひとつ以上持っていなければなりません。また、現在の HTTP リクエストが
+使っている HTTP メソッドを実行する前に何らかの処理をさせるために、
+``perpare`` メソッドをもたせることができます。
