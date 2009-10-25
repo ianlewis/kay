@@ -27,7 +27,8 @@ myapp/views.py:
     return Response("Hello")
 
 It's super easy. What if you want to use html templates for rendering
-pages. Please use ``kay.utils.render_to_response`` for this:
+pages. Please use :func:`kay.utils.render_to_response` for this
+purpose:
 
 myapp/views.py:
 
