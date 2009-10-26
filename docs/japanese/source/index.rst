@@ -26,7 +26,7 @@ Kay ドキュメントへようこそ
   dump_restore
   request_response
   test
-   
+  forms_reference
    
 Indices and tables
 ==================

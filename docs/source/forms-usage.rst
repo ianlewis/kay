@@ -44,7 +44,7 @@ A form is composed of Field objects. In this case, our form has four
 fields: ``subject``, ``message``, ``sender`` and
 ``cc_myself``. ``TextField``, ``EmailField`` and ``BooleanField`` are
 just three of the available field types; a full list can be found in
-:doc:`form-fields`.
+:doc:`forms_reference`.
 
 If your form is going to be used to directly add or edit an AppEngine
 Datastore model, you can use a ModelForm to avoid duplicating your

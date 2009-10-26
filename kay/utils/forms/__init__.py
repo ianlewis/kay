@@ -1951,7 +1951,7 @@ class Form(object):
 
   You can also validate multiple fields in the context of other fields.
   That validation is performed after all other validations.  Just add a
-  method called ``context_validate`` that is passed the dict of all fields::
+  method called ``context_validate`` that is passed the dict of all fields:
 
   >>> class RegisterForm(Form):
   ...     username = TextField(required=True)

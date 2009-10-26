@@ -38,7 +38,7 @@ Kay にはフォームを扱うためのユーティリティが付属してい�
     cc_myself = forms.BooleanField(required=False)
 
 フォームはフィールドオブジェクトで構成されます。この場合は、フォームには四つのフィールドがあります: ``subject`` ``message`` ``sender`` そして ``cc_myself`` です。
-``TextField`` ``EmailField`` ``BooleanField`` は使用可能なフィールドのほんの一部です; 完全なリストは :doc:`form-fields` を参照ください。
+``TextField`` ``EmailField`` ``BooleanField`` は使用可能なフィールドのほんの一部です; 完全なリストは :doc:`forms_reference` を参照ください。
 
 もしフォームが AppEngine のデータストア上でモデルをそのまま追加したり更新したりする目的なら ``ModelForm`` を使用する事でモデル定義を繰り返す事なくフォームを定義できます。
 
