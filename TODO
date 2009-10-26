@@ -7,12 +7,8 @@ Documentation
 
 * Write documentations about
 
-  * middlewares
-  * caching
-
-* Make Japanese translations for documentations about
-
-  * Reference of kay.utils.forms module
+ * How to contribute to Kay
+ * Template strategy
 
 kay
 ---
