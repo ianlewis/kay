@@ -1401,6 +1401,14 @@ class ModelField(Field):
   >>> form = FormWithModelField()
   ... query = TestModel.all().filter('user =', user.key())
   ... form.model_field.set_query(query)
+
+  If the Model class has ``__unicode__()`` method, the return value of
+  this method will be used for rendering the text in an option tag. If
+  there's no ``__unicode__()`` method, ``Model.__repr__()`` will be
+  used for this purpose. You can override this behavior by passing an
+  attribute name used for the option tag's value with ``option_name``
+  keyword argument on initialization of this field.
+
   """
   messages = dict(not_found=lazy_gettext(
       u'The selected entity does not exist, or is not allowed to select.'))
