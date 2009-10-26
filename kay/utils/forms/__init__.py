@@ -1389,9 +1389,18 @@ class ModelField(Field):
   """A field that queries for a model.
 
   The first argument is the name of the model. If the key is not given
-  (None) the primary key is assumed. You can also specify query
-  parameter on init. It forces query based validation.
+  (None) the primary key is assumed. You can specify query parameter
+  on init or anytime you want via set_query() method. It gives you
+  query based option rendering and validation.
 
+  Here is an example for setting query after init:
+
+  >>> class FormWithModelField(Form):
+  ...    model_field = forms.ModelField(model=TestModel, reuired=True)
+
+  >>> form = FormWithModelField()
+  ... query = TestModel.all().filter('user =', user.key())
+  ... form.model_field.set_query(query)
   """
   messages = dict(not_found=lazy_gettext(
       u'The selected entity does not exist, or is not allowed to select.'))
