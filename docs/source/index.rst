@@ -29,6 +29,7 @@ Contents:
   middleware
   builtin-middleware
   test
+  forms_reference
 
 Indices and tables
 ==================

@@ -50,9 +50,6 @@ class cached_property(object):
        writeable setting and will always make the property writeable.
     """
 
-    # this class is public
-    __module__ = 'werkzeug'
-
     # implementation detail: this property is implemented as non-data
     # descriptor.  non-data descriptors are only invoked if there is
     # no entry with the same name in the instance's __dict__
@@ -104,9 +101,6 @@ class environ_property(_DictAccessorProperty):
     by passing ``read_only=False`` to the constructor.
     """
 
-    # this class is public
-    __module__ = 'werkzeug'
-
     read_only = True
 
     def lookup(self, obj):
@@ -115,9 +109,6 @@ class environ_property(_DictAccessorProperty):
 
 class header_property(_DictAccessorProperty):
     """Like `environ_property` but for headers."""
-
-    # this class is public
-    __module__ = 'werkzeug'
 
     def lookup(self, obj):
         return obj.headers
@@ -148,9 +139,6 @@ class HTMLBuilder(object):
     >>> html.p(html("<foo>"))
     u'<p>&lt;foo&gt;</p>'
     """
-
-    # this class is public
-    __module__ = 'werkzeug'
 
     from htmlentitydefs import name2codepoint
     _entity_re = re.compile(r'&([^;]+);')
@@ -527,6 +515,10 @@ def import_string(import_name, silent=False):
             module, obj = import_name.rsplit('.', 1)
         else:
             return __import__(import_name)
+        # __import__ is not able to handle unicode strings in the fromlist
+        # if the module is a package
+        if isinstance(obj, unicode):
+            obj = obj.encode('utf-8')
         return getattr(__import__(module, None, None, [obj]), obj)
     except (ImportError, AttributeError):
         if not silent:
@@ -653,9 +645,6 @@ def bind_arguments(func, args, kwargs):
 
 class ArgumentValidationError(ValueError):
     """Raised if :func:`validate_arguments` fails to validate"""
-
-    # this class is public
-    __module__ = 'werkzeug'
 
     def __init__(self, missing=None, extra=None, extra_positional=None):
         self.missing = set(missing or ())

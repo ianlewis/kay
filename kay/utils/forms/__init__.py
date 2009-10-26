@@ -1389,10 +1389,25 @@ class ModelField(Field):
   """A field that queries for a model.
 
   The first argument is the name of the model. If the key is not given
-  (None) the primary key is assumed. You can also specify query
-  parameter on init. It forces query based validation.  You can
-  override query by giving query named parameter to form's __init__
-  method.
+  (None) the primary key is assumed. You can specify query parameter
+  on init or anytime you want via set_query() method. It gives you
+  query based option rendering and validation.
+
+  Here is an example for setting query after init:
+
+  >>> class FormWithModelField(Form):
+  ...    model_field = forms.ModelField(model=TestModel, reuired=True)
+
+  >>> form = FormWithModelField()
+  ... query = TestModel.all().filter('user =', user.key())
+  ... form.model_field.set_query(query)
+
+  If the Model class has ``__unicode__()`` method, the return value of
+  this method will be used for rendering the text in an option tag. If
+  there's no ``__unicode__()`` method, ``Model.__repr__()`` will be
+  used for this purpose. You can override this behavior by passing an
+  attribute name used for the option tag's value with ``option_name``
+  keyword argument on initialization of this field.
 
   """
   messages = dict(not_found=lazy_gettext(
@@ -1470,10 +1485,11 @@ class ModelField(Field):
 
   def _set_choices(self, choices):
     self.__choices = choices
-
-  choices = property(_get_choices, _set_choices)
+  choices_doc = """You can set choices directly via this attribute."""
+  choices = property(_get_choices, _set_choices, None, choices_doc)
 
   def set_query(self, query):
+    """You can set query directly with this method."""
     self.query = query
     self._create_choices()
 
@@ -1951,7 +1967,7 @@ class Form(object):
 
   You can also validate multiple fields in the context of other fields.
   That validation is performed after all other validations.  Just add a
-  method called ``context_validate`` that is passed the dict of all fields::
+  method called ``context_validate`` that is passed the dict of all fields:
 
   >>> class RegisterForm(Form):
   ...     username = TextField(required=True)

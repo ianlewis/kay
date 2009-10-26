@@ -12,15 +12,10 @@ Kay utilities.
 import os
 import logging
 
-from google.appengine.api import users
-from google.appengine.api import memcache
-
 from werkzeug import (
   Local, LocalManager, Response
 )
 from werkzeug.exceptions import NotFound
-from werkzeug.urls import url_quote
-from werkzeug.utils import import_string
 
 from kay.conf import settings
 
@@ -48,6 +43,7 @@ def get_timezone(tzname):
   """
   Method to get timezone with memcached enhancement.
   """
+  from google.appengine.api import memcache
   global _timezone_cache
   if hasattr(_timezone_cache, 'tzname'):
     tz = _timezone_cache['tzname']
@@ -93,6 +89,7 @@ def url_for(endpoint, **args):
   rv = local.url_adapter.build(endpoint, args,
                                force_external=external)
   if anchor is not None:
+    from werkzeug.urls import url_quote
     rv += '#' + url_quote(anchor)
   return rv
 
@@ -173,6 +170,7 @@ def render_to_response(template, context, mimetype='text/html',
                   mimetype=mimetype)
 
 def get_standard_processors():
+  from werkzeug.utils import import_string
   from kay.conf import settings
   global _standard_context_processors
   if _standard_context_processors is None:
