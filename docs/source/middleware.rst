@@ -106,7 +106,7 @@ an earlier middleware method returned an :class:`werkzeug.Response`
 (this means that your ``process_response()`` method cannot rely on setup done in
 ``process_request()``, for example). In addition, during the response phase the
 classes are applied in reverse order, from the bottom up. This means classes
-defined at the end of :setting:`MIDDLEWARE_CLASSES` will be run first.
+defined at the end of :attr:`settings.MIDDLEWARE_CLASSES` will be run first.
 
 .. _exception-middleware:
 
