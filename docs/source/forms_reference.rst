@@ -2,6 +2,10 @@
 Reference of kay.utils.forms module
 ===================================
 
+This forms module is originally derived from Zine project hosted at:
+http://zine.pocoo.org/
+
+
 .. module:: kay.utils.forms
 
 .. autoclass:: Widget
