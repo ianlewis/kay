@@ -21,7 +21,7 @@ Kay には、すぐに使える組み込みのミドルウェアが付属して�
         'kay.auth.middleware.AuthenticationMiddleware',
     )
 
-リクエストの処理フェーズでは、Kay は :setting:`MIDDLEWARE_CLASSES` に指定された順番で (:meth:`process_request` および :meth:`process_view``) ミドルウェアを適用していきます。レスポンスの処理フェーズでは、(:meth:`process_response` および :meth:`process_exception` ) ミドルウェアが逆順に適用されます。この仕組みは、タマネギの構造になぞらえて、ミドルウェアクラスを「層」だと考えるとよいでしょう:
+リクエストの処理フェーズでは、Kay は :attr:`settings.MIDDLEWARE_CLASSES` に指定された順番で (:meth:`process_request` および :meth:`process_view``) ミドルウェアを適用していきます。レスポンスの処理フェーズでは、(:meth:`process_response` および :meth:`process_exception` ) ミドルウェアが逆順に適用されます。この仕組みは、タマネギの構造になぞらえて、ミドルウェアクラスを「層」だと考えるとよいでしょう:
 
 Kay はミドルウェアがなくても動作します -- 望むなら :attr:`settings.MIDDLEWARE_CLASSES` は空でもよいのです。
 
