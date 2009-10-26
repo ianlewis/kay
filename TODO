@@ -9,11 +9,10 @@ Documentation
 
   * middlewares
   * caching
-  * form fields and widgets
 
 * Make Japanese translations for documentations about
 
-  * modelform.ModelForm
+  * Reference of kay.utils.forms module
 
 kay
 ---
