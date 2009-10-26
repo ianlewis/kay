@@ -26,6 +26,8 @@ Contents:
   i18n
   dump_restore
   request_response
+  middleware
+  builtin-middleware
   test
 
 Indices and tables

@@ -25,6 +25,8 @@ Kay ドキュメントへようこそ
   i18n
   dump_restore
   request_response
+  middleware
+  builtin-middleware
   test
    
    
