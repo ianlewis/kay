@@ -1390,9 +1390,7 @@ class ModelField(Field):
 
   The first argument is the name of the model. If the key is not given
   (None) the primary key is assumed. You can also specify query
-  parameter on init. It forces query based validation.  You can
-  override query by giving query named parameter to form's __init__
-  method.
+  parameter on init. It forces query based validation.
 
   """
   messages = dict(not_found=lazy_gettext(
@@ -1470,10 +1468,11 @@ class ModelField(Field):
 
   def _set_choices(self, choices):
     self.__choices = choices
-
-  choices = property(_get_choices, _set_choices)
+  choices_doc = """You can set choices directly via this attribute."""
+  choices = property(_get_choices, _set_choices, None, choices_doc)
 
   def set_query(self, query):
+    """You can set query directly with this method."""
     self.query = query
     self._create_choices()
 
