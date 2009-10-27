@@ -14,7 +14,9 @@ from werkzeug.routing import (
 
 def make_url():
   return Map([
+    Rule('/_ah/queue/deferred', endpoint='deferred'),
   ])
 
 all_views = {
+  'deferred': 'kay.handlers.task.task_handler',
 }
