@@ -1,0 +1,8 @@
+{
+  "styles" : [
+    ["base" , {
+      "wordWrap": "CJK"
+    }]
+  ]
+}
+
