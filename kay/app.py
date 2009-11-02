@@ -306,24 +306,16 @@ class KayApp(object):
     try:
       endpoint, values = local.url_adapter.match()
       view_func = self.views.get(endpoint, None)
-      if view_func is None:
-        return render_error(NotFound())
-      if isinstance(view_func, tuple):
-        try:
+      try:
+        if isinstance(view_func, tuple):
           view_classname, args, kwargs = view_func
           view_cls = import_string(view_classname)
           view_func = view_cls(*args, **kwargs)
-          assert(callable(view_func))
-        except StandardError, e:
-          logging.error(sys.exc_info())
-          logging.error(e)
-          return render_error(NotFound())
-      if isinstance(view_func, basestring):
-        try:
+        elif isinstance(view_func, basestring):
           view_func = import_string(view_func)
-          assert(callable(view_func))
-        except StandardError, e:
-          logging.error(e)
+        assert(callable(view_func))
+      except StandardError, e:
+          logging.error(self._get_traceback(sys.exc_info()))
           return render_error(NotFound())
       for mw_method in self._view_middleware:
         response = mw_method(request, view_func, **values)
