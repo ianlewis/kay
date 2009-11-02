@@ -15,7 +15,7 @@ import sys
 
 import settings
 
-__version__ = "0.3.0"
+__version__ = "0.4.0"
 
 KAY_DIR = os.path.abspath(os.path.dirname(__file__))
 LIB_DIR = os.path.join(KAY_DIR, 'lib')
