@@ -161,7 +161,7 @@ def render_to_string(template, context={}, processors=None):
   return template.render(context)
 
 
-def render_to_response(template, context, mimetype='text/html',
+def render_to_response(template, context={}, mimetype='text/html',
                        processors=None):
   """
   A function for render html pages.
