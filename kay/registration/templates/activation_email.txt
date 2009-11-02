@@ -1,7 +1,7 @@
 Hi!
 In order to activate your account please visit the following link:
 
-http://{{ url_for('registration/activate', activation_key=activation_key) }}
+{{ url_for('registration/activate', activation_key=activation_key, _external=True) }}
 
 Thanks,
 Your {{ appname }} team
