@@ -1,0 +1,13 @@
+from __future__ import division
+from jinja2.runtime import LoopContext, TemplateReference, Macro, Markup, TemplateRuntimeError, missing, concat, escape, markup_join, unicode_join, to_string, TemplateNotFound
+name = '/activation_email_subject.txt'
+
+def root(context, environment=environment):
+    l_appname = context.resolve('appname')
+    if 0: yield None
+    yield u'Activation of your %s account' % (
+        escape(l_appname), 
+    )
+
+blocks = {}
+debug_info = '1=8'

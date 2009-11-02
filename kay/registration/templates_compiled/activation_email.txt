@@ -1,0 +1,16 @@
+from __future__ import division
+from jinja2.runtime import LoopContext, TemplateReference, Macro, Markup, TemplateRuntimeError, missing, concat, escape, markup_join, unicode_join, to_string, TemplateNotFound
+name = '/activation_email.txt'
+
+def root(context, environment=environment):
+    l_activation_key = context.resolve('activation_key')
+    l_url_for = context.resolve('url_for')
+    l_appname = context.resolve('appname')
+    if 0: yield None
+    yield u'Hi!\nIn order to activate your account please visit the following link:\n\nhttp://%s\n\nThanks,\nYour %s team' % (
+        escape(context.call(l_url_for, 'registration/activate', activation_key=l_activation_key)), 
+        escape(l_appname), 
+    )
+
+blocks = {}
+debug_info = '1=10&4=11&7=12'

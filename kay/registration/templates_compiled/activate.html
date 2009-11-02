@@ -1,0 +1,45 @@
+from __future__ import division
+from jinja2.runtime import LoopContext, TemplateReference, Macro, Markup, TemplateRuntimeError, missing, concat, escape, markup_join, unicode_join, to_string, TemplateNotFound
+name = '/activate.html'
+
+def root(context, environment=environment):
+    parent_template = None
+    block_context = context._block()
+    if 0: yield None
+    parent_template = environment.get_template('base.html', '/activate.html')
+    for name, parent_block in parent_template.blocks.iteritems():
+        context.blocks.setdefault(name, []).append(parent_block)
+    for event in parent_template.root_render_func(context):
+        yield event
+
+def block_content(context, environment=environment):
+    l_account = context.resolve('account')
+    l__ = context.resolve('_')
+    if 0: yield None
+    yield u'\n'
+    if l_account:
+        if 0: yield None
+        yield u'\n  <h1>%s</h1>\n  <p>Congratulations, %s. Your account has been created successfully.</p>\n' % (
+            escape(context.call(l__, 'Activation successful')), 
+            escape(environment.getattr(l_account, 'username')), 
+        )
+    else:
+        if 0: yield None
+        yield u'\n  <h1>%s</h1>\n  <p>Sorry, there were problems with the activation. Please make sure that the activation link was opened correctly in your Browser. Please be also aware that activation links expire automatically.</p>\n' % (
+            escape(context.call(l__, 'Activation failed :(')), 
+        )
+    yield u'\n'
+
+def block_title(context, environment=environment):
+    l_account = context.resolve('account')
+    l__ = context.resolve('_')
+    if 0: yield None
+    if l_account:
+        if 0: yield None
+        yield escape(context.call(l__, 'Activation successful'))
+    else:
+        if 0: yield None
+        yield escape(context.call(l__, 'Activation failed :('))
+
+blocks = {'content': block_content, 'title': block_title}
+debug_info = '1=9&4=15&5=20&6=23&7=24&8=28&9=29&11=31&2=33'
