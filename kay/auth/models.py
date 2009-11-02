@@ -13,7 +13,9 @@ Kay authentication models.
 from google.appengine.ext import db
 
 from kay.conf import settings
-from kay.utils import crypto
+from kay.utils import (
+  crypto, render_to_string
+)
 from kay.i18n import lazy_gettext as _
 
 class User(db.Model):
@@ -53,6 +55,7 @@ class DatastoreUserDBOperationMixin(object):
 
   @classmethod
   def create_inactive_user(cls, user_name, password, email, send_email=True):
+    from kay.registration.models import RegistrationProfile
     def txn():
       key_name = cls.get_key_name(user_name)
       user = cls.get_by_key_name(key_name)
@@ -60,11 +63,27 @@ class DatastoreUserDBOperationMixin(object):
         from kay.auth import DuplicateKeyError
         raise DuplicateKeyError(_(u"This user name is already taken."
                                   " Please choose another user name."))
-      ret = cls(key_name=key_name, activated=False, user_name=user_name,
-                password=crypto.gen_pwhash(password), email=email)
-      ret.put()
-      return ret
-    return db.run_in_transaction(txn)
+      user = cls(key_name=key_name, activated=False, user_name=user_name,
+                 password=crypto.gen_pwhash(password), email=email)
+      user.put()
+      return user
+    user = db.run_in_transaction(txn)
+    salt = crypto.gen_salt()
+    activation_key = crypto.sha1(salt+user.user_name).hexdigest()
+    profile = RegistrationProfile(user=user, key_name=activation_key)
+    profile.put()
+    from google.appengine.api import mail
+    subject = render_to_string('registration/activation_email_subject.txt',
+                               {'appname': settings.APP_NAME})
+    subject = ''.join(subject.splitlines())
+    message = render_to_string(
+      'registration/activation_email.txt',
+      {'activation_key': activation_key,
+       'expiration_days': settings.ACCOUNT_ACTIVATION_DAYS,
+       'appname': settings.APP_NAME})
+    mail.send_mail(subject=subject, body=message,
+                   sender=settings.DEFAULT_MAIL_FROM, to=user.email)
+    return user
 
   @classmethod
   def get_key_name(cls, user_name):

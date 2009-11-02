@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}{{_('Kay Registration')}}{% endblock %}
+
+{% block content %}
+<h1>{{_('Register new user')}}</h1>
+    <div id="message">
+      {{ message }}
+    </div>
+    <div id="registerform">
+      {% call form() %}
+      <fieldset>
+        <legend>{{ _('Kay Registration Form') }}</legend>
+        {% for field in form %}
+        <p>
+          {{ field.label()|safe }}
+          {{ field.render()|safe }}
+          {{ field.errors()|safe }}
+        </p>
+        {% endfor %}
+        {{ form.default_actions(label=_("Register"))|safe }}
+      </fieldset>
+      {% endcall %}
+    </div>
+{% endblock content %}

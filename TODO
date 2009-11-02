@@ -29,6 +29,7 @@ kay.auth
 
 * Incorporate Ian's ChoiceBackend.
 
+* Need a way to purge expired RegistrationProfile entities.
 
 kay.utils.forms
 ----------------
@@ -36,12 +37,6 @@ kay.utils.forms
 * AjaxModelField
 
 * Implement a widget with JQuery's DatetimePicker
-
-
-kay.auth
---------
-
-* 'Registration' application needed.
 
 
 kay.utils.forms
