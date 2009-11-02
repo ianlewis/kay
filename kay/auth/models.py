@@ -14,6 +14,7 @@ from google.appengine.ext import db
 
 from kay.conf import settings
 from kay.utils import crypto
+from kay.i18n import lazy_gettext as _
 
 class User(db.Model):
   """
@@ -49,6 +50,22 @@ class User(db.Model):
     return not self.__eq__(obj)
 
 class DatastoreUserDBOperationMixin(object):
+
+  @classmethod
+  def create_inactive_user(cls, user_name, password, email, send_email=True):
+    def txn():
+      key_name = cls.get_key_name(user_name)
+      user = cls.get_by_key_name(key_name)
+      if user:
+        from kay.auth import DuplicateKeyError
+        raise DuplicateKeyError(_(u"This user name is already taken."
+                                  " Please choose another user name."))
+      ret = cls(key_name=key_name, activated=False, user_name=user_name,
+                password=crypto.gen_pwhash(password), email=email)
+      ret.put()
+      return ret
+    return db.run_in_transaction(txn)
+
   @classmethod
   def get_key_name(cls, user_name):
     return 'u:%s' % user_name
@@ -58,6 +75,8 @@ class DatastoreUserDBOperationMixin(object):
     return cls.get_by_key_name(cls.get_key_name(user_name))
 
   def check_password(self, raw_password):
+    if hasattr(self, 'activated') and self.activated is False:
+      return False
     return crypto.check_pwhash(self.password, raw_password)
 
   def set_password(self, raw_password):
@@ -68,6 +87,7 @@ class DatastoreUser(User, DatastoreUserDBOperationMixin):
   """
   Use DatastoreUser.get_key_name(user_name) as key_name for this model.
   """
+  activated = db.BooleanProperty(required=True, default=True)
   user_name = db.StringProperty(required=True)
   password = db.StringProperty(required=True)
 
@@ -93,6 +113,7 @@ class GoogleUser(User):
 class HybridUser(GoogleUser, DatastoreUserDBOperationMixin):
   """GoogleUser/DatastoreUser hybrid model.
   """
+  activated = db.BooleanProperty(required=True, default=True)
   user_name = db.StringProperty(required=False)
   password = db.StringProperty(required=False)
 
