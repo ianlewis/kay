@@ -4,9 +4,9 @@
 {% block content %}
 {% if account %}
   <h1>{{ _('Activation successful') }}</h1>
-  <p>Congratulations, {{ account.username }}. Your account has been created successfully.</p>
+  <p>{% trans username=account.user_name%}Congratulations, {{ username }}. Your account has been created successfully.{% endtrans %}</p>
 {% else %}
   <h1>{{ _('Activation failed :(') }}</h1>
-  <p>Sorry, there were problems with the activation. Please make sure that the activation link was opened correctly in your Browser. Please be also aware that activation links expire automatically.</p>
+  <p>{% trans %}Sorry, there were problems with the activation. Please make sure that the activation link was opened correctly in your Browser. {% endtrans %}{% trans days=expiration_days %}Please be also aware that activation links expire automatically in {{ days }} day.{% pluralize %}Please be also aware that activation links expire automatically in {{ days }} days.{% endtrans %}</p>
 {% endif %}
 {% endblock content %}

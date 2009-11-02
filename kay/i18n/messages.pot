@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: tmatsuo@candit.jp\n"
-"POT-Creation-Date: 2009-11-02 22:44+0900\n"
+"POT-Creation-Date: 2009-11-03 02:21+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel None\n"
 
-#: kay/app.py:357 kay/utils/decorators.py:155
+#: kay/app.py:349 kay/utils/decorators.py:155
 msgid "Appengine might be under maintenance."
 msgstr ""
 
@@ -25,11 +25,11 @@ msgstr ""
 msgid "user name"
 msgstr ""
 
-#: kay/auth/forms.py:18 kay/registration/forms.py:21
+#: kay/auth/forms.py:18 kay/registration/forms.py:22
 msgid "password"
 msgstr ""
 
-#: kay/auth/models.py:64 kay/registration/forms.py:30
+#: kay/auth/models.py:64 kay/registration/forms.py:31
 msgid "This user name is already taken. Please choose another user name."
 msgstr ""
 
@@ -49,7 +49,7 @@ msgstr ""
 msgid "Login"
 msgstr ""
 
-#: kay/i18n/__init__.py:310
+#: kay/i18n/__init__.py:302
 msgid "now"
 msgstr ""
 
@@ -57,15 +57,15 @@ msgstr ""
 msgid "Hello"
 msgstr ""
 
-#: kay/registration/forms.py:19
+#: kay/registration/forms.py:20
 msgid "email address"
 msgstr ""
 
-#: kay/registration/forms.py:23
+#: kay/registration/forms.py:24
 msgid "password(again)"
 msgstr ""
 
-#: kay/registration/forms.py:35
+#: kay/registration/forms.py:36
 msgid "The passwords don't match."
 msgstr ""
 
@@ -79,9 +79,59 @@ msgstr ""
 msgid "Activation failed :("
 msgstr ""
 
+#: kay/registration/templates/activate.html:7
+#, python-format
+msgid "Congratulations, %(username)s. Your account has been created successfully."
+msgstr ""
+
+#: kay/registration/templates/activate.html:10
+msgid ""
+"Sorry, there were problems with the activation. Please make sure that the "
+"activation link was opened correctly in your Browser. "
+msgstr ""
+
+#: kay/registration/templates/activate.html:10
+#, python-format
+msgid ""
+"Please be also aware that activation links expire automatically in %(days)s "
+"day."
+msgid_plural ""
+"Please be also aware that activation links expire automatically in %(days)s "
+"days."
+msgstr[0] ""
+msgstr[1] ""
+
+#: kay/registration/templates/activation_email.txt:1
+msgid ""
+"\n"
+"Hi!\n"
+"In order to activate your account please visit the following link:\n"
+msgstr ""
+
+#: kay/registration/templates/activation_email.txt:6
+#, python-format
+msgid ""
+"\n"
+"Thanks,\n"
+"Your %(appname)s team\n"
+msgstr ""
+
+#: kay/registration/templates/activation_email_subject.txt:1
+#, python-format
+msgid "Activation of your %(appname)s account"
+msgstr ""
+
 #: kay/registration/templates/registration_complete.html:2
 #: kay/registration/templates/registration_form.html:2
 msgid "Kay Registration"
+msgstr ""
+
+#: kay/registration/templates/registration_complete.html:4
+msgid "Registration complete"
+msgstr ""
+
+#: kay/registration/templates/registration_complete.html:5
+msgid "An e-mail has been sent to you. Please follow the instructions in the e-mail."
 msgstr ""
 
 #: kay/registration/templates/registration_form.html:5

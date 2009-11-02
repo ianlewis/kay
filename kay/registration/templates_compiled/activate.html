@@ -14,20 +14,27 @@ def root(context, environment=environment):
 
 def block_content(context, environment=environment):
     l_account = context.resolve('account')
+    l_gettext = context.resolve('gettext')
+    l_ngettext = context.resolve('ngettext')
+    l_expiration_days = context.resolve('expiration_days')
     l__ = context.resolve('_')
     if 0: yield None
     yield u'\n'
     if l_account:
         if 0: yield None
-        yield u'\n  <h1>%s</h1>\n  <p>Congratulations, %s. Your account has been created successfully.</p>\n' % (
+        yield u'\n  <h1>%s</h1>\n  <p>' % (
             escape(context.call(l__, 'Activation successful')), 
-            escape(environment.getattr(l_account, 'username')), 
         )
+        yield escape((Markup(context.call(l_gettext, u'Congratulations, %(username)s. Your account has been created successfully.')) % {'username': environment.getattr(l_account, 'user_name')}))
+        yield u'</p>\n'
     else:
         if 0: yield None
-        yield u'\n  <h1>%s</h1>\n  <p>Sorry, there were problems with the activation. Please make sure that the activation link was opened correctly in your Browser. Please be also aware that activation links expire automatically.</p>\n' % (
+        yield u'\n  <h1>%s</h1>\n  <p>' % (
             escape(context.call(l__, 'Activation failed :(')), 
         )
+        yield escape(Markup(context.call(l_gettext, u'Sorry, there were problems with the activation. Please make sure that the activation link was opened correctly in your Browser. ')))
+        yield escape((Markup(context.call(l_ngettext, u'Please be also aware that activation links expire automatically in %(days)s day.', u'Please be also aware that activation links expire automatically in %(days)s days.', l_expiration_days)) % {'days': l_expiration_days}))
+        yield u'</p>\n'
     yield u'\n'
 
 def block_title(context, environment=environment):
@@ -42,4 +49,4 @@ def block_title(context, environment=environment):
         yield escape(context.call(l__, 'Activation failed :('))
 
 blocks = {'content': block_content, 'title': block_title}
-debug_info = '1=9&4=15&5=20&6=23&7=24&8=28&9=29&11=31&2=33'
+debug_info = '1=9&4=15&5=23&6=26&7=28&8=32&9=33&10=35&11=38&2=40'

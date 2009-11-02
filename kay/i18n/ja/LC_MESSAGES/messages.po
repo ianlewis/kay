@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version:  kay-0.4.0\n"
 "Report-Msgid-Bugs-To: tmatsuo@candit.jp\n"
 "POT-Creation-Date: 2009-05-15 14:07+0900\n"
-"PO-Revision-Date: 2009-11-02 22:44+0900\n"
+"PO-Revision-Date: 2009-11-03 02:22+0900\n"
 "Last-Translator: Takashi Matsuo <tmatsuo@candit.jp>\n"
 "Language-Team: Takashi Matsuo <tmatsuo@candit.jp>\n"
 "Plural-Forms: nplurals=1; plural=0\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel None\n"
 
-#: kay/app.py:357 kay/utils/decorators.py:155
+#: kay/app.py:349 kay/utils/decorators.py:155
 msgid "Appengine might be under maintenance."
 msgstr "Appengine はメンテナンス中のようです。"
 
@@ -25,11 +25,11 @@ msgstr "Appengine はメンテナンス中のようです。"
 msgid "user name"
 msgstr "ユーザー名"
 
-#: kay/auth/forms.py:18 kay/registration/forms.py:21
+#: kay/auth/forms.py:18 kay/registration/forms.py:22
 msgid "password"
 msgstr "パスワード"
 
-#: kay/auth/models.py:64 kay/registration/forms.py:30
+#: kay/auth/models.py:64 kay/registration/forms.py:31
 msgid "This user name is already taken. Please choose another user name."
 msgstr "このユーザー名は既に使われています。別のユーザー名を選んでください。"
 
@@ -49,7 +49,7 @@ msgstr "Kay ログインフォーム"
 msgid "Login"
 msgstr "ログイン"
 
-#: kay/i18n/__init__.py:310
+#: kay/i18n/__init__.py:302
 msgid "now"
 msgstr "現在"
 
@@ -57,32 +57,87 @@ msgstr "現在"
 msgid "Hello"
 msgstr "こんにちは"
 
-#: kay/registration/forms.py:19
+#: kay/registration/forms.py:20
 msgid "email address"
 msgstr "電子メールアドレス"
 
-#: kay/registration/forms.py:23
+#: kay/registration/forms.py:24
 msgid "password(again)"
 msgstr "パスワード(確認)"
 
-#: kay/registration/forms.py:35
+#: kay/registration/forms.py:36
 msgid "The passwords don't match."
 msgstr "パスワードが一致しません。"
 
 #: kay/registration/templates/activate.html:2
 #: kay/registration/templates/activate.html:6
 msgid "Activation successful"
-msgstr "アクティベートに成功しました"
+msgstr "アクティベーションに成功しました"
 
 #: kay/registration/templates/activate.html:2
 #: kay/registration/templates/activate.html:9
 msgid "Activation failed :("
-msgstr "アクティベートに失敗しました"
+msgstr "アクティベーションに失敗しました (_o_)"
+
+#: kay/registration/templates/activate.html:7
+#, python-format
+msgid "Congratulations, %(username)s. Your account has been created successfully."
+msgstr "%(username)s さんおめでとうございます。アカウントが正常に作成されました。"
+
+#: kay/registration/templates/activate.html:10
+msgid ""
+"Sorry, there were problems with the activation. Please make sure that the "
+"activation link was opened correctly in your Browser. "
+msgstr "済みません。正常にアクティベーションできませんでした。アクティベーション用のリンクは正しいか確認してみてください。"
+
+#: kay/registration/templates/activate.html:10
+#, python-format
+msgid ""
+"Please be also aware that activation links expire automatically in %(days)s "
+"day."
+msgid_plural ""
+"Please be also aware that activation links expire automatically in %(days)s "
+"days."
+msgstr[0] "また %(days)s 日でリンクは期限切れになる事にもご留意ください。"
+
+#: kay/registration/templates/activation_email.txt:1
+msgid ""
+"\n"
+"Hi!\n"
+"In order to activate your account please visit the following link:\n"
+msgstr ""
+"\n"
+"こんにちは\n"
+"アカウントのアクティベーションのために下記のリンクをクリックしてください:\n"
+
+#: kay/registration/templates/activation_email.txt:6
+#, python-format
+msgid ""
+"\n"
+"Thanks,\n"
+"Your %(appname)s team\n"
+msgstr ""
+"\n"
+"ありがとうございました。\n"
+"%(appname)s チームより\n"
+
+#: kay/registration/templates/activation_email_subject.txt:1
+#, python-format
+msgid "Activation of your %(appname)s account"
+msgstr "%(appname)s アカウントのアクティベーション"
 
 #: kay/registration/templates/registration_complete.html:2
 #: kay/registration/templates/registration_form.html:2
 msgid "Kay Registration"
 msgstr "Kay ユーザー登録"
+
+#: kay/registration/templates/registration_complete.html:4
+msgid "Registration complete"
+msgstr "ユーザー登録完了"
+
+#: kay/registration/templates/registration_complete.html:5
+msgid "An e-mail has been sent to you. Please follow the instructions in the e-mail."
+msgstr "あなたにメールを送りました。メールに記載の手順に従ってください。"
 
 #: kay/registration/templates/registration_form.html:5
 msgid "Register new user"

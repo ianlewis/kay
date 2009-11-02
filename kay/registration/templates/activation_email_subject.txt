@@ -1,1 +1,1 @@
-Activation of your {{ appname }} account
+{% trans %}Activation of your {{ appname }} account{% endtrans %}

@@ -3,11 +3,10 @@ from jinja2.runtime import LoopContext, TemplateReference, Macro, Markup, Templa
 name = '/activation_email_subject.txt'
 
 def root(context, environment=environment):
+    l_gettext = context.resolve('gettext')
     l_appname = context.resolve('appname')
     if 0: yield None
-    yield u'Activation of your %s account' % (
-        escape(l_appname), 
-    )
+    yield escape((Markup(context.call(l_gettext, u'Activation of your %(appname)s account')) % {'appname': l_appname}))
 
 blocks = {}
-debug_info = '1=8'
+debug_info = '1=9'

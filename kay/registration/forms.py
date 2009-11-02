@@ -15,7 +15,8 @@ from kay.utils.validators import ValidationError
 from kay.conf import settings
 
 class RegistrationForm(forms.Form):
-  user_name = forms.TextField(required=True, label=_(u"user name"))
+  user_name = forms.TextField(required=True, label=_(u"user name"),
+                              max_length=30)
   email = forms.EmailField(required=True, label=_(u"email address"))
   password = forms.TextField(required=True, widget=forms.PasswordInput,
                              label=_("password"))
