@@ -55,7 +55,6 @@ from datetime import datetime
 from time import strptime
 from weakref import WeakKeyDictionary
 
-from pytz import timezone, UTC
 from werkzeug.exceptions import NotFound
 from werkzeug.urls import url_quote_plus
 from werkzeug.utils import import_string
