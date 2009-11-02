@@ -110,8 +110,10 @@ class KayApp(object):
   def get_mount_point(self, app):
     if app == 'kay._internal':
       return '/_kay'
-    return self.app_settings.APP_MOUNT_POINTS.get(
-      app, "/%s" % get_app_tailname(app))
+    if self.app_settings.APP_MOUNT_POINTS.has_key(app):
+      return self.app_settings.APP_MOUNT_POINTS.get(app)
+    else:
+      return '/%s' % get_app_tailname(app)
 
   def get_installed_apps(self):
     return self.app_settings.INSTALLED_APPS+['kay._internal']
@@ -132,6 +134,10 @@ class KayApp(object):
         logging.debug("Reason:\n%s" % self._get_traceback(sys.exc_info()))
         continue
       mountpoint = self.get_mount_point(app)
+      if mountpoint is None:
+        logging.debug("Mountpoint for app '%s' is set to None explicitly,"
+                      " skipped." % app)
+        continue
       make_rules = getattr(url_mod, 'make_rules', None)
       if make_rules:
         self.url_map.add(Submount(mountpoint, make_rules()))
@@ -302,6 +308,16 @@ class KayApp(object):
       view_func = self.views.get(endpoint, None)
       if view_func is None:
         return render_error(NotFound())
+      if isinstance(view_func, tuple):
+        try:
+          view_classname, args, kwargs = view_func
+          view_cls = import_string(view_classname)
+          view_func = view_cls(*args, **kwargs)
+          assert(callable(view_func))
+        except StandardError, e:
+          logging.error(sys.exc_info())
+          logging.error(e)
+          return render_error(NotFound())
       if isinstance(view_func, basestring):
         try:
           view_func = import_string(view_func)
