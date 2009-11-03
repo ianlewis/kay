@@ -159,8 +159,6 @@ class KayApp(object):
   def init_jinja2_environ(self):
     """
     Initialize the environment for jinja2.
-    TODO: Capability to disable i18n stuff.
-    TODO: Pluggable utility mechanism.
     """
     if os.environ['APPLICATION_ID'] == 'test' or \
           ('SERVER_SOFTWARE' in os.environ and \
@@ -228,28 +226,6 @@ class KayApp(object):
         continue
       self.jinja2_env.filters[key] = func
 
-  def init_lang(self, lang):
-    """
-    Initialize translations with specified language.
-    """
-    global translations_cache
-    if self.app_settings.USE_I18N:
-      from kay.i18n import load_translations
-      translations = translations_cache.get("trans:%s:%s" %
-                                            (self.app_settings.APP_NAME, lang),
-                                            None)
-      if translations is None:
-        translations = load_translations(lang)
-        translations_cache["trans:%s:%s" %
-                     (self.app_settings.APP_NAME, lang)] = translations
-      self.active_translations = translations
-      self.jinja2_env.install_gettext_translations(translations)
-    else:
-      from kay.i18n import KayNullTranslations
-      self.active_translations = KayNullTranslations()
-      self.jinja2_env.install_null_translations()
-
-
   def load_middleware(self):
     self._response_middleware = []
     self._view_middleware = []
@@ -280,7 +256,9 @@ class KayApp(object):
     self._request_middleware = request_middleware
 
   def get_response(self, request):
+    global translations_cache
     if self.app_settings.USE_I18N:
+      from kay.i18n import load_translations
       lang = request.cookies.get(settings.LANG_COOKIE_NAME)
       if not lang:
         lang = (request.accept_languages.best or 
@@ -290,9 +268,24 @@ class KayApp(object):
         lang = lang[:pos].lower()+'_'+lang[pos+1:].upper()
       else:
         lang = lang.lower()
+      translations = translations_cache.get("trans:%s:%s" %
+                                            (self.app_settings.APP_NAME, lang),
+                                            None)
+      if translations is None:
+        translations = load_translations(lang)
+        translations_cache["trans:%s:%s" %
+                     (self.app_settings.APP_NAME, lang)] = translations
+      self.active_translations = translations
+      self.jinja2_env.install_gettext_translations(translations)
     else:
+      from kay.i18n import KayNullTranslations
       lang = None
-    self.init_lang(lang)
+      self.active_translations = KayNullTranslations()
+      self.jinja2_env.globals.update(
+        _=lambda x: x,
+        gettext=lambda x: x,
+        ngettext=lambda s, p, n: (n != 1 and (p,) or (s,))[0]
+      )
     request.lang = lang
 
     # apply request middleware
