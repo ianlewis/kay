@@ -135,6 +135,8 @@ def get_translations():
     return ret
   return load_translations(default)
 
+def gettext_noop(string):
+  return unicode(string)
 
 def gettext(string):
   """Translate a given string to the language of the application."""

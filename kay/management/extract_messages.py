@@ -33,6 +33,7 @@ KEYWORDS = {
   '__': None,
   '_': None,
   'gettext': None,
+  'gettext_noop': None,
   'ngettext': (1, 2),
   'lazy_gettext': None,
   'lazy_ngettext': (1, 2),
