@@ -9,7 +9,7 @@ Kay session middleware.
 
 import kay.sessions
 from kay.conf import settings
-from jinja2.utils import import_string
+from werkzeug import import_string
 
 class SessionMiddleware(object):
 

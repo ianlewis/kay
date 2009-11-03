@@ -38,14 +38,7 @@ def gen_salt(length=6):
 
 def new_iid():
   """Called by the websetup to get a unique uuid for the application iid."""
-  try:
-    import uuid
-  except ImportError:
-    # if there is no uuid support, we create a pseudo-unique id based
-    # on the current time.  This should be good enough to keep local
-    # installations apart.
-    import time
-    return '%x%x' % tuple(map(int, str(time.time()).split('.')))
+  import uuid
   return uuid.uuid4().hex
 
 
