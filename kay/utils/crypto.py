@@ -15,12 +15,7 @@ This file originally derives from Zine project.
 
 import string
 from random import choice, randrange
-try:
-  from hashlib import sha1, md5
-except ImportError:
-  from sha import new as sha1
-  from md5 import new as md5
-
+from hashlib import sha1, md5
 
 KEY_CHARS = string.ascii_letters + string.digits
 IDENTIFIER_START = string.ascii_letters + '_'
