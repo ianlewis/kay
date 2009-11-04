@@ -152,8 +152,6 @@ class KayApp(object):
         raise exceptions.ImproperlyConfigured, \
             'Failed to import %s: "%s".' %\
             (self.app_settings.AUTH_USER_BACKEND, e)
-      except:
-        raise
       self.auth_backend = klass()
 
   def init_jinja2_environ(self):
@@ -342,7 +340,8 @@ class KayApp(object):
           {"message": _('Appengine might be under maintenance.')}),
         content_type="text/html; charset=utf-8",
         status=503)
-    except: # Handle everything else, including SuspiciousOperation, etc.
+    except Exception:
+      # Handle everything else, including SuspiciousOperation, etc.
       # Get the exception info now, in case another exception is thrown later.
       exc_info = sys.exc_info()
       return self.handle_uncaught_exception(request, exc_info)

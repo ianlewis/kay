@@ -138,7 +138,7 @@ class DebugReprGenerator(object):
   def fallback_repr(self):
     try:
       info = ''.join(format_exception_only(*sys.exc_info()[:2]))
-    except:
+    except Exception:
       info = '?'
     return u'broken repr (%s)' % \
         info.decode('utf-8', 'ignore').strip()
@@ -153,7 +153,7 @@ class DebugReprGenerator(object):
     try:
       try:
         return self.dispatch_repr(obj, recursive)
-      except:
+      except Exception:
         return self.fallback_repr()
     finally:
       self._stack.pop()
@@ -176,7 +176,7 @@ class DebugReprGenerator(object):
           continue
         try:
           items.append((key, self.repr(getattr(obj, key))))
-        except:
+        except Exception:
           pass
       title = 'Details for'
     title += ' ' + object.__repr__(obj)[1:-1]

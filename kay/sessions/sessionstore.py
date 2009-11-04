@@ -77,7 +77,7 @@ class GAESessionStore(sessions.SessionStore):
       return pickle.loads(encoded_data)
     # Unpickling can cause a variety of exceptions. If something happens,
     # just return an empty dictionary (an empty session).
-    except:
+    except Exception:
       return {}
 
   def get_data(self, session):

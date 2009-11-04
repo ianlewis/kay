@@ -9,15 +9,9 @@ Kay session model.
 
 import base64
 import cPickle as pickle
-try:
-  import hashlib
-  md5_constructor = hashlib.md5
-  sha_constructor = hashlib.sha1
-except ImportError:
-  import md5
-  md5_constructor = md5.new
-  import sha
-  sha_constructor = sha.new
+import hashlib
+md5_constructor = hashlib.md5
+sha_constructor = hashlib.sha1
 
 from werkzeug.contrib import sessions
 from google.appengine.ext import db
@@ -40,6 +34,6 @@ class GAESession(db.Model):
       return pickle.loads(pickled)
     # Unpickling can cause a variety of exceptions. If something happens,
     # just return an empty dictionary (an empty session).
-    except:
+    except Exception:
       return {}
 

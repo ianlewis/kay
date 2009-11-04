@@ -128,7 +128,7 @@ def get_translations():
   try:
     ret = local.app.active_translations
     default = local.app.app_settings.DEFAULT_LANG
-  except:
+  except Exception:
     ret = None
     default = settings.DEFAULT_LANG
   if ret is not None:
@@ -250,7 +250,7 @@ class _TranslationProxy(object):
   def __repr__(self):
     try:
       return 'i' + repr(unicode(self.value))
-    except:
+    except Exception:
       return '<%s broken>' % self.__class__.__name__
 
 

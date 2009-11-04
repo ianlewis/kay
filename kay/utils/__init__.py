@@ -50,7 +50,7 @@ def get_timezone(tzname):
   else:
     try:
       tz = memcache.get("tz:%s" % tzname)
-    except:
+    except Exception:
       tz = None
       logging.debug("timezone get failed: %s" % tzname)
   if tz is None:
