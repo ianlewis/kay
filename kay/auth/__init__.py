@@ -59,19 +59,17 @@ def create_new_user(user_name, password=None, **kwargs):
     logging.warn("Failed importing auth user model: %s." %
                  settings.AUTH_USER_MODEL)
     return
+  if password:
+    kwargs['password'] = auth_model.hash_password(password)
+  else:
+    kwargs['password'] = auth_model.get_unusable_password()
   def txn():
     user = auth_model.get_by_key_name(auth_model.get_key_name(user_name))
     if user:
       raise DuplicateKeyError("An user: %s is already registered." % user_name)
     new_user = auth_model(key_name=auth_model.get_key_name(user_name),
-                          user_name=user_name, password="temporary",
-                          **kwargs)
+                          user_name=user_name, **kwargs)
 
-    if password:
-      new_user.set_password(password)
-    else:
-      new_user.set_unusable_password()
-    # set_password/set_unusable_password calls put()
-    #new_user.put()
+    new_user.put()
     return new_user
   return db.run_in_transaction(txn)

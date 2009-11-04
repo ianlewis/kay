@@ -93,13 +93,21 @@ class DatastoreUserDBOperationMixin(object):
   def get_by_user_name(cls, user_name):
     return cls.get_by_key_name(cls.get_key_name(user_name))
 
+  @classmethod
+  def hash_password(cls, raw):
+    return crypto.gen_pwhash(raw)
+
+  @classmethod
+  def get_unusable_password(cls):
+    return 'unusable_password'
+
   def check_password(self, raw_password):
     if hasattr(self, 'activated') and self.activated is False:
       return False
     return crypto.check_pwhash(self.password, raw_password)
 
   def set_password(self, raw_password):
-    self.password = crypto.gen_pwhash(raw_password)
+    self.password = self.hash_password(raw_password)
     return self.put()
 
 class DatastoreUser(User, DatastoreUserDBOperationMixin):
