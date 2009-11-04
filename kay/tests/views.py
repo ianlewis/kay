@@ -20,3 +20,10 @@ from kay.utils.decorators import maintenance_check
 @maintenance_check
 def index(request):
   return Response("test")
+
+@maintenance_check("tests/no_decorator")
+def index2(request):
+  return Response("test")
+
+def no_decorator(request):
+  return Response("test")

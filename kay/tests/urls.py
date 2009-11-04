@@ -17,9 +17,13 @@ def make_rules():
   return [
     EndpointPrefix('tests/', [
       Rule('/', endpoint='index'),
+      Rule('/index2', endpoint='index2'),
+      Rule('/no_decorator', endpoint='no_decorator'),
     ]),
   ]
 
 all_views = {
   'tests/index': kay.tests.views.index,
+  'tests/index2': kay.tests.views.index2,
+  'tests/no_decorator': kay.tests.views.no_decorator,
 }

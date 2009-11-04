@@ -127,33 +127,35 @@ def retry_on_timeout(retries=3, secs=1):
     return _wrapper
   return _decorator
 
-def maintenance_check(view):
+def maintenance_check(endpoint='_internal/maintenance_page'):
   """
   checks if datastore capabilities stays available for certain time.
   """
   import logging
   from google.appengine.api.capabilities import CapabilitySet
-  from werkzeug import Response
-  from kay.utils import render_to_string
+  from werkzeug import redirect
+  from kay.utils import url_for
   from kay.i18n import gettext as _
 
-  def wrapped(request, *args, **kwargs):
-    datastore_write = CapabilitySet('datastore_v3', capabilities=['write'])
-    datastore_writable = datastore_write.will_remain_enabled_for(60)
-    if not datastore_writable:
-      logging.warn('Datastore is not writable. %s' %
-                   datastore_write.admin_message())
-      if request.is_xhr:
-        return ServiceUnavailable('Appengine might be under maintenance.')
-      else:
-        # Saving session will also fail.
-        if hasattr(request, 'session'):
-          del(request.session)
-        return Response(
-          render_to_string(
-            "_internal/maintenance.html",
-            {"message": _('Appengine might be under maintenance.')}),
-          content_type="text/html; charset=utf-8",
-          status=503)
-    return view(request, *args, **kwargs)
-  return wrapped
+  arg_exist = True
+  if callable(endpoint):
+    _endpoint = endpoint
+    endpoint = '_internal/maintenance_page'
+    arg_exist = False
+  def decorator(view):
+    def wrapped(request, *args, **kwargs):
+      datastore_write = CapabilitySet('datastore_v3', capabilities=['write'])
+      datastore_writable = datastore_write.will_remain_enabled_for(60)
+      if not datastore_writable:
+        logging.warn('Datastore is not writable. %s' %
+                     datastore_write.admin_message())
+        if not request.is_xhr:
+          # Saving session will also fail.
+          if hasattr(request, 'session'):
+            del(request.session)
+          return redirect(url_for(endpoint))
+      return view(request, *args, **kwargs)
+    return wrapped
+  if not arg_exist:
+    return decorator(_endpoint)
+  return decorator
