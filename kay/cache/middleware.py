@@ -45,9 +45,10 @@ class CacheMiddleware(object):
     if hasattr(view_func, kay.cache.NO_CACHE):
       return None
     if self.cache_anonymous_only:
-      assert hasattr(request, 'user'), \
-          ("You need to add a particular AuthenticationMiddleware "
-           "before CacheMiddleware")
+      if not hasattr(request, 'user'):
+        logging.warn("You need to add a particular AuthenticationMiddleware "
+                     "before CacheMiddleware")
+        return None
     if not request.method in ('GET', 'HEAD') or request.args:
       return None
     if self.cache_anonymous_only and request.user.is_authenticated():
