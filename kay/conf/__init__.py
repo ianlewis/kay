@@ -45,9 +45,7 @@ class LazySettings(LazyObject):
 
   def _setup(self):
     """
-    Load the settings module pointed to by the environment
-    variable. This is used the first time we need any settings at all,
-    if the user has not previously configured the settings manually.
+    Load the settings module passed to the constructor. 
     """
     try:
       if not self.settings_module: # If it's set but is an empty string.
@@ -55,7 +53,7 @@ class LazySettings(LazyObject):
     except KeyError:
       # NOTE: This is arguably an EnvironmentError, but that causes
       # problems with Python's interactive help.
-      raise ImportError("Settings cannot be imported, because environment variable %s is undefined." % ENVIRONMENT_VARIABLE)
+      raise ImportError("Settings cannot be imported")
 
     self._wrapped = Settings(self.settings_module)
     try:
