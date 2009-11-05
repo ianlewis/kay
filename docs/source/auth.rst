@@ -8,8 +8,8 @@ Overview
 Google App Engine has a very nice default auth mechanism using google
 account or google apps account. You can use this capability with
 extensible manner with ``AuthenticationMiddleware`` and
-``kay.auth.backend.GoogleBackend``. You can also use username and
-password information stored in the app engine datastore.
+``kay.auth.backends.googleaccount.GoogleBackend``. You can also use
+username and password information stored in the app engine datastore.
 
 Helper functions and decorators
 -------------------------------
@@ -52,9 +52,9 @@ Using google account authentication
 
 By default, ``kay.auth.middleware.AuthenticationMiddleware`` is
 enabled, and :attr:`settings.AUTH_USER_BACKEND` is set to
-``kay.auth.backend.GoogleBackend``. This backend is for authentication
-using google account or google apps account. If a user logs into your
-app first time, an information of the user is stored as
+``kay.auth.backends.googleaccount.GoogleBackend``. This backend is for
+authentication using google account or google apps account. If a user
+logs into your app first time, an information of the user is stored as
 ``kay.auth.models.GoogleUser`` entity (It's just a default setting, it
 is also customizable) in the GAE datastore. You can use this
 middleware and backend combination without using session capability.
@@ -68,7 +68,7 @@ set the name of your new class to :attr:`settings.AUTH_USER_MODEL`.
   MIDDLEWARE_CLASSES = (
     'kay.auth.middleware.AuthenticationMiddleware',
   )
-  AUTH_USER_BACKEND = 'kay.auth.backend.GoogleBackend'
+  AUTH_USER_BACKEND = 'kay.auth.backends.googleaccount.GoogleBackend'
   AUTH_USER_MODEL = 'kay.auth.models.GoogleUser'
 
 
@@ -80,7 +80,7 @@ To use this middleware, you need to set
 :attr:`settings.MIDDLEWARE_CLASSES`, and also need to set
 ``kay.auth.models.DatastoreUser`` (or a classname that is extended
 from it) to :attr:`settings.AUTH_USER_MODEL` and
-``kay.auth.backend.DatastoreBackend`` to
+``kay.auth.backends.datastore.DatastoreBackend`` to
 :attr:`settings.AUTH_USER_BACKEND`. AuthenticationMiddleware must be
 placed under SessionMiddleware that is mandatry for this middleware.
 You also need to add ``kay.auth`` to :attr:`settings.INSTALLED_APPS`.
@@ -94,7 +94,7 @@ You also need to add ``kay.auth`` to :attr:`settings.INSTALLED_APPS`.
     'kay.sessions.middleware.SessionMiddleware',
     'kay.auth.middleware.AuthenticationMiddleware',
   )
-  AUTH_USER_BACKEND = 'kay.auth.backend.DatastoreBackend'
+  AUTH_USER_BACKEND = 'kay.auth.backends.datastore.DatastoreBackend'
   AUTH_USER_MODEL = 'kay.auth.models.DatastoreUser'
 
 

@@ -236,7 +236,7 @@ Items
 	  
 .. attribute:: AUTH_USER_BACKEND
 
-   The backend class for user authentication. The default is ``kay.auth.backend.GoogleBackend``.
+   The backend class for user authentication. The default is ``kay.auth.backends.googleaccount.GoogleBackend``.
    
    .. seealso:: :doc:`auth`
 

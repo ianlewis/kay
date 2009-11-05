@@ -10,7 +10,13 @@ Kay-0.4.0 - November ??, 2009
 
   - Added task_handler for deferred library that corresponds with
     kay's rules.
+  - Moved auth backend classes from kay.auth.backend module to
+    kay.auth.backends package.
 
+  - Notice about this release
+
+    - kay.auth.backend module is now deprecated. Please use
+      kay.auth.backends package instead.
 
 Kay-0.3.0 - October 27, 2009
 =============================

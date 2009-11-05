@@ -230,7 +230,7 @@ Kayアプリケーションの基本的な設定はプロジェクトディレ�
 	  
 .. attribute:: AUTH_USER_BACKEND
 
-   ユーザ認証で使用するバックエンドクラスを指定します。デフォルト値は ``kay.auth.backend.GoogleBackend`` です。
+   ユーザ認証で使用するバックエンドクラスを指定します。デフォルト値は ``kay.auth.backends.googleaccount.GoogleBackend`` です。
 
    .. seealso:: :doc:`auth`
 
