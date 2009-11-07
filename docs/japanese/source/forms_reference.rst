@@ -1,11 +1,11 @@
-===================================
-Reference of kay.utils.forms module
-===================================
+=======================================
+kay.utils.forms モジュール リファレンス
+=======================================
 
-This forms module is originally derived from Zine project hosted at:
-http://zine.pocoo.org/
+このフォームモジュールは、 http://zine.pocoo.org/ の Zine project から流用したものです。
 
-.. module:: kay.utils.forms
+
+.. module:: forms
 
 .. autoclass:: Widget
    :members:
