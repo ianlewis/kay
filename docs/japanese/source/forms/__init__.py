@@ -67,7 +67,7 @@ class Widget(_Renderable):
   >>> username = widget['username']
   >>> password = widget['password']
 
-  ウィジェットをレンダリングするには、通常 `render()` メソッドを呼び出します。すべてのキーワードパラメータは、resulting tag の HTML 属性として使われます。ウィジェット自体を呼び出すことも可能です (``username.render()`` のかわりに ``username()``) 。フィールドにエラーがなければ同じように動作します。エラーがあった場合はウィジェットの後にデフォルトのエラーリストを追加します。TODO
+  ウィジェットをレンダリングするには、通常 `render()` メソッドを呼び出します。すべてのキーワードパラメータは、生成されたタグの HTML 属性として使われます。ウィジェット自体を呼び出すことも可能です (``username.render()`` のかわりに ``username()`` とする) 。フィールドにエラーがなければ同じように動作します。エラーがあった場合はウィジェットの後にデフォルトのエラーリストを追加します。
 
   ウィジェットは、パブリックな属性をいくつかもっています。
 
@@ -93,7 +93,7 @@ class Widget(_Renderable):
 
   `value`
 
-      プリミティブとしてウィジェットの値を返します。基本ウィジェットでは常に文字列です。サブウィジェットをもつウィジェットや複数の値をもつウィジェットではディクショナリかリストです。
+      ウィジェットの値をプリミティブ型で返します。通常のウィジェットでは常に文字列です。サブウィジェットをもつウィジェットや複数の値をもつウィジェットではディクショナリかリストです。
 
       >>> username.value
       u''
@@ -105,11 +105,11 @@ class Widget(_Renderable):
       >>> username.name
       'username'
 
-      名称が常に明らかではないということを覚えておいてください。 Zine はネストされたフォームをサポートしているので、常にネーム属性を使うのはいいアイディアです。TODO
+      ネーム はいつも明らかというわけではないということを覚えておいてください。 Zine はネストされたフォームをサポートしているので、常にネーム属性を使うのはいいアイディアです。
 
   `id`
 
-      ウィジェットのデフォルトドメインを取得できます。これは、フィールドをのアイディアがない場合は ``None`` で、 `f_` + ドットのかわりにアンダースコアつきのフィールド名となります：
+      ウィジェットのデフォルトドメインを取得できます。フィールドのためのアイディアがない場合は ``None`` で、そうでない場合は `f_` + ドットのかわりにアンダースコアつきのフィールド名となります：
 
       >>> username.id
       'f_username'
@@ -123,7 +123,7 @@ class Widget(_Renderable):
     pass
   
   def hidden(self):
-    """現在の値に対する見えないフィールドを、ひとつ、または、複数返します。サブウィジェットもハンドリングします。データをそのまま渡す透過フォームに有用です。
+    """現在の値に対する隠蔽フィールドをひとつ以上返します。サブウィジェットもハンドリングします。データをそのまま渡す透過フォームに有用です。
     """
     pass
   
@@ -163,7 +163,7 @@ class Widget(_Renderable):
     pass
 
   def as_dd(self, **attrs):
-    """dt/dd アイテムを返します"""
+    """dt/dd 要素を返します"""
     pass
 
 
@@ -246,7 +246,7 @@ class SelectBox(Widget):
   
 
 class _InputGroupMember(InternalWidget):
-  """A widget that is a single radio button."""
+  """単一のラジオボタン用のウィジェット"""
 
   @property
   def name(self):
@@ -364,27 +364,20 @@ class MultipleValidationErrors(ValidationError):
 class FieldMeta(type):
 
   def __new__(cls, name, bases, d):
-    messages = {}
-    for base in reversed(bases):
-      if hasattr(base, 'messages'):
-        messages.update(base.messages)
-    if 'messages' in d:
-      messages.update(d['messages'])
-    d['messages'] = messages
-    return type.__new__(cls, name, bases, d)
+    pass
 
 
 class Field(object):
   """抽象フィールド基本クラス"""
 
   def apply_validators(self, value):
-    """値に対してすべてのヴァリデータを適応します。"""
+    """値に対してすべてのヴァリデータを適用します。"""
     pass
 
   def should_validate(self, value):
     """デフォルトでは、値が None ではない場合、ヴァリデートします。このメソッドは、もしフィールドが空で入力必須ではない場合、ヴァリデーションを行わないように用いられるようなカスタムヴァリデータが適用される前に呼ばれます。
 
-    例えば、 `is_valid_ip` のようなヴァリデータは、値が空の文字列で、フィールドが入力必須で、チェック時にヴァリデーションエラーをあげていない場合は、決して呼び出されることはありません。
+    例えば、 `is_valid_ip` のようなヴァリデータは、値が空の文字列であり、かつ、入力必須のフィールドのチェック時にヴァリデーションエラーがあがっていないような場合は、決して呼び出されることはありません。
     """
     pass
 
@@ -394,7 +387,7 @@ class Field(object):
     pass
 
   def to_primitive(self, value):
-    """値をプリミティブに変換します（文字列、または、リストないしディクショナリないし文字列のリスト/ディクショナリ）。
+    """値をプリミティブ型に変換します（文字列、リスト、ディクショナリ、文字列のリスト/ディクショナリ）。
 
     このメソッドは失敗してはいけません！
     """
@@ -444,18 +437,17 @@ class FormAsField(Mapping):
 
 
 class Multiple(Field):
-  """Apply a single field to a sequence of values.
+  """一連の値に単一のフィールドを適用します。
 
   >>> field = Multiple(IntegerField())
   >>> field([u'1', u'2', u'3'])
   [1, 2, 3]
 
-  Recommended widgets:
+  推奨されるウィジェット:
 
-  -   `ListWidget` -- the default one and useful if multiple complex
-      fields are in use.
-  -   `CheckboxGroup` -- useful in combination with choices
-  -   `SelectBoxWidget` -- useful in combination with choices
+  -   `ListWidget` -- デフォルトです。複合フィールドで使うときに便利です。
+  -   `CheckboxGroup` -- 選択と一緒に使うと便利です。
+  -   `SelectBoxWidget` -- 選択と一緒に使うと便利です。
   """
 
   widget = ListWidget
@@ -974,7 +966,7 @@ class Form(object):
 
   >>> field = RegisterForm.as_field()
 
-  このフィールドは、他のフィールドクラスと同じように扱われます。フィールドとしてのフォームにおいて重要なことは、もしそのフィールドがフォームから使われている場合、ヴァリデータが `form` / `self` として渡された `RegisterForm` のインスタンスではなく、使われている場所のフォームを取得することです。TODO
+  このフィールドは、他のフィールドクラスと同じように扱われます。フィールドとしてのフォームにおいて重要なことは、もしそのフィールドがフォームから使われている場合、ヴァリデータが `form` / `self` として渡された `RegisterForm` のインスタンスではなく、使われている場所のフォームを取得することです。
 
   フォームフィールドは、フォームのインスタンス化においてフォームに束縛されます。これにより、フォームの特定のインスタンスを変更することが可能になります。例えば、フォームのインスタンスを作成し、 ``del form.fields['name']`` を使って、いくつかのフィールドをなくしたり、選択フィールドの選択内容を変更することもできます。しかし、新しいフィールドは束縛されていないので、インスタンスに追加するのは容易ではありません。直接フォームに保存されたフィールドは通常の属性のように名前でアクセスすることが可能です。
 
