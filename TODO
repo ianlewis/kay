@@ -17,6 +17,9 @@ Documentation
 kay
 ---
 
+* set/get flash message (a simple cookie based implementation would be
+  fine)
+
 * Capability for compressing css and js media with i18n.
 
 * It could be better than now to installing Kay to somewhere on the
