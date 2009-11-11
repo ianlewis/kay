@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2007 Edgewall Software
+# Copyright (C) 2007-2008 Edgewall Software
 # All rights reserved.
 #
 # This software is licensed as described in the file COPYING, which
@@ -21,8 +21,100 @@
 import array
 import struct
 
-__all__ = ['write_mo']
+from babel.messages.catalog import Catalog, Message
+
+__all__ = ['read_mo', 'write_mo']
 __docformat__ = 'restructuredtext en'
+
+
+LE_MAGIC = 0x950412deL
+BE_MAGIC = 0xde120495L
+
+def read_mo(fileobj):
+    """Read a binary MO file from the given file-like object and return a
+    corresponding `Catalog` object.
+    
+    :param fileobj: the file-like object to read the MO file from
+    :return: a catalog object representing the parsed MO file
+    :rtype: `Catalog`
+    
+    :note: The implementation of this function is heavily based on the
+           ``GNUTranslations._parse`` method of the ``gettext`` module in the
+           standard library.
+    """
+    catalog = Catalog()
+    headers = {}
+
+    filename = getattr(fileobj, 'name', '')
+    charset = None
+
+    buf = fileobj.read()
+    buflen = len(buf)
+    unpack = struct.unpack
+
+    # Parse the .mo file header, which consists of 5 little endian 32
+    # bit words.
+    magic = unpack('<I', buf[:4])[0] # Are we big endian or little endian?
+    if magic == LE_MAGIC:
+        version, msgcount, origidx, transidx = unpack('<4I', buf[4:20])
+        ii = '<II'
+    elif magic == BE_MAGIC:
+        version, msgcount, origidx, transidx = unpack('>4I', buf[4:20])
+        ii = '>II'
+    else:
+        raise IOError(0, 'Bad magic number', filename)
+
+    # Now put all messages from the .mo file buffer into the catalog
+    # dictionary
+    for i in xrange(0, msgcount):
+        mlen, moff = unpack(ii, buf[origidx:origidx + 8])
+        mend = moff + mlen
+        tlen, toff = unpack(ii, buf[transidx:transidx + 8])
+        tend = toff + tlen
+        if mend < buflen and tend < buflen:
+            msg = buf[moff:mend]
+            tmsg = buf[toff:tend]
+        else:
+            raise IOError(0, 'File is corrupt', filename)
+
+        # See if we're looking at GNU .mo conventions for metadata
+        if mlen == 0:
+            # Catalog description
+            lastkey = key = None
+            for item in tmsg.splitlines():
+                item = item.strip()
+                if not item:
+                    continue
+                if ':' in item:
+                    key, value = item.split(':', 1)
+                    lastkey = key = key.strip().lower()
+                    headers[key] = value.strip()
+                elif lastkey:
+                    headers[lastkey] += '\n' + item
+
+        if '\x04' in msg: # context
+            ctxt, msg = msg.split('\x04')
+        else:
+            ctxt = None
+
+        if '\x00' in msg: # plural forms
+            msg = msg.split('\x00')
+            tmsg = tmsg.split('\x00')
+            if catalog.charset:
+                msg = [x.decode(catalog.charset) for x in msg]
+                tmsg = [x.decode(catalog.charset) for x in tmsg]
+        else:
+            if catalog.charset:
+                msg = msg.decode(catalog.charset)
+                tmsg = tmsg.decode(catalog.charset)
+        catalog[msg] = Message(msg, tmsg, context=ctxt)
+
+        # advance to next entry in the seek tables
+        origidx += 8
+        transidx += 8
+
+    catalog.mime_headers = headers.items()
+    return catalog
 
 def write_mo(fileobj, catalog, use_fuzzy=False):
     """Write a catalog to the specified file-like object using the GNU MO file
@@ -93,6 +185,9 @@ def write_mo(fileobj, catalog, use_fuzzy=False):
                 msgstr = message.id.encode(catalog.charset)
             else:
                 msgstr = message.string.encode(catalog.charset)
+        if message.context:
+            msgid = '\x04'.join([message.context.encode(catalog.charset),
+                                 msgid])
         offsets.append((len(ids), len(msgid), len(strs), len(msgstr)))
         ids += msgid + '\x00'
         strs += msgstr + '\x00'
@@ -112,7 +207,7 @@ def write_mo(fileobj, catalog, use_fuzzy=False):
     offsets = koffsets + voffsets
 
     fileobj.write(struct.pack('Iiiiiii',
-        0x950412deL,                # magic
+        LE_MAGIC,                   # magic
         0,                          # version
         len(messages),              # number of entries
         7 * 4,                      # start of key index

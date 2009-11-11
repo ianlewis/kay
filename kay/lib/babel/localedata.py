@@ -19,24 +19,18 @@
 
 import os
 import pickle
-import zipfile
 try:
     import threading
 except ImportError:
     import dummy_threading as threading
 from UserDict import DictMixin
 
-try:
-  from google.appengine.api import memcache
-  memcache.get("test")
-except (ImportError, AssertionError):
-  from kay.misc import NullMemcache
-  memcache = NullMemcache()
-
 __all__ = ['exists', 'list', 'load']
 __docformat__ = 'restructuredtext en'
 
-_filename = os.path.join(os.path.dirname(__file__), 'localedata.zip')
+_cache = {}
+_cache_lock = threading.RLock()
+_dirname = os.path.join(os.path.dirname(__file__), 'localedata')
 
 
 def exists(name):
@@ -46,15 +40,9 @@ def exists(name):
     :return: `True` if the locale data exists, `False` otherwise
     :rtype: `bool`
     """
-    data = memcache.get("locale:%s")
-    if data is not None:
-      return True
-    zfile = zipfile.ZipFile(_filename)
-    try:
-      zfile.getinfo("localedata/%s.dat" % name)
-    except KeyError:
-      return False
-    return True
+    if name in _cache:
+        return True
+    return os.path.exists(os.path.join(_dirname, '%s.dat' % name))
 
 
 def list():
@@ -65,11 +53,8 @@ def list():
     :rtype: `list`
     :since: version 0.8.1
     """
-    
-    zfile = zipfile.ZipFile(_filename)
-    filelist = [fname[len('localedata/'):] for fname in zfile.namelist()]
     return [stem for stem, extension in [
-        os.path.splitext(filename) for filename in filelist
+        os.path.splitext(filename) for filename in os.listdir(_dirname)
     ] if extension == '.dat' and stem != 'root']
 
 
@@ -100,28 +85,33 @@ def load(name, merge_inherited=True):
     :raise `IOError`: if no locale data file is found for the given locale
                       identifer, or one of the locales it inherits from
     """
-
-    data = memcache.get("locale:%s" % name)
-    if not data:
-      zfile = zipfile.ZipFile(_filename)
-      # Load inherited data
-      if name == 'root' or not merge_inherited:
-        data = {}
-      else:
-        parts = name.split('_')
-        if len(parts) == 1:
-          parent = 'root'
-        else:
-          parent = '_'.join(parts[:-1])
-        data = load(parent).copy()
-      filename = os.path.join('localedata/%s.dat' % name)
-      zdata = zfile.read(filename)
-      if name != 'root' and merge_inherited:
-        merge(data, pickle.loads(zdata))
-      else:
-        data = pickle.loads(zdata)
-      memcache.set("locale:%s" % name, data, 86400)
-    return data
+    _cache_lock.acquire()
+    try:
+        data = _cache.get(name)
+        if not data:
+            # Load inherited data
+            if name == 'root' or not merge_inherited:
+                data = {}
+            else:
+                parts = name.split('_')
+                if len(parts) == 1:
+                    parent = 'root'
+                else:
+                    parent = '_'.join(parts[:-1])
+                data = load(parent).copy()
+            filename = os.path.join(_dirname, '%s.dat' % name)
+            fileobj = open(filename, 'rb')
+            try:
+                if name != 'root' and merge_inherited:
+                    merge(data, pickle.load(fileobj))
+                else:
+                    data = pickle.load(fileobj)
+                _cache[name] = data
+            finally:
+                fileobj.close()
+        return data
+    finally:
+        _cache_lock.release()
 
 
 def merge(dict1, dict2):
@@ -130,8 +120,8 @@ def merge(dict1, dict2):
     
     >>> d = {1: 'foo', 3: 'baz'}
     >>> merge(d, {1: 'Foo', 2: 'Bar'})
-    >>> d
-    {1: 'Foo', 2: 'Bar', 3: 'baz'}
+    >>> items = d.items(); items.sort(); items
+    [(1, 'Foo'), (2, 'Bar'), (3, 'baz')]
     
     :param dict1: the dictionary to merge into
     :param dict2: the dictionary containing the data that should be merged
@@ -150,12 +140,7 @@ def merge(dict1, dict2):
                     merge(others, val2)
                     val1 = (alias, others)
                 else:
-                    try:
-                      val1 = val1.copy()
-                    except:
-                      print "key: %s" % key
-                      print "val1: %s" % val1
-                      raise
+                    val1 = val1.copy()
                     merge(val1, val2)
             else:
                 val1 = val2

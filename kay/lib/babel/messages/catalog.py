@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2007 Edgewall Software
+# Copyright (C) 2007-2008 Edgewall Software
 # All rights reserved.
 #
 # This software is licensed as described in the file COPYING, which
@@ -19,17 +19,13 @@ from difflib import get_close_matches
 from email import message_from_string
 from copy import copy
 import re
-try:
-    set
-except NameError:
-    from sets import Set as set
 import time
 
 from babel import __version__ as VERSION
 from babel.core import Locale
 from babel.dates import format_datetime
 from babel.messages.plurals import get_plural
-from babel.util import odict, distinct, LOCALTZ, UTC, FixedOffsetTimezone
+from babel.util import odict, distinct, set, LOCALTZ, UTC, FixedOffsetTimezone
 
 __all__ = ['Message', 'Catalog', 'TranslationError']
 __docformat__ = 'restructuredtext en'
@@ -51,7 +47,7 @@ class Message(object):
     """Representation of a single message in a catalog."""
 
     def __init__(self, id, string=u'', locations=(), flags=(), auto_comments=(),
-                 user_comments=(), previous_id=(), lineno=None):
+                 user_comments=(), previous_id=(), lineno=None, context=None):
         """Create the message object.
 
         :param id: the message ID, or a ``(singular, plural)`` tuple for
@@ -66,6 +62,7 @@ class Message(object):
                             tuple for pluralizable messages
         :param lineno: the line number on which the msgid line was found in the
                        PO file, if any
+        :param context: the message context
         """
         self.id = id #: The message ID
         if not string and self.pluralizable:
@@ -84,6 +81,7 @@ class Message(object):
         else:
             self.previous_id = list(previous_id)
         self.lineno = lineno
+        self.context = context
 
     def __repr__(self):
         return '<%s %r (flags: %r)>' % (type(self).__name__, self.id,
@@ -106,7 +104,7 @@ class Message(object):
         return Message(*map(copy, (self.id, self.string, self.locations,
                                    self.flags, self.auto_comments,
                                    self.user_comments, self.previous_id,
-                                   self.lineno)))
+                                   self.lineno, self.context)))
 
     def check(self, catalog=None):
         """Run various validation checks on the message.  Some validations
@@ -351,13 +349,61 @@ class Catalog(object):
             elif name == 'pot-creation-date':
                 # FIXME: this should use dates.parse_datetime as soon as that
                 #        is ready
-                value, tzoffset, _ = re.split('[+-](\d{4})$', value, 1)
+                value, tzoffset, _ = re.split('([+-]\d{4})$', value, 1)
+
                 tt = time.strptime(value, '%Y-%m-%d %H:%M')
                 ts = time.mktime(tt)
-                tzoffset = FixedOffsetTimezone(int(tzoffset[:2]) * 60 +
-                                               int(tzoffset[2:]))
+
+                # Seprate the offset into a sign component, hours, and minutes
+                plus_minus_s, rest = tzoffset[0], tzoffset[1:]
+                hours_offset_s, mins_offset_s = rest[:2], rest[2:]
+
+                # Make them all integers
+                plus_minus = int(plus_minus_s + '1')
+                hours_offset = int(hours_offset_s)
+                mins_offset = int(mins_offset_s)
+
+                # Calculate net offset
+                net_mins_offset = hours_offset * 60
+                net_mins_offset += mins_offset
+                net_mins_offset *= plus_minus
+
+                # Create an offset object
+                tzoffset = FixedOffsetTimezone(net_mins_offset)
+
+                # Store the offset in a datetime object
                 dt = datetime.fromtimestamp(ts)
                 self.creation_date = dt.replace(tzinfo=tzoffset)
+            elif name == 'po-revision-date':
+                # Keep the value if it's not the default one
+                if 'YEAR' not in value:
+                    # FIXME: this should use dates.parse_datetime as soon as
+                    #        that is ready
+                    value, tzoffset, _ = re.split('([+-]\d{4})$', value, 1)
+                    tt = time.strptime(value, '%Y-%m-%d %H:%M')
+                    ts = time.mktime(tt)
+
+                    # Seprate the offset into a sign component, hours, and
+                    # minutes
+                    plus_minus_s, rest = tzoffset[0], tzoffset[1:]
+                    hours_offset_s, mins_offset_s = rest[:2], rest[2:]
+
+                    # Make them all integers
+                    plus_minus = int(plus_minus_s + '1')
+                    hours_offset = int(hours_offset_s)
+                    mins_offset = int(mins_offset_s)
+
+                    # Calculate net offset
+                    net_mins_offset = hours_offset * 60
+                    net_mins_offset += mins_offset
+                    net_mins_offset *= plus_minus
+
+                    # Create an offset object
+                    tzoffset = FixedOffsetTimezone(net_mins_offset)
+
+                    # Store the offset in a datetime object
+                    dt = datetime.fromtimestamp(ts)
+                    self.revision_date = dt.replace(tzinfo=tzoffset)
 
     mime_headers = property(_get_mime_headers, _set_mime_headers, doc="""\
     The MIME headers of the catalog, used for the special ``msgid ""`` entry.
@@ -492,19 +538,17 @@ class Catalog(object):
 
     def __delitem__(self, id):
         """Delete the message with the specified ID."""
-        key = self._key_for(id)
-        if key in self._messages:
-            del self._messages[key]
+        self.delete(id)
 
     def __getitem__(self, id):
         """Return the message with the specified ID.
 
         :param id: the message ID
-        :return: the message with the specified ID, or `None` if no such message
-                 is in the catalog
+        :return: the message with the specified ID, or `None` if no such
+                 message is in the catalog
         :rtype: `Message`
         """
-        return self._messages.get(self._key_for(id))
+        return self.get(id)
 
     def __setitem__(self, id, message):
         """Add or update the message with the specified ID.
@@ -529,7 +573,7 @@ class Catalog(object):
         :param message: the `Message` object
         """
         assert isinstance(message, Message), 'expected a Message object'
-        key = self._key_for(id)
+        key = self._key_for(id, message.context)
         current = self._messages.get(key)
         if current:
             if message.pluralizable and not current.pluralizable:
@@ -558,7 +602,7 @@ class Catalog(object):
             self._messages[key] = message
 
     def add(self, id, string=None, locations=(), flags=(), auto_comments=(),
-            user_comments=(), previous_id=(), lineno=None):
+            user_comments=(), previous_id=(), lineno=None, context=None):
         """Add or update the message with the specified ID.
 
         >>> catalog = Catalog()
@@ -581,9 +625,11 @@ class Catalog(object):
                             tuple for pluralizable messages
         :param lineno: the line number on which the msgid line was found in the
                        PO file, if any
+        :param context: the message context
         """
         self[id] = Message(id, string, list(locations), flags, auto_comments,
-                           user_comments, previous_id, lineno=lineno)
+                           user_comments, previous_id, lineno=lineno,
+                           context=context)
 
     def check(self):
         """Run various validation checks on the translations in the catalog.
@@ -598,6 +644,27 @@ class Catalog(object):
             errors = message.check(catalog=self)
             if errors:
                 yield message, errors
+
+    def get(self, id, context=None):
+        """Return the message with the specified ID and context.
+
+        :param id: the message ID
+        :param context: the message context, or ``None`` for no context
+        :return: the message with the specified ID, or `None` if no such
+                 message is in the catalog
+        :rtype: `Message`
+        """
+        return self._messages.get(self._key_for(id, context))
+
+    def delete(self, id, context=None):
+        """Delete the message with the specified ID and context.
+        
+        :param id: the message ID
+        :param context: the message context, or ``None`` for no context
+        """
+        key = self._key_for(id, context)
+        if key in self._messages:
+            del self._messages[key]
 
     def update(self, template, no_fuzzy_matching=False):
         """Update the catalog based on the given template catalog.
@@ -653,10 +720,10 @@ class Catalog(object):
         # Prepare for fuzzy matching
         fuzzy_candidates = []
         if not no_fuzzy_matching:
-            fuzzy_candidates = [
-                self._key_for(msgid) for msgid in messages
-                if msgid and messages[msgid].string
-            ]
+            fuzzy_candidates = dict([
+                (self._key_for(msgid), messages[msgid].context)
+                for msgid in messages if msgid and messages[msgid].string
+            ])
         fuzzy_matches = set()
 
         def _merge(message, oldkey, newkey):
@@ -679,8 +746,7 @@ class Catalog(object):
                     message.string = tuple(
                         [message.string] + ([u''] * (len(message.id) - 1))
                     )
-                elif len(message.string) != len(message.id) and \
-                    len(message.string) != self.num_plurals:
+                elif len(message.string) != self.num_plurals:
                     fuzzy = True
                     message.string = tuple(message.string[:len(oldmsg.string)])
             elif isinstance(message.string, (list, tuple)):
@@ -693,16 +759,24 @@ class Catalog(object):
 
         for message in template:
             if message.id:
-                key = self._key_for(message.id)
+                key = self._key_for(message.id, message.context)
                 if key in messages:
                     _merge(message, key, key)
                 else:
                     if no_fuzzy_matching is False:
                         # do some fuzzy matching with difflib
-                        matches = get_close_matches(key.lower().strip(),
-                                                    fuzzy_candidates, 1)
+                        if isinstance(key, tuple):
+                            matchkey = key[0] # just the msgid, no context
+                        else:
+                            matchkey = key
+                        matches = get_close_matches(matchkey.lower().strip(),
+                                                    fuzzy_candidates.keys(), 1)
                         if matches:
-                            _merge(message, matches[0], key)
+                            newkey = matches[0]
+                            newctxt = fuzzy_candidates[newkey]
+                            if newctxt is not None:
+                                newkey = newkey, newctxt
+                            _merge(message, newkey, key)
                             continue
 
                     self[message.id] = message
@@ -711,12 +785,18 @@ class Catalog(object):
         for msgid in remaining:
             if no_fuzzy_matching or msgid not in fuzzy_matches:
                 self.obsolete[msgid] = remaining[msgid]
+        # Make updated catalog's POT-Creation-Date equal to the template
+        # used to update the catalog
+        self.creation_date = template.creation_date
 
-    def _key_for(self, id):
+    def _key_for(self, id, context=None):
         """The key for a message is just the singular ID even for pluralizable
+        messages, but is a ``(msgid, msgctxt)`` tuple for context-specific
         messages.
         """
         key = id
         if isinstance(key, (list, tuple)):
             key = id[0]
+        if context is not None:
+            key = (key, context)
         return key
