@@ -22,22 +22,21 @@ class NamedModel(db.Model):
 
   @classmethod
   def create_new_entity(cls, **kwargs):
-    key_generator = cls.get_key_generator(**kwargs)
-    first_key_name = key_generator.next()
-    def txn():
-      key_name = first_key_name
+    def txn(key_name):
       if kwargs.has_key('parent'):
         entity = cls.get_by_key_name(key_name, parent=kwargs['parent'])
       else:
         entity = cls.get_by_key_name(key_name)
-      while entity is not None:
-        key_name = key_negerator.next()
-        if kwargs.has_key('parent'):
-          entity = cls.get_by_key_name(key_name, parent=kwargs['parent'])
-        else:
-          entity = cls.get_by_key_name(key_name)
-      entity = cls(key_name=key_name, **kwargs)
-      entity.put()
-      return entity
-    return db.run_in_transaction(txn)
-
+      if entity is None:
+        entity = cls(key_name=key_name, **kwargs)
+        entity.put()
+        return entity
+      else:
+        return None
+    key_generator = cls.get_key_generator(**kwargs)
+    first_key_name = key_generator.next()
+    entity = db.run_in_transaction(txn, first_key_name)
+    while entity is None:
+      key_name = key_negerator.next()
+      entity = db.run_in_transaction(txn, key_name)
+    return entity
