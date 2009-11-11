@@ -8,125 +8,125 @@ kay.utils.forms モジュール リファレンス
 .. module:: forms
 
 .. autoclass:: Widget
+   :show-inheritance:
    :members:
-   :inherited-members:
 
 .. autoclass:: Input
+   :show-inheritance:
    :members:
-   :inherited-members:
 
 .. autoclass:: FileInput
+   :show-inheritance:
    :members:
-   :inherited-members:
 
 .. autoclass:: TextInput
+   :show-inheritance:
    :members:
-   :inherited-members:
 
 .. autoclass:: PasswordInput
+   :show-inheritance:
    :members:
-   :inherited-members:
 
 .. autoclass:: HiddenInput
+   :show-inheritance:
    :members:
-   :inherited-members:
 
 .. autoclass:: Textarea
+   :show-inheritance:
    :members:
-   :inherited-members:
 
 .. autoclass:: Checkbox
+   :show-inheritance:
    :members:
-   :inherited-members:
 
 .. autoclass:: SelectBox
+   :show-inheritance:
    :members:
-   :inherited-members:
 
 .. autoclass:: RadioButton
+   :show-inheritance:
    :members:
-   :inherited-members:
 
 .. autoclass:: GroupCheckbox
+   :show-inheritance:
    :members:
-   :inherited-members:
 
 .. autoclass:: RadioButtonGroup
+   :show-inheritance:
    :members:
-   :inherited-members:
 
 .. autoclass:: CheckboxGroup
+   :show-inheritance:
    :members:
-   :inherited-members:
 
 .. autoclass:: Field
+   :show-inheritance:
    :members:
-   :inherited-members:
 
 .. autoclass:: Multiple
+   :show-inheritance:
    :members:
-   :inherited-members:
 
 .. autoclass:: CommaSeparated
+   :show-inheritance:
    :members:
-   :inherited-members:
 
 .. autoclass:: LineSeparated
+   :show-inheritance:
    :members:
-   :inherited-members:
 
 .. autoclass:: TextField
+   :show-inheritance:
    :members:
-   :inherited-members:
 
 .. autoclass:: RegexField
+   :show-inheritance:
    :members:
-   :inherited-members:
 
 .. autoclass:: EmailField
+   :show-inheritance:
    :members:
-   :inherited-members:
 
 .. autoclass:: DateTimeField
+   :show-inheritance:
    :members:
-   :inherited-members:
 
 .. autoclass:: ModelField
+   :show-inheritance:
    :members:
-   :inherited-members:
 
 .. autoclass:: HiddenModelField
+   :show-inheritance:
    :members:
-   :inherited-members:
 
 .. autoclass:: ChoiceField
+   :show-inheritance:
    :members:
-   :inherited-members:
 
 .. autoclass:: MultiChoiceField
+   :show-inheritance:
    :members:
-   :inherited-members:
 
 .. autoclass:: NumberField
+   :show-inheritance:
    :members:
-   :inherited-members:
 
 .. autoclass:: IntegerField
+   :show-inheritance:
    :members:
-   :inherited-members:
 
 .. autoclass:: FloatField
+   :show-inheritance:
    :members:
-   :inherited-members:
 
 .. autoclass:: FileField
+   :show-inheritance:
    :members:
-   :inherited-members:
 
 .. autoclass:: BooleanField
+   :show-inheritance:
    :members:
-   :inherited-members:
 
 .. autoclass:: Form
+   :show-inheritance:
    :members:
-   :inherited-members:
