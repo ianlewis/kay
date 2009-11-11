@@ -216,6 +216,9 @@ class Locale(object):
     def __eq__(self, other):
         return str(self) == str(other)
 
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
     def __repr__(self):
         return '<Locale "%s">' % str(self)
 
@@ -572,7 +575,7 @@ class Locale(object):
         >>> Locale('en', 'US').date_formats['short']
         <DateTimePattern u'M/d/yy'>
         >>> Locale('fr', 'FR').date_formats['long']
-        <DateTimePattern u'd MMMM yyyy'>
+        <DateTimePattern u'd MMMM y'>
         
         :type: `dict`
         """)
@@ -595,12 +598,29 @@ class Locale(object):
     datetime_formats = property(datetime_formats, doc="""\
         Locale patterns for datetime formatting.
         
-        >>> Locale('en').datetime_formats[None]
+        >>> Locale('en').datetime_formats['full']
         u'{1} {0}'
-        >>> Locale('th').datetime_formats[None]
+        >>> Locale('th').datetime_formats['medium']
         u'{1}, {0}'
         
         :type: `dict`
+        """)
+
+    def plural_form(self):
+        return self._data['plural_form']
+    plural_form = property(plural_form, doc="""\
+        Plural rules for the locale.
+        
+        >>> Locale('en').plural_form(1)
+        'one'
+        >>> Locale('en').plural_form(0)
+        'other'
+        >>> Locale('fr').plural_form(0)
+        'one'
+        >>> Locale('ru').plural_form(100)
+        'many'
+        
+        :type: `PluralRule`
         """)
 
 

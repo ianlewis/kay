@@ -21,13 +21,14 @@ following environment variables, in that order:
  * ``LANG``
 """
 
+from __future__ import division
 from datetime import date, datetime, time, timedelta, tzinfo
 import re
 
 from babel.core import default_locale, get_global, Locale
 from babel.util import UTC
 
-__all__ = ['format_date', 'format_datetime', 'format_time',
+__all__ = ['format_date', 'format_datetime', 'format_time', 'format_timedelta',
            'get_timezone_name', 'parse_date', 'parse_datetime', 'parse_time']
 __docformat__ = 'restructuredtext en'
 
@@ -122,9 +123,9 @@ def get_date_format(format='medium', locale=LC_TIME):
     format.
     
     >>> get_date_format(locale='en_US')
-    <DateTimePattern u'MMM d, yyyy'>
+    <DateTimePattern u'MMM d, y'>
     >>> get_date_format('full', locale='de_DE')
-    <DateTimePattern u'EEEE, d. MMMM yyyy'>
+    <DateTimePattern u'EEEE, d. MMMM y'>
     
     :param format: the format to use, one of "full", "long", "medium", or
                    "short"
@@ -159,7 +160,7 @@ def get_time_format(format='medium', locale=LC_TIME):
     >>> get_time_format(locale='en_US')
     <DateTimePattern u'h:mm:ss a'>
     >>> get_time_format('full', locale='de_DE')
-    <DateTimePattern u'HH:mm:ss v'>
+    <DateTimePattern u'HH:mm:ss zzzz'>
     
     :param format: the format to use, one of "full", "long", "medium", or
                    "short"
@@ -460,7 +461,7 @@ def format_date(date=None, format='medium', locale=LC_TIME):
 
 def format_datetime(datetime=None, format='medium', tzinfo=None,
                     locale=LC_TIME):
-    """Return a date formatted according to the given pattern.
+    r"""Return a date formatted according to the given pattern.
     
     >>> dt = datetime(2007, 04, 01, 15, 30)
     >>> format_datetime(dt, locale='en_US')
@@ -472,7 +473,7 @@ def format_datetime(datetime=None, format='medium', tzinfo=None,
     >>> from pytz import timezone
     >>> format_datetime(dt, 'full', tzinfo=timezone('Europe/Paris'),
     ...                 locale='fr_FR')
-    u'dimanche 1 avril 2007 17:30:00 HEC'
+    u'dimanche 1 avril 2007 17:30:00 Heure avanc\xe9e de l\u2019Europe centrale'
     >>> format_datetime(dt, "yyyy.MM.dd G 'at' HH:mm:ss zzz",
     ...                 tzinfo=timezone('US/Eastern'), locale='en')
     u'2007.04.01 AD at 11:30:00 EDT'
@@ -508,7 +509,7 @@ def format_datetime(datetime=None, format='medium', tzinfo=None,
         return parse_pattern(format).apply(datetime, locale)
 
 def format_time(time=None, format='medium', tzinfo=None, locale=LC_TIME):
-    """Return a time formatted according to the given pattern.
+    r"""Return a time formatted according to the given pattern.
     
     >>> t = time(15, 30)
     >>> format_time(t, locale='en_US')
@@ -530,7 +531,7 @@ def format_time(time=None, format='medium', tzinfo=None, locale=LC_TIME):
     >>> tzinfo = timezone('Europe/Paris')
     >>> t = tzinfo.localize(t)
     >>> format_time(t, format='full', tzinfo=tzinfo, locale='fr_FR')
-    u'15:30:00 HEC'
+    u'15:30:00 Heure avanc\xe9e de l\u2019Europe centrale'
     >>> format_time(t, "hh 'o''clock' a, zzzz", tzinfo=timezone('US/Eastern'),
     ...             locale='en')
     u"09 o'clock AM, Eastern Daylight Time"
@@ -551,10 +552,10 @@ def format_time(time=None, format='medium', tzinfo=None, locale=LC_TIME):
     >>> t = time(15, 30)
     >>> format_time(t, format='full', tzinfo=timezone('Europe/Paris'),
     ...             locale='fr_FR')
-    u'15:30:00 HEC'
+    u'15:30:00 Heure normale de l\u2019Europe centrale'
     >>> format_time(t, format='full', tzinfo=timezone('US/Eastern'),
     ...             locale='en_US')
-    u'3:30:00 PM ET'
+    u'3:30:00 PM Eastern Standard Time'
     
     :param time: the ``time`` or ``datetime`` object; if `None`, the current
                  time in UTC is used
@@ -578,7 +579,7 @@ def format_time(time=None, format='medium', tzinfo=None, locale=LC_TIME):
     if isinstance(time, datetime):
         if tzinfo is not None:
             time = time.astimezone(tzinfo)
-            if hasattr(tzinfo, 'localize'): # pytz
+            if hasattr(tzinfo, 'normalize'): # pytz
                 time = tzinfo.normalize(time)
         time = time.timetz()
     elif tzinfo is not None:
@@ -588,6 +589,68 @@ def format_time(time=None, format='medium', tzinfo=None, locale=LC_TIME):
     if format in ('full', 'long', 'medium', 'short'):
         format = get_time_format(format, locale=locale)
     return parse_pattern(format).apply(time, locale)
+
+TIMEDELTA_UNITS = (
+    ('year',   3600 * 24 * 365),
+    ('month',  3600 * 24 * 30),
+    ('week',   3600 * 24 * 7),
+    ('day',    3600 * 24),
+    ('hour',   3600),
+    ('minute', 60),
+    ('second', 1)
+)
+
+def format_timedelta(delta, granularity='second', threshold=.85, locale=LC_TIME):
+    """Return a time delta according to the rules of the given locale.
+
+    >>> format_timedelta(timedelta(weeks=12), locale='en_US')
+    u'3 mths'
+    >>> format_timedelta(timedelta(seconds=1), locale='es')
+    u'1 s'
+
+    The granularity parameter can be provided to alter the lowest unit
+    presented, which defaults to a second.
+    
+    >>> format_timedelta(timedelta(hours=3), granularity='day',
+    ...                  locale='en_US')
+    u'1 day'
+
+    The threshold parameter can be used to determine at which value the
+    presentation switches to the next higher unit. A higher threshold factor
+    means the presentation will switch later. For example:
+
+    >>> format_timedelta(timedelta(hours=23), threshold=0.9, locale='en_US')
+    u'1 day'
+    >>> format_timedelta(timedelta(hours=23), threshold=1.1, locale='en_US')
+    u'23 hrs'
+
+    :param delta: a ``timedelta`` object representing the time difference to
+                  format, or the delta in seconds as an `int` value
+    :param granularity: determines the smallest unit that should be displayed,
+                        the value can be one of "year", "month", "week", "day",
+                        "hour", "minute" or "second"
+    :param threshold: factor that determines at which point the presentation
+                      switches to the next higher unit
+    :param locale: a `Locale` object or a locale identifier
+    :rtype: `unicode`
+    """
+    if isinstance(delta, timedelta):
+        seconds = int((delta.days * 86400) + delta.seconds)
+    else:
+        seconds = delta
+    locale = Locale.parse(locale)
+
+    for unit, secs_per_unit in TIMEDELTA_UNITS:
+        value = abs(seconds) / secs_per_unit
+        if value >= threshold or unit == granularity:
+            if unit == granularity and value > 0:
+                value = max(1, value)
+            value = int(round(value))
+            plural_form = locale.plural_form(value)
+            pattern = locale._data['unit_patterns'][unit][plural_form]
+            return pattern.replace('{0}', str(value))
+
+    return u''
 
 def parse_date(string, locale=LC_TIME):
     """Parse a date from a string.
@@ -695,7 +758,8 @@ class DateTimePattern(object):
         return self.pattern
 
     def __mod__(self, other):
-        assert type(other) is DateTimeFormat
+        if type(other) is not DateTimeFormat:
+            return NotImplemented
         return self.format % other
 
     def apply(self, datetime, locale):
@@ -824,7 +888,7 @@ class DateTimeFormat(object):
         return self.format(self.get_day_of_year(), num)
 
     def format_day_of_week_in_month(self):
-        return '%d' % ((self.value.day - 1) / 7 + 1)
+        return '%d' % ((self.value.day - 1) // 7 + 1)
 
     def format_period(self, char):
         period = {0: 'am', 1: 'pm'}[int(self.value.hour >= 12)]
@@ -889,7 +953,7 @@ class DateTimeFormat(object):
                      day_of_period + 1) % 7
         if first_day < 0:
             first_day += 7
-        week_number = (day_of_period + first_day - 1) / 7
+        week_number = (day_of_period + first_day - 1) // 7
         if 7 - first_day >= self.locale.min_week_days:
             week_number += 1
         return week_number

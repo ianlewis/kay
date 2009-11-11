@@ -190,13 +190,18 @@ class TemporarySession(db.Model):
   @classmethod
   def get_new_session(cls, user):
     from kay.utils import crypto
-    def txn():
-      uuid = crypto.new_iid()
-      session = cls.get_by_key_name(cls.get_key_name(uuid))
-      while session is not None:
-        uuid = crypto.new_iid()
-        session = cls.get_by_key_name(cls.get_key_name(uuid))
-      session = cls(key_name=cls.get_key_name(uuid), user=user)
-      session.put()
-      return session
-    return db.run_in_transaction(txn)
+    def txn(id):
+      session = cls.get_by_key_name(cls.get_key_name(id))
+      if session is None:
+        session = cls(key_name=cls.get_key_name(id), user=user)
+        session.put()
+        return session
+      else:
+        return None
+
+    id = crypto.new_iid()
+    session = db.run_in_transaction(txn, id)
+    while session is None:
+      id = crypto.new_iid()
+      session = db.run_in_transaction(txn, id)
+    return session
