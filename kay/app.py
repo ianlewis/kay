@@ -22,7 +22,9 @@ from werkzeug.exceptions import (
 from werkzeug import (
   Response, redirect
 )
-from werkzeug.routing import Submount
+from werkzeug.routing import (
+  Submount, RequestRedirect
+)
 from werkzeug.utils import import_string
 from jinja2 import (
   Environment, Undefined,
@@ -323,6 +325,8 @@ class KayApp(object):
           if response:
             return response
         raise
+    except RequestRedirect, e:
+      response = e
     except HTTPException, e:
       logging.warning(e)
       response = render_error(e)

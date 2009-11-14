@@ -27,3 +27,10 @@ def index2(request):
 
 def no_decorator(request):
   return Response("test")
+
+def oldpage(request):
+  return Resposne("Old")
+
+def newpage(request):
+  return Response("New")
+  
