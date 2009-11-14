@@ -257,15 +257,14 @@ def shell(datastore_path='', history_path='', useful_imports=True,
       sh = IPython.Shell.IPShellEmbed(argv='', banner=banner)
       sh(global_ns={}, local_ns=namespace)
       return
-  else:
-    sys.ps1 = '%s> ' % appid
-    if readline is not None:
-      readline.parse_and_bind('tab: complete')
-      atexit.register(lambda: readline.write_history_file(HISTORY_PATH))
-      if os.path.exists(HISTORY_PATH):
-        readline.read_history_file(HISTORY_PATH)
-    from code import interact
-    interact(banner, local=namespace)
+  sys.ps1 = '%s> ' % appid
+  if readline is not None:
+    readline.parse_and_bind('tab: complete')
+    atexit.register(lambda: readline.write_history_file(HISTORY_PATH))
+    if os.path.exists(HISTORY_PATH):
+      readline.read_history_file(HISTORY_PATH)
+  from code import interact
+  interact(banner, local=namespace)
 
 
 # TODO: Need refactoring of following three functions.
@@ -360,12 +359,11 @@ def rshell(appid=('a', ''), host=('h', ''), path=('p', ''),
       sh = IPython.Shell.IPShellEmbed(argv='', banner=banner)
       sh(global_ns={}, local_ns=namespace)
       return
-  else:
-    sys.ps1 = '%s> ' % appid
-    if readline is not None:
-      readline.parse_and_bind('tab: complete')
-      atexit.register(lambda: readline.write_history_file(HISTORY_PATH))
-      if os.path.exists(HISTORY_PATH):
-        readline.read_history_file(HISTORY_PATH)
-    from code import interact
-    interact(banner, local=namespace)
+  sys.ps1 = '%s> ' % appid
+  if readline is not None:
+    readline.parse_and_bind('tab: complete')
+    atexit.register(lambda: readline.write_history_file(HISTORY_PATH))
+    if os.path.exists(HISTORY_PATH):
+      readline.read_history_file(HISTORY_PATH)
+  from code import interact
+  interact(banner, local=namespace)
