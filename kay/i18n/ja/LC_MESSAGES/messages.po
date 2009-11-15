@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  kay-0.4.0\n"
 "Report-Msgid-Bugs-To: tmatsuo@candit.jp\n"
-"POT-Creation-Date: 2009-05-15 14:07+0900\n"
-"PO-Revision-Date: 2009-11-03 02:22+0900\n"
+"POT-Creation-Date: 2009-11-15 23:30+0900\n"
+"PO-Revision-Date: 2009-11-15 23:32+0900\n"
 "Last-Translator: Takashi Matsuo <tmatsuo@candit.jp>\n"
 "Language-Team: Takashi Matsuo <tmatsuo@candit.jp>\n"
 "Plural-Forms: nplurals=1; plural=0\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel None\n"
 
-#: kay/app.py:349 kay/utils/decorators.py:155
+#: kay/app.py:344
 msgid "Appengine might be under maintenance."
 msgstr "Appengine はメンテナンス中のようです。"
 
@@ -29,7 +29,7 @@ msgstr "ユーザー名"
 msgid "password"
 msgstr "パスワード"
 
-#: kay/auth/models.py:64 kay/registration/forms.py:31
+#: kay/auth/models.py:67 kay/registration/forms.py:31
 msgid "This user name is already taken. Please choose another user name."
 msgstr "このユーザー名は既に使われています。別のユーザー名を選んでください。"
 
@@ -49,7 +49,7 @@ msgstr "Kay ログインフォーム"
 msgid "Login"
 msgstr "ログイン"
 
-#: kay/i18n/__init__.py:302
+#: kay/i18n/__init__.py:304
 msgid "now"
 msgstr "現在"
 
@@ -93,12 +93,12 @@ msgstr "済みません。正常にアクティベーションできませんで
 #: kay/registration/templates/activate.html:10
 #, python-format
 msgid ""
-"Please be also aware that activation links expire automatically in %(days)s "
-"day."
+"Please be also aware that activation links expire automatically in "
+"%(seconds)s second."
 msgid_plural ""
-"Please be also aware that activation links expire automatically in %(days)s "
-"days."
-msgstr[0] "また %(days)s 日でリンクは期限切れになる事にもご留意ください。"
+"Please be also aware that activation links expire automatically in "
+"%(seconds)s seconds."
+msgstr[0] "また %(seconds)s 秒でリンクは期限切れになる事にもご留意ください。"
 
 #: kay/registration/templates/activation_email.txt:1
 msgid ""

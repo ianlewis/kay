@@ -35,7 +35,7 @@ class ActivateHandler(BaseHandler, NoCacheMixin):
   def get(self, activation_key):
     account = RegistrationProfile.activate_user(activation_key)
     context = {'account': account,
-               'expiration_days': settings.ACCOUNT_ACTIVATION_DAYS}
+               'expiration_duration': settings.ACCOUNT_ACTIVATION_DURATION}
     for key, value in self.extra_context.items():
       context[key] = callable(value) and value() or value
     return render_to_response(self.template_name, context)

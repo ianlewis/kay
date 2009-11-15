@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: tmatsuo@candit.jp\n"
-"POT-Creation-Date: 2009-11-03 02:21+0900\n"
+"POT-Creation-Date: 2009-11-15 23:30+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel None\n"
 
-#: kay/app.py:349 kay/utils/decorators.py:155
+#: kay/app.py:344
 msgid "Appengine might be under maintenance."
 msgstr ""
 
@@ -29,7 +29,7 @@ msgstr ""
 msgid "password"
 msgstr ""
 
-#: kay/auth/models.py:64 kay/registration/forms.py:31
+#: kay/auth/models.py:67 kay/registration/forms.py:31
 msgid "This user name is already taken. Please choose another user name."
 msgstr ""
 
@@ -49,7 +49,7 @@ msgstr ""
 msgid "Login"
 msgstr ""
 
-#: kay/i18n/__init__.py:302
+#: kay/i18n/__init__.py:304
 msgid "now"
 msgstr ""
 
@@ -93,11 +93,11 @@ msgstr ""
 #: kay/registration/templates/activate.html:10
 #, python-format
 msgid ""
-"Please be also aware that activation links expire automatically in %(days)s "
-"day."
+"Please be also aware that activation links expire automatically in "
+"%(seconds)s second."
 msgid_plural ""
-"Please be also aware that activation links expire automatically in %(days)s "
-"days."
+"Please be also aware that activation links expire automatically in "
+"%(seconds)s seconds."
 msgstr[0] ""
 msgstr[1] ""
 

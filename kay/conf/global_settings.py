@@ -85,5 +85,5 @@ AUTH_USER_BACKEND = 'kay.auth.backends.googleaccount.GoogleBackend'
 AUTH_USER_MODEL = 'kay.auth.models.GoogleUser'
 USE_DB_HOOK = False
 
-ACCOUNT_ACTIVATION_DAYS = 1
+ACCOUNT_ACTIVATION_DURATION = 3600
 DEFAULT_MAIL_FROM = 'admin@example.com'

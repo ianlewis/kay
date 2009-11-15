@@ -69,14 +69,15 @@ class DatastoreUserDBOperationMixin(object):
       user = cls(key_name=key_name, activated=False, user_name=user_name,
                  password=crypto.gen_pwhash(password), email=email)
       user.put()
-      return user
-    user = db.run_in_transaction(txn)
-    salt = crypto.gen_salt()
-    activation_key = crypto.sha1(salt+user.user_name).hexdigest()
-    profile = RegistrationProfile(user=user, key_name=activation_key)
-    profile.put()
+      salt = crypto.gen_salt()
+      activation_key = crypto.sha1(salt+user.user_name).hexdigest()
+      profile = RegistrationProfile(user=user, parent=user,
+                                    key_name=activation_key)
+      profile.put()
+      return user, profile
+    user, profile = db.run_in_transaction(txn)
     expiration_date = datetime.datetime.now() + \
-        datetime.timedelta(days=settings.ACCOUNT_ACTIVATION_DAYS)
+        datetime.timedelta(seconds=settings.ACCOUNT_ACTIVATION_DURATION)
     deferred.defer(expire_registration, profile.key(), _eta=expiration_date)
     from google.appengine.api import mail
     subject = render_to_string('registration/activation_email_subject.txt',
@@ -84,8 +85,7 @@ class DatastoreUserDBOperationMixin(object):
     subject = ''.join(subject.splitlines())
     message = render_to_string(
       'registration/activation_email.txt',
-      {'activation_key': activation_key,
-       'expiration_days': settings.ACCOUNT_ACTIVATION_DAYS,
+      {'activation_key': str(profile.key()),
        'appname': settings.APP_NAME})
     mail.send_mail(subject=subject, body=message,
                    sender=settings.DEFAULT_MAIL_FROM, to=user.email)
