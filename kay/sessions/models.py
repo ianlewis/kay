@@ -16,6 +16,7 @@ sha_constructor = hashlib.sha1
 from werkzeug.contrib import sessions
 from google.appengine.ext import db
 
+from kay.exceptions import SuspiciousOperation
 from kay.conf import settings
 
 class GAESession(db.Model):
@@ -28,7 +29,8 @@ class GAESession(db.Model):
   def get_decoded(self):
     encoded_data = base64.decodestring(self.data)
     pickled, tamper_check = encoded_data[:-32], encoded_data[-32:]
-    if md5_constructor(pickled + settings.SECRET_KEY).hexdigest() != tamper_check:
+    if md5_constructor(pickled + settings.SECRET_KEY).hexdigest() != \
+          tamper_check:
       raise SuspiciousOperation, "User tampered with session cookie."
     try:
       return pickle.loads(pickled)
