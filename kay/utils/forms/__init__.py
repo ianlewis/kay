@@ -855,7 +855,7 @@ class ListWidget(Widget):
       return u''
     items = []
     for index in xrange(len(self) + attrs.pop('extra_rows', 1)):
-      items.append(html.li(self[index]()) for item in self)
+      items.append(html.li(self[index]()))
     # add an invisible item for the validator
     if not items:
       items.append(html.li(style='display: none'))
