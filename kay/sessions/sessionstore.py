@@ -7,6 +7,7 @@ Kay sessionstore.
 :license: BSD, see LICENSE for more details.
 """
 
+import logging
 import base64
 import datetime
 import cPickle as pickle
@@ -59,7 +60,10 @@ class GAESessionStore(sessions.SessionStore):
     key_name = self.get_key_name(sid)
     s = memcache.get(key_name)
     if s is None:
-      s = GAESession.get_by_key_name(key_name)
+      try:
+        s = GAESession.get_by_key_name(key_name)
+      except db.BadValueError, e:
+        logging.warn("get_by_key_name failed with db.BadValueError: %s" % e)
     if not self.is_valid_key(sid) or s is None:
       return self.new()
     else:
