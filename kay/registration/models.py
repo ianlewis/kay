@@ -20,7 +20,7 @@ class RegistrationProfile(db.Model):
   @classmethod
   def activate_user(cls, activation_key):
     target = cls.get_by_key_name(activation_key)
-    if target is None or target.activation_key_expired():
+    if target is None or target.activation_key_expired:
       return None
     target.user.activated = True
     target.user.put()
@@ -28,7 +28,14 @@ class RegistrationProfile(db.Model):
     target.put()
     return target.user
 
+  @property
   def activation_key_expired(self):
     expiration_date = datetime.timedelta(days=settings.ACCOUNT_ACTIVATION_DAYS)
     return self.activated or \
         (self.user.created + expiration_date <= datetime.datetime.now())
+
+def expire_registration(registration_key):
+  p = RegistrationProfile.get(registration_key)
+  if not p.activated:
+    p.user.delete()
+  p.delete()

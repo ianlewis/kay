@@ -55,7 +55,10 @@ class DatastoreUserDBOperationMixin(object):
 
   @classmethod
   def create_inactive_user(cls, user_name, password, email, send_email=True):
+    import datetime
     from kay.registration.models import RegistrationProfile
+    from kay.registration.models import expire_registration
+    from google.appengine.ext import deferred
     def txn():
       key_name = cls.get_key_name(user_name)
       user = cls.get_by_key_name(key_name)
@@ -72,6 +75,9 @@ class DatastoreUserDBOperationMixin(object):
     activation_key = crypto.sha1(salt+user.user_name).hexdigest()
     profile = RegistrationProfile(user=user, key_name=activation_key)
     profile.put()
+    expiration_date = datetime.datetime.now() + \
+        datetime.timedelta(days=settings.ACCOUNT_ACTIVATION_DAYS)
+    deferred.defer(expire_registration, profile.key(), _eta=expiration_date)
     from google.appengine.api import mail
     subject = render_to_string('registration/activation_email_subject.txt',
                                {'appname': settings.APP_NAME})

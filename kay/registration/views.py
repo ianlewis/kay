@@ -14,6 +14,7 @@ from werkzeug import (
 from kay.i18n import lazy_gettext as _
 from kay.cache import NoCacheMixin
 from kay.cache.decorators import no_cache
+from kay.sessions.decorators import no_session
 from kay.handlers import BaseHandler
 from kay.utils import (
   render_to_response, url_for
