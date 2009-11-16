@@ -11,13 +11,6 @@ Documentation
  * Template strategy
  * registration app
 
-* Create Japanese translations of 
-
- * forms_reference
-
-* Add a description that you need to restart local dev server after
-  putting some entities in shell tool,
-
 kay
 ---
 
@@ -36,9 +29,11 @@ kay
 kay.auth
 --------
 
-* Incorporate Ian's ChoiceBackend.
+* `Forgot password?` capability for DatastoreUser
 
-* Need a way to purge expired RegistrationProfile entities.
+* `Change password` capability for DatastoreUser
+
+* Incorporate Ian's ChoiceBackend.
 
 kay.utils.forms
 ----------------

@@ -378,8 +378,10 @@ Let's store data in this model. You can use Kay's shell tool for it.
 
 ^D means Ctrl + D.
 Note that if you forget to run ``put()``, you cannot have data saved.
-Check if the data was saved by running a development server and check
-following URL: http://localhost:8080/_ah/admin/
+Additionally, the data you stored by shell tool won't appear on the
+dev server until you restart the dev server. Check if the data was
+saved by restarting the development server and check following URL:
+http://localhost:8080/_ah/admin/
 
 
 Display Data
