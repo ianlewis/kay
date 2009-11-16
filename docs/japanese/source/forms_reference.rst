@@ -179,7 +179,7 @@ kay.utils.forms モジュール リファレンス
    入力グループのラジオボタン   
    
 
-.. class:: Field(label=None, help_text=None, validators=None, widget=None, messages=None, default=no default)¶
+.. class:: Field(label=None, help_text=None, validators=None, widget=None, messages=None, default=no default)
    
    Bases: :class:`object`
 
@@ -210,7 +210,7 @@ kay.utils.forms モジュール リファレンス
    フォームがデータに束縛されている場合 ``True`` を返します。
 
    
-.. class:: Multiple(label=None, help_text=None, validators=None, widget=None, messages=None, default=no default)¶
+.. class:: Multiple(label=None, help_text=None, validators=None, widget=None, messages=None, default=no default)
    
    Bases: :class:`kay.utils.form.Field`
 
@@ -227,7 +227,7 @@ kay.utils.forms モジュール リファレンス
    -   `SelectBoxWidget` -- 選択と一緒に使うと便利です。
   
 
-.. class:: CommaSeparated(label=None, help_text=None, validators=None, widget=None, messages=None, default=no default)¶
+.. class:: CommaSeparated(label=None, help_text=None, validators=None, widget=None, messages=None, default=no default)
    
    Bases: :class:`kay.utils.form.Multiple`
 
@@ -240,7 +240,7 @@ kay.utils.forms モジュール リファレンス
    デフォルトのウィジェットは、 `TextInput` ですが、 `Textarea` も可能です。
   
 
-.. class:: LineSeparated(label=None, help_text=None, validators=None, widget=None, messages=None, default=no default)¶
+.. class:: LineSeparated(label=None, help_text=None, validators=None, widget=None, messages=None, default=no default)
    
    Bases: :class:`kay.utils.form.CommaSeparated`
 
@@ -253,7 +253,7 @@ kay.utils.forms モジュール リファレンス
    デフォルトのウィジェットは `Textarea` で、それがこのウィジェットに対しては唯一有意です。
 
    
-.. class:: TextField(label=None, help_text=None, validators=None, widget=None, messages=None, default=no default)¶
+.. class:: TextField(label=None, help_text=None, validators=None, widget=None, messages=None, default=no default)
    
    Bases: :class:`kay.utils.form.Field`
 
@@ -268,17 +268,17 @@ kay.utils.forms モジュール リファレンス
    ValidationError: This field is required.
 
    
-.. class:: RegexField(label=None, help_text=None, validators=None, widget=None, messages=None, default=no default)¶
+.. class:: RegexField(label=None, help_text=None, validators=None, widget=None, messages=None, default=no default)
    
    Bases: :class:`kay.utils.form.TextField`
    
    
-.. class:: EmailField(label=None, help_text=None, validators=None, widget=None, messages=None, default=no default)¶
+.. class:: EmailField(label=None, help_text=None, validators=None, widget=None, messages=None, default=no default)
    
    Bases: :class:`kay.utils.form.RegexField`
    
 
-.. class:: DateTimeField(label=None, help_text=None, validators=None, widget=None, messages=None, default=no default)¶
+.. class:: DateTimeField(label=None, help_text=None, validators=None, widget=None, messages=None, default=no default)
    
    Bases: :class:`kay.utils.form.Field`
    
@@ -294,7 +294,7 @@ kay.utils.forms モジュール リファレンス
    ValidationError: Please enter a valid date.
 
    
-.. class:: ModelField(label=None, help_text=None, validators=None, widget=None, messages=None, default=no default)¶
+.. class:: ModelField(label=None, help_text=None, validators=None, widget=None, messages=None, default=no default)
    
    Bases: :class:`kay.utils.form.Field`
 
@@ -318,14 +318,14 @@ kay.utils.forms モジュール リファレンス
    このメソッドで直接クエリをセットできます。
 
    
-.. class:: HiddenModelField(label=None, help_text=None, validators=None, widget=None, messages=None, default=no default)¶
+.. class:: HiddenModelField(label=None, help_text=None, validators=None, widget=None, messages=None, default=no default)
    
    Bases: :class:`kay.utils.form.ModelField`
 
    プライマリキーによって識別されたモデルを指す隠蔽フィールド。フォームを経由して、モデルに渡すことができます。
    
 
-.. class:: ChoiceField(label=None, help_text=None, validators=None, widget=None, messages=None, default=no default)¶
+.. class:: ChoiceField(label=None, help_text=None, validators=None, widget=None, messages=None, default=no default)
    
    Bases: :class:`kay.utils.form.Field`
 
@@ -371,14 +371,14 @@ kay.utils.forms モジュール リファレンス
    ...                                              ('1', _('Something'))])
   
 
-.. class:: MultiChoiceField(label=None, help_text=None, validators=None, widget=None, messages=None, default=no default)¶
+.. class:: MultiChoiceField(label=None, help_text=None, validators=None, widget=None, messages=None, default=no default)
 
    Bases: :class:`kay.utils.form.ChoiceField`
 
    ユーザに複数の選択肢を用意するフィールド
 
    
-.. class:: NumberField(label=None, help_text=None, validators=None, widget=None, messages=None, default=no default)¶
+.. class:: NumberField(label=None, help_text=None, validators=None, widget=None, messages=None, default=no default)
    
    Bases: :class:`kay.utils.form.Field`
 
@@ -397,7 +397,7 @@ kay.utils.forms モジュール リファレンス
    ValidationError: Ensure this value is less than or equal to 99.
 
    
-.. class:: IntegerField(label=None, help_text=None, validators=None, widget=None, messages=None, default=no default)¶
+.. class:: IntegerField(label=None, help_text=None, validators=None, widget=None, messages=None, default=no default)
    
    Bases: :class:`kay.utils.form.NumberField`
 
@@ -418,7 +418,7 @@ kay.utils.forms モジュール リファレンス
    ValidationError: Ensure this value is less than or equal to 99.
 
    
-.. class:: FloatField(label=None, help_text=None, validators=None, widget=None, messages=None, default=no default)¶
+.. class:: FloatField(label=None, help_text=None, validators=None, widget=None, messages=None, default=no default)
    
    Bases: :class:`kay.utils.form.NumberField`
 
@@ -439,14 +439,14 @@ kay.utils.forms モジュール リファレンス
    ValidationError: Ensure this value is less than or equal to 99.
   
 
-.. class:: FileField(label=None, help_text=None, validators=None, widget=None, messages=None, default=no default)¶
+.. class:: FileField(label=None, help_text=None, validators=None, widget=None, messages=None, default=no default)
    
    Bases: :class:`kay.utils.form.Field`
 
    ファイルアップロード用のフィールド
   
 
-.. class:: BooleanField(label=None, help_text=None, validators=None, widget=None, messages=None, default=no default)¶
+.. class:: BooleanField(label=None, help_text=None, validators=None, widget=None, messages=None, default=no default)
    
    Bases: :class:`kay.utils.form.Field`
 
