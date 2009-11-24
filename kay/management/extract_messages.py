@@ -42,11 +42,11 @@ BUGS_ADDRESS = 'tmatsuo@candit.jp'
 COPYRIGHT = 'Takashi Matsuo'
 METHODS = [
   ('**.py', 'python'),
+  ('**/templates_compiled/**.*', 'ignore'),
   ('**/templates/*~', 'ignore'),
   ('**/templates/**.*', 'jinja2.ext:babel_extract'),
   ('**.html', 'jinja2.ext:babel_extract'),
   ('**.js', 'ignore'),
-  ('**/templates_compiled/**.*', 'ignore'),
 ]
 JSMETHODS = [
   ('**.py', 'ignore'),
