@@ -97,28 +97,30 @@
 
 ダンプやリストアが失敗する場合には ``_backup/__init__.py`` を作り kind 毎に bulkloader の設定をカスタマイズする事で対応します。
 
-* 失敗するケース1
+失敗するケース1
+===============
 
-  リストアする entity が大きいと、api の 1M limit にひっかかって失敗するケースがあります。例えば bbs_image という kind の設定をカスタマイズして、一度に一つの entity のみ送るように設定するには下記のようにします。
+リストアする entity が大きいと、api の 1M limit にひっかかって失敗するケースがあります。例えば bbs_image という kind の設定をカスタマイズして、一度に一つの entity のみ送るように設定するには下記のようにします。
 
-  _backup/__init__.py:
+_backup/__init__.py:
 
-  .. code-block:: python
+.. code-block:: python
 
-    restore_options = {
-      'bbs_image': ['--batch_size=1'],
-    }
+   restore_options = {
+     'bbs_image': ['--batch_size=1'],
+   }
 
-* 失敗するケース2
+失敗するケース2
+===============
 
-  ローカルの開発サーバーからダンプする時に、ローカルの開発サーバーはシングルスレッドなのが原因なのか、よう分らないエラーで失敗する時がありました。試しに下記のように設定してシングルスレッドでダンプするようにしたら成功しました。
+ローカルの開発サーバーからダンプする時に、ローカルの開発サーバーはシングルスレッドなのが原因なのか、よう分らないエラーで失敗する時がありました。試しに下記のように設定してシングルスレッドでダンプするようにしたら成功しました。
 
-  _backup/__init__.py:
+_backup/__init__.py:
 
-  .. code-block:: python
-  
-    dump_options = {
-      'chat_message': ['--num_threads=1'],
-    }
+.. code-block:: python
+ 
+   dump_options = {
+     'chat_message': ['--num_threads=1'],
+   }
 
 他に失敗するケースがあれば、私に教えてください。ここに設定例を加えて行きたいと思います。
