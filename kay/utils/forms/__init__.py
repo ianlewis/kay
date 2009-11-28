@@ -1578,7 +1578,7 @@ class ChoiceField(Field):
       invalid_choice=lazy_gettext('Please enter a valid choice.')
   )
 
-  def __init__(self, label=None, help_text=None, required=True,
+  def __init__(self, label=None, help_text=None, required=False,
                choices=None, validators=None, widget=None, messages=None,
                default=missing):
     Field.__init__(self, label, help_text, validators, widget, messages,
