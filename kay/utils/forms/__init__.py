@@ -550,7 +550,7 @@ class PasswordInput(TextInput):
 class HiddenInput(Input):
   """A hidden input field for text."""
   type = 'hidden'
-
+  disable_dt = True 
 
 class Textarea(Widget):
   """Displays a textarea."""
