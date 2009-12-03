@@ -20,8 +20,9 @@ class LoginForm(forms.Form):
 class ChangePasswordForm(forms.Form):
   old_password = forms.TextField(required=True, label=_("Old password"),
                                  max_length=32, widget=forms.PasswordInput)
-  new_password = forms.TextField(required=True, label=_("Old password"),
+  new_password = forms.TextField(required=True, label=_("New password"),
                                  max_length=32, widget=forms.PasswordInput)
-  password_confirm = forms.TextField(required=True, label=_("Old password"),
+  password_confirm = forms.TextField(required=True,
+                                     label=_("Confirm password"),
                                      max_length=32, widget=forms.PasswordInput)
   

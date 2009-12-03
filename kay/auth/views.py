@@ -24,7 +24,9 @@ from kay.cache.decorators import no_cache
 from kay.cache import NoCacheMixin
 from kay.handlers import BaseHandler
 
-from forms import LoginForm
+from forms import (
+  LoginForm, ChangePasswordForm
+)
 
 def post_session(request):
   if request.method == "GET":
@@ -84,3 +86,13 @@ class ChangePasswordHandler(BaseHandler, NoCacheMixin):
 
   def __init__(self, template_name='auth/change_password.html'):
     self.template_name = template_name
+
+  def get(self):
+    form = ChangePasswordForm()
+    message = ''
+    return render_to_response(self.template_name,
+                              {"form": form.as_widget(),
+                               "message": message})
+
+  def post(self):
+    return Response("post")

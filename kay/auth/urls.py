@@ -19,6 +19,7 @@ def make_rules():
       Rule('/login', endpoint='login'),
       Rule('/post_session', endpoint='post_session'),
       Rule('/logout', endpoint='logout'),
+      Rule('/change_password', endpoint='change_password'),
     ]),
   ]
 
@@ -26,4 +27,5 @@ all_views = {
   'auth/login': 'kay.auth.views.login',
   'auth/post_session': 'kay.auth.views.post_session',
   'auth/logout': 'kay.auth.views.logout',
+  'auth/change_password': ('kay.auth.views.ChangePasswordHandler',(), {}),
 }
