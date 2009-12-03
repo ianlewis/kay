@@ -27,6 +27,7 @@ kay.setup_env()
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 # extensions = ['sphinx.ext.autodoc', 'rst2pdf.pdfbuilder']
+#extensions = ['sphinx.ext.autodoc', 'rst2pdf.pdfbuilder']
 extensions = ['sphinx.ext.autodoc']
 
 # Add any paths that contain templates here, relative to this directory.
@@ -223,6 +224,7 @@ pdf_stylesheets = ['sphinx','kerning','a4','ja']
 
 # A colon-separated list of folders to search for fonts. Example:
 # pdf_font_path = ['/usr/share/fonts', '/usr/share/texmf-dist/fonts/']
+pdf_font_path = ['/Users/tmatsuo/Library/Fonts']
 
 # Language to be used for hyphenation support
 #pdf_language = "en_US"
