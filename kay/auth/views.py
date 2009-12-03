@@ -21,6 +21,8 @@ from kay.utils import (
 )
 from kay.i18n import lazy_gettext as _
 from kay.cache.decorators import no_cache
+from kay.cache import NoCacheMixin
+from kay.handlers import BaseHandler
 
 from forms import LoginForm
 
@@ -40,7 +42,6 @@ def post_session(request):
         request.session['_user'] = temporary_session.user.key()
         return redirect(unquote_plus(request.values.get('next')))
   return Response("Error")
-    
 
 @no_cache
 def login(request):
@@ -77,3 +78,9 @@ def logout(request):
   logout(request)
   next = request.values.get("next")
   return redirect(unquote_plus(next))
+
+
+class ChangePasswordHandler(BaseHandler, NoCacheMixin):
+
+  def __init__(self, template_name='auth/change_password.html'):
+    self.template_name = template_name

@@ -17,3 +17,11 @@ class LoginForm(forms.Form):
   password = forms.TextField(required=True, widget=forms.PasswordInput,
                              label=_("password"))
 
+class ChangePasswordForm(forms.Form):
+  old_password = forms.TextField(required=True, label=_("Old password"),
+                                 max_length=32, widget=forms.PasswordInput)
+  new_password = forms.TextField(required=True, label=_("Old password"),
+                                 max_length=32, widget=forms.PasswordInput)
+  password_confirm = forms.TextField(required=True, label=_("Old password"),
+                                     max_length=32, widget=forms.PasswordInput)
+  
