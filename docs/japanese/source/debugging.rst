@@ -96,11 +96,11 @@ traceback の各段階ごとに例外の発生した位置とソースコード�
 Jinja2 テンプレートでの例外
 ----------------------------
 
-Jinja2 テンプレート中で例外が起きると、デバッガー上で妙なトレースバックを見る事になります。これは appengine の ctypes が使用できない制約によるものです。回避策としては appengine SDK の dev_appserver.py にパッチを当てる方法があります。
+Jinja2 テンプレート中で例外が起きると、デバッガー上で妙なトレースバックを見る事になります。これは appengine の 制約で ctypes が使用できないのが原因です。回避策としては appengine SDK の dev_appserver.py にパッチを当てる方法があります。
 
 'gestalt' と '_ctypes' を ``_WHITE_LIST_C_MODULES`` リストに加えればきちんとトレースバックが表示されます。
 
-しかし、python dictribution の中には ctypes が壊れているものもあり(例えば最近の macports の python25)、上記の方法では動きません。このような場合は別途インストールされた(Kay にバンドルされたものでは無く) jinja2 ディレクトリから _speedups.so を ``kay/lib/jinja2`` にコピーして '_speedups' を ``_WHITE_LIST_C_MODULES`` に加えれば動くようになります。MacOSX を使っているなら、コンパイル済みの _speedups.so を手に入れる一番簡単な方法は py25-jinja2 を macports でインストールする事です。
+しかし、python dictribution の中には ctypes が壊れているものもあり(例えば最近の macports の python25)、上記の方法では動きません。このような場合は(Kay にバンドルされたものでは無く)別途インストールした jinja2 ディレクトリから _speedups.so を ``kay/lib/jinja2`` にコピーして '_speedups' を ``_WHITE_LIST_C_MODULES`` に加えれば動くようになります。MacOSX を使っているなら、コンパイル済みの _speedups.so を手に入れる一番簡単な方法は py25-jinja2 を macports でインストールする事です。
 
 
 pdb を使用する

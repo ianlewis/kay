@@ -115,11 +115,11 @@ manage.py clear_datastore
 
 .. cmdoption:: -a, --appid appid
 
-   対象となるアプリケーションを ``app-id`` で指定します。指定が無ければ ``app.yaml`` 内の ``application`` に設定された値が使用されます。
+   対象となるアプリケーションを ``appid`` で指定します。指定が無ければ ``app.yaml`` 内の ``application`` に設定された値が使用されます。
 
 .. cmdoption:: -h, --host host
 
-   対象となるアプリケーションをホスト名で指定します。デフォルト値は ``app-id.appspot.com`` です。
+   対象となるアプリケーションをホスト名で指定します。デフォルト値は ``appid.appspot.com`` です。
 
 .. cmdoption:: -p, --path path
 
@@ -185,13 +185,13 @@ manage.py create_user
 
    管理者権限を付与する場合に指定します。
 
-.. cmdoption:: -a, --appid app-id
+.. cmdoption:: -a, --appid appid
 
-   対象となるアプリケーションを ``app-id`` で指定します。デフォルト値は ``settings.py`` の ``APPLICATION_ID`` です。
+   対象となるアプリケーションを ``appid`` で指定します。デフォルト値は ``settings.py`` の ``APPLICATION_ID`` です。
 
 .. cmdoption:: -h, --host host
 
-   対象となるアプリケーションをホスト名で指定します。デフォルト値は ``app-id.appspot.com`` です。
+   対象となるアプリケーションをホスト名で指定します。デフォルト値は ``appid.appspot.com`` です。
 
 .. cmdoption:: -p, --path path
 
@@ -218,9 +218,9 @@ manage.py dump_all
 
    ``_backup`` 配下に、ここで指定した名称のディレクトリが生成され、データとログファイルが保存されます。
 
-.. cmdoption:: -i, --app-id app-id
+.. cmdoption:: -i, --app-id appid
 
-   データをダンプするアプリケーションを ``app-id`` で指定します。
+   データをダンプするアプリケーションを ``appid`` で指定します。
 
 .. cmdoption:: -u, --url url
 
@@ -245,7 +245,7 @@ manage.py extract_messages
 
   $ python manage.py extract_messages [options]
 
-.. cmdoption:: -t, --target string
+.. cmdoption:: -t, --target directory
 
    対象となるディレクトリを指定します。
 
@@ -475,7 +475,7 @@ potファイルで翻訳ファイルを更新します。
 
    $ python manage.py update_translations [options]
 
-.. cmdoption:: -t, --target string
+.. cmdoption:: -t, --target directory
 
    対象となるディレクトリを指定します。
 
