@@ -86,7 +86,7 @@ macports の python25 を使うばあいは、他に下記もインストール�
    1 directory, 5 files
 
 アプリケーションが出来たら ``settings.py`` を編集して、プロジェクトに登録します。
-``settings.py`` の ``INSTALLED_APPS`` に ``myapp`` を登録します。必要なら ``APP_MOUNT_POINTS`` も登録します。下記の例では、アプリケーションをルート URL にマウントする例です。
+まずは ``settings.py`` の ``INSTALLED_APPS`` に ``myapp`` を追加します。必要なら ``APP_MOUNT_POINTS`` も設定してください。下記の例では、アプリケーションをルート URL にマウントする例です。
 ``APP_MOUNT_POINTS`` を設定しない場合は ``/myapp`` というようにアプリケーション名 URL にマウントされます。
 なお、ここでは ``kay.auth`` というアプリケーションも一緒に登録しています。
 
@@ -109,7 +109,7 @@ settings.py
   }
 
 
-見れば分かると思いますが ``INSTALLED_APPS`` はタプルで ``APP_MOUNT_POINTS`` は dict になっています。
+ご覧になれば分かると思いますが ``INSTALLED_APPS`` はタプルで ``APP_MOUNT_POINTS`` は dict になっています。
 
 アプリケーションを動かす
 ------------------------
@@ -357,7 +357,7 @@ myapp/views.py
 			       'comments': comments})
 
 先程定義したモデルクラスを import するのを忘れないようにしましょう。
-``Comment.all().order('-created').fetch(100)`` では、データストアから最新 100 件のコメントを取得しています。そのリストを ``render_to_response`` に渡しています。 :func:`kay.utils.render_to_response()` も参照してください。
+``Comment.all().order('-created').fetch(100)`` で、データストアから最新 100 件のコメントを取得し、そのリストを ``render_to_response`` に渡しています。 :func:`kay.utils.render_to_response()` も参照してください。
 
 myapp/templates/index.html
 
@@ -389,12 +389,12 @@ myapp/templates/index.html
   </html>
 
 ``message`` を表示している下に、新しく div を追加しています。
-``{% for ... %}`` と ``{% endfor %}`` はループです。ここでは ``comment.body`` を表示するだけです。
+``{% for ... %}`` と ``{% endfor %}`` はループです。ここでは ``comment.body`` と投稿者を表示するだけです。
 
 コメント投稿フォーム
 --------------------
 
-コメントを投稿できるようにしましょう。html のフォームのために ``forms.py`` というファイルを新規に作成します。
+コメントを投稿できるようにしましょう。html のフォームのために ``myapp`` ディレクトリ内に ``forms.py`` というファイルを新規に作成します。
 
 myapp/forms.py
 
