@@ -26,6 +26,8 @@ kay
 
 * A capability for veryfying OpenSocial Signed Request.
 
+* A urlfetch stub for testing purpose.
+
 kay.auth
 --------
 
