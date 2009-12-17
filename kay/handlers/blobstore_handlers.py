@@ -173,8 +173,6 @@ class BlobstoreUploadHandler(BaseHandler):
       self.__uploads = {}
       for key, value in self.request.files.items():
         if isinstance(value, FileStorage):
-          from kay.utils.repr import dump
-          logging.error(dump(value))
           for option in value.headers['Content-Type'].split(';'):
             if 'blob-key' in option:
               self.__uploads.setdefault(key, []).append(parse_blob_info(value))
