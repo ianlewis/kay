@@ -15,11 +15,14 @@ from werkzeug import (
   unescape, redirect, Response,
 )
 from werkzeug.urls import url_encode
+from werkzeug.exceptions import Forbidden
 
 from kay.utils import (
   local, render_to_response, url_for,
 )
+from kay.utils import flash
 from kay.i18n import lazy_gettext as _
+from kay.i18n import gettext
 from kay.cache.decorators import no_cache
 from kay.cache import NoCacheMixin
 from kay.handlers import BaseHandler
@@ -87,12 +90,21 @@ class ChangePasswordHandler(BaseHandler, NoCacheMixin):
   def __init__(self, template_name='auth/change_password.html'):
     self.template_name = template_name
 
+  def prepare(self):
+    # TODO: check if FlashMiddleware is used.
+    if not self.request.user.is_authenticated():
+      raise Forbidden(_("You must sign in for this operation."))
+    self.form = ChangePasswordForm()
+
   def get(self):
-    form = ChangePasswordForm()
-    message = ''
+    message = flash.get_flash()
     return render_to_response(self.template_name,
-                              {"form": form.as_widget(),
+                              {"form": self.form.as_widget(),
                                "message": message})
 
   def post(self):
-    return Response("post")
+    if self.form.validate(self.request.form):
+      self.request.user.set_password(self.form['new_password'])
+      flash.set_flash(gettext("Password changed successfully."))
+      return redirect(url_for('auth/change_password'))
+    return self.get()

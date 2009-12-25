@@ -29,6 +29,7 @@ def get_flash():
   local.flash_message = None
   if data:
     return simplejson.loads(b64decode(data))
+  return u''
 
 
 def set_flash(data):
