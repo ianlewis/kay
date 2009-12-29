@@ -202,6 +202,13 @@ class UserProperty(db.Property):
                  "use db.UserProperty instead.")
     super(UserProperty, self).__init__(*args, **kwds)
 
+class EmailProperty(db.EmailProperty):
+  __metaclass__ = monkey_patch
+
+  def get_form_field(self, **kwargs):
+    defaults = {'form_class': forms.EmailField}
+    defaults.update(kwargs)
+    return super(EmailProperty, self).get_form_field(**defaults)
 
 class StringProperty(db.StringProperty):
   __metaclass__ = monkey_patch
