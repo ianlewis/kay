@@ -139,12 +139,13 @@ def render_error(e):
     description = Markup(e.description)
   else:
     description = e.description
-  return Response(
-        template.render(
-          {"code": e.code, "name": e.name,
-           "description": description}),
-        content_type="text/html; charset=utf-8",
-        status=e.code)
+  context = {"code": e.code, "name": e.name, "description": description}
+  processors = ()
+  for processor in get_standard_processors() + processors:
+    context.update(processor(get_request()))
+  return Response(template.render(context),
+                  content_type="text/html; charset=utf-8",
+                  status=e.code)
 
 def render_to_string(template, context={}, processors=None):
   """
