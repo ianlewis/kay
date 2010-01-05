@@ -14,7 +14,7 @@ from google.appengine.ext import db
 
 from kay.conf import settings
 from kay.utils import (
-  crypto, render_to_string
+  crypto, render_to_string, url_for
 )
 from kay.i18n import lazy_gettext as _
 
@@ -57,8 +57,7 @@ class DatastoreUserDBOperationMixin(object):
   def create_inactive_user(cls, user_name, password, email, send_email=True):
     import datetime
     from kay.registration.models import RegistrationProfile
-    from kay.registration.models import expire_registration
-    from google.appengine.ext import deferred
+    from google.appengine.api.labs import taskqueue
     def txn():
       key_name = cls.get_key_name(user_name)
       user = cls.get_by_key_name(key_name)
@@ -66,29 +65,28 @@ class DatastoreUserDBOperationMixin(object):
         from kay.auth import DuplicateKeyError
         raise DuplicateKeyError(_(u"This user name is already taken."
                                   " Please choose another user name."))
+      salt = crypto.gen_salt()
+      activation_key = crypto.sha1(salt+user_name).hexdigest()
+      profile_key = db.Key.from_path(cls.kind(), key_name,
+                                     RegistrationProfile.kind(),
+                                     activation_key)
+
+      expiration_date = datetime.datetime.now() + \
+          datetime.timedelta(seconds=settings.ACCOUNT_ACTIVATION_DURATION)
+      taskqueue.add(url=url_for('_internal/expire_registration',
+                                registration_key=str(profile_key)),
+                    eta=expiration_date, transactional=True)
+      taskqueue.add(url=url_for('_internal/send_registration_confirm',
+                                registration_key=str(profile_key)),
+                    transactional=True)
       user = cls(key_name=key_name, activated=False, user_name=user_name,
                  password=crypto.gen_pwhash(password), email=email)
       user.put()
-      salt = crypto.gen_salt()
-      activation_key = crypto.sha1(salt+user.user_name).hexdigest()
       profile = RegistrationProfile(user=user, parent=user,
                                     key_name=activation_key)
       profile.put()
-      return user, profile
-    user, profile = db.run_in_transaction(txn)
-    expiration_date = datetime.datetime.now() + \
-        datetime.timedelta(seconds=settings.ACCOUNT_ACTIVATION_DURATION)
-    deferred.defer(expire_registration, profile.key(), _eta=expiration_date)
-    from google.appengine.api import mail
-    subject = render_to_string('registration/activation_email_subject.txt',
-                               {'appname': settings.APP_NAME})
-    subject = ''.join(subject.splitlines())
-    message = render_to_string(
-      'registration/activation_email.txt',
-      {'activation_key': str(profile.key()),
-       'appname': settings.APP_NAME})
-    mail.send_mail(subject=subject, body=message,
-                   sender=settings.DEFAULT_MAIL_FROM, to=user.email)
+      return user
+    user = db.run_in_transaction(txn)
     return user
 
   @classmethod

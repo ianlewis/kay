@@ -19,12 +19,17 @@ def make_rules():
     EndpointPrefix('_internal/', [
       Rule('/cron/hourly', endpoint='cron/hourly'),
       Rule('/cron/frequent', endpoint='cron/frequent'),
-      Rule('/maintenance_page', endpoint='maintenance_page'),
+      Rule('/expire_registration/<registration_key>',
+           endpoint='expire_registration'),
+      Rule('/send_registration_confirm/<registration_key>',
+           endpoint='send_registration_confirm'),
     ]),
   ]
 
 all_views = {
   '_internal/cron/hourly': 'kay._internal.views.cron_hourly',
   '_internal/cron/frequent': 'kay._internal.views.cron_frequent',
-  '_internal/maintenance_page': 'kay._internal.views.maintenance_page',
+  '_internal/expire_registration': 'kay._internal.views.expire_registration',
+  '_internal/send_registration_confirm':
+    'kay._internal.views.send_registration_confirm',
 }
