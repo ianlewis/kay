@@ -120,32 +120,36 @@ class KayApp(object):
   def get_installed_apps(self):
     return self.app_settings.INSTALLED_APPS+['kay._internal']
 
-  def init_url_map(self):
+  def init_url_map(self, url_module):
     self.has_error_on_init_url_map = False
-    mod = import_string(self.app_settings.ROOT_URL_MODULE)
+    mod = import_string(url_module)
 
     make_url = getattr(mod, 'make_url')
     all_views = getattr(mod, 'all_views')
     self.views = all_views
     self.url_map = make_url()
     for app in self.get_installed_apps():
-      try:
-        url_mod = import_string("%s.urls" % app)
-      except (ImportError, AttributeError):
-        logging.warning("Failed to import app '%s.urls', skipped." % app)
-        logging.debug("Reason:\n%s" % self._get_traceback(sys.exc_info()))
-        continue
       mountpoint = self.get_mount_point(app)
       if mountpoint is None:
         logging.debug("Mountpoint for app '%s' is set to None explicitly,"
                       " skipped." % app)
         continue
+      try:
+        url_mod = import_string("%s.%s" % (app, url_module))
+      except (ImportError, AttributeError):
+        try:
+          url_mod = import_string("%s.urls" % app)
+        except (ImportError, AttributeError):
+          logging.warning("Failed to import app '%s.urls', skipped." % app)
+          logging.debug("Reason:\n%s" % self._get_traceback(sys.exc_info()))
+          continue
       make_rules = getattr(url_mod, 'make_rules', None)
       if make_rules:
         self.url_map.add(Submount(mountpoint, make_rules()))
       all_views = getattr(url_mod, 'all_views', None)
       if all_views:
         self.views.update(all_views)
+    # TODO move the block bellow to somewhere else
     if 'kay.auth.middleware.AuthenticationMiddleware' in \
           self.app_settings.MIDDLEWARE_CLASSES:
       try:
@@ -392,7 +396,7 @@ class KayApp(object):
     local.request = request = Request(environ)
     if self.url_map is None or self.has_error_on_init_url_map:
       try:
-        self.init_url_map()
+        self.init_url_map(self.app_settings.ROOT_URL_MODULE)
       except (StandardError, exceptions.ImproperlyConfigured):
         self.has_error_on_init_url_map = True
         raise

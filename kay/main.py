@@ -16,13 +16,23 @@ kay.setup()
 
 from kay.app import get_application
 from kay.utils.handlers import KayHandler
-from kay.conf import settings
+from kay.conf import (
+  settings, LazySettings
+)
 
 application = get_application()
 debugged_application = None
+applications = {}
+debugged_applications = {}
 
 def real_main():
   global application
+  global applications
+  server_name = os.environ.get('SERVER_NAME')
+  target_setting = settings.PER_DOMAIN_SETTINGS.get(server_name, None)
+  if target_setting:
+    applications[server_name] = get_application(
+      settings=LazySettings(settings_module=target_setting))
   if settings.DEBUG:
     logging.getLogger().setLevel(logging.DEBUG)
     if 'SERVER_SOFTWARE' in os.environ and \
@@ -38,14 +48,25 @@ def real_main():
       # wrap the application
       from werkzeug import DebuggedApplication
       global debugged_application
-      if debugged_application is None:
-        debugged_application = application = DebuggedApplication(application,
-                                                                 evalex=True)
+      global debugged_applications
+      if target_setting:
+        if not debugged_applications.has_key(server_name):
+          debugged_applications[server_name] = applications[server_name] = \
+              DebuggedApplication(applications[server_name], evalex=True)
+        else:
+          applications[server_name] = debugged_applications[server_name]
       else:
-        application = debugged_application
+        if debugged_application is None:
+          debugged_application = application = DebuggedApplication(application,
+                                                                   evalex=True)
+        else:
+          application = debugged_application
   else:
     logging.getLogger().setLevel(logging.INFO)
-  KayHandler().run(application)
+  if target_setting:
+    KayHandler().run(applications[server_name])
+  else:
+    KayHandler().run(application)
 
 def profile_main():
   # This is the main function for profiling 

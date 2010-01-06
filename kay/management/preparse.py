@@ -60,13 +60,22 @@ def do_preparse_apps():
   """
   Pre compile all the jinja2 templates in your applications.
   """
+  from kay.conf import LazySettings
   print_status("Compiling templates...")
-  app = kay.app.get_application()
-  compile_app_templates(app.app) # pass KayApp instance
-  for key, submount_app in app.mounts.iteritems():
-    if key == "/_kay":
-      continue
-    compile_app_templates(submount_app)
+  application = kay.app.get_application()
+  applications = [application]
+  settings_treated = []
+  for key, settings_name in \
+        application.app.app_settings.PER_DOMAIN_SETTINGS.iteritems():
+    if not settings_name in settings_treated:
+      applications.append(kay.app.get_application(
+          settings=LazySettings(settings_module=settings_name)))
+    settings_treated.append(settings_name)
+  for app in applications:
+    compile_app_templates(app.app) # pass KayApp instance
+    for key, submount_app in app.mounts.iteritems():
+      compile_app_templates(submount_app)
+
   print_status("Finished compiling templates...")
 
 
