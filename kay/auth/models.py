@@ -81,10 +81,9 @@ class DatastoreUserDBOperationMixin(object):
                     transactional=True)
       user = cls(key_name=key_name, activated=False, user_name=user_name,
                  password=crypto.gen_pwhash(password), email=email)
-      user.put()
       profile = RegistrationProfile(user=user, parent=user,
                                     key_name=activation_key)
-      profile.put()
+      db.put([profile, user])
       return user
     user = db.run_in_transaction(txn)
     return user
