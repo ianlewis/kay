@@ -39,6 +39,7 @@ def maintenance_page(request):
 
 @no_session
 def expire_registration(request, registration_key):
+  from kay.registration.models import RegistrationProfile
   p = db.get(registration_key)
   def txn():
     if not p.activated:
@@ -50,6 +51,7 @@ def expire_registration(request, registration_key):
 @no_session
 def send_registration_confirm(request, registration_key):
   logging.debug(registration_key)
+  from kay.registration.models import RegistrationProfile
   from google.appengine.api import mail
   from kay.conf import settings
   p = db.get(registration_key)
