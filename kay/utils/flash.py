@@ -48,8 +48,11 @@ class FlashMiddleware(object):
   def process_response(self, request, response):
     key = settings.FLASH_COOKIE_NAME
     data = getattr(local, 'flash_message', None)
-    if data:
-      response.set_cookie(key, value=data)
-    else:
-      response.delete_cookie(key)
+    try:
+      if data:
+        response.set_cookie(key, value=data)
+      else:
+        response.delete_cookie(key)
+    except Exception:
+      pass
     return response
