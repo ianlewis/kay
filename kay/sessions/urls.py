@@ -11,7 +11,6 @@ from werkzeug.routing import (
   Map, Rule, Submount,
   EndpointPrefix, RuleTemplate,
 )
-import kay.sessions.views
 
 def make_rules():
   return [
@@ -21,5 +20,5 @@ def make_rules():
   ]
 
 all_views = {
-  'sessions/purge': kay.sessions.views.purge_old_sessions,
+  'sessions/purge': 'kay.sessions.views.purge_old_sessions',
 }
