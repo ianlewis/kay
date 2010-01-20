@@ -16,8 +16,8 @@ kay
 
 * Capability for compressing css and js media with i18n.
 
-* It could be better than now to installing Kay to somewhere on the
-  system paths.
+* It could be better than now to allow installing Kay to somewhere on
+  the system paths.
 
 * A script for buildout.
 
