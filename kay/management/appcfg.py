@@ -63,9 +63,11 @@ def do_appcfg_passthru_argv():
     sys.exit(1)
   from kay.conf import settings
   if settings.PROFILE and 'update' in sys.argv:
-    print_status('--------------------------\n' \
-        'WARNING: PROFILER ENABLED!\n' \
-        '--------------------------')
+    print_status(
+      '--------------------------\n'
+      'WARNING: PROFILER ENABLED!\n'
+      '--------------------------'
+    )
 
     
 do_appcfg_passthru_argv.passthru = True

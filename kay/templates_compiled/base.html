@@ -13,12 +13,25 @@ def root(context, environment=environment):
         yield event
     for event in context.blocks['js'][0](block_context):
         yield event
-    yield u'</head>'
+    for event in context.blocks['additional_headers'][0](block_context):
+        yield event
+    yield u'\n  </head>'
     for event in context.blocks['bodytag'][0](block_context):
         yield event
     for event in context.blocks['content'][0](block_context):
         yield event
     yield u'\n  </body>\n</html>'
+
+def block_additional_headers(context, environment=environment):
+    if 0: yield None
+    yield u'\n    '
+
+def block_title(context, environment=environment):
+    if 0: yield None
+
+def block_js(context, environment=environment):
+    if 0: yield None
+    yield u'\n    '
 
 def block_content(context, environment=environment):
     if 0: yield None
@@ -28,10 +41,6 @@ def block_bodytag(context, environment=environment):
     if 0: yield None
     yield u'<body>'
 
-def block_js(context, environment=environment):
-    if 0: yield None
-    yield u'\n    '
-
 def block_css(context, environment=environment):
     l_internal_media_url = context.resolve('internal_media_url')
     if 0: yield None
@@ -39,8 +48,5 @@ def block_css(context, environment=environment):
         escape(l_internal_media_url), 
     )
 
-def block_title(context, environment=environment):
-    if 0: yield None
-
-blocks = {'content': block_content, 'bodytag': block_bodytag, 'js': block_js, 'css': block_css, 'title': block_title}
-debug_info = '1=8&5=9&6=12&9=14&11=16&12=17&13=19&14=21&13=23&12=27&9=31&6=35&7=39&5=42'
+blocks = {'additional_headers': block_additional_headers, 'title': block_title, 'js': block_js, 'content': block_content, 'bodytag': block_bodytag, 'css': block_css}
+debug_info = '1=8&5=9&6=12&9=14&11=16&12=18&14=19&15=21&16=23&11=25&5=29&9=32&15=36&14=40&6=44&7=48'

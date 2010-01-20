@@ -14,9 +14,9 @@ def root(context, environment=environment):
 
 def block_content(context, environment=environment):
     l_account = context.resolve('account')
+    l_expiration_duration = context.resolve('expiration_duration')
     l_gettext = context.resolve('gettext')
     l_ngettext = context.resolve('ngettext')
-    l_expiration_days = context.resolve('expiration_days')
     l__ = context.resolve('_')
     if 0: yield None
     yield u'\n'
@@ -33,7 +33,7 @@ def block_content(context, environment=environment):
             escape(context.call(l__, 'Activation failed :(')), 
         )
         yield escape(Markup(context.call(l_gettext, u'Sorry, there were problems with the activation. Please make sure that the activation link was opened correctly in your Browser. ')))
-        yield escape((Markup(context.call(l_ngettext, u'Please be also aware that activation links expire automatically in %(days)s day.', u'Please be also aware that activation links expire automatically in %(days)s days.', l_expiration_days)) % {'days': l_expiration_days}))
+        yield escape((Markup(context.call(l_ngettext, u'Please be also aware that activation links expire automatically in %(seconds)s second.', u'Please be also aware that activation links expire automatically in %(seconds)s seconds.', l_expiration_duration)) % {'seconds': l_expiration_duration}))
         yield u'</p>\n'
     yield u'\n'
 

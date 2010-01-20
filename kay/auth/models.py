@@ -185,22 +185,39 @@ class TemporarySession(db.Model):
   user = db.ReferenceProperty(required=True)
   created = db.DateTimeProperty(auto_now_add=True)
   last_login = db.DateTimeProperty(auto_now=True)
+  data = db.BlobProperty()
 
   @classmethod
   def get_key_name(cls, uuid):
     return 's:%s' % uuid
 
   @classmethod
-  def get_new_session(cls, user):
+  def get_new_session(cls, user, data=None, auto_delete=True,
+                      countdown=settings.TEMPORARY_SESSION_LIFETIME,
+                      additional_tq_url=None, tq_kwargs={}):
     from kay.utils import crypto
+    from google.appengine.api.labs import taskqueue
     def txn(id):
-      session = cls.get_by_key_name(cls.get_key_name(id))
+      key_name = cls.get_key_name(id)
+      if additional_tq_url is not None:
+        tq_kwargs.update({'session_key': db.Key.from_path(cls.kind(),
+                                                          key_name)})
+        taskqueue.add(url=url_for(additional_tq_url, **tq_kwargs),
+                      transactional=True)
+      taskqueue.add(url=url_for("_internal/expire_temporary_session",
+                                session_key=db.Key.from_path(cls.kind(),
+                                                             key_name)),
+                    countdown=countdown, transactional=True)
+      session = cls.get_by_key_name(key_name)
       if session is None:
-        session = cls(key_name=cls.get_key_name(id), user=user)
+        if data:
+          session = cls(key_name=key_name, user=user, data=data)
+        else:
+          session = cls(key_name=key_name, user=user)
         session.put()
         return session
       else:
-        return None
+        raise db.Rollback("The specified id already exists.")
 
     id = crypto.new_iid()
     session = db.run_in_transaction(txn, id)

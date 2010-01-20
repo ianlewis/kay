@@ -66,7 +66,7 @@ class DatastoreBackend(object):
 class DatastoreBackendWithOwnedDomainHack(DatastoreBackend):
 
   def store_user(self, user):
-    from models import TemporarySession
+    from kay.auth.models import TemporarySession
     session = TemporarySession.get_new_session(user)
     return session
 

@@ -15,6 +15,7 @@ from werkzeug import (
   unescape, redirect, Response,
 )
 from werkzeug.urls import url_encode
+from werkzeug.utils import import_string
 from werkzeug.exceptions import Forbidden
 
 from kay.utils import (
@@ -26,10 +27,12 @@ from kay.i18n import gettext
 from kay.cache.decorators import no_cache
 from kay.cache import NoCacheMixin
 from kay.handlers import BaseHandler
+from kay.conf import settings
 
-from forms import (
-  LoginForm, ChangePasswordForm
+from kay.auth.forms import (
+  LoginForm, ChangePasswordForm, ResetPasswordRequestForm, ResetPasswordForm,
 )
+from kay.auth.models import TemporarySession
 
 def post_session(request):
   if request.method == "GET":
@@ -79,11 +82,57 @@ def login(request):
 @no_cache
 def logout(request):
   from kay.auth import logout
-
   logout(request)
   next = request.values.get("next")
   return redirect(unquote_plus(next))
 
+@no_cache
+def reset_password(request, session_key):
+  form = ResetPasswordForm()
+  if request.method == 'GET':
+    try:
+      temporary_session = TemporarySession.get(session_key)
+    except Exception:
+      # BadKeyError ... etc
+      temporary_session = None
+    if temporary_session is None:
+      return Forbidden("Temporary Session might be expired.")
+    # TODO: acquire new temporary session
+    new_session = TemporarySession.get_new_session(temporary_session.user)
+    temporary_session.delete()
+    form.data['temp_session'] = str(new_session.key())
+  elif request.method == 'POST' and form.validate(request.form):
+    new_session = TemporarySession.get(form['temp_session'])
+    user = new_session.user
+    user.set_password(form['new_password'])
+    new_session.delete()
+    return render_to_response("auth/reset_password_success.html")
+  return render_to_response("auth/reset_password.html",
+                            {"form": form.as_widget()})
+
+@no_cache
+def request_reset_password(request):
+  form = ResetPasswordRequestForm()
+  message = ""
+  if request.method == 'POST' and form.validate(request.form):
+    try:
+      auth_model_class = import_string(settings.AUTH_USER_MODEL)
+    except (ImportError, AttributeError), e:
+      raise ImproperlyConfigured, \
+          'Failed to import %s: "%s".' % (settings.AUTH_USER_MODEL, e)
+    user = auth_model_class.get_by_user_name(form['user_name'])
+    if user is None:
+      return render_to_response("auth/no_such_user.html",
+                                {"user_name": form["user_name"]})
+    else:
+      temporary_session = TemporarySession.get_new_session(
+        user, additional_tq_url='_internal/send_reset_password_instruction',
+        tq_kwargs={"user_key": user.key()}
+      )
+      return render_to_response("auth/reset_password_finish.html")
+  return render_to_response("auth/request_reset_password.html",
+                            {"message": message,
+                             "form": form.as_widget()})
 
 class ChangePasswordHandler(BaseHandler, NoCacheMixin):
 
