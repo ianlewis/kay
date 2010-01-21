@@ -38,7 +38,6 @@ from kay.utils import (
 from kay import (
   utils, exceptions, mail,
 )
-from kay.utils.filters import nl2br
 
 from kay.conf import settings, _settings, LazySettings
 
