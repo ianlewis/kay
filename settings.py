@@ -45,7 +45,7 @@ JINJA2_FILTERS = {
 }
 
 MIDDLEWARE_CLASSES = (
-#  'kay.auth.middleware.AuthenticationMiddleware',
+  'kay.auth.middleware.AuthenticationMiddleware',
 )
 AUTH_USER_BACKEND = 'kay.auth.backends.googleaccount.GoogleBackend'
 AUTH_USER_MODEL = 'kay.auth.models.GoogleUser'
