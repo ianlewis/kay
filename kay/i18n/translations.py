@@ -17,9 +17,10 @@ class KayTranslations(TranslationsBase):
   @classmethod
   def load(cls, path, locale=None, domain='messages'):
     """Load the translations from the given path."""
-    from babel import Locale
-    catalog = os.path.join(path, str(Locale.parse(locale)), 'LC_MESSAGES',
-                           domain + '.mo')
+    from babel.core import parse_locale
+    lang, script, territory, variant = parse_locale(locale)
+    parsed_locale = '_'.join(filter(None, [lang, script, territory, variant]))
+    catalog = os.path.join(path, parsed_locale, 'LC_MESSAGES', domain + '.mo')
     if os.path.isfile(catalog):
       return KayTranslations(fileobj=open(catalog, 'rb'), locale=locale)
     else:
