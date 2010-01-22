@@ -55,5 +55,6 @@ skip_files: |
   (LICENSE)|
   (docs\/.*)|
   (kay\/management\/.*)|
+  (kay\/lib\/babel\/localedata\/.*)|
   )$
 

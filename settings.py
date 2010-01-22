@@ -25,7 +25,7 @@ ADMINS = (
 TEMPLATE_DIRS = (
 )
 
-USE_I18N = True
+USE_I18N = False
 DEFAULT_LANG = 'en'
 
 INSTALLED_APPS = (
@@ -45,7 +45,7 @@ JINJA2_FILTERS = {
 }
 
 MIDDLEWARE_CLASSES = (
-  'kay.auth.middleware.AuthenticationMiddleware',
+#  'kay.auth.middleware.AuthenticationMiddleware',
 )
 AUTH_USER_BACKEND = 'kay.auth.backends.googleaccount.GoogleBackend'
 AUTH_USER_MODEL = 'kay.auth.models.GoogleUser'

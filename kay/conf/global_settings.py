@@ -46,7 +46,7 @@ ADMINS = (
 TEMPLATE_DIRS = (
 )
 
-USE_I18N = True
+USE_I18N = False
 DEFAULT_LANG = 'en'
 I18N_DIR = 'i18n'
 
