@@ -33,8 +33,3 @@ INSTALLED_APPS = (
 
 APP_MOUNT_POINTS = {
 }
-
-MIDDLEWARE_CLASSES = (
-)
-AUTH_USER_BACKEND = 'kay.auth.backends.googleaccount.GoogleBackend'
-AUTH_USER_MODEL = 'kay.auth.models.GoogleUser'
