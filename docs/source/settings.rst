@@ -183,9 +183,12 @@ Items
    
 .. attribute:: CONTEXT_PROCESSORS
 
-   Specify the path of context processors in this tuple.
-   If you add context proccssors,
-   you can add contexts template engine use in rendering. The default as follows.
+   Specify the path of context processors in this tuple. If you add
+   context proccssors, you can add context variables which the jinja2
+   template engine use in its rendering process. The default is an
+   empty tuple.
+
+   Here are examples:
 
    .. code-block:: python
 
@@ -221,15 +224,18 @@ Items
 
 .. attribute:: SUBMOUNT_APPS
 
-   If you'd like to run applications with entirely-differnt settings, you can set them here. The default is an empty tuple.
+   If you'd like to run applications with entirely-differnt settings,
+   you can set them here. The default is an empty tuple.
    
 .. attribute:: MIDDLEWARE_CLASSES
 
-   Specify additional middlewares to this tuple.
+   Specify additional middlewares to this tuple. The default is an
+   empty tuple. Here are examples:
 
    .. code-block:: python
 
      MIDDLEWARE_CLASSES = (
+       'kay.session.middleware.SessionMiddleware',
        'kay.auth.middleware.AuthenticationMiddleware',
      )
 

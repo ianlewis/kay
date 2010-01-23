@@ -57,13 +57,9 @@ APP_MOUNT_POINTS = {
 }
 
 CONTEXT_PROCESSORS = (
-  'kay.context_processors.request',
-  'kay.context_processors.url_functions',
-  'kay.context_processors.media_url',
 )
 
 JINJA2_FILTERS = {
-  'nl2br': 'kay.utils.filters.nl2br',
 }
 
 JINJA2_ENVIRONMENT_KWARGS = {
@@ -78,8 +74,6 @@ SUBMOUNT_APPS = (
 )
 
 MIDDLEWARE_CLASSES = (
-  'kay.sessions.middleware.SessionMiddleware',
-  'kay.auth.middleware.AuthenticationMiddleware',
 )
 
 AUTH_USER_BACKEND = 'kay.auth.backends.googleaccount.GoogleBackend'

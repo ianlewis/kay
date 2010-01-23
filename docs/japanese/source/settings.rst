@@ -168,7 +168,8 @@ Kayアプリケーションの基本的な設定はプロジェクトディレ�
    
 .. attribute:: CONTEXT_PROCESSORS
 
-   コンテキスト・プロセッサのパスをタプルで指定します。コンテキスト・プロセッサを使うとテンプレートエンジンが render の時に使用するコンテキストに追加設定できます。デフォルト値は以下のとおりです。
+   コンテキスト・プロセッサのパスをタプルで指定します。コンテキスト・プロセッサを使うとテンプレートエンジンが render の時に使用するコンテキストに追加設定できます。デフォルト値は空のタプルです。
+   以下は設定の一例です。
 
    .. code-block:: python
 
@@ -181,7 +182,8 @@ Kayアプリケーションの基本的な設定はプロジェクトディレ�
 
 .. attribute:: JINJA2_FILTERS
 
-   Jinja2のフィルタをディクショナリで設定します。デフォルト値は以下のとおりです。
+   Jinja2のフィルタをディクショナリで設定します。デフォルト値は空の辞書です。
+   以下は設定例です。
 
    .. code-block:: python
 
@@ -219,11 +221,12 @@ Kayアプリケーションの基本的な設定はプロジェクトディレ�
    
 .. attribute:: MIDDLEWARE_CLASSES
 
-   ミドルウェアを追加する場合は、このタプルに設定します。
+   ミドルウェアを追加する場合は、このタプルに設定します。デフォルト値は空のタプルです。以下は設定の一例です。
 
    .. code-block:: python
 
      MIDDLEWARE_CLASSES = (
+       'kay.session.middleware.SessionMiddleware',
        'kay.auth.middleware.AuthenticationMiddleware',
      )
 
