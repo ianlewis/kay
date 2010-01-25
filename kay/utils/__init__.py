@@ -18,6 +18,7 @@ from werkzeug import (
 from werkzeug.exceptions import NotFound
 
 from kay.conf import settings
+from kay.exceptions import ImproperlyConfigured
 
 local = Local()
 local_manager = LocalManager([local])
@@ -181,7 +182,7 @@ def get_standard_processors():
         func = import_string(path)
       except (ImportError, AttributeError), e:
         raise ImproperlyConfigured('Error importing request processor module'
-                                   ' %s: "%s"' % (module, e))
+                                   ' %s: "%s"' % (path, e))
       processors.append(func)
     _standard_context_processors = tuple(processors)
   return _standard_context_processors
