@@ -1185,7 +1185,7 @@ class Multiple(Field):
       if message is None:
         message = ngettext(u'Please provide no more than %d item.',
                            u'Please provide no more than %d items.',
-                           self.min_size) % self.min_size
+                           self.max_size) % self.max_size
       raise ValidationError(message)
     result = []
     errors = {}
@@ -1649,7 +1649,7 @@ class MultiChoiceField(ChoiceField):
       if message is None:
         message = ngettext(u'Please provide no more than %d item.',
                            u'Please provide no more than %d items.',
-                           self.min_size) % self.min_size
+                           self.max_size) % self.max_size
       raise ValidationError(message)
 
     return result
