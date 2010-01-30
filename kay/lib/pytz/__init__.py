@@ -53,7 +53,7 @@ def open_resource(name):
             raise ValueError('Bad path segment: %r' % part)
     zoneinfo = zipfile.ZipFile(os.path.join(os.path.dirname(__file__),
                                'zoneinfo.zip'))
-    return StringIO(zoneinfo.read(os.path.join('zoneinfo', *name_parts)))
+    return StringIO(zoneinfo.read('zoneinfo/' + name))
 
 # Enable this when we get some translations?
 # We want an i18n API that is useful to programs using Python's gettext
