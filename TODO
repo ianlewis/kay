@@ -28,16 +28,7 @@ kay
 kay.auth
 --------
 
-* `Forgot password?` capability for DatastoreUser
-
 * Incorporate Ian's ChoiceBackend.
-
-kay.utils.forms
-----------------
-
-* AjaxModelField
-
-* Implement a widget with JQuery's DatetimePicker
 
 
 kay.utils.forms
