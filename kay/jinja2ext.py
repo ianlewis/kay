@@ -64,7 +64,7 @@ class FragmentCacheExtension(Extension):
   def _cache_support(self, name, timeout, vary_on, caller):
     """Helper callback."""
     key_seeds = [name, local.request.lang]
-    if vary_on:
+    if vary_on is not None:
       if isinstance(vary_on, tuple):
         for v in vary_on:
           key_seeds.append(str(v))
