@@ -33,3 +33,10 @@ INSTALLED_APPS = (
 
 APP_MOUNT_POINTS = {
 }
+
+# You can remove following settings if unnecessary.
+CONTEXT_PROCESSORS = (
+  'kay.context_processors.request',
+  'kay.context_processors.url_functions',
+  'kay.context_processors.media_url',
+)
