@@ -42,23 +42,7 @@ from kay import (
 from kay.conf import settings, _settings, LazySettings
 
 translations_cache = {}
-
-def model_name_from_key(key):
-  return key.path().element_list()[0].type()
-    
-def db_hook(service, call, request, response):
-  if call == 'Put':
-    from kay.utils.db_hook import execute_hooks
-    for key, entity in zip(response.key_list(), request.entity_list()):
-      kind = model_name_from_key(key)
-      execute_hooks(kind, key, entity)
-  elif call == 'Commit':
-    from kay.utils.db_hook import execute_reserved_hooks
-    execute_reserved_hooks()
-  elif call == 'Rollback' or call == 'BeginTransaction':
-    from kay.utils.db_hook import clear_reserved_hooks
-    clear_reserved_hooks()
-    
+hook_installed = False
 
 def get_application(settings=_settings):
   application = KayApp(settings)
@@ -387,10 +371,13 @@ class KayApp(object):
   def __call__(self, environ, start_response):
     kay.setup_syspath()
     if _settings.USE_DB_HOOK:
-      from google.appengine.api import apiproxy_stub_map
-      apiproxy_stub_map.apiproxy.GetPostCallHooks().Clear()
-      apiproxy_stub_map.apiproxy.GetPostCallHooks().Append(
-        'db_hook', db_hook, 'datastore_v3')
+      global hook_installed
+      if not hook_installed:
+        from google.appengine.api import apiproxy_stub_map
+        from kay.utils.db_hook import post_hook
+        apiproxy_stub_map.apiproxy.GetPostCallHooks().Append(
+          'post_hook', post_hook, 'datastore_v3')
+        hook_installed = True
     local.app = self
     local.request = request = Request(environ)
     if self.url_map is None or self.has_error_on_init_url_map:

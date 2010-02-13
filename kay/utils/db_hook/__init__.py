@@ -16,7 +16,6 @@ import put_type
 
 post_save_hooks = {}
 
-
 def register_post_save_hook(func, model):
   global post_save_hooks
   kind = model.kind()
@@ -89,3 +88,16 @@ def execute_reserved_hooks():
     for func_list, instance, put_type_id in tmp_list:
       for func in func_list:
         func(instance, put_type_id)
+
+def model_name_from_key(key):
+  return key.path().element_list()[0].type()
+
+def post_hook(service, call, request, response):
+  if call == 'Put':
+    for key, entity in zip(response.key_list(), request.entity_list()):
+      kind = model_name_from_key(key)
+      execute_hooks(kind, key, entity)
+  elif call == 'Commit':
+    execute_reserved_hooks()
+  elif call == 'Rollback' or call == 'BeginTransaction':
+    clear_reserved_hooks()
