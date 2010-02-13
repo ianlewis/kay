@@ -2136,6 +2136,15 @@ class Form(object):
     self.errors = {}
     self.raw_data = None
 
+  def append_errors(self, message, field_name=None):
+    if not isinstance(message, (list, tuple)):
+      messages = [unicode(message)]
+    else:
+      messages = map(unicode, message)
+    error_list = ErrorList(messages)
+    error_list.extend(self.errors.get(field_name, []))
+    self.errors.update({field_name: error_list})
+
   def validate(self, data, files=None):
     """Validate the form against the data passed."""
     self.raw_data = _decode(data)
