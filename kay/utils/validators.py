@@ -38,6 +38,8 @@ class ValidationError(ValueError):
   def __init__(self, message):
     if not isinstance(message, (list, tuple)):
       messages = [message]
+    else:
+      messages = message
     # make all items in the list unicode (this also evaluates
     # lazy translations in there)
     messages = map(unicode, messages)
