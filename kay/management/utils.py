@@ -24,7 +24,7 @@ def get_user_apps():
   main_app = kay.app.get_application()
   apps = [main_app.app]
   for key, submount_app in main_app.mounts.iteritems():
-    if key == "/_kay":
+    if not hasattr(submount_app, 'app_settings') or key == "/_kay":
       continue
     apps.append(submount_app)
   for app in apps:

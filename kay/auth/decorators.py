@@ -22,7 +22,10 @@ from kay.utils import (
 def login_required(func):
   def inner(request, *args, **kwargs):
     if request.user.is_anonymous():
-      return redirect(create_login_url(request.url))
+      if request.is_xhr:
+        return Forbidden()
+      else:
+        return redirect(create_login_url(request.url))
     return func(request, *args, **kwargs)
   update_wrapper(inner, func)
   return inner

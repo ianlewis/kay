@@ -50,6 +50,11 @@ def get_application(settings=_settings):
   for app_name in settings.SUBMOUNT_APPS:
     app = KayApp(LazySettings('%s.settings' % app_name))
     submount_apps['/%s' % app_name] = app
+  if settings.JSONRPC2_MOUNT_POINT:
+    app_name = settings.JSONRPC2_MOUNT_POINT
+    import kay.ext.jsonrpc2 as jsonrpc2
+    app = jsonrpc2.make_application(getattr(settings, "JSONRPC2_METHODS", {}))
+    submount_apps['/%s' % app_name] = app
   application = DispatcherMiddleware(application, submount_apps)
   return application
 

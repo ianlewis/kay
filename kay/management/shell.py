@@ -49,7 +49,7 @@ def get_all_models_as_dict(only_polymodel_base=False):
   app = kay.app.get_application()
   apps.append(app.app)
   for key, submount_app in app.mounts.iteritems():
-    if key == "/_kay":
+    if not hasattr(submount_app, 'app_settings') or key == "/_kay":
       continue
     apps.append(submount_app)
   for kay_app in apps:

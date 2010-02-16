@@ -88,3 +88,11 @@ TEMPORARY_SESSION_LIFETIME = 3600
 
 PER_DOMAIN_SETTINGS = {
 }
+
+# To use jsonrpc, set url path to JSONRPC_MOUNT_POINT.
+JSONRPC2_MOUNT_POINT = None
+
+# make callable object to RPCable.
+JSONRPC2_METHODS = {
+    
+}

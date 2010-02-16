@@ -74,7 +74,8 @@ def do_preparse_apps():
   for app in applications:
     compile_app_templates(app.app) # pass KayApp instance
     for key, submount_app in app.mounts.iteritems():
-      compile_app_templates(submount_app)
+      if isinstance(submount_app, kay.app.KayApp):
+        compile_app_templates(submount_app)
 
   print_status("Finished compiling templates...")
 
