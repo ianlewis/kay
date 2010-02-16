@@ -47,9 +47,8 @@ import itertools
 from werkzeug import Request, Response
 from werkzeug import exceptions
 
-class JsonRpcHandler(object):
+class JsonRpcApplication(object):
   def __init__(self, methods=None):
-    self.__name__ = JsonRpcHandler.__name__
     if methods is not None:
       self.methods = methods
     else:
@@ -66,7 +65,6 @@ class JsonRpcHandler(object):
     self.methods[name] = func
 
   def process(self, data):
-
     if data.get('jsonrpc') != "2.0":
       return {'jsonrpc':'2.0',
               'id':data.get('id'),
@@ -128,7 +126,8 @@ class JsonRpcHandler(object):
                        'data':str(e)}}
 
 
-  def __call__(self, request):
+  def __call__(self, environ, start_response):
+    request = Request(environ)
     if request.method != "POST":
       raise exceptions.MethodNotAllowed
 
@@ -163,15 +162,8 @@ class JsonRpcHandler(object):
       response.headers["Pragma"] = "no-cache"
       response.headers["Expires"] = "-1"
       response.data = json.dumps(resdata)
-    return response
-
-
-class JsonRpcApplication(JsonRpcHandler):
-  def __call__(self, environ, start_response):
-    request = Request(environ)
-    response = super(JsonRpcApplication, self).__call__(request)
     return response(environ, start_response)
-    
+
 
 def getmod(modname):
   try:
