@@ -116,8 +116,6 @@ def post_hook(service, call, request, response):
   elif call == 'Rollback' or call == 'BeginTransaction':
     clear_reserved_hooks()
 
-import logging
-
 def execute_pre_save_hooks(kind, pb_key, entity):
   put_type_id = put_type.UNKNOWN
   func_list = pre_save_hooks.get(kind, None)
