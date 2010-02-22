@@ -380,8 +380,11 @@ class KayApp(object):
       if not hook_installed:
         from google.appengine.api import apiproxy_stub_map
         from kay.utils.db_hook import post_hook
+        from kay.utils.db_hook import pre_hook
         apiproxy_stub_map.apiproxy.GetPostCallHooks().Append(
           'post_hook', post_hook, 'datastore_v3')
+        apiproxy_stub_map.apiproxy.GetPreCallHooks().Append(
+          'pre_hook', pre_hook, 'datastore_v3')
         hook_installed = True
     local.app = self
     local.request = request = Request(environ)

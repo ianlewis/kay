@@ -11,14 +11,14 @@ NEWLY_CREATED = 1
 UPDATED = 2
 MAYBE_NEWLY_CREATED = 3
 MAYBE_UPDATED = 4
-UNKOWN = 5
+UNKNOWN = 5
 
 type_names = {
   1: "Newly Created",
   2: "Updated",
   3: "Maybe Newly Created",
   4: "Maybe Updated",
-  5: "Unkown",
+  5: "Unknown",
 }
 
 def get_name(type):
