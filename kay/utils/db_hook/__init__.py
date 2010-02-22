@@ -104,7 +104,7 @@ def execute_reserved_hooks():
         func(instance, put_type_id)
 
 def kind_name_from_key(key):
-  return key.path().element_list()[0].type()
+  return key.path().element_list()[-1].type()
 
 def post_hook(service, call, request, response):
   if call == 'Put':
