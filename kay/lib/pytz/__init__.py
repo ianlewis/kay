@@ -26,6 +26,8 @@ __all__ = [
     'loader',
     ]
 
+import os
+import logging
 import sys, datetime, os.path, gettext
 from UserDict import DictMixin
 from UserList import UserList
@@ -45,40 +47,59 @@ try:
 except NameError:
     from sets import Set as set
 
+import zipfile
+from cStringIO import StringIO
+
+from google.appengine.api import memcache
+
+zoneinfo = None
+zoneinfo_path = os.path.abspath(os.path.join(os.path.dirname(__file__),
+                                             'zoneinfo.zip'))
+
+def get_zoneinfo():
+    """Cache the opened zipfile in the module."""
+    global zoneinfo
+    if zoneinfo is None:
+        zoneinfo = zipfile.ZipFile(zoneinfo_path)
+
+    return zoneinfo
+
+
 class TimezoneLoader(object):
+    """A loader that that reads timezones using ZipFile."""
     def __init__(self):
         self.available = {}
 
     def open_resource(self, name):
-        """Open a resource from the zoneinfo subdir for reading.
-
-        Uses the pkg_resources module if available and no standard file
-        found at the calculated location.
-        """
+        """Opens a resource from the zoneinfo subdir for reading."""
         name_parts = name.lstrip('/').split('/')
         for part in name_parts:
             if part == os.path.pardir or os.path.sep in part:
                 raise ValueError('Bad path segment: %r' % part)
-        filename = os.path.join(os.path.dirname(__file__),
-                                'zoneinfo', *name_parts)
-        if not os.path.exists(filename) and resource_stream is not None:
-            # http://bugs.launchpad.net/bugs/383171 - we avoid using this
-            # unless absolutely necessary to help when a broken version of
-            # pkg_resources is installed.
-            return resource_stream(__name__, 'zoneinfo/' + name)
-        return open(filename, 'rb')
 
+        cache_key = 'pytz.zoneinfo.%s.%s' % (OLSON_VERSION, name)
+        zonedata = memcache.get(cache_key)
+        if zonedata is None:
+            zonedata = get_zoneinfo().read(os.path.join('zoneinfo', *name_parts))
+            memcache.add(cache_key, zonedata)
+            logging.info('Added timezone to memcache: %s' % cache_key)
+        else:
+            logging.info('Loaded timezone from memcache: %s' % cache_key)
+
+        return StringIO(zonedata)
 
     def resource_exists(self, name):
         """Return true if the given resource exists"""
         if name not in self.available:
             try:
-                self.open_resource(name)
+                get_zoneinfo().getinfo(os.path.join('zoneinfo',
+                    *name.lstrip('/').split('/')))
                 self.available[name] = True
-            except IOError:
+            except KeyError:
                 self.available[name] = False
 
         return self.available[name]
+
 
 loader = TimezoneLoader()
 

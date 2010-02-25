@@ -44,20 +44,12 @@ def get_timezone(tzname):
   """
   Method to get timezone with memcached enhancement.
   """
-  from google.appengine.api import memcache
   global _timezone_cache
   if hasattr(_timezone_cache, 'tzname'):
     tz = _timezone_cache['tzname']
   else:
-    try:
-      tz = memcache.get("tz:%s" % tzname)
-    except Exception:
-      tz = None
-      logging.debug("timezone get failed: %s" % tzname)
-  if tz is None:
     from pytz import timezone
     tz = timezone(tzname)
-    memcache.add("tz:%s" % tzname, tz, 86400)
     _timezone_cache['tzname'] = tz
   return tz
 
