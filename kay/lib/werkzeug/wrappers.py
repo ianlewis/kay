@@ -17,7 +17,7 @@
     decoded into an unicode object if possible and if it makes sense.
 
 
-    :copyright: (c) 2009 by the Werkzeug Team, see AUTHORS for more details.
+    :copyright: (c) 2010 by the Werkzeug Team, see AUTHORS for more details.
     :license: BSD, see LICENSE for more details.
 """
 import tempfile
@@ -141,6 +141,30 @@ class BaseRequest(object):
     #:
     #: .. versionadded:: 0.5
     max_form_memory_size = None
+
+    #: the class to use for `args` and `form`.  The default is an
+    #: :class:`ImmutableMultiDict` which supports multiple values per key.
+    #: alternatively it makes sense to use an :class:`ImmutableOrderedMultiDict`
+    #: which preserves order or a :class:`ImmutableDict` which is
+    #: the fastest but only remembers the last key.  It is also possible
+    #: to use mutable structures, but this is not recommended.
+    #:
+    #: .. versionadded:: 0.6
+    parameter_storage_class = ImmutableMultiDict
+
+    #: the type to be used for list values from the incoming WSGI
+    #: environment.  By default an :class:`ImmutableList` is used
+    #: (for example for :attr:`access_list`).
+    #:
+    #: .. versionadded:: 0.6
+    list_storage_class = ImmutableList
+
+    #: the type to be used for dict values from the incoming WSGI
+    #: environment.  By default an :class:`ImmutableTypeConversionDict`
+    #: is used (for example for :attr:`cookies`).
+    #:
+    #: .. versionadded:: 0.6
+    dict_storage_class = ImmutableTypeConversionDict
 
     def __init__(self, environ, populate_request=True, shallow=False):
         self.environ = environ
@@ -271,7 +295,7 @@ class BaseRequest(object):
                                        self.charset, self.encoding_errors,
                                        self.max_form_memory_size,
                                        self.max_content_length,
-                                       cls=ImmutableMultiDict,
+                                       cls=self.parameter_storage_class,
                                        silent=False)
             except ValueError, e:
                 self._form_parsing_failed(e)
@@ -285,8 +309,8 @@ class BaseRequest(object):
                                        content_length)
 
         if data is None:
-            data = (stream, ImmutableMultiDict(),
-                    ImmutableMultiDict())
+            data = (stream, self.parameter_storage_class(),
+                    self.parameter_storage_class())
 
         # inject the values into the instance dict so that we bypass
         # our cached_property non-data descriptor.
@@ -321,10 +345,14 @@ class BaseRequest(object):
 
     @cached_property
     def args(self):
-        """The parsed URL parameters as :class:`ImmutableMultiDict`."""
+        """The parsed URL parameters.  By default a :class:`ImmutableMultiDict`
+        is returned from this function.  This can be changed by setting
+        :attr:`parameter_storage_class` to a different type.  This might
+        be necessary if the order of the form data is important.
+        """
         return url_decode(self.environ.get('QUERY_STRING', ''),
                           self.url_charset, errors=self.encoding_errors,
-                          cls=ImmutableMultiDict)
+                          cls=self.parameter_storage_class)
 
     @cached_property
     def data(self):
@@ -339,9 +367,10 @@ class BaseRequest(object):
 
     @cached_property
     def form(self):
-        """Form parameters.  Currently it's not guaranteed that the
-        :class:`ImmutableMultiDict` returned by this function is ordered in
-        the same way as the submitted form data.
+        """The form parameters.  By default a :class:`ImmutableMultiDict`
+        is returned from this function.  This can be changed by setting
+        :attr:`parameter_storage_class` to a different type.  This might
+        be necessary if the order of the form data is important.
         """
         self._load_form_data()
         return self.form
@@ -349,7 +378,12 @@ class BaseRequest(object):
     @cached_property
     def values(self):
         """Combined multi dict for :attr:`args` and :attr:`form`."""
-        return CombinedMultiDict([self.args, self.form])
+        args = []
+        for d in self.args, self.form:
+            if not isinstance(d, MultiDict):
+                d = MultiDict(d)
+            args.append(d)
+        return CombinedMultiDict(args)
 
     @cached_property
     def files(self):
@@ -369,9 +403,9 @@ class BaseRequest(object):
 
     @cached_property
     def cookies(self):
-        """The retrieved cookie values as regular dictionary."""
+        """Read only access to the retrieved cookie values as dictionary."""
         return parse_cookie(self.environ, self.charset,
-                            cls=ImmutableTypeConversionDict)
+                            cls=self.dict_storage_class)
 
     @cached_property
     def headers(self):
@@ -432,10 +466,10 @@ class BaseRequest(object):
         """
         if 'HTTP_X_FORWARDED_FOR' in self.environ:
             addr = self.environ['HTTP_X_FORWARDED_FOR'].split(',')
-            return ImmutableList([x.strip() for x in addr])
+            return self.list_storage_class([x.strip() for x in addr])
         elif 'REMOTE_ADDR' in self.environ:
-            return ImmutableList([self.environ['REMOTE_ADDR']])
-        return ImmutableList()
+            return self.list_storage_class([self.environ['REMOTE_ADDR']])
+        return self.list_storage_class()
 
     @property
     def remote_addr(self):
@@ -796,10 +830,10 @@ class BaseResponse(object):
 
     @property
     def is_streamed(self):
-        """If the response is streamed (the response is not a iterable with
+        """If the response is streamed (the response is not an iterable with
         a length information) this property is `True`.  In this case streamed
         means that there is no information about the number of iterations.
-        This is usully `True` if a generator is passed to the response object.
+        This is usually `True` if a generator is passed to the response object.
 
         This is useful for checking before applying some sort of post
         filtering that should not take place for streamed responses.
@@ -904,7 +938,7 @@ class BaseResponse(object):
                 content_length = sum(len(str(x)) for x in self.response)
             except UnicodeError:
                 # aha, something non-bytestringy in there, too bad, we
-                # can't savely figure out the length of the response.
+                # can't safely figure out the length of the response.
                 pass
             else:
                 headers['Content-Length'] = str(content_length)
@@ -937,7 +971,7 @@ class BaseResponse(object):
     def get_wsgi_response(self, environ):
         """Returns the final WSGI response as tuple.  The first item in
         the tuple is the application iterator, the second the status and
-        the first the list of headers.  The response returned is created
+        the third the list of headers.  The response returned is created
         specially for the given environment.  For example if the request
         method in the WSGI environment is ``'HEAD'`` the response will
         be empty and only the headers and status code will be present.
@@ -1012,7 +1046,7 @@ class AcceptMixin(object):
         object.
 
         .. versionchanged 0.5
-           In previous versions this was a regualr :class:`Accept` object.
+           In previous versions this was a regular :class:`Accept` object.
         """
         return parse_accept_header(self.environ.get('HTTP_ACCEPT_LANGUAGE'),
                                    LanguageAccept)
@@ -1207,7 +1241,7 @@ class ResponseStreamMixin(object):
 
 class CommonRequestDescriptorsMixin(object):
     """A mixin for :class:`BaseRequest` subclasses.  Request objects that
-    mix this class in will automatically get descriptors for a coupl eof
+    mix this class in will automatically get descriptors for a couple of
     HTTP headers with automatic type conversion.
 
     .. versionadded:: 0.5

@@ -61,7 +61,7 @@ r'''
     or as named parameters, pretty much like Python function calls.
 
 
-    :copyright: (c) 2009 by the Werkzeug Team, see AUTHORS for more details.
+    :copyright: (c) 2010 by the Werkzeug Team, see AUTHORS for more details.
     :license: BSD, see LICENSE for more details.
 '''
 import sys
@@ -87,7 +87,7 @@ converters = {
 
 
 def run(namespace=None, action_prefix='action_', args=None):
-    """Run the script.  Participating actions are looked up in the callers
+    """Run the script.  Participating actions are looked up in the caller's
     namespace if no namespace is given, otherwise in the dict provided.
     Only items that start with action_prefix are processed as actions.  If
     you want to use all items in the namespace provided as actions set
@@ -112,7 +112,7 @@ def run(namespace=None, action_prefix='action_', args=None):
         fail('Unknown action \'%s\'' % args[0])
 
     arguments = {}
-    conv = {}
+    types = {}
     key_to_arg = {}
     long_options = []
     formatstring = ''
@@ -121,7 +121,6 @@ def run(namespace=None, action_prefix='action_', args=None):
         return func()
     for idx, (arg, shortcut, default, option_type) in enumerate(arg_def):
         real_arg = arg.replace('-', '_')
-        converter = converters[option_type]
         if shortcut:
             formatstring += shortcut
             if not isinstance(default, bool):
@@ -130,7 +129,7 @@ def run(namespace=None, action_prefix='action_', args=None):
         long_options.append(isinstance(default, bool) and arg or arg + '=')
         key_to_arg['--' + arg] = real_arg
         key_to_arg[idx] = real_arg
-        conv[real_arg] = converter
+        types[real_arg] = option_type
         arguments[real_arg] = default
 
     try:
@@ -146,7 +145,7 @@ def run(namespace=None, action_prefix='action_', args=None):
             fail('Too many parameters')
         specified_arguments.add(arg)
         try:
-            arguments[arg] = conv[arg](value)
+            arguments[arg] = converters[types[arg]](value)
         except ValueError:
             fail('Invalid value for argument %s (%s): %s' % (key, arg, value))
 
@@ -154,12 +153,13 @@ def run(namespace=None, action_prefix='action_', args=None):
         arg = key_to_arg[key]
         if arg in specified_arguments:
             fail('Argument \'%s\' is specified twice' % arg)
-        if arg.startswith('no_'):
-            value = 'no'
-        elif not value:
-            value = 'yes'
+        if types[arg] == 'boolean':
+            if arg.startswith('no_'):
+                value = 'no'
+            else:
+                value = 'yes'
         try:
-            arguments[arg] = conv[arg](value)
+            arguments[arg] = converters[types[arg]](value)
         except ValueError:
             fail('Invalid value for \'%s\': %s' % (key, value))
 
