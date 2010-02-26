@@ -242,7 +242,13 @@ myapp/urls.py
 ユーザー認証
 ------------
 
-ユーザー認証を使用する方法はいくつかありますが、ここでは Google Account での認証を使ってみましょう。デフォルトの ``settings.py`` では Google Account の認証を使用するようになっていますので、特に設定項目はありません。
+ユーザー認証を使用する方法はいくつかありますが、ここでは Google Account での認証を使ってみましょう。デフォルトの ``settings.py`` では Google Account の認証を使用するようになっていますが、認証用のミドルウェアを有効にする必要があります。
+
+.. code-block:: python
+
+  MIDDLEWARE_CLASSES = (
+    'kay.auth.middleware.AuthenticationMiddleware',
+  )
 
 ``myapp/templates/index.html`` を編集して、下記のようにすると、ユーザー認証を使用する事ができます。
 

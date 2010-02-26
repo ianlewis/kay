@@ -276,8 +276,15 @@ User Authentication
 
 There are some ways how to authenticate users. Now we will
 authenticate users with Google Accounts.  By default, ``settings.py``
-is configured to use Google Account Authenticaion.  So you don't need
-to edit ``settings.py`` in this case.
+is configured to use Google Account Authenticaion, but
+``AuthenticationMiddleware`` is not enabled by default. So you need to
+edit ``settings.py`` in this case.
+
+.. code-block:: python
+
+  MIDDLEWARE_CLASSES = (
+    'kay.auth.middleware.AuthenticationMiddleware',
+  )
 
 If you edit ``myapp/templates/index.html`` as follows, you can use
 user authentication.
