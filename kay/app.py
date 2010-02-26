@@ -251,15 +251,10 @@ class KayApp(object):
     global translations_cache
     if self.app_settings.USE_I18N:
       from kay.i18n import load_translations
-      lang = request.cookies.get(settings.LANG_COOKIE_NAME)
+      from kay.i18n import get_language_from_request
+      lang = get_language_from_request(request)
       if not lang:
-        lang = (request.accept_languages.best or 
-                self.app_settings.DEFAULT_LANG)
-      pos = lang.find('-')
-      if pos >= 0:
-        lang = lang[:pos].lower()+'_'+lang[pos+1:].upper()
-      else:
-        lang = lang.lower()
+        lang = self.app_settings.DEFAULT_LANG
       translations = translations_cache.get("trans:%s:%s" %
                                             (self.app_settings.APP_NAME, lang),
                                             None)

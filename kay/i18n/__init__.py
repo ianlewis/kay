@@ -50,6 +50,7 @@ import os
 from gettext import NullTranslations
 
 import kay
+from kay import utils
 from kay.utils import local
 from kay.conf import settings
 
@@ -60,6 +61,27 @@ DATE_FORMATS = ['%m/%d/%Y', '%d/%m/%Y', '%Y%m%d', '%d. %m. %Y',
                 '%m/%d/%y', '%d/%m/%y', '%d%m%y', '%m%d%y', '%y%m%d']
 TIME_FORMATS = ['%H:%M', '%H:%M:%S', '%I:%M %p', '%I:%M:%S %p']
 
+_accepted = {}
+
+def get_language_from_request(request):
+  global _accepted
+  lang = request.cookies.get(settings.LANG_COOKIE_NAME)
+  if lang:
+    return lang
+  for lang in request.accept_languages.itervalues():
+    pos = lang.find('-')
+    if pos >= 0:
+      lang = lang[:pos].lower()+'_'+lang[pos+1:].upper()
+    else:
+      lang = lang.lower()
+    if lang in _accepted:
+      return _accepted[lang]
+    for dirname in (lang, lang.split("_")[0]):
+      if os.path.exists(os.path.join(utils.get_kay_locale_path(), dirname,
+                                     "LC_MESSAGES", "messages.mo")):
+        _accepted[lang] = dirname
+        return dirname
+  return None
 
 def create_lang_url(lang=None, url=None):
   from werkzeug.urls import url_quote_plus
@@ -75,7 +97,6 @@ def load_translations(locale):
   from werkzeug.utils import import_string
 
   from kay.i18n.translations import KayTranslations
-  from kay import utils
   domain = "messages"
   ret = KayTranslations.load(utils.get_kay_locale_path(), locale, domain)
   def _merge(path):
