@@ -51,7 +51,7 @@ Using google account authentication
 -----------------------------------
 
 By default, ``kay.auth.middleware.AuthenticationMiddleware`` is
-enabled, and :attr:`settings.AUTH_USER_BACKEND` is set to
+disabled, and :attr:`settings.AUTH_USER_BACKEND` is set to
 ``kay.auth.backends.googleaccount.GoogleBackend``. This backend is for
 authentication using google account or google apps account. If a user
 logs into your app first time, an information of the user is stored as

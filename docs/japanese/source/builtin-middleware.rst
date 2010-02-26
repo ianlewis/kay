@@ -17,7 +17,7 @@
    
 .. class:: kay.cache.middleware.CacheMiddleware
 
-サイト全体にわたるキャッシュを有効にします。キャッシュを有効にすると、 Kay の管理下にあるページは :attr:`settings.CACHE_MIDDLEWARE_SECONDS` に定義した時間のキャッシュされます。
+サイト全体にわたるキャッシュを有効にします。キャッシュを有効にすると、 Kay の管理下にあるページは :attr:`settings.CACHE_MIDDLEWARE_SECONDS` に定義した時間のキャッシュされます。使用する場合は ``kay.auth.middleware.AuthenticationMiddleware`` を ``kay.cache.middleware.CacheMiddleware`` よりも上に設定する必要があります。
 
 
 .. _Session middleware:

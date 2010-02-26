@@ -15,11 +15,13 @@ Cache middleware
 .. module:: kay.cache.middleware
    :synopsis: Middleware for the site-wide cache.
 
-.. class:: kay.middleware.cache.UpdateCacheMiddleware
+.. class:: kay.cache.middleware.CacheMiddleware
 
-Enable the site-wide cache. If these are enabled, each Kay-powered page will
-be cached for as long as the :attr:`settings.CACHE_MIDDLEWARE_SECONDS` setting
-defines.
+Enable the site-wide cache. If these are enabled, each Kay-powered
+page will be cached for as long as the
+:attr:`settings.CACHE_MIDDLEWARE_SECONDS` setting defines. You need to
+place ``kay.auth.middleware.AuthenticationMiddleware`` before
+``kay.cache.middleware.CacheMiddleware``.
 
 Session middleware
 ------------------
