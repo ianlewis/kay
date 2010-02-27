@@ -29,7 +29,12 @@ Kay には匿名セッションの仕組があります。この仕組を有効�
     'kay.auth.middleware.GoogleAuthenticationMiddleware',
   )
 
-``GAESessionStore`` では、セッションデータは Datastore に保存され、セッションIDのみがユーザー側の Cookie に渡されます。また ``SecureCookieSessionStore`` ではユーザー側の Cookie にセッションデータが保存されます。 ``SecureCookieSessionStore`` を使用した場合には、セッションに保存するデータは id 等の保存のみにして、大きなデータを保存する事は避けてください。
+``GAESessionStore`` では、セッションデータは Datastore に保存され、セッ
+ションIDのみがユーザー側の Cookie に渡されます。また
+``SecureCookieSessionStore`` ではユーザー側の Cookie にセッションデータ
+が保存されます。 ``SecureCookieSessionStore`` を使用した場合には、セッ
+ションに保存するデータは id 等の保存のみにして、大きなデータを保存する
+事は避けてください。
 
 デコレーター
 ------------

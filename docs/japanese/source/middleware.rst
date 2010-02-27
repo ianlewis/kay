@@ -39,7 +39,9 @@ Kay はミドルウェアがなくても動作します -- 望むなら :attr:`s
 
 .. method:: process_request(self, request)
 
-``request`` は :class:`werkzeug.Request` オブジェクトです。このメソッドはリクエストごとに Kay がどのビューを実行するか決定する前に呼び出されます。
+``request`` は :class:`werkzeug.Request` オブジェクトです。このメソッド
+はリクエストごとに Kay がどのビューを実行するか決定する前に呼び出されま
+す。
 
 ``process_request()`` は ``None`` または :class:`werkzeug.Response` オブジェクトのいずれかを返さねばなりません。 ``None`` を返した場合、 Kay はリクエストの処理を継続し、他のミドルウェアや適切なビューを実行します。 :class:`werkzeug.Response` オブジェクトを返した場合、 Kay は他のリクエストミドルウェア、ビューミドルウェア、例外ミドルウェア、あるいは URLconf で設定されたビューを呼び出さず、 :class:`werkzeug.Response` オブジェクトをそのまま返します。レスポンスミドルウェアは必ず呼び出されます。
 
@@ -50,7 +52,13 @@ Kay はミドルウェアがなくても動作します -- 望むなら :attr:`s
 
 .. method:: process_view(self, request, view_func, view_args, view_kwargs)
 
-``request`` は :class:`werkzeug.Request` オブジェクトです。 ``view_func`` は Kay がビュー関数としてこれから呼び出そうとしている Python の関数です (実際の関数オブジェクトで、関数名を表す文字列ではありません)。 ``view_args`` にはビューに渡されることになる固定引数が、 ``view_kwargs`` にはビューに渡されることになるキーワード引数のディクショナリが入っています。 ``view_args`` と ``view_kwargs`` のいずれにも、ビューの第一引数 (``request``) は入っていません。
+``request`` は :class:`werkzeug.Request` オブジェクトです。
+``view_func`` は Kay がビュー関数としてこれから呼び出そうとしている
+Python の関数です (実際の関数オブジェクトで、関数名を表す文字列ではあり
+ません)。 ``view_args`` にはビューに渡されることになる固定引数が、
+``view_kwargs`` にはビューに渡されることになるキーワード引数のディクショ
+ナリが入っています。 ``view_args`` と ``view_kwargs`` のいずれにも、
+ビューの第一引数 (``request``) は入っていません。
 
 ``process_view()`` は Kay がビュー関数を呼び出す直前に呼び出されます。この関数は ``None`` または :class:`werkzeug.Response` オブジェクトを返さねばなりません。 ``None`` を返した場合、 Kay は処理を継続し、他のミドルウェアの ``process_view()`` を試した後、適切なビュー関数を呼び出します。 :class:`werkzeug.Response` オブジェクトを返した場合、 Kay は他のリクエストミドルウェア、ビューミドルウェア、例外ミドルウェア、あるいは URLconf で設定されたビューを呼び出さず、 :class:`werkzeug.Response` オブジェクトをそのまま返します。レスポンスミドルウェアは必ず呼び出されます。
 
@@ -61,7 +69,9 @@ Kay はミドルウェアがなくても動作します -- 望むなら :attr:`s
 
 .. method:: process_response(self, request, response)
 
-``request`` は :class:`werkzeug.Request` オブジェクトです。 ``response`` は Kay のビュー関数の返す :class:`werkzeug.Response` オブジェクトです。
+``request`` は :class:`werkzeug.Request` オブジェクトです。
+``response`` は Kay のビュー関数の返す :class:`werkzeug.Response` オブ
+ジェクトです。
 
 ``process_response()`` は :class:`werkzeug.Response` オブジェクトを返さねばなりません。渡された ``response`` オブジェクトを変更して返しても、新たに :class:`werkzeug.Response` オブジェクトを生成して返してもかまいません。
 
@@ -72,7 +82,8 @@ Kay はミドルウェアがなくても動作します -- 望むなら :attr:`s
 
 .. method:: process_exception(self, request, exception)
 
-``request`` は :class:`werkzeug.Request` オブジェクトです。 ``exception`` はビュー関数の送出した ``Exception`` オブジェクトです。
+``request`` は :class:`werkzeug.Request` オブジェクトです。
+``exception`` はビュー関数の送出した ``Exception`` オブジェクトです。
 
 Kay はビューが例外を送出した際に ``process_exception()`` を呼び出します。 ``process_exception()`` は ``None`` または :class:`werkzeug.Response` オブジェクトのいずれかを返さねばなりません。 :class:`werkzeug.Response` オブジェクトを返した場合、その応答をそのままブラウザに返します。それ以外の場合、デフォルトの例外処理を起動します。
 

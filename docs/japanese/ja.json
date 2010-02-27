@@ -13,7 +13,8 @@
       "wordWrap": "CJK"
     }],
     ["literal" , {
-      "wordWrap": "None"
+      "wordWrap": "None",
+      "font": "VL-Gothic-Regular"
     }]
   ]
 }
