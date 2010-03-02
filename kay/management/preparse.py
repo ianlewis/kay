@@ -3,7 +3,9 @@
 """
 Kay preparse management command.
 
-:Copyright: (c) 2009 Accense Technology, Inc. All rights reserved.
+:Copyright: (c) 2009 Accense Technology, Inc. 
+                     Takashi Matsuo <tmatsuo@candit.jp>,
+                     All rights reserved.
 :license: BSD, see LICENSE for more details.
 """
 
@@ -11,10 +13,11 @@ import os
 import sys
 from os import listdir, path, mkdir
 
+from werkzeug.utils import import_string
+
 import kay
 import kay.app
 from kay.utils import local
-from kay.utils.importlib import import_module
 from kay.utils.jinja2utils.compiler import compile_dir
 from kay.management.utils import print_status
 
@@ -57,13 +60,23 @@ def do_preparse_apps():
   """
   Pre compile all the jinja2 templates in your applications.
   """
+  from kay.conf import LazySettings
   print_status("Compiling templates...")
-  app = kay.app.get_application()
-  compile_app_templates(app.app) # pass KayApp instance
-  for key, submount_app in app.mounts.iteritems():
-    if key == "/_kay":
-      continue
-    compile_app_templates(submount_app)
+  application = kay.app.get_application()
+  applications = [application]
+  settings_treated = []
+  for key, settings_name in \
+        application.app.app_settings.PER_DOMAIN_SETTINGS.iteritems():
+    if not settings_name in settings_treated:
+      applications.append(kay.app.get_application(
+          settings=LazySettings(settings_module=settings_name)))
+    settings_treated.append(settings_name)
+  for app in applications:
+    compile_app_templates(app.app) # pass KayApp instance
+    for key, submount_app in app.mounts.iteritems():
+      if isinstance(submount_app, kay.app.KayApp):
+        compile_app_templates(submount_app)
+
   print_status("Finished compiling templates...")
 
 
@@ -90,9 +103,9 @@ def compile_app_templates(app):
   target_dirs = [dir for dir in app.app_settings.TEMPLATE_DIRS\
                    if os.path.isdir(dir)]
   for app in app.app_settings.INSTALLED_APPS:
-    if app.startswith("kay"):
+    if app.startswith("kay."):
       continue
-    mod = import_module(app)
+    mod = import_string(app)
     target_dirs.extend(find_template_dir(os.path.dirname(mod.__file__),
                                          ('kay')))
   for dir in target_dirs:

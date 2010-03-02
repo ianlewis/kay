@@ -5,11 +5,12 @@
 
     This module implements WSGI related helpers.
 
-    :copyright: (c) 2009 by the Werkzeug Team, see AUTHORS for more details.
+    :copyright: (c) 2010 by the Werkzeug Team, see AUTHORS for more details.
     :license: BSD, see LICENSE for more details.
 """
 import os
 import urllib
+import urlparse
 import posixpath
 import mimetypes
 from zlib import adler32
@@ -150,6 +151,102 @@ def peek_path_info(environ):
         return segments[0]
 
 
+def extract_path_info(environ_or_baseurl, path_or_url, charset='utf-8',
+                      errors='ignore', collapse_http_schemes=True):
+    """Extracts the path info from the given URL (or WSGI environment) and
+    path.  The path info returned is a unicode string, not a bytestring
+    suitable for a WSGI environment.  The URLs might also be IRIs.
+
+    If the path info could not be determined, `None` is returned.
+
+    Some examples:
+
+    >>> extract_path_info('http://example.com/app', '/app/hello')
+    u'/hello'
+    >>> extract_path_info('http://example.com/app',
+    ...                   'https://example.com/app/hello')
+    u'/hello'
+    >>> extract_path_info('http://example.com/app',
+    ...                   'https://example.com/app/hello',
+    ...                   collapse_http_schemes=False) is None
+    True
+
+    Instead of providing a base URL you can also pass a WSGI environment.
+
+    .. versionadded:: 0.6
+
+    :param environ_or_baseurl: a WSGI environment dict, a base URL or
+                               base IRI.  This is the root of the
+                               application.
+    :param path_or_url: an absolute path from the server root, a
+                        relative path (in which case it's the path info)
+                        or a full URL.  Also accepts IRIs and unicode
+                        parameters.
+    :param charset: the charset for byte data in URLs
+    :param errors: the error handling on decode
+    :param collapse_http_schemes: if set to `False` the algorithm does
+                                  not assume that http and https on the
+                                  same server point to the same
+                                  resource.
+    """
+    from werkzeug.urls import uri_to_iri, url_fix
+
+    def _as_iri(obj):
+        if not isinstance(obj, unicode):
+            return uri_to_iri(obj, charset, errors)
+        return obj
+
+    def _normalize_netloc(scheme, netloc):
+        parts = netloc.split(u'@', 1)[-1].split(u':', 1)
+        if len(parts) == 2:
+            netloc, port = parts
+            if (scheme == u'http' and port == u'80') or \
+               (scheme == u'https' and port == u'443'):
+                port = None
+        else:
+            netloc = parts[0]
+            port = None
+        if port is not None:
+            netloc += u':' + port
+        return netloc
+
+    # make sure whatever we are working on is a IRI and parse it
+    path = _as_iri(path_or_url)
+    if isinstance(environ_or_baseurl, dict):
+        environ_or_baseurl = get_current_url(environ_or_baseurl,
+                                             root_only=True)
+    base_iri = _as_iri(environ_or_baseurl)
+    base_scheme, base_netloc, base_path, = \
+        urlparse.urlsplit(base_iri)[:3]
+    cur_scheme, cur_netloc, cur_path, = \
+        urlparse.urlsplit(urlparse.urljoin(base_iri, path))[:3]
+
+    # normalize the network location
+    base_netloc = _normalize_netloc(base_scheme, base_netloc)
+    cur_netloc = _normalize_netloc(cur_scheme, cur_netloc)
+
+    # is that IRI even on a known HTTP scheme?
+    if collapse_http_schemes:
+        for scheme in base_scheme, cur_scheme:
+            if scheme not in (u'http', u'https'):
+                return None
+    else:
+        if not (base_scheme in (u'http', u'https') and \
+                base_scheme == cur_scheme):
+            return None
+
+    # are the netlocs compatible?
+    if base_netloc != cur_netloc:
+        return None
+
+    # are we below the application path?
+    base_path = base_path.rstrip(u'/')
+    if not cur_path.startswith(base_path):
+        return None
+
+    return u'/' + cur_path[len(base_path):].lstrip(u'/')
+
+
 class SharedDataMiddleware(object):
     """A WSGI middleware that provides static content for development
     environments or simple server setups. Usage is quite simple::
@@ -187,22 +284,27 @@ class SharedDataMiddleware(object):
     work but this could also be by accident.  We strongly suggest using ASCII
     only file names for static files.
 
+    The middleware will guess the mimetype using the Python `mimetype`
+    module.  If it's unable to figure out the charset it will fall back
+    to `fallback_mimetype`.
+
     .. versionchanged:: 0.5
        The cache timeout is configurable now.
+
+    .. versionadded:: 0.6
+       The `fallback_mimetype` parameter was added.
 
     :param app: the application to wrap.  If you don't want to wrap an
                 application you can pass it :exc:`NotFound`.
     :param exports: a dict of exported files and folders.
     :param diallow: a list of :func:`~fnmatch.fnmatch` rules.
+    :param fallback_mimetype: the fallback mimetype for unknown files.
     :param cache: enable or disable caching headers.
     :Param cache_timeout: the cache timeout in seconds for the headers.
     """
 
-    # this class is public
-    __module__ = 'werkzeug'
-
     def __init__(self, app, exports, disallow=None, cache=True,
-                 cache_timeout=60 * 60 * 12):
+                 cache_timeout=60 * 60 * 12, fallback_mimetype='text/plain'):
         self.app = app
         self.exports = {}
         self.cache = cache
@@ -221,6 +323,7 @@ class SharedDataMiddleware(object):
         if disallow is not None:
             from fnmatch import fnmatch
             self.is_allowed = lambda x: not fnmatch(x, disallow)
+        self.fallback_mimetype = fallback_mimetype
 
     def is_allowed(self, filename):
         """Subclasses can override this method to disallow the access to
@@ -303,7 +406,7 @@ class SharedDataMiddleware(object):
             return self.app(environ, start_response)
 
         guessed_type = mimetypes.guess_type(real_filename)
-        mime_type = guessed_type[0] or 'text/plain'
+        mime_type = guessed_type[0] or self.fallback_mimetype
         f, mtime, file_size = file_loader()
 
         headers = [('Date', http_date())]
@@ -332,7 +435,7 @@ class SharedDataMiddleware(object):
 
 
 class DispatcherMiddleware(object):
-    """Allows one to mount middlewares or application in a WSGI application.
+    """Allows one to mount middlewares or applications in a WSGI application.
     This is useful if you want to combine multiple WSGI applications::
 
         app = DispatcherMiddleware(app, {
@@ -340,9 +443,6 @@ class DispatcherMiddleware(object):
             '/app3':        app3
         })
     """
-
-    # this class is public
-    __module__ = 'werkzeug'
 
     def __init__(self, app, mounts=None):
         self.app = app
@@ -386,9 +486,6 @@ class ClosingIterator(object):
             cleanup_session()
             cleanup_locals()
     """
-
-    # this class is public
-    __module__ = 'werkzeug'
 
     def __init__(self, iterable, callbacks=None):
         iterator = iter(iterable)
@@ -452,9 +549,6 @@ class FileWrapper(object):
     :param buffer_size: number of bytes for one iteration.
     """
 
-    # this class is public
-    __module__ = 'werkzeug'
-
     def __init__(self, file, buffer_size=8192):
         self.file = file
         self.buffer_size = buffer_size
@@ -474,7 +568,7 @@ class FileWrapper(object):
 
 
 def make_line_iter(stream, limit=None, buffer_size=10 * 1024):
-    """Savely iterates line-based over an input stream.  If the input stream
+    """Safely iterates line-based over an input stream.  If the input stream
     is not a :class:`LimitedStream` the `limit` parameter is mandatory.
 
     This uses the stream's :meth:`~file.read` method internally as opposite
@@ -523,8 +617,7 @@ class LimitedStream(object):
     """Wraps a stream so that it doesn't read more than n bytes.  If the
     stream is exhausted and the caller tries to get more bytes from it
     :func:`on_exhausted` is called which by default returns an empty
-    string or raises :exc:`~werkzeug.exceptions.BadRequest` if silent
-    is set to `False`.  The return value of that function is forwarded
+    string.  The return value of that function is forwarded
     to the reader function.  So if it returns an empty string
     :meth:`read` will return an empty string as well.
 
@@ -534,6 +627,11 @@ class LimitedStream(object):
 
     The `silent` parameter has no effect if :meth:`is_exhausted` is
     overriden by a subclass.
+
+    .. versionchanged:: 0.6
+       Non-silent usage was deprecated because it causes confusion.
+       If you want that, override :meth:`is_exhausted` and raise a
+       :exc:`~exceptions.BadRequest` yourself.
 
     .. admonition:: Note on WSGI compliance
 
@@ -548,7 +646,7 @@ class LimitedStream(object):
        is not portable.  It internally calls :meth:`readline`.
 
        We strongly suggest using :meth:`read` only or using the
-       :func:`make_line_iter` which savely iterates line-based
+       :func:`make_line_iter` which safely iterates line-based
        over a WSGI input stream.
 
     :param stream: the stream to wrap.
@@ -559,15 +657,18 @@ class LimitedStream(object):
                    past the limit and will return an empty string.
     """
 
-    # this class is public
-    __module__ = 'werkzeug'
-
     def __init__(self, stream, limit, silent=True):
         self._read = stream.read
         self._readline = stream.readline
         self._pos = 0
         self.limit = limit
         self.silent = silent
+        if not silent:
+            from warnings import warn
+            warn(DeprecationWarning('non-silent usage of the '
+            'LimitedStream is deprecated.  If you want to '
+            'continue to use the stream in non-silent usage '
+            'override on_exhausted.'), stacklevel=2)
 
     def __iter__(self):
         return self
@@ -658,6 +759,6 @@ class LimitedStream(object):
         return line
 
 
-# circulear dependencies
+# circular dependencies
 from werkzeug.utils import http_date
 from werkzeug.http import is_resource_modified

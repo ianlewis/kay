@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2007 Edgewall Software
+# Copyright (C) 2007-2008 Edgewall Software
 # All rights reserved.
 #
 # This software is licensed as described in the file COPYING, which
@@ -13,9 +13,8 @@
 
 """Plural form definitions."""
 
-
-from operator import itemgetter
 from babel.core import default_locale, Locale
+from babel.util import itemgetter
 
 
 LC_CTYPE = default_locale('LC_CTYPE')

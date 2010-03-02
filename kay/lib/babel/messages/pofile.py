@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2007 Edgewall Software
+# Copyright (C) 2007-2008 Edgewall Software
 # All rights reserved.
 #
 # This software is licensed as described in the file COPYING, which
@@ -21,14 +21,10 @@ format.
 from datetime import date, datetime
 import os
 import re
-try:
-    set
-except NameError:
-    from sets import Set as set
 
 from babel import __version__ as VERSION
 from babel.messages.catalog import Catalog, Message
-from babel.util import wraptext, LOCALTZ
+from babel.util import set, wraptext, LOCALTZ
 
 __all__ = ['read_po', 'write_po']
 __docformat__ = 'restructuredtext en'
@@ -122,8 +118,8 @@ def read_po(fileobj, locale=None, domain=None, ignore_obsolete=False):
                    means it's a template)
     :param domain: the message domain
     :param ignore_obsolete: whether to ignore obsolete messages in the input
-    :return: an iterator over ``(message, translation, location)`` tuples
-    :rtype: ``iterator``
+    :return: a catalog object representing the parsed PO file
+    :rtype: `Catalog`
     """
     catalog = Catalog(locale=locale, domain=domain)
 
@@ -136,8 +132,10 @@ def read_po(fileobj, locale=None, domain=None, ignore_obsolete=False):
     user_comments = []
     auto_comments = []
     obsolete = [False]
+    context = []
     in_msgid = [False]
     in_msgstr = [False]
+    in_msgctxt = [False]
 
     def _add_message():
         translations.sort()
@@ -155,15 +153,20 @@ def read_po(fileobj, locale=None, domain=None, ignore_obsolete=False):
             string = tuple([denormalize(t[1]) for t in string])
         else:
             string = denormalize(translations[0][1])
+        if context:
+            msgctxt = denormalize('\n'.join(context))
+        else:
+            msgctxt = None
         message = Message(msgid, string, list(locations), set(flags),
-                          auto_comments, user_comments, lineno=offset[0] + 1)
+                          auto_comments, user_comments, lineno=offset[0] + 1,
+                          context=msgctxt)
         if obsolete[0]:
             if not ignore_obsolete:
                 catalog.obsolete[msgid] = message
         else:
             catalog[msgid] = message
-        del messages[:]; del translations[:]; del locations[:];
-        del flags[:]; del auto_comments[:]; del user_comments[:]
+        del messages[:]; del translations[:]; del context[:]; del locations[:];
+        del flags[:]; del auto_comments[:]; del user_comments[:];
         obsolete[0] = False
         counter[0] += 1
 
@@ -188,14 +191,23 @@ def read_po(fileobj, locale=None, domain=None, ignore_obsolete=False):
                 translations.append([int(idx), msg.lstrip()])
             else:
                 translations.append([0, msg])
+        elif line.startswith('msgctxt'):
+            if messages:
+                _add_message()
+            in_msgid[0] = in_msgstr[0] = False
+            context.append(line[7:].lstrip())
         elif line.startswith('"'):
             if in_msgid[0]:
                 messages[-1] += u'\n' + line.rstrip()
             elif in_msgstr[0]:
                 translations[-1][1] += u'\n' + line.rstrip()
+            elif in_msgctxt[0]:
+                context.append(line.rstrip())
 
     for lineno, line in enumerate(fileobj.readlines()):
-        line = line.strip().decode(catalog.charset)
+        line = line.strip()
+        if not isinstance(line, unicode):
+            line = line.decode(catalog.charset)
         if line.startswith('#'):
             in_msgid[0] = in_msgstr[0] = False
             if messages and translations:
@@ -378,14 +390,20 @@ def write_po(fileobj, catalog, width=76, no_location=False, omit_header=False,
         fileobj.write(text)
 
     def _write_comment(comment, prefix=''):
-        lines = comment
+        # xgettext always wraps comments even if --no-wrap is passed;
+        # provide the same behaviour
         if width and width > 0:
-            lines = wraptext(comment, width)
-        for line in lines:
+            _width = width
+        else:
+            _width = 76
+        for line in wraptext(comment, _width):
             _write('#%s %s\n' % (prefix, line.strip()))
 
     def _write_message(message, prefix=''):
         if isinstance(message.id, (list, tuple)):
+            if message.context:
+                _write('%smsgctxt %s\n' % (prefix,
+                                           _normalize(message.context, prefix)))
             _write('%smsgid %s\n' % (prefix, _normalize(message.id[0], prefix)))
             _write('%smsgid_plural %s\n' % (
                 prefix, _normalize(message.id[1], prefix)
@@ -400,6 +418,9 @@ def write_po(fileobj, catalog, width=76, no_location=False, omit_header=False,
                     prefix, idx, _normalize(string, prefix)
                 ))
         else:
+            if message.context:
+                _write('%smsgctxt %s\n' % (prefix,
+                                           _normalize(message.context, prefix)))
             _write('%smsgid %s\n' % (prefix, _normalize(message.id, prefix)))
             _write('%smsgstr %s\n' % (
                 prefix, _normalize(message.string or '', prefix)

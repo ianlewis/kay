@@ -63,6 +63,15 @@ except TypeError, _error:
     del _test_gen_bug, _error
 
 
+# for python 2.x we create outselves a next() function that does the
+# basics without exception catching.
+try:
+    next = next
+except NameError:
+    def next(x):
+        return x.next()
+
+
 # ironpython without stdlib doesn't have keyword
 try:
     from keyword import iskeyword as is_python_keyword
@@ -460,7 +469,7 @@ class Markup(unicode):
         func.__doc__ = orig.__doc__
         return func
 
-    for method in '__getitem__', '__getslice__', 'capitalize', \
+    for method in '__getitem__', 'capitalize', \
                   'title', 'lower', 'upper', 'replace', 'ljust', \
                   'rjust', 'lstrip', 'rstrip', 'center', 'strip', \
                   'translate', 'expandtabs', 'swapcase', 'zfill':
@@ -474,6 +483,10 @@ class Markup(unicode):
     # new in python 2.6
     if hasattr(unicode, 'format'):
         format = make_wrapper('format')
+
+    # not in python 3
+    if hasattr(unicode, '__getslice__'):
+        __getslice__ = make_wrapper('__getslice__')
 
     del method, make_wrapper
 
@@ -600,7 +613,7 @@ class LRUCache(object):
         if self._queue[-1] != key:
             try:
                 self._remove(key)
-            except:
+            except ValueError:
                 # if something removed the key from the container
                 # when we read, ignore the ValueError that we would
                 # get otherwise.
@@ -615,7 +628,11 @@ class LRUCache(object):
         self._wlock.acquire()
         try:
             if key in self._mapping:
-                self._remove(key)
+                try:
+                    self._remove(key)
+                except ValueError:
+                    # __getitem__ is not locked, it might happen
+                    pass
             elif len(self._mapping) == self.capacity:
                 del self._mapping[self._popleft()]
             self._append(key)
@@ -630,7 +647,11 @@ class LRUCache(object):
         self._wlock.acquire()
         try:
             del self._mapping[key]
-            self._remove(key)
+            try:
+                self._remove(key)
+            except ValueError:
+                # __getitem__ is not locked, it might happen
+                pass
         finally:
             self._wlock.release()
 

@@ -9,6 +9,7 @@ Kay decorator test.
 """
 
 import unittest
+import re
 
 from google.appengine.api import apiproxy_stub_map
 from google.appengine.api.capabilities import capability_stub
@@ -49,7 +50,16 @@ class MaintenanceCheckTestCase(unittest.TestCase):
       'capability_service',
       mocked_capability_stub.DisabledCapabilityServiceStub())
     response = self.client.get('/')
-    self.assertEqual(response.status_code, 503)
+    self.assertEqual(response.status_code, 302)
+    self.assertEqual(response.headers['Location'],
+                     'http://localhost/_kay/maintenance_page')
+
+    response = self.client.get('/index2')
+    self.assertEqual(response.status_code, 302)
+    self.assertEqual(response.headers['Location'],
+                     'http://localhost/no_decorator')
+    response = self.client.get('/no_decorator')
+    self.assertEqual(response.status_code, 200)
 
 if __name__ == "__main__":
   unittest.main()

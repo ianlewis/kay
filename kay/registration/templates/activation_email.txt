@@ -1,0 +1,9 @@
+{% trans %}
+Hi!
+In order to activate your account please visit the following link:
+{% endtrans %}
+{{ url_for('registration/activate', activation_key=activation_key, _external=True) }}
+{% trans %}
+Thanks,
+Your {{ appname }} team
+{% endtrans %}

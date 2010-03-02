@@ -128,10 +128,13 @@ def get_group_symbol(locale=LC_NUMERIC):
     return Locale.parse(locale).number_symbols.get('group', u',')
 
 def format_number(number, locale=LC_NUMERIC):
-    """Return the given number formatted for a specific locale.
+    u"""Return the given number formatted for a specific locale.
     
     >>> format_number(1099, locale='en_US')
     u'1,099'
+    >>> format_number(1099, locale='de_DE')
+    u'1.099'
+
     
     :param number: the number to format
     :param locale: the `Locale` object or locale identifier
@@ -142,7 +145,7 @@ def format_number(number, locale=LC_NUMERIC):
     return format_decimal(number, locale=locale)
 
 def format_decimal(number, format=None, locale=LC_NUMERIC):
-    """Return the given decimal number formatted for a specific locale.
+    u"""Return the given decimal number formatted for a specific locale.
     
     >>> format_decimal(1.2345, locale='en_US')
     u'1.234'
@@ -152,8 +155,8 @@ def format_decimal(number, format=None, locale=LC_NUMERIC):
     u'-1.235'
     >>> format_decimal(1.2345, locale='sv_SE')
     u'1,234'
-    >>> format_decimal(12345, locale='de')
-    u'12.345'
+    >>> format_decimal(1.2345, locale='de')
+    u'1,234'
 
     The appropriate thousands grouping and the decimal separator are used for
     each locale:
@@ -391,7 +394,10 @@ def parse_pattern(pattern):
             raise ValueError('Significant digit patterns can not contain '
                              '"@" or "0"')
     if '.' in number:
-        integer, fraction = number.rsplit('.', 1)
+        #integer, fraction = number.rsplit('.', 1)
+        # 2.3 compat: this is rsplit
+        parts = number.split('.')
+        integer, fraction = '.'.join(parts[:-1]), parts[-1]
     else:
         integer = number
         fraction = ''

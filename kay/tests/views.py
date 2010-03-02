@@ -10,9 +10,6 @@ Kay test views.
 from werkzeug import (
   unescape, redirect, Response,
 )
-from werkzeug.urls import (
-  url_unquote_plus, url_encode,
-)
 
 from kay.utils import (
   local, render_to_response, url_for,
@@ -23,3 +20,17 @@ from kay.utils.decorators import maintenance_check
 @maintenance_check
 def index(request):
   return Response("test")
+
+@maintenance_check("tests/no_decorator")
+def index2(request):
+  return Response("test")
+
+def no_decorator(request):
+  return Response("test")
+
+def oldpage(request):
+  return Resposne("Old")
+
+def newpage(request):
+  return Response("New")
+  

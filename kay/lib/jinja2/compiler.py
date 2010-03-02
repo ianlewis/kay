@@ -10,10 +10,11 @@
 """
 from cStringIO import StringIO
 from itertools import chain
+from copy import deepcopy
 from jinja2 import nodes
 from jinja2.visitor import NodeVisitor, NodeTransformer
 from jinja2.exceptions import TemplateAssertionError
-from jinja2.utils import Markup, concat, escape, is_python_keyword
+from jinja2.utils import Markup, concat, escape, is_python_keyword, next
 
 
 operators = {
@@ -114,6 +115,9 @@ class Identifiers(object):
         if local_only:
             return False
         return name in self.declared
+
+    def copy(self):
+        return deepcopy(self)
 
 
 class Frame(object):
@@ -264,6 +268,37 @@ class FrameIdentifierVisitor(NodeVisitor):
         elif node.ctx == 'load' and not \
              self.identifiers.is_declared(node.name, self.hard_scope):
             self.identifiers.undeclared.add(node.name)
+
+    def visit_If(self, node):
+        self.visit(node.test)
+        real_identifiers = self.identifiers
+
+        old_names = real_identifiers.declared | \
+                    real_identifiers.declared_locally | \
+                    real_identifiers.declared_parameter
+
+        def inner_visit(nodes):
+            if not nodes:
+                return set()
+            self.identifiers = real_identifiers.copy()
+            for subnode in nodes:
+                self.visit(subnode)
+            rv = self.identifiers.declared_locally - old_names
+            # we have to remember the undeclared variables of this branch
+            # because we will have to pull them.
+            real_identifiers.undeclared.update(self.identifiers.undeclared)
+            self.identifiers = real_identifiers
+            return rv
+
+        body = inner_visit(node.body)
+        else_ = inner_visit(node.else_ or ())
+
+        # the differences between the two branches are also pulled as
+        # undeclared variables
+        real_identifiers.undeclared.update(body.symmetric_difference(else_))
+
+        # remember those that are declared.
+        real_identifiers.declared_locally.update(body | else_)
 
     def visit_Macro(self, node):
         self.identifiers.declared_locally.add(node.name)
@@ -606,7 +641,7 @@ class CodeGenerator(NodeVisitor):
         )
         if overriden_closure_vars:
             self.fail('It\'s not possible to set and access variables '
-                      'derived from an outer scope! (affects: %s' %
+                      'derived from an outer scope! (affects: %s)' %
                       ', '.join(sorted(overriden_closure_vars)), node.lineno)
 
         # remove variables from a closure from the frame's undeclared
@@ -647,6 +682,15 @@ class CodeGenerator(NodeVisitor):
         # macros are delayed, they never require output checks
         frame.require_output_check = False
         args = frame.arguments
+        # XXX: this is an ugly fix for the loop nesting bug
+        # (tests.test_old_bugs.test_loop_call_bug).  This works around
+        # a identifier nesting problem we have in general.  It's just more
+        # likely to happen in loops which is why we work around it.  The
+        # real solution would be "nonlocal" all the identifiers that are
+        # leaking into a new python frame and might be used both unassigned
+        # and assigned.
+        if 'loop' in frame.identifiers.declared:
+            args = args + ['l_loop=l_loop']
         self.writeline('def macro(%s):' % ', '.join(args), node)
         self.indent()
         self.buffer(frame)
@@ -692,6 +736,9 @@ class CodeGenerator(NodeVisitor):
         # overhead by just not processing any inheritance code.
         have_extends = node.find(nodes.Extends) is not None
 
+        # are there any block tags?  If yes, we need a copy of the scope.
+        have_blocks = node.find(nodes.Block) is not None
+
         # find all blocks
         for block in node.find_all(nodes.Block):
             if block.name in self.blocks:
@@ -724,6 +771,8 @@ class CodeGenerator(NodeVisitor):
         self.indent()
         if have_extends:
             self.writeline('parent_template = None')
+        if have_blocks:
+            self.writeline('block_context = context._block()')
         if 'self' in find_undeclared(node.body, ('self',)):
             frame.identifiers.add_special('self')
             self.writeline('l_self = TemplateReference(context)')
@@ -756,6 +805,8 @@ class CodeGenerator(NodeVisitor):
             if 'self' in undeclared:
                 block_frame.identifiers.add_special('self')
                 self.writeline('l_self = TemplateReference(context)')
+            if block.find(nodes.Block) is not None:
+                self.writeline('block_context = context._block(%r)' % name)
             if 'super' in undeclared:
                 block_frame.identifiers.add_special('super')
                 self.writeline('l_super = context.super(%r, '
@@ -786,9 +837,9 @@ class CodeGenerator(NodeVisitor):
                 self.indent()
                 level += 1
         if node.scoped:
-            context = 'context.derived(locals())'
+            context = 'block_context.derived(locals())'
         else:
-            context = 'context'
+            context = 'block_context'
         self.writeline('for event in context.blocks[%r][0](%s):' % (
                        node.name, context), node)
         self.indent()
@@ -1191,7 +1242,7 @@ class CodeGenerator(NodeVisitor):
                     if self.environment.autoescape:
                         self.write('escape(')
                     else:
-                        self.write('unicode(')
+                        self.write('to_string(')
                     if self.environment.finalize is not None:
                         self.write('environment.finalize(')
                         close += 1
@@ -1255,7 +1306,7 @@ class CodeGenerator(NodeVisitor):
             public_names = [x for x in assignment_frame.toplevel_assignments
                             if not x.startswith('_')]
             if len(assignment_frame.toplevel_assignments) == 1:
-                name = iter(assignment_frame.toplevel_assignments).next()
+                name = next(iter(assignment_frame.toplevel_assignments))
                 self.writeline('context.vars[%r] = l_%s' % (name, name))
             else:
                 self.writeline('context.vars.update({')

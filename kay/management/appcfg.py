@@ -3,7 +3,9 @@
 """
 Kay appcfg management command.
 
-:Copyright: (c) 2009 Accense Technology, Inc. All rights reserved.
+:Copyright: (c) 2009 Accense Technology, Inc. 
+                     Takashi Matsuo <tmatsuo@candit.jp>,
+                     All rights reserved.
 :license: BSD, see LICENSE for more details.
 """
 
@@ -17,7 +19,6 @@ import kay
 import kay.app
 from kay.utils import local
 from kay.utils.jinja2utils.compiler import compile_dir
-from kay.utils.importlib import import_module
 from kay.management.preparse import do_preparse_apps
 from kay.management.utils import print_status
 from shell import get_all_models_as_dict
@@ -62,9 +63,11 @@ def do_appcfg_passthru_argv():
     sys.exit(1)
   from kay.conf import settings
   if settings.PROFILE and 'update' in sys.argv:
-    print_status('--------------------------\n' \
-        'WARNING: PROFILER ENABLED!\n' \
-        '--------------------------')
+    print_status(
+      '--------------------------\n'
+      'WARNING: PROFILER ENABLED!\n'
+      '--------------------------'
+    )
 
     
 do_appcfg_passthru_argv.passthru = True

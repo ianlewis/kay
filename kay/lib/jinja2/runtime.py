@@ -11,7 +11,7 @@
 import sys
 from itertools import chain, imap
 from jinja2.utils import Markup, partial, soft_unicode, escape, missing, \
-     concat, MethodType, FunctionType, internalcode
+     concat, MethodType, FunctionType, internalcode, next
 from jinja2.exceptions import UndefinedError, TemplateRuntimeError, \
      TemplateNotFound
 
@@ -19,11 +19,17 @@ from jinja2.exceptions import UndefinedError, TemplateRuntimeError, \
 # these variables are exported to the template runtime
 __all__ = ['LoopContext', 'TemplateReference', 'Macro', 'Markup',
            'TemplateRuntimeError', 'missing', 'concat', 'escape',
-           'markup_join', 'unicode_join', 'TemplateNotFound']
+           'markup_join', 'unicode_join', 'to_string',
+           'TemplateNotFound']
 
 
 #: the types we support for context functions
 _context_function_types = (FunctionType, MethodType)
+
+#: the name of the function that is used to convert something into
+#: a string.  2to3 will adopt that automatically and the generated
+#: code can take advantage of it.
+to_string = unicode
 
 
 def markup_join(seq):
@@ -179,6 +185,16 @@ class Context(object):
         context.blocks.update((k, list(v)) for k, v in self.blocks.iteritems())
         return context
 
+    def _block(self, block=None):
+        """Creates a context that is used for block execution.  Currently this
+        returns a special `_BlockContext` that warns about changed behavior.
+        In Jinja 2.5, this will instead just return a new context with the same
+        resolve behavior.  Do not call from anywhere but the generated code!
+
+        :private:
+        """
+        return _BlockContext(self, block)
+
     def _all(meth):
         proxy = lambda self: getattr(self.get_all(), meth)()
         proxy.__doc__ = getattr(dict, meth).__doc__
@@ -188,9 +204,12 @@ class Context(object):
     keys = _all('keys')
     values = _all('values')
     items = _all('items')
-    iterkeys = _all('iterkeys')
-    itervalues = _all('itervalues')
-    iteritems = _all('iteritems')
+
+    # not available on python 3
+    if hasattr(dict, 'iterkeys'):
+        iterkeys = _all('iterkeys')
+        itervalues = _all('itervalues')
+        iteritems = _all('iteritems')
     del _all
 
     def __contains__(self, name):
@@ -211,6 +230,39 @@ class Context(object):
             repr(self.get_all()),
             self.name
         )
+
+
+class _BlockContext(Context):
+    """Implements a deprecation warning for the changed block assignments."""
+    __slots__ = ('real_context', 'block_name')
+
+    def __init__(self, real_context, block_name):
+        super(_BlockContext, self).__init__(real_context.environment,
+                                            real_context.parent,
+                                            real_context.name, {})
+        self.vars = dict(real_context.vars)
+        self.exported_vars = set(real_context.exported_vars)
+        self.blocks = real_context.blocks
+        self.real_context = real_context
+        self.block_name = block_name
+
+    def resolve(self, key):
+        self_rv = super(_BlockContext, self).resolve(key)
+        base_rv = self.real_context.resolve(key)
+        if self_rv != base_rv and not isinstance(base_rv, Undefined):
+            from warnings import warn
+            if self.block_name is not None:
+                detail = 'accessing %r from inside block %r' \
+                    % (key, self.block_name)
+            else:
+                detail = 'accessing %r toplevel' % key
+            detail += ', in template %s' % self.name
+            warn(DeprecationWarning('variables set in a base template '
+                                    'will no longer leak into the child '
+                                    'context in future versions.  Happened '
+                                    'when ' + detail))
+            return base_rv
+        return self_rv
 
 
 # register the context as mapping if possible
@@ -327,7 +379,7 @@ class LoopContextIterator(object):
     def next(self):
         ctx = self.context
         ctx.index0 += 1
-        return ctx._iterator.next(), ctx
+        return next(ctx._iterator), ctx
 
 
 class Macro(object):
@@ -375,7 +427,7 @@ class Macro(object):
             arguments.append(kwargs)
         elif kwargs:
             raise TypeError('macro %r takes no keyword argument %r' %
-                            (self.name, iter(kwargs).next()))
+                            (self.name, next(iter(kwargs))))
         if self.catch_varargs:
             arguments.append(args[self._argument_count:])
         elif len(args) > self._argument_count:

@@ -11,7 +11,7 @@
     library.
 
 
-    :copyright: (c) 2009 by the Werkzeug Team, see AUTHORS for more details.
+    :copyright: (c) 2010 by the Werkzeug Team, see AUTHORS for more details.
     :license: BSD, see LICENSE for more details.
 """
 from types import ModuleType
@@ -43,7 +43,8 @@ all_by_module = {
     'werkzeug.exceptions':  ['abort', 'Aborter'],
     'werkzeug.urls':        ['url_decode', 'url_encode', 'url_quote',
                              'url_quote_plus', 'url_unquote',
-                             'url_unquote_plus', 'url_fix', 'Href'],
+                             'url_unquote_plus', 'url_fix', 'Href',
+                             'iri_to_uri', 'uri_to_iri'],
     'werkzeug.formparser':  ['parse_form_data'],
     'werkzeug.utils':       ['escape', 'environ_property', 'cookie_date',
                              'http_date', 'append_slash_redirect', 'redirect',
@@ -57,7 +58,7 @@ all_by_module = {
                              'peek_path_info', 'SharedDataMiddleware',
                              'DispatcherMiddleware', 'ClosingIterator',
                              'FileWrapper', 'make_line_iter', 'LimitedStream',
-                             'responder', 'wrap_file'],
+                             'responder', 'wrap_file', 'extract_path_info'],
     'werkzeug.datastructures': ['MultiDict', 'CombinedMultiDict', 'Headers',
                              'EnvironHeaders', 'ImmutableList',
                              'ImmutableDict', 'ImmutableMultiDict',
@@ -66,7 +67,8 @@ all_by_module = {
                              'LanguageAccept', 'RequestCacheControl',
                              'ResponseCacheControl', 'ETags', 'HeaderSet',
                              'WWWAuthenticate', 'Authorization',
-                             'FileMultiDict', 'CallbackDict', 'FileStorage'],
+                             'FileMultiDict', 'CallbackDict', 'FileStorage',
+                             'OrderedMultiDict', 'ImmutableOrderedMultiDict'],
     'werkzeug.useragents':  ['UserAgent'],
     'werkzeug.http':        ['parse_etags', 'parse_date', 'parse_cache_control_header',
                              'is_resource_modified', 'parse_accept_header',

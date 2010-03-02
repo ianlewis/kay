@@ -3,26 +3,22 @@
 """
 Kay utilities.
 
-:Copyright: (c) 2009 Accense Technology, Inc. All rights reserved.
+:Copyright: (c) 2009 Accense Technology, Inc. 
+                     Takashi Matsuo <tmatsuo@candit.jp>,
+                     All rights reserved.
 :license: BSD, see LICENSE for more details.
 """
 
 import os
 import logging
-from datetime import datetime
-
-from google.appengine.api import users
-from google.appengine.api import memcache
 
 from werkzeug import (
   Local, LocalManager, Response
 )
 from werkzeug.exceptions import NotFound
-from werkzeug.urls import url_quote
-from pytz import timezone, UTC
 
 from kay.conf import settings
-from kay.utils.importlib import import_module
+from kay.exceptions import ImproperlyConfigured
 
 local = Local()
 local_manager = LocalManager([local])
@@ -31,36 +27,30 @@ _translations_cache = {}
 _default_translations = None
 _standard_context_processors = None
 
+_timezone_cache = {}
+
 def set_trace():
   import pdb, sys
   debugger = pdb.Pdb(stdin=sys.__stdin__, 
                      stdout=sys.__stdout__)
   debugger.set_trace(sys._getframe().f_back)
 
-def get_project_path():
-  return os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
-
-
 def get_kay_locale_path():
-  return os.path.join(get_project_path(), 'kay', 'i18n')
+  import kay
+  return os.path.join(kay.KAY_DIR, 'i18n')
 
 
 def get_timezone(tzname):
   """
   Method to get timezone with memcached enhancement.
   """
-  try:
-    tz = memcache.get("tz:%s" % tzname)
-  except:
-    tz = None
-    logging.debug("timezone get failed: %s" % tzname)
-  if tz is None:
-    tz = timezone(tzname)
-    memcache.add("tz:%s" % tzname, tz, 86400)
-    logging.debug("timezone memcache added: %s" % tzname)
+  global _timezone_cache
+  if hasattr(_timezone_cache, 'tzname'):
+    tz = _timezone_cache['tzname']
   else:
-    logging.debug("timezone memcache hit: %s" % tzname)
-
+    from pytz import timezone
+    tz = timezone(tzname)
+    _timezone_cache['tzname'] = tz
   return tz
 
 
@@ -77,9 +67,8 @@ def get_request():
 
 
 def url_for(endpoint, **args):
-  """Get the URL to an endpoint.  The keyword arguments provided are used
-  as URL values.  Unknown URL values are used as keyword argument.
-  Additionally there are some special keyword arguments:
+  """Get the URL to an endpoint. There are some special keyword
+  arguments:
 
   `_anchor`
     This string is used as URL anchor.
@@ -88,24 +77,16 @@ def url_for(endpoint, **args):
     If set to `True` the URL will be generated with the full server name
     and `http://` prefix.
   """
-  if hasattr(endpoint, 'get_url_values'):
-    rv = endpoint.get_url_values()
-    if rv is not None:
-      if isinstance(rv, basestring):
-        return make_external_url(rv)
-      endpoint, updated_args = rv
-      args.update(updated_args)
   anchor = args.pop('_anchor', None)
   external = args.pop('_external', False)
   rv = local.url_adapter.build(endpoint, args,
                                force_external=external)
   if anchor is not None:
+    from werkzeug.urls import url_quote
     rv += '#' + url_quote(anchor)
   return rv
 
-
 def create_auth_url(url, action):
-  # TODO: Change implementation according to auth backend settings.
   if url is None:
     url = local.request.url
   method_name = 'create_%s_url' % action
@@ -121,14 +102,14 @@ def create_auth_url(url, action):
 
 def create_logout_url(url=None):
   """
-  An utility function for jinja2.
+  Get the URL for a logout page.
   """
   return create_auth_url(url, 'logout')
     
 
 def create_login_url(url=None):
   """
-  An utility function for jinja2.
+  Get the URL for a login page.
   """
   return create_auth_url(url, 'login')
 
@@ -140,6 +121,24 @@ def reverse(endpoint, _external=False, method='GET', **values):
   return local.url_adapter.build(endpoint, values, method=method,
       force_external=_external)
 
+def render_error(e):
+  from jinja2.exceptions import TemplateNotFound
+  from jinja2 import Markup
+  try:
+    template = local.app.jinja2_env.get_template("%d.html" % e.code)
+  except TemplateNotFound:
+    template = local.app.jinja2_env.get_template("_internal/defaulterror.html")
+  if local.app.jinja2_env.autoescape:
+    description = Markup(e.get_description(os.environ))
+  else:
+    description = e.get_description(os.environ)
+  context = {"code": e.code, "name": e.name, "description": description}
+  processors = ()
+  for processor in get_standard_processors() + processors:
+    context.update(processor(get_request()))
+  return Response(template.render(context),
+                  content_type="text/html; charset=utf-8",
+                  status=e.code)
 
 def render_to_string(template, context={}, processors=None):
   """
@@ -156,7 +155,7 @@ def render_to_string(template, context={}, processors=None):
   return template.render(context)
 
 
-def render_to_response(template, context, mimetype='text/html',
+def render_to_response(template, context={}, mimetype='text/html',
                        processors=None):
   """
   A function for render html pages.
@@ -165,24 +164,17 @@ def render_to_response(template, context, mimetype='text/html',
                   mimetype=mimetype)
 
 def get_standard_processors():
+  from werkzeug.utils import import_string
   from kay.conf import settings
   global _standard_context_processors
   if _standard_context_processors is None:
     processors = []
     for path in settings.CONTEXT_PROCESSORS:
-      i = path.rfind('.')
-      module, attr = path[:i], path[i+1:]
       try:
-        mod = import_module(module)
-      except ImportError, e:
+        func = import_string(path)
+      except (ImportError, AttributeError), e:
         raise ImproperlyConfigured('Error importing request processor module'
-                                   ' %s: "%s"' % (module, e))
-      try:
-        func = getattr(mod, attr)
-      except AttributeError:
-        raise ImproperlyConfigured('Module "%s" does not define a "%s" '
-                                   'callable request processor' %
-                                   (module, attr))
+                                   ' %s: "%s"' % (path, e))
       processors.append(func)
     _standard_context_processors = tuple(processors)
   return _standard_context_processors
@@ -191,6 +183,7 @@ def get_standard_processors():
 def to_local_timezone(datetime, tzname=settings.DEFAULT_TIMEZONE):
   """Convert a datetime object to the local timezone."""
   if datetime.tzinfo is None:
+    from pytz import UTC
     datetime = datetime.replace(tzinfo=UTC)
   tzinfo = get_timezone(tzname)
   return tzinfo.normalize(datetime.astimezone(tzinfo))
@@ -198,6 +191,7 @@ def to_local_timezone(datetime, tzname=settings.DEFAULT_TIMEZONE):
 
 def to_utc(datetime, tzname=settings.DEFAULT_TIMEZONE):
   """Convert a datetime object to UTC and drop tzinfo."""
+  from pytz import UTC
   if datetime.tzinfo is None:
     datetime = get_timezone(tzname).localize(datetime)
   return datetime.astimezone(UTC).replace(tzinfo=None)

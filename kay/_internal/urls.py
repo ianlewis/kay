@@ -13,19 +13,31 @@ from werkzeug.routing import (
   Map, Rule, Submount,
   EndpointPrefix, RuleTemplate,
 )
-from kay._internal import views
 
 def make_rules():
   return [
     EndpointPrefix('_internal/', [
       Rule('/cron/hourly', endpoint='cron/hourly'),
       Rule('/cron/frequent', endpoint='cron/frequent'),
-      Rule('/maintenance_page', endpoint='maintenance_page'),
+      Rule('/expire_registration/<registration_key>',
+           endpoint='expire_registration'),
+      Rule('/expire_temporary_session/<session_key>',
+           endpoint='expire_temporary_session'),
+      Rule('/send_registration_confirm/<registration_key>',
+           endpoint='send_registration_confirm'),
+      Rule('/send_reset_password_instruction/<user_key>/<session_key>',
+           endpoint='send_reset_password_instruction'),
     ]),
   ]
 
 all_views = {
-  '_internal/cron/hourly': views.cron_hourly,
-  '_internal/cron/frequent': views.cron_frequent,
-  '_internal/maintenance_page': views.maintenance_page,
+  '_internal/cron/hourly': 'kay._internal.views.cron_hourly',
+  '_internal/cron/frequent': 'kay._internal.views.cron_frequent',
+  '_internal/expire_registration': 'kay._internal.views.expire_registration',
+  '_internal/expire_temporary_session':
+    'kay._internal.views.expire_temporary_session',
+  '_internal/send_registration_confirm':
+    'kay._internal.views.send_registration_confirm',
+  '_internal/send_reset_password_instruction':
+    'kay._internal.views.send_reset_password_instruction',
 }

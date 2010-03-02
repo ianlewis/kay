@@ -3,7 +3,9 @@
 """
 Kay context processors.
 
-:Copyright: (c) 2009 Accense Technology, Inc. All rights reserved.
+:Copyright: (c) 2009 Accense Technology, Inc. 
+                     Takashi Matsuo <tmatsuo@candit.jp>,
+                     All rights reserved.
 :license: BSD, see LICENSE for more details.
 """
 
@@ -14,19 +16,21 @@ def request(request):
   return {"request": request}
 
 def url_functions(request):
-  return {'url_for': url_for,
-          'reverse': reverse,
-          'create_login_url': create_login_url,
-          'create_logout_url': create_logout_url}
+  ret = {'url_for': url_for,
+         'reverse': reverse,
+         'create_login_url': create_login_url,
+         'create_logout_url': create_logout_url}
+  if settings.USE_I18N:
+    from kay.i18n import create_lang_url
+    ret.update({'create_lang_url': create_lang_url})
+  return ret
+    
+def i18n(request):
+    #TODO: Add available languages like django's context processor
+    return {
+        "language_code": request.lang,
+    }
 
 def media_url(request):
-  import sys
-  frame = sys._getframe(1)
-  # ugly, but works
-  while frame.f_globals['__name__'] == 'kay.utils':
-    frame = frame.f_back
-  app_name = frame.f_globals['__name__'].split('.')[-2]
   return {'media_url': settings.MEDIA_URL,
-          'app_media_url': '%s/%s' % (settings.MEDIA_URL, app_name),
           'internal_media_url': settings.INTERNAL_MEDIA_URL}
-

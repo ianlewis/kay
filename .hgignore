@@ -7,6 +7,7 @@ syntax: glob
 .DS_Store
 docs/build
 docs/japanese/build
+kay/lib/jinja2/_speedups.so
 
 syntax: regexp
 (.*/)?\#[^/]*\#$

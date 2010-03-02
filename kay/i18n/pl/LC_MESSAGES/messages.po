@@ -1,0 +1,421 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Kay Framework\n"
+"Report-Msgid-Bugs-To: tmatsuo@candit.jp\n"
+"POT-Creation-Date: 2010-01-31 10:20+0100\n"
+"PO-Revision-Date: 2010-01-31 10:28+0100\n"
+"Last-Translator: Rafał Jońca <jonca.rafal@gmail.com>\n"
+"Language-Team: Rafał Jońca <jonca.rafal@gmail.com>\n"
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel None\n"
+
+#: kay/app.py:347
+msgid "Appengine might be under maintenance."
+msgstr "Platforma Appengine znajduje się w trybie konserwacji."
+
+#: kay/auth/forms.py:20
+#: kay/auth/forms.py:30
+#: kay/registration/forms.py:18
+msgid "user name"
+msgstr "nazwa użytkownika"
+
+#: kay/auth/forms.py:22
+#: kay/registration/forms.py:22
+msgid "password"
+msgstr "hasło"
+
+#: kay/auth/forms.py:26
+#: kay/registration/forms.py:20
+msgid "email address"
+msgstr "adres e-mail"
+
+#: kay/auth/forms.py:34
+msgid "Old password"
+msgstr "Stare hasło"
+
+#: kay/auth/forms.py:38
+msgid "New password"
+msgstr "Nowe hasło"
+
+#: kay/auth/forms.py:41
+msgid "Confirm password"
+msgstr "Potwierdzenie hasła"
+
+#: kay/auth/forms.py:45
+#: kay/auth/forms.py:73
+msgid "The new passwords don't match."
+msgstr "Hasła nie pasują do siebie."
+
+#: kay/auth/forms.py:58
+msgid "Invalid temporary session."
+msgstr "Nieprawidłowa sesja tymczasowa."
+
+#: kay/auth/forms.py:69
+msgid "Can not validate old password."
+msgstr "Nie mogę sprawdzić starego hasła."
+
+#: kay/auth/forms.py:75
+msgid "The new password must differ from the old one."
+msgstr "Nowe hasło musi różnić się od poprzedniego."
+
+#: kay/auth/models.py:66
+#: kay/registration/forms.py:31
+msgid "This user name is already taken. Please choose another user name."
+msgstr "Ta nazwa użytkownika jest zajęta. Proszę wybrać inną."
+
+#: kay/auth/views.py:77
+msgid "Failed to login."
+msgstr "Logowanie nie powiodło się."
+
+#: kay/auth/views.py:145
+msgid "You must sign in for this operation."
+msgstr "Ta operacja wymaga zalogowania się."
+
+#: kay/auth/views.py:157
+msgid "Password changed successfully."
+msgstr "Zmiana hasła zakończona sukcesem."
+
+#: kay/auth/templates/change_password.html:2
+msgid "Change Password"
+msgstr "Zmień hasło"
+
+#: kay/auth/templates/change_password.html:11
+msgid "Changing password"
+msgstr "Zmiana hasła"
+
+#: kay/auth/templates/change_password.html:19
+msgid "Change"
+msgstr "Zmień"
+
+#: kay/auth/templates/loginform.html:2
+msgid "Kay Login"
+msgstr "Logowanie Kay"
+
+#: kay/auth/templates/loginform.html:11
+msgid "Kay Login Form"
+msgstr "Formularz logowania Kay"
+
+#: kay/auth/templates/loginform.html:19
+msgid "Login"
+msgstr "Zaloguj"
+
+#: kay/auth/templates/loginform.html:23
+msgid "Forgot password?"
+msgstr "Zapomniałeś hasła?"
+
+#: kay/auth/templates/no_such_user.html:2
+#: kay/auth/templates/request_reset_password.html:2
+#: kay/auth/templates/request_reset_password.html:12
+#: kay/auth/templates/reset_password_finish.html:2
+msgid "Kay Reset Password Request"
+msgstr "Żądanie zmiany hasła od Kay"
+
+#: kay/auth/templates/request_reset_password.html:5
+msgid "Please input your user name."
+msgstr "Proszę wpisać nazwę użytkownika."
+
+#: kay/auth/templates/request_reset_password.html:20
+msgid "Request Resetting Password"
+msgstr "Zażądaj zmiany hasła"
+
+#: kay/auth/templates/reset_password.html:2
+#: kay/auth/templates/reset_password.html:12
+#: kay/auth/templates/reset_password_success.html:2
+msgid "Kay Reset Password"
+msgstr "Zmiana hasła w Kay"
+
+#: kay/auth/templates/reset_password.html:5
+msgid "Please input your new password."
+msgstr "Prosze wpisać nowe hasło."
+
+#: kay/auth/templates/reset_password.html:20
+msgid "Reset Your Password"
+msgstr "Zmień swoje hasło."
+
+#: kay/auth/templates/reset_password_finish.html:4
+msgid "An e-mail has been sent to you. Please follow the instruction in the e-mail for resetting your password."
+msgstr "Na Twój adres e-mail została wysłana wiadomość. Wykonaj znajdujące się tam instrukcje, by zmienić swoje hasło."
+
+#: kay/auth/templates/reset_password_instruction.txt:1
+msgid ""
+"\n"
+"Hi!\n"
+"In order to reset your password please visit the following link:\n"
+msgstr ""
+"\n"
+"Witaj!\n"
+"Aby zmienić hasło do konta, odwiedź następujący adres URL:\n"
+
+#: kay/auth/templates/reset_password_instruction.txt:6
+#: kay/registration/templates/activation_email.txt:6
+#, python-format
+msgid ""
+"\n"
+"Thanks,\n"
+"Your %(appname)s team\n"
+msgstr ""
+"\n"
+"Z wyrazami szacunku,\n"
+"Zespół %(appname)s\n"
+
+#: kay/auth/templates/reset_password_instruction_subject.txt:1
+#, python-format
+msgid "An instructions for resetting your password of %(appname)s."
+msgstr "Instrukcje zmiany hasła dla aplikacji %(appname)s."
+
+#: kay/auth/templates/reset_password_success.html:4
+msgid "Your password has been changed successfully."
+msgstr "Zmiana Twojego hasła zakończona powodzeniem."
+
+#: kay/i18n/__init__.py:304
+msgid "now"
+msgstr "teraz"
+
+#: kay/registration/forms.py:24
+msgid "password(again)"
+msgstr "hasło (ponów)"
+
+#: kay/registration/forms.py:36
+msgid "The passwords don't match."
+msgstr "Hasła nie pasują do siebie."
+
+#: kay/registration/templates/activate.html:2
+#: kay/registration/templates/activate.html:6
+msgid "Activation successful"
+msgstr "Aktywacja powiodła się"
+
+#: kay/registration/templates/activate.html:2
+#: kay/registration/templates/activate.html:9
+msgid "Activation failed :("
+msgstr "Aktywacja nie powiodła się :("
+
+#: kay/registration/templates/activate.html:7
+#, python-format
+msgid "Congratulations, %(username)s. Your account has been created successfully."
+msgstr "Gratulacje, %(username)s. Twoje konto zostało utworzone."
+
+#: kay/registration/templates/activate.html:10
+msgid "Sorry, there were problems with the activation. Please make sure that the activation link was opened correctly in your Browser. "
+msgstr "Przepraszamy, nastąpiły nieoczekiwane problemy z aktywacją. Upewnij się, że aktywacyjny adres URL został poprawnie wpisany w oknie przeglądarki."
+
+#: kay/registration/templates/activate.html:10
+#, python-format
+msgid "Please be also aware that activation links expire automatically in %(seconds)s second."
+msgid_plural "Please be also aware that activation links expire automatically in %(seconds)s seconds."
+msgstr[0] "Pamiętaj, że aktywacyjny adres URL wygaśnie automatycznie po %(seconds)s sekundzie."
+msgstr[1] "Pamiętaj, że aktywacyjny adres URL wygaśnie automatycznie po %(seconds)s sekundach."
+msgstr[2] "Pamiętaj, że aktywacyjny adres URL wygaśnie automatycznie po %(seconds)s sekundach."
+
+#: kay/registration/templates/activation_email.txt:1
+msgid ""
+"\n"
+"Hi!\n"
+"In order to activate your account please visit the following link:\n"
+msgstr ""
+"\n"
+"Witaj!\n"
+"Aby aktywować swoje konto, odwiedź następujący adres URL:\n"
+
+#: kay/registration/templates/activation_email_subject.txt:1
+#, python-format
+msgid "Activation of your %(appname)s account"
+msgstr "Aktywacja konta w systemie %(appname)s"
+
+#: kay/registration/templates/registration_complete.html:2
+#: kay/registration/templates/registration_form.html:2
+msgid "Kay Registration"
+msgstr "Rejestracja Kay"
+
+#: kay/registration/templates/registration_complete.html:4
+msgid "Registration complete"
+msgstr "Rejestracja zakończona"
+
+#: kay/registration/templates/registration_complete.html:5
+msgid "An e-mail has been sent to you. Please follow the instructions in the e-mail."
+msgstr "Na Twój adres e-mail została wysłana wiadomość. Wykonaj znajdujące się tam instrukcje."
+
+#: kay/registration/templates/registration_form.html:5
+msgid "Register new user"
+msgstr "Utworzenie nowego użytkownika."
+
+#: kay/registration/templates/registration_form.html:12
+msgid "Kay Registration Form"
+msgstr "Formularz rejestracji Kay"
+
+#: kay/registration/templates/registration_form.html:20
+msgid "Register"
+msgstr "Rejestracja"
+
+#: kay/utils/validators.py:83
+msgid "You have to enter a valid e-mail address."
+msgstr "Musisz podać poprawny adres e-mail."
+
+#: kay/utils/validators.py:104
+msgid "You have to enter a valid URL."
+msgstr "Musisz podać poprawny adres URL."
+
+#: kay/utils/validators.py:122
+msgid "The slug is too long"
+msgstr "Podany URI jest za długi."
+
+#: kay/utils/validators.py:124
+msgid "The slug must not start with a slash"
+msgstr "Nieprawidłowe URI, lokalne URI muszą zaczynać się od znaku ukośnika"
+
+#: kay/utils/validators.py:142
+#: kay/utils/validators.py:145
+msgid "You have to enter a valid net address."
+msgstr "Musisz podać poprawny adres IP."
+
+#: kay/utils/validators.py:147
+msgid "The port has to be numeric"
+msgstr "Port musi być liczbą"
+
+#: kay/utils/validators.py:155
+msgid "Invalid character, < or > are not allowed."
+msgstr "Niepoprawny znak, znaki < i > nie są dozwolone."
+
+#: kay/utils/validators.py:157
+msgid "URL prefix must not be a sole slash."
+msgstr "Przedrostek URL nie może zaczynać się tylko i wyłącznie od ukośnika."
+
+#: kay/utils/validators.py:160
+msgid "URL prefix must start with a slash."
+msgstr "Przedrostek URL musi zaczynać się od ukośnika."
+
+#: kay/utils/validators.py:162
+msgid "URL prefix must not end with a slash."
+msgstr "Przedrostek URL nie może kończyć się ukośnikiem."
+
+#: kay/utils/validators.py:171
+msgid "The text must not be empty."
+msgstr "Nie można użyć pustego ciągu znaków."
+
+#: kay/utils/forms/__init__.py:700
+msgid "No choices."
+msgstr "Brak wyboru."
+
+#: kay/utils/forms/__init__.py:800
+msgid "Submit"
+msgstr "Wyślij"
+
+#: kay/utils/forms/__init__.py:953
+msgid "This field is required."
+msgstr "Wypełnienie tego pola jest wymagane."
+
+#: kay/utils/forms/__init__.py:1124
+msgid "Invalid security token submitted."
+msgstr "Przesłano niepoprawny token zabezpieczający."
+
+#: kay/utils/forms/__init__.py:1179
+#: kay/utils/forms/__init__.py:1643
+#, python-format
+msgid "Please provide at least %d item."
+msgid_plural "Please provide at least %d items."
+msgstr[0] "Podaj przynajmniej %d element."
+msgstr[1] "Podaj przynajmniej %d elementy."
+msgstr[2] "Podaj przynajmniej %d elementów."
+
+#: kay/utils/forms/__init__.py:1186
+#: kay/utils/forms/__init__.py:1650
+#, python-format
+msgid "Please provide no more than %d item."
+msgid_plural "Please provide no more than %d items."
+msgstr[0] "Podaj co najwyżej %d element."
+msgstr[1] "Podaj co najwyżej %d elementy."
+msgstr[2] "Podaj co najwyżej %d elementów."
+
+#: kay/utils/forms/__init__.py:1299
+#, python-format
+msgid "Please enter at least %d character."
+msgid_plural "Please enter at least %d characters."
+msgstr[0] "Podaj przynajmniej %d znak."
+msgstr[1] "Podaj przynajmniej %d znaki."
+msgstr[2] "Podaj przynajmniej %d znaków."
+
+#: kay/utils/forms/__init__.py:1306
+#, python-format
+msgid "Please enter no more than %d character."
+msgid_plural "Please enter no more than %d characters."
+msgstr[0] "Podaj co najwyżej %d znak."
+msgstr[1] "Podaj co najwyżej %d znaki."
+msgstr[2] "Podaj co najwyżej %d znaków."
+
+#: kay/utils/forms/__init__.py:1317
+msgid "The value is invalid."
+msgstr "Nieprawidłowa wartość."
+
+#: kay/utils/forms/__init__.py:1339
+msgid "Enter a valid e-mail address."
+msgstr "Musisz podać poprawny adres e-mail."
+
+#: kay/utils/forms/__init__.py:1359
+msgid "Please enter a valid date."
+msgstr "Podaj poprawną datę."
+
+#: kay/utils/forms/__init__.py:1413
+msgid "The selected entity does not exist, or is not allowed to select."
+msgstr "Wybrany element nie istnieje lub nie można go wybrać."
+
+#: kay/utils/forms/__init__.py:1507
+msgid "Invalid value."
+msgstr "Nieprawidłowa wartość."
+
+#: kay/utils/forms/__init__.py:1508
+msgid "Key does not exist."
+msgstr "Klucz nie istnieje."
+
+#: kay/utils/forms/__init__.py:1578
+msgid "Please enter a valid choice."
+msgstr "Podaj poprawną wartość z dostępnych."
+
+#: kay/utils/forms/__init__.py:1637
+#, python-format
+msgid "“%s” is not a valid choice"
+msgstr "\"%s\" nie jest poprawnym wyborem."
+
+#: kay/utils/forms/__init__.py:1683
+msgid "Please enter a number."
+msgstr "Proszę wpisać liczbę."
+
+#: kay/utils/forms/__init__.py:1709
+#, python-format
+msgid "Ensure this value is greater than or equal to %s."
+msgstr "Upewnij się, że wartość jest większa lub równa %s."
+
+#: kay/utils/forms/__init__.py:1715
+#, python-format
+msgid "Ensure this value is less than or equal to %s."
+msgstr "Upewnij się, że wartość jest mniejsza lub równa %s."
+
+#: kay/utils/forms/__init__.py:1748
+msgid "Please enter a whole number."
+msgstr "Proszę wpisać liczbę całkowitą."
+
+#: kay/utils/forms/__init__.py:1774
+msgid "Please enter a float number."
+msgstr "Proszę wpisać liczbę zmiennoprzecinkową."
+
+#: kay/utils/forms/__init__.py:1794
+msgid "Please select a file to upload."
+msgstr "Wybierz plik do przesłania na serwer."
+
+#: kay/utils/forms/__init__.py:1799
+msgid "File must not empty."
+msgstr "Plik nie może być pusty."
+
+#: kay/utils/forms/__init__.py:1821
+msgid "True"
+msgstr "Prawda"
+
+#: kay/utils/forms/__init__.py:1822
+msgid "False"
+msgstr "Fałsz"
+
+#: kay/utils/forms/__init__.py:1833
+msgid "Please select True or False."
+msgstr "Proszę wybrać Prawdę lub Fałsz."
+

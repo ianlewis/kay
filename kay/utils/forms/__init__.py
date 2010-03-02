@@ -28,7 +28,7 @@ try:
 except ImportError:
   from sha import new as sha1
 
-from werkzeug import html, escape, cached_property, MultiDict
+from werkzeug import escape, cached_property, MultiDict
 from google.appengine.ext import db
 
 from kay.utils import get_request, url_for
@@ -43,6 +43,17 @@ from kay.utils.datastructures import OrderedDict, missing
 _last_position_hint = -1
 _position_hint_lock = Lock()
 
+class HtmlProxy(object):
+  def __getattr__(self, name):
+    from kay.conf import settings
+    if settings.FORMS_USE_XHTML:
+      from werkzeug import xhtml
+      return getattr(xhtml, name)
+    else:
+      from werkzeug import html
+      return getattr(html, name)
+
+html = HtmlProxy()
 
 def fill_dict(_dict, **kwargs):
   """A helper to fill the dict passed with the items passed as keyword
@@ -539,7 +550,7 @@ class PasswordInput(TextInput):
 class HiddenInput(Input):
   """A hidden input field for text."""
   type = 'hidden'
-
+  disable_dt = True 
 
 class Textarea(Widget):
   """Displays a textarea."""
@@ -844,7 +855,7 @@ class ListWidget(Widget):
       return u''
     items = []
     for index in xrange(len(self) + attrs.pop('extra_rows', 1)):
-      items.append(html.li(self[index]()) for item in self)
+      items.append(html.li(self[index]()))
     # add an invisible item for the validator
     if not items:
       items.append(html.li(style='display: none'))
@@ -1174,7 +1185,7 @@ class Multiple(Field):
       if message is None:
         message = ngettext(u'Please provide no more than %d item.',
                            u'Please provide no more than %d items.',
-                           self.min_size) % self.min_size
+                           self.max_size) % self.max_size
       raise ValidationError(message)
     result = []
     errors = {}
@@ -1378,10 +1389,25 @@ class ModelField(Field):
   """A field that queries for a model.
 
   The first argument is the name of the model. If the key is not given
-  (None) the primary key is assumed. You can also specify query
-  parameter on init. It forces query based validation.  You can
-  override query by giving query named parameter to form's __init__
-  method.
+  (None) the primary key is assumed. You can specify query parameter
+  on init or anytime you want via set_query() method. It gives you
+  query based option rendering and validation.
+
+  Here is an example for setting query after init:
+
+  >>> class FormWithModelField(Form):
+  ...    model_field = forms.ModelField(model=TestModel, reuired=True)
+
+  >>> form = FormWithModelField()
+  ... query = TestModel.all().filter('user =', user.key())
+  ... form.model_field.set_query(query)
+
+  If the Model class has ``__unicode__()`` method, the return value of
+  this method will be used for rendering the text in an option tag. If
+  there's no ``__unicode__()`` method, ``Model.__repr__()`` will be
+  used for this purpose. You can override this behavior by passing an
+  attribute name used for the option tag's value with ``option_name``
+  keyword argument on initialization of this field.
 
   """
   messages = dict(not_found=lazy_gettext(
@@ -1412,7 +1438,7 @@ class ModelField(Field):
         raise ValidationError(self.messages['required'])
       return None
     value = self._coerce_value(value)
-    tmp_query = copy.deepcopy(self.query)
+    tmp_query = copy.copy(self.query)
     if self.key is None:
       query = tmp_query.filter("__key__ =", db.Key(value))
     else:
@@ -1459,10 +1485,11 @@ class ModelField(Field):
 
   def _set_choices(self, choices):
     self.__choices = choices
-
-  choices = property(_get_choices, _set_choices)
+  choices_doc = """You can set choices directly via this attribute."""
+  choices = property(_get_choices, _set_choices, None, choices_doc)
 
   def set_query(self, query):
+    """You can set query directly with this method."""
     self.query = query
     self._create_choices()
 
@@ -1551,7 +1578,7 @@ class ChoiceField(Field):
       invalid_choice=lazy_gettext('Please enter a valid choice.')
   )
 
-  def __init__(self, label=None, help_text=None, required=True,
+  def __init__(self, label=None, help_text=None, required=False,
                choices=None, validators=None, widget=None, messages=None,
                default=missing):
     Field.__init__(self, label, help_text, validators, widget, messages,
@@ -1622,7 +1649,7 @@ class MultiChoiceField(ChoiceField):
       if message is None:
         message = ngettext(u'Please provide no more than %d item.',
                            u'Please provide no more than %d items.',
-                           self.min_size) % self.min_size
+                           self.max_size) % self.max_size
       raise ValidationError(message)
 
     return result
@@ -1940,7 +1967,7 @@ class Form(object):
 
   You can also validate multiple fields in the context of other fields.
   That validation is performed after all other validations.  Just add a
-  method called ``context_validate`` that is passed the dict of all fields::
+  method called ``context_validate`` that is passed the dict of all fields:
 
   >>> class RegisterForm(Form):
   ...     username = TextField(required=True)
@@ -2079,7 +2106,7 @@ class Form(object):
       login_time = self.request.session.get('lt', -1)
     except AttributeError:
       login_time = -1
-    import settings
+    from kay.conf import settings
     key = settings.SECRET_KEY
     return sha1(('%s|%s|%s|%s' % (path, login_time, user_id, key))
                  .encode('utf-8')).hexdigest()
@@ -2108,6 +2135,15 @@ class Form(object):
     self.data = self.initial.copy()
     self.errors = {}
     self.raw_data = None
+
+  def append_errors(self, message, field_name=None):
+    if not isinstance(message, (list, tuple)):
+      messages = [unicode(message)]
+    else:
+      messages = map(unicode, message)
+    error_list = ErrorList(messages)
+    error_list.extend(self.errors.get(field_name, []))
+    self.errors.update({field_name: error_list})
 
   def validate(self, data, files=None):
     """Validate the form against the data passed."""

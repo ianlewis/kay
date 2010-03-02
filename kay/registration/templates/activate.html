@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}{% if account %}{{ _('Activation successful') }}{% else %}{{ _('Activation failed :(') }}{% endif %}{% endblock %}
+
+{% block content %}
+{% if account %}
+  <h1>{{ _('Activation successful') }}</h1>
+  <p>{% trans username=account.user_name%}Congratulations, {{ username }}. Your account has been created successfully.{% endtrans %}</p>
+{% else %}
+  <h1>{{ _('Activation failed :(') }}</h1>
+  <p>{% trans %}Sorry, there were problems with the activation. Please make sure that the activation link was opened correctly in your Browser. {% endtrans %}{% trans seconds=expiration_duration %}Please be also aware that activation links expire automatically in {{ seconds }} second.{% pluralize %}Please be also aware that activation links expire automatically in {{ seconds }} seconds.{% endtrans %}</p>
+{% endif %}
+{% endblock content %}

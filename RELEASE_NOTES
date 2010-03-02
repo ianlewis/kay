@@ -1,7 +1,61 @@
 
-Copyright 2009 by Accense Technology, Inc All rights reserved.
+Copyright 2009 by Accense Technology, Inc
+	          Takashi Matsuo <tmatsuo@candit.jp>
+		  All rights reserved.
 
 Kay framework - Release Notes
+
+Kay-0.4.0 - November ??, 2009
+=============================
+
+  - Added task_handler for deferred library that corresponds with
+    kay's rules.
+  - Moved auth backend classes from kay.auth.backend module to
+    kay.auth.backends package.
+
+  - Notice about this release
+
+    - kay.auth.backend module is now deprecated. Please use
+      kay.auth.backends package instead.
+
+Kay-0.3.0 - October 27, 2009
+=============================
+
+  - Added CacheMiddleware, cache_page decorator and FragmentCache
+    jinja2 extension.
+  - Added SecureCookieSessionStore.
+  - Added handler for InboundMail
+  - Capability for customizing Jinja2 environ
+  - Now views can be defined as strings for lazy loading
+  - Users can migrate data from an appid to another one very easily
+  - Added kay.auth.GoogleBackend
+  - More documentations available. 
+  - Added --all option to i18n related scripts.
+  - Fixed testing environment was partially broken.
+  - Allow users to choose a xhtml renderer for rendering forms.
+  - More and more lazy loading of modules.
+  - Notice about this release
+
+    - GoogleAuthenticationMiddleware is obsolete. Please migrate it to
+      AuthenticationMiddleware and GoogleBackend combination. See URL
+      bellow for more details:
+      http://kay-docs.shehas.net/auth.html#using-google-account-authentication
+
+    - Changed options of some i18n related scripts. Please refer to
+      URL bellow for more details:
+      http://kay-docs.shehas.net/manage_py.html
+
+
+Kay-0.2.0 - September 23, 2009
+==============================
+
+  - Added handers for XMPP
+  - Added clear_datastore action
+  - Added create_user action
+  - Added dump_all/restore_all action
+  - Added a capability for adding custom jinja2 filters
+  - Added a capability for setting user's preffered language explicitly.
+  - Documentation sites started.
 
 Kay-0.1.0 - August 27, 2009
 ===========================

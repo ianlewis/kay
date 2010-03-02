@@ -47,23 +47,11 @@ This file is originally derived from Zine project.
 """
 
 import os
-from os import path
-import cPickle as pickle
-import struct
 from gettext import NullTranslations
-from datetime import datetime
-from time import strptime
-from weakref import WeakKeyDictionary
 
-from babel import Locale, dates, UnknownLocaleError
-from babel.support import Translations as TranslationsBase
-from pytz import timezone, UTC
-from werkzeug.exceptions import NotFound
-import simplejson
-
+import kay
 from kay import utils
 from kay.utils import local
-from kay.utils.importlib import import_module
 from kay.conf import settings
 
 __all__ = ['_', 'gettext', 'ngettext', 'lazy_gettext', 'lazy_ngettext']
@@ -73,14 +61,42 @@ DATE_FORMATS = ['%m/%d/%Y', '%d/%m/%Y', '%Y%m%d', '%d. %m. %Y',
                 '%m/%d/%y', '%d/%m/%y', '%d%m%y', '%m%d%y', '%y%m%d']
 TIME_FORMATS = ['%H:%M', '%H:%M:%S', '%I:%M %p', '%I:%M:%S %p']
 
+_accepted = {}
 
-_js_translations = WeakKeyDictionary()
+def get_language_from_request(request):
+  global _accepted
+  lang = request.cookies.get(settings.LANG_COOKIE_NAME)
+  if lang:
+    return lang
+  for lang in request.accept_languages.itervalues():
+    pos = lang.find('-')
+    if pos >= 0:
+      lang = lang[:pos].lower()+'_'+lang[pos+1:].upper()
+    else:
+      lang = lang.lower()
+    if lang in _accepted:
+      return _accepted[lang]
+    for dirname in (lang, lang.split("_")[0]):
+      if os.path.exists(os.path.join(utils.get_kay_locale_path(), dirname,
+                                     "LC_MESSAGES", "messages.mo")):
+        _accepted[lang] = dirname
+        return dirname
+  return None
+
+def create_lang_url(lang=None, url=None):
+  from werkzeug.urls import url_quote_plus
+  from kay.utils import url_for
+  if not url:
+    url = local.request.url
+  return url_for("i18n/set_language", lang=lang, next=url_quote_plus(url))
 
 def load_translations(locale):
   """Load the translation for a locale.  If a locale does not exist
-  the return value a fake translation object.  If the locale is unknown
-  a `UnknownLocaleError` is raised.
+  the return value a fake translation object.
   """
+  from werkzeug.utils import import_string
+
+  from kay.i18n.translations import KayTranslations
   domain = "messages"
   ret = KayTranslations.load(utils.get_kay_locale_path(), locale, domain)
   def _merge(path):
@@ -96,42 +112,19 @@ def load_translations(locale):
   except AttributeError:
     installed_apps = settings.INSTALLED_APPS
   for appname in installed_apps:
-    app = import_module(appname)
+    app = import_string(appname)
     apppath = os.path.join(os.path.dirname(app.__file__), 'i18n')
 
     if os.path.isdir(apppath):
       ret = _merge(apppath)
-
+  # Add I18N_DIR
+  try:
+    target = os.path.join(kay.PROJECT_DIR, local.app.app_settings.I18N_DIR)
+    if os.path.isdir(target):
+      ret = _merge(target)
+  except AttributeError:
+    pass
   return ret
-
-
-class KayTranslations(TranslationsBase):
-  gettext = TranslationsBase.ugettext
-  ngettext = TranslationsBase.ungettext
-
-  def __init__(self, fileobj=None, locale=None):
-    self.lang = locale
-    self._catalog = {}
-    TranslationsBase.__init__(self, fileobj=fileobj)
-    if not hasattr(self, "plural"):
-      self.plural = lambda n: int(n != 1)
-
-
-  @classmethod
-  def load(cls, path, locale=None, domain='messages'):
-    """Load the translations from the given path."""
-    catalog = os.path.join(path, str(Locale.parse(locale)), 'LC_MESSAGES',
-                           domain + '.mo')
-    if os.path.isfile(catalog):
-      return KayTranslations(fileobj=open(catalog, 'rb'), locale=locale)
-    else:
-      return KayTranslations(fileobj=None, locale=locale)
-
-  def merge(self, other):
-    self._catalog.update(other._catalog)
-
-  def __nonzero__(self):
-    return bool(self._catalog)
 
 
 class KayNullTranslations(NullTranslations):
@@ -156,13 +149,15 @@ def get_translations():
   try:
     ret = local.app.active_translations
     default = local.app.app_settings.DEFAULT_LANG
-  except:
+  except Exception:
     ret = None
     default = settings.DEFAULT_LANG
   if ret is not None:
     return ret
   return load_translations(default)
 
+def gettext_noop(string):
+  return unicode(string)
 
 def gettext(string):
   """Translate a given string to the language of the application."""
@@ -276,7 +271,7 @@ class _TranslationProxy(object):
   def __repr__(self):
     try:
       return 'i' + repr(unicode(self.value))
-    except:
+    except Exception:
       return '<%s broken>' % self.__class__.__name__
 
 
@@ -320,6 +315,8 @@ def parse_datetime(string, rebase=True):
   function should be considered of a lenient counterpart of
   `format_system_datetime`.
   """
+  from datetime import datetime
+  from time import strptime
 
   from kay.utils import to_utc
 

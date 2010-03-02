@@ -8,29 +8,37 @@ See the datetime section of the Python Library Reference for information
 on how to use these modules.
 '''
 
-# The Olson database has historically been updated about 4 times a year
-OLSON_VERSION = '2008c'
+# The Olson database is updated several times a year.
+OLSON_VERSION = '2010b'
 VERSION = OLSON_VERSION
+# Version format for a patch release - only one so far.
 #VERSION = OLSON_VERSION + '.2'
 __version__ = OLSON_VERSION
 
 OLSEN_VERSION = OLSON_VERSION # Old releases had this misspelling
 
 __all__ = [
-    'timezone', 'utc', 'country_timezones',
-    'AmbiguousTimeError', 'UnknownTimeZoneError',
+    'timezone', 'utc', 'country_timezones', 'country_names',
+    'AmbiguousTimeError', 'InvalidTimeError',
+    'NonExistentTimeError', 'UnknownTimeZoneError',
     'all_timezones', 'all_timezones_set',
     'common_timezones', 'common_timezones_set',
+    'loader',
     ]
 
+import os
+import logging
 import sys, datetime, os.path, gettext
+from UserDict import DictMixin
+from UserList import UserList
 
 try:
     from pkg_resources import resource_stream
 except ImportError:
     resource_stream = None
 
-from tzinfo import AmbiguousTimeError, unpickler
+from tzinfo import AmbiguousTimeError, InvalidTimeError, NonExistentTimeError
+from tzinfo import unpickler
 from tzfile import build_tzinfo
 
 # Use 2.3 sets module implementation if set builtin is not available
@@ -39,28 +47,75 @@ try:
 except NameError:
     from sets import Set as set
 
+import zipfile
+from cStringIO import StringIO
+
+from google.appengine.api import memcache
+
+zoneinfo = None
+zoneinfo_path = os.path.abspath(os.path.join(os.path.dirname(__file__),
+                                             'zoneinfo.zip'))
+
+def get_zoneinfo():
+    """Cache the opened zipfile in the module."""
+    global zoneinfo
+    if zoneinfo is None:
+        zoneinfo = zipfile.ZipFile(zoneinfo_path)
+
+    return zoneinfo
+
+
+class TimezoneLoader(object):
+    """A loader that that reads timezones using ZipFile."""
+    def __init__(self):
+        self.available = {}
+
+    def open_resource(self, name):
+        """Opens a resource from the zoneinfo subdir for reading."""
+        name_parts = name.lstrip('/').split('/')
+        for part in name_parts:
+            if part == os.path.pardir or os.path.sep in part:
+                raise ValueError('Bad path segment: %r' % part)
+
+        cache_key = 'pytz.zoneinfo.%s.%s' % (OLSON_VERSION, name)
+        zonedata = memcache.get(cache_key)
+        if zonedata is None:
+            zonedata = get_zoneinfo().read(os.path.join('zoneinfo', *name_parts))
+            memcache.add(cache_key, zonedata)
+            logging.info('Added timezone to memcache: %s' % cache_key)
+        else:
+            logging.info('Loaded timezone from memcache: %s' % cache_key)
+
+        return StringIO(zonedata)
+
+    def resource_exists(self, name):
+        """Return true if the given resource exists"""
+        if name not in self.available:
+            try:
+                get_zoneinfo().getinfo(os.path.join('zoneinfo',
+                    *name.lstrip('/').split('/')))
+                self.available[name] = True
+            except KeyError:
+                self.available[name] = False
+
+        return self.available[name]
+
+
+loader = TimezoneLoader()
 
 def open_resource(name):
-    """Open a resource from the zoneinfo subdir for reading.
+    return loader.open_resource(name)
 
-    """
-    import zipfile
-    from cStringIO import StringIO
+def resource_exists(name):
+    return loader.resource_exists(name)
 
-    name_parts = name.lstrip('/').split('/')
-    for part in name_parts:
-        if part == os.path.pardir or os.path.sep in part:
-            raise ValueError('Bad path segment: %r' % part)
-    zoneinfo = zipfile.ZipFile(os.path.join(os.path.dirname(__file__),
-                               'zoneinfo.zip'))
-    return StringIO(zoneinfo.read(os.path.join('zoneinfo', *name_parts)))
 
 # Enable this when we get some translations?
 # We want an i18n API that is useful to programs using Python's gettext
 # module, as well as the Zope3 i18n package. Perhaps we should just provide
 # the POT file and translations, and leave it up to callers to make use
 # of them.
-# 
+#
 # t = gettext.translation(
 #         'pytz', os.path.join(os.path.dirname(__file__), 'locales'),
 #         fallback=True
@@ -89,8 +144,8 @@ class UnknownTimeZoneError(KeyError):
 _tzinfo_cache = {}
 
 def timezone(zone):
-    r''' Return a datetime.tzinfo implementation for the given timezone 
-    
+    r''' Return a datetime.tzinfo implementation for the given timezone
+
     >>> from datetime import datetime, timedelta
     >>> utc = timezone('UTC')
     >>> eastern = timezone('US/Eastern')
@@ -133,11 +188,11 @@ def timezone(zone):
 
     zone = _unmunge_zone(zone)
     if zone not in _tzinfo_cache:
-        if zone in all_timezones_set:
+        if resource_exists(zone):
             _tzinfo_cache[zone] = build_tzinfo(zone, open_resource(zone))
         else:
             raise UnknownTimeZoneError(zone)
-    
+
     return _tzinfo_cache[zone]
 
 
@@ -152,7 +207,7 @@ HOUR = datetime.timedelta(hours=1)
 
 class UTC(datetime.tzinfo):
     """UTC
-    
+
     Identical to the reference UTC implementation given in Python docs except
     that it unpickles using the single module global instance defined beneath
     this class declaration.
@@ -170,7 +225,7 @@ class UTC(datetime.tzinfo):
 
     def dst(self, dt):
         return ZERO
-    
+
     def __reduce__(self):
         return _UTC, ()
 
@@ -198,14 +253,14 @@ UTC = utc = UTC() # UTC is a singleton
 
 def _UTC():
     """Factory function for utc unpickling.
-    
-    Makes sure that unpickling a utc instance always returns the same 
+
+    Makes sure that unpickling a utc instance always returns the same
     module global.
-    
+
     These examples belong in the UTC class above, but it is obscured; or in
     the README.txt, but we are not depending on Python 2.4 so integrating
     the README.txt examples with the unit tests is not trivial.
-    
+
     >>> import datetime, pickle
     >>> dt = datetime.datetime(2005, 3, 1, 14, 13, 21, tzinfo=utc)
     >>> naive = dt.replace(tzinfo=None)
@@ -238,36 +293,95 @@ def _p(*args):
     return unpickler(*args)
 _p.__safe_for_unpickling__ = True
 
-_country_timezones_cache = {}
 
-def country_timezones(iso3166_code):
-    """Return a list of timezones used in a particular country.
+class _LazyDict(DictMixin):
+    """Dictionary populated on first use."""
+    data = None
+    def __getitem__(self, key):
+        if self.data is None:
+            self._fill()
+        return self.data[key.upper()]
+
+    def keys(self):
+        if self.data is None:
+            self._fill()
+        return self.data.keys()
+
+
+class _LazyList(UserList):
+    def __init__(self, func):
+        self._data = None
+        self._build = func
+
+    def data(self):
+        if self._data is None:
+            self._data = self._build()
+        return self._data
+
+    data = property(data)
+
+class _CountryTimezoneDict(_LazyDict):
+    """Map ISO 3166 country code to a list of timezone names commonly used
+    in that country.
 
     iso3166_code is the two letter code used to identify the country.
 
-    >>> country_timezones('ch')
+    >>> country_timezones['ch']
     ['Europe/Zurich']
-    >>> country_timezones('CH')
+    >>> country_timezones['CH']
     ['Europe/Zurich']
-    >>> country_timezones(u'ch')
+    >>> country_timezones[u'ch']
     ['Europe/Zurich']
-    >>> country_timezones('XXX')
+    >>> country_timezones['XXX']
     Traceback (most recent call last):
     ...
     KeyError: 'XXX'
+
+    Previously, this information was exposed as a function rather than a
+    dictionary. This is still supported::
+
+    >>> country_timezones('nz')
+    ['Pacific/Auckland', 'Pacific/Chatham']
     """
-    iso3166_code = iso3166_code.upper()
-    if not _country_timezones_cache:
+    def __call__(self, iso3166_code):
+        """Backwards compatibility."""
+        return self[iso3166_code]
+
+    def _fill(self):
+        data = {}
         zone_tab = open_resource('zone.tab')
         for line in zone_tab:
             if line.startswith('#'):
                 continue
             code, coordinates, zone = line.split(None, 4)[:3]
+            if not resource_exists(zone):
+                continue
             try:
-                _country_timezones_cache[code].append(zone)
+                data[code].append(zone)
             except KeyError:
-                _country_timezones_cache[code] = [zone]
-    return _country_timezones_cache[iso3166_code]
+                data[code] = [zone]
+        self.data = data
+
+country_timezones = _CountryTimezoneDict()
+
+
+class _CountryNameDict(_LazyDict):
+    '''Dictionary proving ISO3166 code -> English name.
+
+    >>> country_names['au']
+    'Australia'
+    '''
+    def _fill(self):
+        data = {}
+        zone_tab = open_resource('iso3166.tab')
+        for line in zone_tab.readlines():
+            if line.startswith('#'):
+                continue
+            code, name = line.split(None, 1)
+            data[code] = name.strip()
+        self.data = data
+
+country_names = _CountryNameDict()
 
 
 # Time-zone info based solely on fixed offsets
@@ -290,7 +404,7 @@ class _FixedOffset(datetime.tzinfo):
 
     def dst(self, dt):
         return None
-    
+
     def tzname(self, dt):
         return None
 
@@ -312,7 +426,7 @@ class _FixedOffset(datetime.tzinfo):
 
 def FixedOffset(offset, _tzinfos = {}):
     """return a fixed-offset timezone based off a number of minutes.
-    
+
         >>> one = FixedOffset(-330)
         >>> one
         pytz.FixedOffset(-330)
@@ -324,7 +438,7 @@ def FixedOffset(offset, _tzinfos = {}):
         pytz.FixedOffset(1380)
         >>> two.utcoffset(datetime.datetime.now())
         datetime.timedelta(0, 82800)
-    
+
     The datetime.timedelta must be between the range of -1 and 1 day,
     non-inclusive.
 
@@ -345,7 +459,7 @@ def FixedOffset(offset, _tzinfos = {}):
 
     There should always be only one instance of a FixedOffset per timedelta.
     This should be true for multiple creation calls.
-    
+
         >>> FixedOffset(-330) is one
         True
         >>> FixedOffset(1380) is two
@@ -384,465 +498,7 @@ def _test():
 if __name__ == '__main__':
     _test()
 
-common_timezones = \
-['Africa/Abidjan',
- 'Africa/Accra',
- 'Africa/Addis_Ababa',
- 'Africa/Algiers',
- 'Africa/Asmara',
- 'Africa/Asmera',
- 'Africa/Bamako',
- 'Africa/Bangui',
- 'Africa/Banjul',
- 'Africa/Bissau',
- 'Africa/Blantyre',
- 'Africa/Brazzaville',
- 'Africa/Bujumbura',
- 'Africa/Cairo',
- 'Africa/Casablanca',
- 'Africa/Ceuta',
- 'Africa/Conakry',
- 'Africa/Dakar',
- 'Africa/Dar_es_Salaam',
- 'Africa/Djibouti',
- 'Africa/Douala',
- 'Africa/El_Aaiun',
- 'Africa/Freetown',
- 'Africa/Gaborone',
- 'Africa/Harare',
- 'Africa/Johannesburg',
- 'Africa/Kampala',
- 'Africa/Khartoum',
- 'Africa/Kigali',
- 'Africa/Kinshasa',
- 'Africa/Lagos',
- 'Africa/Libreville',
- 'Africa/Lome',
- 'Africa/Luanda',
- 'Africa/Lubumbashi',
- 'Africa/Lusaka',
- 'Africa/Malabo',
- 'Africa/Maputo',
- 'Africa/Maseru',
- 'Africa/Mbabane',
- 'Africa/Mogadishu',
- 'Africa/Monrovia',
- 'Africa/Nairobi',
- 'Africa/Ndjamena',
- 'Africa/Niamey',
- 'Africa/Nouakchott',
- 'Africa/Ouagadougou',
- 'Africa/Porto-Novo',
- 'Africa/Sao_Tome',
- 'Africa/Timbuktu',
- 'Africa/Tripoli',
- 'Africa/Tunis',
- 'Africa/Windhoek',
- 'America/Adak',
- 'America/Anchorage',
- 'America/Anguilla',
- 'America/Antigua',
- 'America/Araguaina',
- 'America/Aruba',
- 'America/Asuncion',
- 'America/Atikokan',
- 'America/Atka',
- 'America/Bahia',
- 'America/Barbados',
- 'America/Belem',
- 'America/Belize',
- 'America/Blanc-Sablon',
- 'America/Boa_Vista',
- 'America/Bogota',
- 'America/Boise',
- 'America/Buenos_Aires',
- 'America/Cambridge_Bay',
- 'America/Campo_Grande',
- 'America/Cancun',
- 'America/Caracas',
- 'America/Catamarca',
- 'America/Cayenne',
- 'America/Cayman',
- 'America/Chicago',
- 'America/Chihuahua',
- 'America/Coral_Harbour',
- 'America/Cordoba',
- 'America/Costa_Rica',
- 'America/Cuiaba',
- 'America/Curacao',
- 'America/Danmarkshavn',
- 'America/Dawson',
- 'America/Dawson_Creek',
- 'America/Denver',
- 'America/Detroit',
- 'America/Dominica',
- 'America/Edmonton',
- 'America/Eirunepe',
- 'America/El_Salvador',
- 'America/Ensenada',
- 'America/Fort_Wayne',
- 'America/Fortaleza',
- 'America/Glace_Bay',
- 'America/Godthab',
- 'America/Goose_Bay',
- 'America/Grand_Turk',
- 'America/Grenada',
- 'America/Guadeloupe',
- 'America/Guatemala',
- 'America/Guayaquil',
- 'America/Guyana',
- 'America/Halifax',
- 'America/Havana',
- 'America/Hermosillo',
- 'America/Indianapolis',
- 'America/Inuvik',
- 'America/Iqaluit',
- 'America/Jamaica',
- 'America/Jujuy',
- 'America/Juneau',
- 'America/Knox_IN',
- 'America/La_Paz',
- 'America/Lima',
- 'America/Los_Angeles',
- 'America/Louisville',
- 'America/Maceio',
- 'America/Managua',
- 'America/Manaus',
- 'America/Marigot',
- 'America/Martinique',
- 'America/Mazatlan',
- 'America/Mendoza',
- 'America/Menominee',
- 'America/Merida',
- 'America/Mexico_City',
- 'America/Miquelon',
- 'America/Moncton',
- 'America/Monterrey',
- 'America/Montevideo',
- 'America/Montreal',
- 'America/Montserrat',
- 'America/Nassau',
- 'America/New_York',
- 'America/Nipigon',
- 'America/Nome',
- 'America/Noronha',
- 'America/Panama',
- 'America/Pangnirtung',
- 'America/Paramaribo',
- 'America/Phoenix',
- 'America/Port-au-Prince',
- 'America/Port_of_Spain',
- 'America/Porto_Acre',
- 'America/Porto_Velho',
- 'America/Puerto_Rico',
- 'America/Rainy_River',
- 'America/Rankin_Inlet',
- 'America/Recife',
- 'America/Regina',
- 'America/Resolute',
- 'America/Rio_Branco',
- 'America/Rosario',
- 'America/Santiago',
- 'America/Santo_Domingo',
- 'America/Sao_Paulo',
- 'America/Scoresbysund',
- 'America/Shiprock',
- 'America/St_Barthelemy',
- 'America/St_Johns',
- 'America/St_Kitts',
- 'America/St_Lucia',
- 'America/St_Thomas',
- 'America/St_Vincent',
- 'America/Swift_Current',
- 'America/Tegucigalpa',
- 'America/Thule',
- 'America/Thunder_Bay',
- 'America/Tijuana',
- 'America/Toronto',
- 'America/Tortola',
- 'America/Vancouver',
- 'America/Virgin',
- 'America/Whitehorse',
- 'America/Winnipeg',
- 'America/Yakutat',
- 'America/Yellowknife',
- 'Antarctica/Casey',
- 'Antarctica/Davis',
- 'Antarctica/DumontDUrville',
- 'Antarctica/Mawson',
- 'Antarctica/McMurdo',
- 'Antarctica/Palmer',
- 'Antarctica/Rothera',
- 'Antarctica/South_Pole',
- 'Antarctica/Syowa',
- 'Antarctica/Vostok',
- 'Arctic/Longyearbyen',
- 'Asia/Aden',
- 'Asia/Almaty',
- 'Asia/Amman',
- 'Asia/Anadyr',
- 'Asia/Aqtau',
- 'Asia/Aqtobe',
- 'Asia/Ashgabat',
- 'Asia/Ashkhabad',
- 'Asia/Baghdad',
- 'Asia/Bahrain',
- 'Asia/Baku',
- 'Asia/Bangkok',
- 'Asia/Beirut',
- 'Asia/Bishkek',
- 'Asia/Brunei',
- 'Asia/Calcutta',
- 'Asia/Choibalsan',
- 'Asia/Chongqing',
- 'Asia/Chungking',
- 'Asia/Colombo',
- 'Asia/Dacca',
- 'Asia/Damascus',
- 'Asia/Dhaka',
- 'Asia/Dili',
- 'Asia/Dubai',
- 'Asia/Dushanbe',
- 'Asia/Gaza',
- 'Asia/Harbin',
- 'Asia/Ho_Chi_Minh',
- 'Asia/Hong_Kong',
- 'Asia/Hovd',
- 'Asia/Irkutsk',
- 'Asia/Istanbul',
- 'Asia/Jakarta',
- 'Asia/Jayapura',
- 'Asia/Jerusalem',
- 'Asia/Kabul',
- 'Asia/Kamchatka',
- 'Asia/Karachi',
- 'Asia/Kashgar',
- 'Asia/Katmandu',
- 'Asia/Kolkata',
- 'Asia/Krasnoyarsk',
- 'Asia/Kuala_Lumpur',
- 'Asia/Kuching',
- 'Asia/Kuwait',
- 'Asia/Macao',
- 'Asia/Macau',
- 'Asia/Magadan',
- 'Asia/Makassar',
- 'Asia/Manila',
- 'Asia/Muscat',
- 'Asia/Nicosia',
- 'Asia/Novosibirsk',
- 'Asia/Omsk',
- 'Asia/Oral',
- 'Asia/Phnom_Penh',
- 'Asia/Pontianak',
- 'Asia/Pyongyang',
- 'Asia/Qatar',
- 'Asia/Qyzylorda',
- 'Asia/Rangoon',
- 'Asia/Riyadh',
- 'Asia/Saigon',
- 'Asia/Sakhalin',
- 'Asia/Samarkand',
- 'Asia/Seoul',
- 'Asia/Shanghai',
- 'Asia/Singapore',
- 'Asia/Taipei',
- 'Asia/Tashkent',
- 'Asia/Tbilisi',
- 'Asia/Tehran',
- 'Asia/Tel_Aviv',
- 'Asia/Thimbu',
- 'Asia/Thimphu',
- 'Asia/Tokyo',
- 'Asia/Ujung_Pandang',
- 'Asia/Ulaanbaatar',
- 'Asia/Ulan_Bator',
- 'Asia/Urumqi',
- 'Asia/Vientiane',
- 'Asia/Vladivostok',
- 'Asia/Yakutsk',
- 'Asia/Yekaterinburg',
- 'Asia/Yerevan',
- 'Atlantic/Azores',
- 'Atlantic/Bermuda',
- 'Atlantic/Canary',
- 'Atlantic/Cape_Verde',
- 'Atlantic/Faeroe',
- 'Atlantic/Faroe',
- 'Atlantic/Jan_Mayen',
- 'Atlantic/Madeira',
- 'Atlantic/Reykjavik',
- 'Atlantic/South_Georgia',
- 'Atlantic/St_Helena',
- 'Atlantic/Stanley',
- 'Australia/ACT',
- 'Australia/Adelaide',
- 'Australia/Brisbane',
- 'Australia/Broken_Hill',
- 'Australia/Canberra',
- 'Australia/Currie',
- 'Australia/Darwin',
- 'Australia/Eucla',
- 'Australia/Hobart',
- 'Australia/LHI',
- 'Australia/Lindeman',
- 'Australia/Lord_Howe',
- 'Australia/Melbourne',
- 'Australia/NSW',
- 'Australia/North',
- 'Australia/Perth',
- 'Australia/Queensland',
- 'Australia/South',
- 'Australia/Sydney',
- 'Australia/Tasmania',
- 'Australia/Victoria',
- 'Australia/West',
- 'Australia/Yancowinna',
- 'Brazil/Acre',
- 'Brazil/DeNoronha',
- 'Brazil/East',
- 'Brazil/West',
- 'Canada/Atlantic',
- 'Canada/Central',
- 'Canada/East-Saskatchewan',
- 'Canada/Eastern',
- 'Canada/Mountain',
- 'Canada/Newfoundland',
- 'Canada/Pacific',
- 'Canada/Saskatchewan',
- 'Canada/Yukon',
- 'Chile/Continental',
- 'Chile/EasterIsland',
- 'Europe/Amsterdam',
- 'Europe/Andorra',
- 'Europe/Athens',
- 'Europe/Belfast',
- 'Europe/Belgrade',
- 'Europe/Berlin',
- 'Europe/Bratislava',
- 'Europe/Brussels',
- 'Europe/Bucharest',
- 'Europe/Budapest',
- 'Europe/Chisinau',
- 'Europe/Copenhagen',
- 'Europe/Dublin',
- 'Europe/Gibraltar',
- 'Europe/Guernsey',
- 'Europe/Helsinki',
- 'Europe/Isle_of_Man',
- 'Europe/Istanbul',
- 'Europe/Jersey',
- 'Europe/Kaliningrad',
- 'Europe/Kiev',
- 'Europe/Lisbon',
- 'Europe/Ljubljana',
- 'Europe/London',
- 'Europe/Luxembourg',
- 'Europe/Madrid',
- 'Europe/Malta',
- 'Europe/Mariehamn',
- 'Europe/Minsk',
- 'Europe/Monaco',
- 'Europe/Moscow',
- 'Europe/Nicosia',
- 'Europe/Oslo',
- 'Europe/Paris',
- 'Europe/Podgorica',
- 'Europe/Prague',
- 'Europe/Riga',
- 'Europe/Rome',
- 'Europe/Samara',
- 'Europe/San_Marino',
- 'Europe/Sarajevo',
- 'Europe/Simferopol',
- 'Europe/Skopje',
- 'Europe/Sofia',
- 'Europe/Stockholm',
- 'Europe/Tallinn',
- 'Europe/Tirane',
- 'Europe/Tiraspol',
- 'Europe/Uzhgorod',
- 'Europe/Vaduz',
- 'Europe/Vatican',
- 'Europe/Vienna',
- 'Europe/Vilnius',
- 'Europe/Volgograd',
- 'Europe/Warsaw',
- 'Europe/Zagreb',
- 'Europe/Zaporozhye',
- 'Europe/Zurich',
- 'GMT',
- 'Indian/Antananarivo',
- 'Indian/Chagos',
- 'Indian/Christmas',
- 'Indian/Cocos',
- 'Indian/Comoro',
- 'Indian/Kerguelen',
- 'Indian/Mahe',
- 'Indian/Maldives',
- 'Indian/Mauritius',
- 'Indian/Mayotte',
- 'Indian/Reunion',
- 'Mexico/BajaNorte',
- 'Mexico/BajaSur',
- 'Mexico/General',
- 'Pacific/Apia',
- 'Pacific/Auckland',
- 'Pacific/Chatham',
- 'Pacific/Easter',
- 'Pacific/Efate',
- 'Pacific/Enderbury',
- 'Pacific/Fakaofo',
- 'Pacific/Fiji',
- 'Pacific/Funafuti',
- 'Pacific/Galapagos',
- 'Pacific/Gambier',
- 'Pacific/Guadalcanal',
- 'Pacific/Guam',
- 'Pacific/Honolulu',
- 'Pacific/Johnston',
- 'Pacific/Kiritimati',
- 'Pacific/Kosrae',
- 'Pacific/Kwajalein',
- 'Pacific/Majuro',
- 'Pacific/Marquesas',
- 'Pacific/Midway',
- 'Pacific/Nauru',
- 'Pacific/Niue',
- 'Pacific/Norfolk',
- 'Pacific/Noumea',
- 'Pacific/Pago_Pago',
- 'Pacific/Palau',
- 'Pacific/Pitcairn',
- 'Pacific/Ponape',
- 'Pacific/Port_Moresby',
- 'Pacific/Rarotonga',
- 'Pacific/Saipan',
- 'Pacific/Samoa',
- 'Pacific/Tahiti',
- 'Pacific/Tarawa',
- 'Pacific/Tongatapu',
- 'Pacific/Truk',
- 'Pacific/Wake',
- 'Pacific/Wallis',
- 'Pacific/Yap',
- 'US/Alaska',
- 'US/Aleutian',
- 'US/Arizona',
- 'US/Central',
- 'US/East-Indiana',
- 'US/Eastern',
- 'US/Hawaii',
- 'US/Indiana-Starke',
- 'US/Michigan',
- 'US/Mountain',
- 'US/Pacific',
- 'US/Pacific-New',
- 'US/Samoa',
- 'UTC']
-common_timezones_set = set(common_timezones)
-
-all_timezones = \
+all_timezones_unfiltered = \
 ['Africa/Abidjan',
  'Africa/Accra',
  'Africa/Addis_Ababa',
@@ -909,6 +565,7 @@ all_timezones = \
  'America/Argentina/La_Rioja',
  'America/Argentina/Mendoza',
  'America/Argentina/Rio_Gallegos',
+ 'America/Argentina/Salta',
  'America/Argentina/San_Juan',
  'America/Argentina/San_Luis',
  'America/Argentina/Tucuman',
@@ -1024,6 +681,7 @@ all_timezones = \
  'America/Resolute',
  'America/Rio_Branco',
  'America/Rosario',
+ 'America/Santarem',
  'America/Santiago',
  'America/Santo_Domingo',
  'America/Sao_Paulo',
@@ -1099,6 +757,7 @@ all_timezones = \
  'Asia/Kamchatka',
  'Asia/Karachi',
  'Asia/Kashgar',
+ 'Asia/Kathmandu',
  'Asia/Katmandu',
  'Asia/Kolkata',
  'Asia/Krasnoyarsk',
@@ -1112,6 +771,7 @@ all_timezones = \
  'Asia/Manila',
  'Asia/Muscat',
  'Asia/Nicosia',
+ 'Asia/Novokuznetsk',
  'Asia/Novosibirsk',
  'Asia/Omsk',
  'Asia/Oral',
@@ -1398,6 +1058,412 @@ all_timezones = \
  'Universal',
  'W-SU',
  'WET',
- 'Zulu',
- 'posixrules']
-all_timezones_set = set(all_timezones)
+ 'Zulu']
+
+all_timezones = _LazyList(
+        lambda: filter(resource_exists, all_timezones_unfiltered)
+)
+
+all_timezones_set = set(all_timezones_unfiltered) # XXX
+
+common_timezones_unfiltered = \
+['Africa/Abidjan',
+ 'Africa/Accra',
+ 'Africa/Addis_Ababa',
+ 'Africa/Algiers',
+ 'Africa/Asmara',
+ 'Africa/Bamako',
+ 'Africa/Bangui',
+ 'Africa/Banjul',
+ 'Africa/Bissau',
+ 'Africa/Blantyre',
+ 'Africa/Brazzaville',
+ 'Africa/Bujumbura',
+ 'Africa/Cairo',
+ 'Africa/Casablanca',
+ 'Africa/Ceuta',
+ 'Africa/Conakry',
+ 'Africa/Dakar',
+ 'Africa/Dar_es_Salaam',
+ 'Africa/Djibouti',
+ 'Africa/Douala',
+ 'Africa/El_Aaiun',
+ 'Africa/Freetown',
+ 'Africa/Gaborone',
+ 'Africa/Harare',
+ 'Africa/Johannesburg',
+ 'Africa/Kampala',
+ 'Africa/Khartoum',
+ 'Africa/Kigali',
+ 'Africa/Kinshasa',
+ 'Africa/Lagos',
+ 'Africa/Libreville',
+ 'Africa/Lome',
+ 'Africa/Luanda',
+ 'Africa/Lubumbashi',
+ 'Africa/Lusaka',
+ 'Africa/Malabo',
+ 'Africa/Maputo',
+ 'Africa/Maseru',
+ 'Africa/Mbabane',
+ 'Africa/Mogadishu',
+ 'Africa/Monrovia',
+ 'Africa/Nairobi',
+ 'Africa/Ndjamena',
+ 'Africa/Niamey',
+ 'Africa/Nouakchott',
+ 'Africa/Ouagadougou',
+ 'Africa/Porto-Novo',
+ 'Africa/Sao_Tome',
+ 'Africa/Tripoli',
+ 'Africa/Tunis',
+ 'Africa/Windhoek',
+ 'America/Adak',
+ 'America/Anchorage',
+ 'America/Anguilla',
+ 'America/Antigua',
+ 'America/Araguaina',
+ 'America/Argentina/Buenos_Aires',
+ 'America/Argentina/Catamarca',
+ 'America/Argentina/Cordoba',
+ 'America/Argentina/Jujuy',
+ 'America/Argentina/La_Rioja',
+ 'America/Argentina/Mendoza',
+ 'America/Argentina/Rio_Gallegos',
+ 'America/Argentina/Salta',
+ 'America/Argentina/San_Juan',
+ 'America/Argentina/San_Luis',
+ 'America/Argentina/Tucuman',
+ 'America/Argentina/Ushuaia',
+ 'America/Aruba',
+ 'America/Asuncion',
+ 'America/Atikokan',
+ 'America/Bahia',
+ 'America/Barbados',
+ 'America/Belem',
+ 'America/Belize',
+ 'America/Blanc-Sablon',
+ 'America/Boa_Vista',
+ 'America/Bogota',
+ 'America/Boise',
+ 'America/Cambridge_Bay',
+ 'America/Campo_Grande',
+ 'America/Cancun',
+ 'America/Caracas',
+ 'America/Cayenne',
+ 'America/Cayman',
+ 'America/Chicago',
+ 'America/Chihuahua',
+ 'America/Costa_Rica',
+ 'America/Cuiaba',
+ 'America/Curacao',
+ 'America/Danmarkshavn',
+ 'America/Dawson',
+ 'America/Dawson_Creek',
+ 'America/Denver',
+ 'America/Detroit',
+ 'America/Dominica',
+ 'America/Edmonton',
+ 'America/Eirunepe',
+ 'America/El_Salvador',
+ 'America/Fortaleza',
+ 'America/Glace_Bay',
+ 'America/Godthab',
+ 'America/Goose_Bay',
+ 'America/Grand_Turk',
+ 'America/Grenada',
+ 'America/Guadeloupe',
+ 'America/Guatemala',
+ 'America/Guayaquil',
+ 'America/Guyana',
+ 'America/Halifax',
+ 'America/Havana',
+ 'America/Hermosillo',
+ 'America/Indiana/Indianapolis',
+ 'America/Indiana/Knox',
+ 'America/Indiana/Marengo',
+ 'America/Indiana/Petersburg',
+ 'America/Indiana/Tell_City',
+ 'America/Indiana/Vevay',
+ 'America/Indiana/Vincennes',
+ 'America/Indiana/Winamac',
+ 'America/Inuvik',
+ 'America/Iqaluit',
+ 'America/Jamaica',
+ 'America/Juneau',
+ 'America/Kentucky/Louisville',
+ 'America/Kentucky/Monticello',
+ 'America/La_Paz',
+ 'America/Lima',
+ 'America/Los_Angeles',
+ 'America/Maceio',
+ 'America/Managua',
+ 'America/Manaus',
+ 'America/Martinique',
+ 'America/Mazatlan',
+ 'America/Menominee',
+ 'America/Merida',
+ 'America/Mexico_City',
+ 'America/Miquelon',
+ 'America/Moncton',
+ 'America/Monterrey',
+ 'America/Montevideo',
+ 'America/Montreal',
+ 'America/Montserrat',
+ 'America/Nassau',
+ 'America/New_York',
+ 'America/Nipigon',
+ 'America/Nome',
+ 'America/Noronha',
+ 'America/North_Dakota/Center',
+ 'America/North_Dakota/New_Salem',
+ 'America/Panama',
+ 'America/Pangnirtung',
+ 'America/Paramaribo',
+ 'America/Phoenix',
+ 'America/Port-au-Prince',
+ 'America/Port_of_Spain',
+ 'America/Porto_Velho',
+ 'America/Puerto_Rico',
+ 'America/Rainy_River',
+ 'America/Rankin_Inlet',
+ 'America/Recife',
+ 'America/Regina',
+ 'America/Resolute',
+ 'America/Rio_Branco',
+ 'America/Santarem',
+ 'America/Santiago',
+ 'America/Santo_Domingo',
+ 'America/Sao_Paulo',
+ 'America/Scoresbysund',
+ 'America/St_Johns',
+ 'America/St_Kitts',
+ 'America/St_Lucia',
+ 'America/St_Thomas',
+ 'America/St_Vincent',
+ 'America/Swift_Current',
+ 'America/Tegucigalpa',
+ 'America/Thule',
+ 'America/Thunder_Bay',
+ 'America/Tijuana',
+ 'America/Toronto',
+ 'America/Tortola',
+ 'America/Vancouver',
+ 'America/Whitehorse',
+ 'America/Winnipeg',
+ 'America/Yakutat',
+ 'America/Yellowknife',
+ 'Antarctica/Casey',
+ 'Antarctica/Davis',
+ 'Antarctica/DumontDUrville',
+ 'Antarctica/Mawson',
+ 'Antarctica/McMurdo',
+ 'Antarctica/Palmer',
+ 'Antarctica/Rothera',
+ 'Antarctica/Syowa',
+ 'Antarctica/Vostok',
+ 'Asia/Aden',
+ 'Asia/Almaty',
+ 'Asia/Amman',
+ 'Asia/Anadyr',
+ 'Asia/Aqtau',
+ 'Asia/Aqtobe',
+ 'Asia/Ashgabat',
+ 'Asia/Baghdad',
+ 'Asia/Bahrain',
+ 'Asia/Baku',
+ 'Asia/Bangkok',
+ 'Asia/Beirut',
+ 'Asia/Bishkek',
+ 'Asia/Brunei',
+ 'Asia/Choibalsan',
+ 'Asia/Chongqing',
+ 'Asia/Colombo',
+ 'Asia/Damascus',
+ 'Asia/Dhaka',
+ 'Asia/Dili',
+ 'Asia/Dubai',
+ 'Asia/Dushanbe',
+ 'Asia/Gaza',
+ 'Asia/Harbin',
+ 'Asia/Ho_Chi_Minh',
+ 'Asia/Hong_Kong',
+ 'Asia/Hovd',
+ 'Asia/Irkutsk',
+ 'Asia/Jakarta',
+ 'Asia/Jayapura',
+ 'Asia/Jerusalem',
+ 'Asia/Kabul',
+ 'Asia/Kamchatka',
+ 'Asia/Karachi',
+ 'Asia/Kashgar',
+ 'Asia/Kathmandu',
+ 'Asia/Kolkata',
+ 'Asia/Krasnoyarsk',
+ 'Asia/Kuala_Lumpur',
+ 'Asia/Kuching',
+ 'Asia/Kuwait',
+ 'Asia/Macau',
+ 'Asia/Magadan',
+ 'Asia/Makassar',
+ 'Asia/Manila',
+ 'Asia/Muscat',
+ 'Asia/Nicosia',
+ 'Asia/Novokuznetsk',
+ 'Asia/Novosibirsk',
+ 'Asia/Omsk',
+ 'Asia/Oral',
+ 'Asia/Phnom_Penh',
+ 'Asia/Pontianak',
+ 'Asia/Pyongyang',
+ 'Asia/Qatar',
+ 'Asia/Qyzylorda',
+ 'Asia/Rangoon',
+ 'Asia/Riyadh',
+ 'Asia/Sakhalin',
+ 'Asia/Samarkand',
+ 'Asia/Seoul',
+ 'Asia/Shanghai',
+ 'Asia/Singapore',
+ 'Asia/Taipei',
+ 'Asia/Tashkent',
+ 'Asia/Tbilisi',
+ 'Asia/Tehran',
+ 'Asia/Thimphu',
+ 'Asia/Tokyo',
+ 'Asia/Ulaanbaatar',
+ 'Asia/Urumqi',
+ 'Asia/Vientiane',
+ 'Asia/Vladivostok',
+ 'Asia/Yakutsk',
+ 'Asia/Yekaterinburg',
+ 'Asia/Yerevan',
+ 'Atlantic/Azores',
+ 'Atlantic/Bermuda',
+ 'Atlantic/Canary',
+ 'Atlantic/Cape_Verde',
+ 'Atlantic/Faroe',
+ 'Atlantic/Madeira',
+ 'Atlantic/Reykjavik',
+ 'Atlantic/South_Georgia',
+ 'Atlantic/St_Helena',
+ 'Atlantic/Stanley',
+ 'Australia/Adelaide',
+ 'Australia/Brisbane',
+ 'Australia/Broken_Hill',
+ 'Australia/Currie',
+ 'Australia/Darwin',
+ 'Australia/Eucla',
+ 'Australia/Hobart',
+ 'Australia/Lindeman',
+ 'Australia/Lord_Howe',
+ 'Australia/Melbourne',
+ 'Australia/Perth',
+ 'Australia/Sydney',
+ 'Europe/Amsterdam',
+ 'Europe/Andorra',
+ 'Europe/Athens',
+ 'Europe/Belgrade',
+ 'Europe/Berlin',
+ 'Europe/Brussels',
+ 'Europe/Bucharest',
+ 'Europe/Budapest',
+ 'Europe/Chisinau',
+ 'Europe/Copenhagen',
+ 'Europe/Dublin',
+ 'Europe/Gibraltar',
+ 'Europe/Helsinki',
+ 'Europe/Istanbul',
+ 'Europe/Kaliningrad',
+ 'Europe/Kiev',
+ 'Europe/Lisbon',
+ 'Europe/London',
+ 'Europe/Luxembourg',
+ 'Europe/Madrid',
+ 'Europe/Malta',
+ 'Europe/Minsk',
+ 'Europe/Monaco',
+ 'Europe/Moscow',
+ 'Europe/Oslo',
+ 'Europe/Paris',
+ 'Europe/Prague',
+ 'Europe/Riga',
+ 'Europe/Rome',
+ 'Europe/Samara',
+ 'Europe/Simferopol',
+ 'Europe/Sofia',
+ 'Europe/Stockholm',
+ 'Europe/Tallinn',
+ 'Europe/Tirane',
+ 'Europe/Uzhgorod',
+ 'Europe/Vaduz',
+ 'Europe/Vienna',
+ 'Europe/Vilnius',
+ 'Europe/Volgograd',
+ 'Europe/Warsaw',
+ 'Europe/Zaporozhye',
+ 'Europe/Zurich',
+ 'GMT',
+ 'Indian/Antananarivo',
+ 'Indian/Chagos',
+ 'Indian/Christmas',
+ 'Indian/Cocos',
+ 'Indian/Comoro',
+ 'Indian/Kerguelen',
+ 'Indian/Mahe',
+ 'Indian/Maldives',
+ 'Indian/Mauritius',
+ 'Indian/Mayotte',
+ 'Indian/Reunion',
+ 'Pacific/Apia',
+ 'Pacific/Auckland',
+ 'Pacific/Chatham',
+ 'Pacific/Easter',
+ 'Pacific/Efate',
+ 'Pacific/Enderbury',
+ 'Pacific/Fakaofo',
+ 'Pacific/Fiji',
+ 'Pacific/Funafuti',
+ 'Pacific/Galapagos',
+ 'Pacific/Gambier',
+ 'Pacific/Guadalcanal',
+ 'Pacific/Guam',
+ 'Pacific/Honolulu',
+ 'Pacific/Johnston',
+ 'Pacific/Kiritimati',
+ 'Pacific/Kosrae',
+ 'Pacific/Kwajalein',
+ 'Pacific/Majuro',
+ 'Pacific/Marquesas',
+ 'Pacific/Midway',
+ 'Pacific/Nauru',
+ 'Pacific/Niue',
+ 'Pacific/Norfolk',
+ 'Pacific/Noumea',
+ 'Pacific/Pago_Pago',
+ 'Pacific/Palau',
+ 'Pacific/Pitcairn',
+ 'Pacific/Ponape',
+ 'Pacific/Port_Moresby',
+ 'Pacific/Rarotonga',
+ 'Pacific/Saipan',
+ 'Pacific/Tahiti',
+ 'Pacific/Tarawa',
+ 'Pacific/Tongatapu',
+ 'Pacific/Truk',
+ 'Pacific/Wake',
+ 'Pacific/Wallis',
+ 'US/Alaska',
+ 'US/Arizona',
+ 'US/Central',
+ 'US/Eastern',
+ 'US/Hawaii',
+ 'US/Mountain',
+ 'US/Pacific',
+ 'UTC']
+
+common_timezones = _LazyList(
+    lambda: filter(resource_exists, common_timezones_unfiltered)
+)
+
+common_timezones_set = set(common_timezones_unfiltered) # XXX

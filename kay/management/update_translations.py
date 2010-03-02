@@ -22,23 +22,35 @@ from babel import Locale
 from babel.messages import Catalog
 from babel.messages.pofile import write_po, read_po
 
-from kay.management.utils import print_status
+from kay.management.utils import (
+  print_status, get_user_apps,
+)
 
 domains = ['messages', 'jsmessages']
 
 def do_update_translations(target=("t", ""), lang=("l", ""),
-                           statistics=("s", False)):
+                           statistics=("s", False), i18n_dir=("i", ""),
+                           all=("a", False)):
   """
   Update existing translations with updated pot files.
   """
-  if not target:
+  if not target and not all:
     print_status('Please specify target.')
     sys.exit(1)
   elif target == 'kay':
     print_status('Updating core strings')
     root = path.join(kay.KAY_DIR, 'i18n')
+  elif all:
+    targets = get_user_apps()
+    for target in targets:
+      do_update_translations(target=target, lang=lang, statistics=statistics,
+                             i18n_dir=None, all=False)
+    sys.exit(0)
   else:
-    root = path.join(target, 'i18n')
+    if i18n_dir:
+      root = i18n_dir
+    else:
+      root = path.join(target, 'i18n')
     if not path.isdir(root):
       print_status('source folder missing')
       sys.exit(1)
@@ -48,8 +60,8 @@ def do_update_translations(target=("t", ""), lang=("l", ""),
     if lang:
       filepath = path.join(root, lang, 'LC_MESSAGES', domain+'.po')
       if not path.exists(filepath):
-        print_status("unknown locale. %s not found." % filepath)
-        sys.exit(1)
+        print_status("%s not found, skipped." % filepath)
+        continue
     try:
       f = file(path.join(root, domain+'.pot'))
     except IOError:
@@ -68,7 +80,7 @@ def do_update_translations(target=("t", ""), lang=("l", ""),
                          path.join(root, lang, 'LC_MESSAGES', domain+'.po'):
         continue
       if path.exists(filename):
-        print_status('Updating %r' % lang_dir, nl=False)
+        print_status('Updating %s' % filename, nl=False)
         locale = Locale.parse(lang_dir)
         f = file(filename)
         try:

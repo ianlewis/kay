@@ -6,43 +6,144 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  kay-0.0.0\n"
 "Report-Msgid-Bugs-To: tmatsuo@candit.jp\n"
-"POT-Creation-Date: 2009-05-15 14:07+0900\n"
-"PO-Revision-Date: 2009-08-17 14:24+0900\n"
+"POT-Creation-Date: 2009-11-15 23:30+0900\n"
+"PO-Revision-Date: 2009-10-17 02:53+0900\n"
 "Last-Translator: TsungWei Hu <marr.tw AT gmail.com>\n"
 "Language-Team: Takashi Matsuo <tmatsuo@candit.jp>\n"
 "Plural-Forms: nplurals=1; plural=0\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 0.9.4\n"
+"Generated-By: Babel None\n"
 
-#: kay/auth/forms.py:14
+#: kay/app.py:344
+msgid "Appengine might be under maintenance."
+msgstr ""
+
+#: kay/auth/forms.py:16 kay/registration/forms.py:18
 msgid "user name"
 msgstr ""
 
-#: kay/auth/forms.py:17
+#: kay/auth/forms.py:18 kay/registration/forms.py:22
 msgid "password"
 msgstr ""
 
-#: kay/auth/views.py:32
+#: kay/auth/models.py:67 kay/registration/forms.py:31
+msgid "This user name is already taken. Please choose another user name."
+msgstr ""
+
+#: kay/auth/views.py:68
 msgid "Failed to login."
 msgstr ""
 
-#: kay/auth/templates/loginform.html:5
+#: kay/auth/templates/loginform.html:2
 msgid "Kay Login"
 msgstr ""
 
-#: kay/auth/templates/loginform.html:27
+#: kay/auth/templates/loginform.html:11
+msgid "Kay Login Form"
+msgstr ""
+
+#: kay/auth/templates/loginform.html:19
 msgid "Login"
 msgstr ""
 
-#: kay/i18n/__init__.py:328
+#: kay/i18n/__init__.py:304
 msgid "now"
 msgstr "現在"
 
 #: kay/management/app_template/views.py:26
 msgid "Hello"
 msgstr "你好嗎"
+
+#: kay/registration/forms.py:20
+#, fuzzy
+msgid "email address"
+msgstr "你必須輸入正確的電子郵件地址。"
+
+#: kay/registration/forms.py:24
+msgid "password(again)"
+msgstr ""
+
+#: kay/registration/forms.py:36
+msgid "The passwords don't match."
+msgstr ""
+
+#: kay/registration/templates/activate.html:2
+#: kay/registration/templates/activate.html:6
+msgid "Activation successful"
+msgstr ""
+
+#: kay/registration/templates/activate.html:2
+#: kay/registration/templates/activate.html:9
+msgid "Activation failed :("
+msgstr ""
+
+#: kay/registration/templates/activate.html:7
+#, python-format
+msgid "Congratulations, %(username)s. Your account has been created successfully."
+msgstr ""
+
+#: kay/registration/templates/activate.html:10
+msgid ""
+"Sorry, there were problems with the activation. Please make sure that the "
+"activation link was opened correctly in your Browser. "
+msgstr ""
+
+#: kay/registration/templates/activate.html:10
+#, python-format
+msgid ""
+"Please be also aware that activation links expire automatically in "
+"%(seconds)s second."
+msgid_plural ""
+"Please be also aware that activation links expire automatically in "
+"%(seconds)s seconds."
+msgstr[0] ""
+
+#: kay/registration/templates/activation_email.txt:1
+msgid ""
+"\n"
+"Hi!\n"
+"In order to activate your account please visit the following link:\n"
+msgstr ""
+
+#: kay/registration/templates/activation_email.txt:6
+#, python-format
+msgid ""
+"\n"
+"Thanks,\n"
+"Your %(appname)s team\n"
+msgstr ""
+
+#: kay/registration/templates/activation_email_subject.txt:1
+#, python-format
+msgid "Activation of your %(appname)s account"
+msgstr ""
+
+#: kay/registration/templates/registration_complete.html:2
+#: kay/registration/templates/registration_form.html:2
+msgid "Kay Registration"
+msgstr ""
+
+#: kay/registration/templates/registration_complete.html:4
+msgid "Registration complete"
+msgstr ""
+
+#: kay/registration/templates/registration_complete.html:5
+msgid "An e-mail has been sent to you. Please follow the instructions in the e-mail."
+msgstr ""
+
+#: kay/registration/templates/registration_form.html:5
+msgid "Register new user"
+msgstr ""
+
+#: kay/registration/templates/registration_form.html:12
+msgid "Kay Registration Form"
+msgstr ""
+
+#: kay/registration/templates/registration_form.html:20
+msgid "Register"
+msgstr ""
 
 #: kay/utils/validators.py:83
 msgid "You have to enter a valid e-mail address."
@@ -58,7 +159,7 @@ msgstr "slug 過長。"
 
 #: kay/utils/validators.py:124
 msgid "The slug must not start with a slash"
-msgstr "slug 開頭必須是斜線符號。"
+msgstr "slug 的開頭不可以是斜線符號。"
 
 #: kay/utils/validators.py:142 kay/utils/validators.py:145
 msgid "You have to enter a valid net address."
@@ -88,119 +189,119 @@ msgstr "URL prefix 結尾不可以是斜線符號。"
 msgid "The text must not be empty."
 msgstr "本文不可以是空白。"
 
-#: kay/utils/forms/__init__.py:689
+#: kay/utils/forms/__init__.py:700
 msgid "No choices."
 msgstr "沒有選擇。"
 
-#: kay/utils/forms/__init__.py:789
+#: kay/utils/forms/__init__.py:800
 msgid "Submit"
 msgstr "送出"
 
-#: kay/utils/forms/__init__.py:942
+#: kay/utils/forms/__init__.py:953
 msgid "This field is required."
 msgstr "本欄位必填。"
 
-#: kay/utils/forms/__init__.py:1113
+#: kay/utils/forms/__init__.py:1124
 msgid "Invalid security token submitted."
 msgstr "送出非法的安全記號。"
 
-#: kay/utils/forms/__init__.py:1168 kay/utils/forms/__init__.py:1616
+#: kay/utils/forms/__init__.py:1179 kay/utils/forms/__init__.py:1643
 #, python-format
 msgid "Please provide at least %d item."
 msgid_plural "Please provide at least %d items."
 msgstr[0] "請至少提供 %d 個必要項目。"
 
-#: kay/utils/forms/__init__.py:1175 kay/utils/forms/__init__.py:1623
+#: kay/utils/forms/__init__.py:1186 kay/utils/forms/__init__.py:1650
 #, python-format
 msgid "Please provide no more than %d item."
 msgid_plural "Please provide no more than %d items."
 msgstr[0] "請提供 %d 個以內的必要項目。"
 
-#: kay/utils/forms/__init__.py:1288
+#: kay/utils/forms/__init__.py:1299
 #, python-format
 msgid "Please enter at least %d character."
 msgid_plural "Please enter at least %d characters."
 msgstr[0] "請輸入至少 %d 個字以上的文字。"
 
-#: kay/utils/forms/__init__.py:1295
+#: kay/utils/forms/__init__.py:1306
 #, python-format
 msgid "Please enter no more than %d character."
 msgid_plural "Please enter no more than %d characters."
 msgstr[0] "請輸入 %d 個字以內的文字。"
 
-#: kay/utils/forms/__init__.py:1306
+#: kay/utils/forms/__init__.py:1317
 msgid "The value is invalid."
 msgstr ""
 
-#: kay/utils/forms/__init__.py:1328
+#: kay/utils/forms/__init__.py:1339
 #, fuzzy
 msgid "Enter a valid e-mail address."
 msgstr "你必須輸入正確的電子郵件地址。"
 
-#: kay/utils/forms/__init__.py:1348
+#: kay/utils/forms/__init__.py:1359
 msgid "Please enter a valid date."
 msgstr "請輸入正確的日期。"
 
-#: kay/utils/forms/__init__.py:1387
+#: kay/utils/forms/__init__.py:1413
 msgid "The selected entity does not exist, or is not allowed to select."
 msgstr "選擇項目並不存在，或不允許被選擇。"
 
-#: kay/utils/forms/__init__.py:1480
+#: kay/utils/forms/__init__.py:1507
 msgid "Invalid value."
 msgstr "不正確的屬性值。"
 
-#: kay/utils/forms/__init__.py:1481
+#: kay/utils/forms/__init__.py:1508
 msgid "Key does not exist."
 msgstr "鍵並不存在。"
 
-#: kay/utils/forms/__init__.py:1551
+#: kay/utils/forms/__init__.py:1578
 msgid "Please enter a valid choice."
 msgstr "請輸入正確的選擇。"
 
-#: kay/utils/forms/__init__.py:1610
+#: kay/utils/forms/__init__.py:1637
 #, python-format
 msgid "“%s” is not a valid choice"
 msgstr "“%s” 不是正確的選項。"
 
-#: kay/utils/forms/__init__.py:1656
+#: kay/utils/forms/__init__.py:1683
 msgid "Please enter a number."
 msgstr "請輸入一個數字。"
 
-#: kay/utils/forms/__init__.py:1682
+#: kay/utils/forms/__init__.py:1709
 #, python-format
 msgid "Ensure this value is greater than or equal to %s."
 msgstr "確保這個數值大於或等於 %s 。"
 
-#: kay/utils/forms/__init__.py:1688
+#: kay/utils/forms/__init__.py:1715
 #, python-format
 msgid "Ensure this value is less than or equal to %s."
 msgstr "確保這個數值小於或等於 %s 。"
 
-#: kay/utils/forms/__init__.py:1721
+#: kay/utils/forms/__init__.py:1748
 msgid "Please enter a whole number."
 msgstr "請輸入一個整數。"
 
-#: kay/utils/forms/__init__.py:1747
+#: kay/utils/forms/__init__.py:1774
 msgid "Please enter a float number."
 msgstr "請輸入一個浮點數。"
 
-#: kay/utils/forms/__init__.py:1767
+#: kay/utils/forms/__init__.py:1794
 msgid "Please select a file to upload."
 msgstr "請選擇要上傳的檔案。"
 
-#: kay/utils/forms/__init__.py:1772
+#: kay/utils/forms/__init__.py:1799
 msgid "File must not empty."
 msgstr "檔案不能是空的。"
 
-#: kay/utils/forms/__init__.py:1794
+#: kay/utils/forms/__init__.py:1821
 msgid "True"
 msgstr "真"
 
-#: kay/utils/forms/__init__.py:1795
+#: kay/utils/forms/__init__.py:1822
 msgid "False"
 msgstr "假"
 
-#: kay/utils/forms/__init__.py:1806
+#: kay/utils/forms/__init__.py:1833
 #, fuzzy
 msgid "Please select True or False."
 msgstr "請選擇要上傳的檔案。"

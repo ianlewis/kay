@@ -7,7 +7,9 @@ Values will be read from the module passed when initialization and
 then, kay.conf.global_settings; see the global settings file for a
 list of all possible variables.
 
-:Copyright: (c) 2009 Accense Technology, Inc. All rights reserved.
+:Copyright: (c) 2009 Accense Technology, Inc. 
+                     Takashi Matsuo <tmatsuo@candit.jp>,
+                     All rights reserved.
 :license: BSD, see LICENSE for more details.
 
 Taken from django.
@@ -23,9 +25,8 @@ from kay.misc.lazy import LazyObject
 
 class LazySettings(LazyObject):
   """
-  A lazy proxy for either global Django settings or a app local
-  settings object. Kay uses the settings module passed to __init__
-  medthod.
+  A lazy proxy for either global Kay settings or a app local settings
+  object. Kay uses the settings module passed to __init__ medthod.
   """
   def __init__(self, settings_module=None):
     super(LazySettings, self).__init__()
@@ -44,9 +45,7 @@ class LazySettings(LazyObject):
 
   def _setup(self):
     """
-    Load the settings module pointed to by the environment
-    variable. This is used the first time we need any settings at all,
-    if the user has not previously configured the settings manually.
+    Load the settings module passed to the constructor. 
     """
     try:
       if not self.settings_module: # If it's set but is an empty string.
@@ -54,7 +53,7 @@ class LazySettings(LazyObject):
     except KeyError:
       # NOTE: This is arguably an EnvironmentError, but that causes
       # problems with Python's interactive help.
-      raise ImportError("Settings cannot be imported, because environment variable %s is undefined." % ENVIRONMENT_VARIABLE)
+      raise ImportError("Settings cannot be imported")
 
     self._wrapped = Settings(self.settings_module)
     try:
@@ -72,7 +71,7 @@ class LazySettings(LazyObject):
 
 class Settings(object):
   def __init__(self, settings_module):
-    from kay.utils import importlib
+    from werkzeug.utils import import_string
     # update this dict from global settings (but only for ALL_CAPS settings)
     for setting in dir(global_settings):
       if setting == setting.upper():
@@ -82,7 +81,7 @@ class Settings(object):
     self.SETTINGS_MODULE = settings_module
 
     try:
-      mod = importlib.import_module(self.SETTINGS_MODULE)
+      mod = import_string(self.SETTINGS_MODULE)
     except ImportError, e:
       raise ImportError, ("Could not import settings '%s' (Is it on sys.path?"
                           " Does it have syntax errors?): %s"
@@ -105,7 +104,7 @@ class Settings(object):
     new_installed_apps = []
     for app in self.INSTALLED_APPS:
       if app.endswith('.*'):
-        app_mod = importlib.import_module(app[:-2])
+        app_mod = import_string(app[:-2])
         appdir = os.path.dirname(app_mod.__file__)
         app_subdirs = os.listdir(appdir)
         app_subdirs.sort()

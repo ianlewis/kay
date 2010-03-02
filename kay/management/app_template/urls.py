@@ -6,7 +6,6 @@ from werkzeug.routing import (
   Map, Rule, Submount,
   EndpointPrefix, RuleTemplate,
 )
-import %app_name%.views
 
 def make_rules():
   return [
@@ -16,5 +15,5 @@ def make_rules():
   ]
 
 all_views = {
-  '%app_name%/index': %app_name%.views.index,
+  '%app_name%/index': '%app_name%.views.index',
 }

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # %app_name%.views
 
+"""
 import logging
 
 from google.appengine.api import users
@@ -20,7 +21,12 @@ from kay.utils import (
 from kay.i18n import gettext as _
 from kay.auth.decorators import login_required
 
+"""
+
+from kay.utils import render_to_response
+
+
 # Create your views here.
 
 def index(request):
-  return render_to_response('%app_name%/index.html', {'message': _('Hello')})
+  return render_to_response('%app_name%/index.html', {'message': 'Hello'})

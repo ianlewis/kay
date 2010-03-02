@@ -44,7 +44,7 @@ A form is composed of Field objects. In this case, our form has four
 fields: ``subject``, ``message``, ``sender`` and
 ``cc_myself``. ``TextField``, ``EmailField`` and ``BooleanField`` are
 just three of the available field types; a full list can be found in
-:doc:`form-fields`.
+:doc:`forms_reference`.
 
 If your form is going to be used to directly add or edit an AppEngine
 Datastore model, you can use a ModelForm to avoid duplicating your
@@ -293,8 +293,9 @@ To put validation method on particular field, you can define a method
 named ``validate_FIELDNAME``. e.g. To check if a value submitted as
 ``password`` field is stronger enough, you can set
 ``validate_password`` method in the class definition of the Form. If
-validation fails, you need to raise ValidationError with appropriate
-error message.
+validation fails, you need to raise
+:class:`kay.utils.validators.ValidationError` with appropriate error
+message.
 
 Here's an example:
 
@@ -309,7 +310,7 @@ Here's an example:
 
     def validate_password(self, value):
       if not stronger_enough(value):
-	raise ValidationError(u"The password you specified is too week.")
+	raise ValidationError(u"The password you specified is too weak.")
 
 What if adding a field for password confirmation? To do that, you have
 to check the values among plural fields, creating the method named
@@ -327,10 +328,89 @@ to check the values among plural fields, creating the method named
 
     def validate_password(self, value):
       if not stronger_enough(value):
-	raise ValidationError(u"The password you specified is too week.")
+	raise ValidationError(u"The password you specified is too weak.")
 
     def context_validate(self, data):
       if data['password'] != data['password_confirm']:
 	raise ValidationError(u"The passwords don't match.")
 
 
+Using ModelForm
+---------------
+
+:class:`kay.utils.forms.modelform.ModelForm` is a very convenient
+class for creating a form automatically from particular model
+definition.
+
+Let's say you have a model like bellow:
+
+.. code-block:: python
+
+  class Comment(db.Model):
+    user = db.ReferenceProperty()
+    body = db.StringProperty(required=True)
+    created = db.DateTimeProperty(auto_now_add=True)
+
+You can create a form automatically from above definition like:
+
+.. code-block:: python
+
+  from kay.utils.forms.modelform import ModelForm
+  from myapp.models import Comment
+
+  class CommentForm(ModelForm):
+    class Meta:
+      model = Comment
+      exclude = ('user', 'created')
+
+You can configure your ModelForm's subclass by defining inner class
+named ``Meta``. ``Meta`` class can have these class attributes:
+
+.. class:: Meta
+
+   .. attribute:: model
+
+      Model class to refer to
+
+   .. attribute:: fields
+
+      A list of field names to be included in the form. If ``fields``
+      is set and non empty, properties not listed here are excluded
+      from the form, and following ``exclude`` attribute will be
+      ignored.
+
+   .. attribute:: exclude
+
+      A list of field names to be excluded from the form.
+
+   .. attribute:: help_texts
+
+      A dictionary which has field names as its key and help texts as
+      its values.
+
+Once created, you can use this form as follows:
+
+.. code-block:: python
+
+  from myapp.models import Comment
+  from myapp.forms import CommentForm
+
+  def index(request):
+    comments = Comment.all().order('-created').fetch(100)
+    form = CommentForm()
+    if request.method == 'POST':
+      if form.validate(request.form):
+        if request.user.is_authenticated():
+          user = request.user
+        else:
+          user = None
+        new_comment = form.save(user=user)
+        return redirect('/')
+    return render_to_response('myapp/index.html',
+                              {'comments': comments,
+                               'form': form.as_widget()})
+
+Above code shows how to asign values not specified in the forms on
+saving a new entity with this form. ModelForm.save method accepts
+keyword arguments and these arguments will be passed to the
+constructor of the new entity on creation.

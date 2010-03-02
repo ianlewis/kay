@@ -5,10 +5,11 @@
 
     This module implements a client to WSGI applications for testing.
 
-    :copyright: (c) 2009 by the Werkzeug Team, see AUTHORS for more details.
+    :copyright: (c) 2010 by the Werkzeug Team, see AUTHORS for more details.
     :license: BSD, see LICENSE for more details.
 """
 import sys
+import urllib
 import urlparse
 import mimetypes
 from time import time
@@ -21,7 +22,7 @@ from urllib2 import Request as U2Request
 
 from werkzeug._internal import _empty_stream
 from werkzeug.wrappers import BaseRequest
-from werkzeug.urls import url_encode
+from werkzeug.urls import url_encode, url_fix, iri_to_uri
 from werkzeug.wsgi import get_host, get_current_url
 from werkzeug.datastructures import FileMultiDict, MultiDict, \
      CombinedMultiDict, Headers, FileStorage
@@ -152,7 +153,7 @@ class _TestCookieJar(CookieJar):
         for cookie in self:
             cvals.append('%s=%s' % (cookie.name, cookie.value))
         if cvals:
-            environ['HTTP_COOKIE'] = ','.join(cvals)
+            environ['HTTP_COOKIE'] = ', '.join(cvals)
 
     def extract_wsgi(self, environ, headers):
         """Extract the server's set-cookie headers as cookies into the
@@ -174,8 +175,12 @@ def _iter_data(data):
             for value in values:
                 yield key, value
     else:
-        for item in data.iteritems():
-            yield item
+        for key, values in data.iteritems():
+            if isinstance(values, list):
+                for value in values:
+                    yield key, value
+            else:
+                yield key, values
 
 
 class EnvironBuilder(object):
@@ -198,12 +203,16 @@ class EnvironBuilder(object):
         the :attr:`content_length` is set and you have to provide a
         :attr:`content_type`.
     -   a `dict`: If it's a dict the keys have to be strings and the values
-        and of the following objects:
+        any of the following objects:
 
         -   a :class:`file`-like object.  These are converted into
             :class:`FileStorage` objects automatically.
         -   a tuple.  The :meth:`~FileMultiDict.add_file` method is called
             with the tuple items as positional arguments.
+
+    .. versionadded:: 0.6
+       `path` and `base_url` can now be unicode strings that are encoded using
+       the :func:`iri_to_uri` function.
 
     :param path: the path of the request.  In the WSGI environment this will
                  end up as `PATH_INFO`.  If the `query_string` is not defined
@@ -236,9 +245,6 @@ class EnvironBuilder(object):
     :param charset: the charset used to encode unicode data.
     """
 
-    # this class is public
-    __module__ = 'werkzeug'
-
     #: the server protocol to use.  defaults to HTTP/1.1
     server_protocol = 'HTTP/1.1'
 
@@ -256,7 +262,14 @@ class EnvironBuilder(object):
         if query_string is None and '?' in path:
             path, query_string = path.split('?', 1)
         self.charset = charset
+        if isinstance(path, unicode):
+            path = iri_to_uri(path, charset)
         self.path = path
+        if base_url is not None:
+            if isinstance(base_url, unicode):
+                base_url = iri_to_uri(base_url, charset)
+            else:
+                base_url = url_fix(base_url, charset)
         self.base_url = base_url
         if isinstance(query_string, basestring):
             self.query_string = query_string
@@ -298,7 +311,7 @@ class EnvironBuilder(object):
                        hasattr(value, 'read'):
                         self._add_file_from_data(key, value)
                     else:
-                        self.form[key] = value
+                        self.form.setlistdefault(key).append(value)
 
     def _add_file_from_data(self, key, value):
         """Called in the EnvironBuilder to add files from the data dict."""
@@ -308,7 +321,7 @@ class EnvironBuilder(object):
             from warnings import warn
             warn(DeprecationWarning('it\'s no longer possible to pass dicts '
                                     'as `data`.  Use tuples or FileStorage '
-                                    'objects intead'), stacklevel=2)
+                                    'objects instead'), stacklevel=2)
             args = v
             value = dict(value)
             mimetype = value.pop('mimetype', None)
@@ -510,15 +523,15 @@ class EnvironBuilder(object):
         if self.environ_base:
             result.update(self.environ_base)
 
-        def _encode(x):
+        def _path_encode(x):
             if isinstance(x, unicode):
-                return x.encode(self.charset)
-            return x
+                x = x.encode(self.charset)
+            return urllib.unquote(x)
 
         result.update({
             'REQUEST_METHOD':       self.method,
-            'SCRIPT_NAME':          _encode(self.script_root),
-            'PATH_INFO':            _encode(self.path),
+            'SCRIPT_NAME':          _path_encode(self.script_root),
+            'PATH_INFO':            _path_encode(self.path),
             'QUERY_STRING':         self.query_string,
             'SERVER_NAME':          self.server_name,
             'SERVER_PORT':          str(self.server_port),
@@ -581,9 +594,6 @@ class Client(object):
        builtin cookie support.
     """
 
-    # this class is public
-    __module__ = 'werkzeug'
-
     def __init__(self, application, response_wrapper=None, use_cookies=True):
         self.application = application
         if response_wrapper is None:
@@ -614,7 +624,7 @@ class Client(object):
         Additional parameters:
 
         :param as_tuple: Returns a tuple in the form ``(environ, result)``
-        :param buffered: Set this to true to buffer the application run.
+        :param buffered: Set this to True to buffer the application run.
                          This will automatically close the application for
                          you as well.
         :param follow_redirects: Set this to True if the `Client` should
@@ -768,7 +778,7 @@ def run_wsgi_app(app, environ, buffered=False):
 
     app_iter = app(environ, start_response)
 
-    # when buffering we emit the close call early and conver the
+    # when buffering we emit the close call early and convert the
     # application iterator into a regular list
     if buffered:
         close_func = getattr(app_iter, 'close', None)
@@ -786,9 +796,12 @@ def run_wsgi_app(app, environ, buffered=False):
         while not response:
             buffer.append(app_iter.next())
         if buffer:
-            app_iter = chain(buffer, app_iter)
             close_func = getattr(app_iter, 'close', None)
+            app_iter = chain(buffer, app_iter)
             if close_func is not None:
                 app_iter = ClosingIterator(app_iter, close_func)
 
     return app_iter, response[0], response[1]
+
+
+from werkzeug.wsgi import ClosingIterator

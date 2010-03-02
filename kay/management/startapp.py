@@ -40,7 +40,7 @@ def startproject(proj_name=''):
     sys.stderr.write("Failed to mkdir: %s\n" % e)
     sys.exit(1)
   link_paths = ['kay', 'manage.py']
-  copy_paths = ['settings.py', 'urls.py']
+  copy_paths = ['settings.py', 'urls.py', 'favicon.ico']
   for path in link_paths:
     src = os.path.join(kay.PROJECT_DIR, path)
     dest = os.path.join(top_dir, path)

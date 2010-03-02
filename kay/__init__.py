@@ -13,12 +13,14 @@ Kay framework.
 import os
 import sys
 
-__version__ = "0.2.0"
+import settings
+
+__version__ = "0.7.0"
 
 KAY_DIR = os.path.abspath(os.path.dirname(__file__))
-PROJECT_DIR = os.path.dirname(KAY_DIR)
 LIB_DIR = os.path.join(KAY_DIR, 'lib')
-
+PROJECT_DIR = os.path.abspath(os.path.dirname(settings.__file__))
+PROJECT_LIB_DIR = os.path.join(PROJECT_DIR, 'lib')
 
 def setup_env(manage_py_env=False):
   """Configures app engine environment for command-line apps."""
@@ -64,6 +66,9 @@ def setup_env(manage_py_env=False):
           EXTRA_PATHS.append(os.path.dirname(path))
           break
     sys.path = EXTRA_PATHS + sys.path
+    # corresponds with another google package
+    if sys.modules.has_key('google'):
+      del sys.modules['google']
     from google.appengine.api import apiproxy_stub_map
   setup()
 
@@ -130,3 +135,5 @@ def setup_syspath():
     sys.path = [PROJECT_DIR] + sys.path
   if not LIB_DIR in sys.path:
     sys.path = [LIB_DIR] + sys.path
+  if not PROJECT_LIB_DIR in sys.path:
+    sys.path = [PROJECT_LIB_DIR] + sys.path

@@ -38,7 +38,7 @@ Kay にはフォームを扱うためのユーティリティが付属してい�
     cc_myself = forms.BooleanField(required=False)
 
 フォームはフィールドオブジェクトで構成されます。この場合は、フォームには四つのフィールドがあります: ``subject`` ``message`` ``sender`` そして ``cc_myself`` です。
-``TextField`` ``EmailField`` ``BooleanField`` は使用可能なフィールドのほんの一部です; 完全なリストは :doc:`form-fields` を参照ください。
+``TextField`` ``EmailField`` ``BooleanField`` は使用可能なフィールドのほんの一部です; 完全なリストは :doc:`forms_reference` を参照ください。
 
 もしフォームが AppEngine のデータストア上でモデルをそのまま追加したり更新したりする目的なら ``ModelForm`` を使用する事でモデル定義を繰り返す事なくフォームを定義できます。
 
@@ -248,7 +248,7 @@ Widget は callable で、call するとレンダーされた HTML form が得�
 フォームヴァリデーションのカスタマイズ
 --------------------------------------
 
-特定のフィールドにヴァリデーション用のメソッドを設定するには、``validate_FIELDNAME`` という形式のメソッドを定義します。例えば ``password`` フィールドのデータが十分安全かどうかを確かめるためには ``validate_password`` メソッドをフォームクラスへ定義します。もしヴァリデーションが失敗したら、適切なエラーメッセージと共に ``ValidationError`` を発生させる必要があります。
+特定のフィールドにヴァリデーション用のメソッドを設定するには、``validate_FIELDNAME`` という形式のメソッドを定義します。例えば ``password`` フィールドのデータが十分安全かどうかを確かめるためには ``validate_password`` メソッドをフォームクラスへ定義します。もしヴァリデーションが失敗したら、適切なエラーメッセージと共に :class:`kay.utils.validators.ValidationError` を発生させる必要があります。
 
 下記に例を示します:
 
@@ -263,7 +263,7 @@ Widget は callable で、call するとレンダーされた HTML form が得�
 
     def validate_password(self, value):
       if not stronger_enough(value):
-	raise ValidationError(u"The password you specified is too week.")
+	raise ValidationError(u"The password you specified is too weak.")
 
 パスワードを確認のため再入力させる場合にはどうしたら良いでしょうか。そのためには ``context_validate`` というメソッドを定義して、複数のフィールドに跨がるデータをチェックする必要があります。例:
 
@@ -279,9 +279,79 @@ Widget は callable で、call するとレンダーされた HTML form が得�
 
     def validate_password(self, value):
       if not stronger_enough(value):
-	raise ValidationError(u"The password you specified is too week.")
+	raise ValidationError(u"The password you specified is too weak.")
 
     def context_validate(self, data):
       if data['password'] != data['password_confirm']:
 	raise ValidationError(u"The passwords don't match.")
 
+
+モデルフォームを使う
+--------------------
+
+:class:`kay.utils.forms.modelform.ModelForm` は、特定のモデル定義からフォームを自動生成するのにとても便利なクラスです。
+
+以下のようなモデルがあるとしましょう。
+
+.. code-block:: python
+
+  class Comment(db.Model):
+    user = db.ReferenceProperty()
+    body = db.StringProperty(required=True)
+    created = db.DateTimeProperty(auto_now_add=True)
+
+上記の定義から、フォームを自動生成することができます。
+
+.. code-block:: python
+
+  from kay.utils.forms.modelform import ModelForm
+  from myapp.models import Comment
+
+  class CommentForm(ModelForm):
+    class Meta:
+      model = Comment
+      exclude = ('user', 'created')
+
+``Meta`` という名前でインナークラスを定義すれば、モデルフォームのサブクラスを設定することもできます。 ``Meta`` クラスは以下のクラス属性をもつことができます。
+
+.. class:: Meta
+
+   .. attribute:: model
+
+      参照するモデルクラス
+
+   .. attribute:: fields
+
+   	  フォームに含めるするフィールド名のリスト。 ``fields`` がセットされ、空でなければ、ここに挙げられていないプロパティはフォームから取り除かれ、次の ``exclude`` 属性が無視されます。
+
+   .. attribute:: exclude
+
+      フォームから取り除くフィールド名のリスト
+
+   .. attribute:: help_texts
+
+   	  キーにフィールド名、値にヘルプテキストをもったディクショナリ
+
+作成すると、以下のようにしてフォームを使うことができます。
+
+.. code-block:: python
+
+  from myapp.models import Comment
+  from myapp.forms import CommentForm
+
+  def index(request):
+    comments = Comment.all().order('-created').fetch(100)
+    form = CommentForm()
+    if request.method == 'POST':
+      if form.validate(request.form):
+        if request.user.is_authenticated():
+          user = request.user
+        else:
+          user = None
+        new_comment = form.save(user=user)
+        return redirect('/')
+    return render_to_response('myapp/index.html',
+                              {'comments': comments,
+                               'form': form.as_widget()})
+
+上記のコードは、このフォームを使って新しいエンティティを保存する際に、フォームで指定されていない値をどうやってエンティティに与えるかを示しています。 ``ModelForm.save`` メソッドは、キーワード引数を受け取り、新しいエンティティのコンストラクタにこれらの引数を渡します。

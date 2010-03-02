@@ -8,6 +8,13 @@ Kay test settings.
 """
 
 DEBUG = False
+ROOT_URL_MODULE = 'kay.tests.globalurls'
+
+MIDDLEWARE_CLASSES = (
+  'kay.sessions.middleware.SessionMiddleware',
+  'kay.auth.middleware.AuthenticationMiddleware',
+  'kay.cache.middleware.CacheMiddleware',
+)
 
 INSTALLED_APPS = (
   'kay.tests',

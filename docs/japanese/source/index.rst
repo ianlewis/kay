@@ -5,23 +5,37 @@
 Kay ドキュメントへようこそ
 ==========================
 
+このドキュメントは開発版です。古いバージョンのドキュメントは下記をクリッ
+クしてください。
+
+  - http://kay-docs-jp.shehas.net/0.3.0/
+  - http://kay-docs-jp.shehas.net/0.2.0/
+
 目次:
 
 .. toctree::
-   :maxdepth: 1
+  :numbered:
+  :maxdepth: 1
 
-   tutorial
-
-.. toctree::   
-   :maxdepth: 2
-
-   manage_py
-   urlmapping
-   auth
-   session
-   forms-usage
-   i18n
-
+  tutorial
+  debugging
+  settings
+  manage_py
+  urlmapping
+  views
+  templates
+  utils
+  auth
+  session
+  forms-usage
+  i18n
+  dump_restore
+  request_response
+  middleware
+  builtin-middleware
+  test
+  forms_reference
+   
 Indices and tables
 ==================
 

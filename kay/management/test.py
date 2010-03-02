@@ -28,10 +28,14 @@ import unittest
 
 APP_ID = u'test'
 os.environ['APPLICATION_ID'] = APP_ID
+os.environ['USER_EMAIL'] = ''
+os.environ['SERVER_NAME'] = 'localhost'
+os.environ['SERVER_PORT'] = '80'
 
 import kay
 kay.setup()
 
+from werkzeug.utils import import_string
 from google.appengine.ext import db
 from google.appengine.api import apiproxy_stub_map
 from google.appengine.api import datastore_file_stub
@@ -41,7 +45,6 @@ from google.appengine.api.memcache import memcache_stub
 from google.appengine.api import user_service_stub
 
 from kay.conf import settings
-from kay.utils.importlib import import_module
 
 def setup_stub():
   apiproxy_stub_map.apiproxy = apiproxy_stub_map.APIProxyStubMap()
@@ -59,15 +62,18 @@ def setup_stub():
 def runtest(target='', verbosity=0):
   suite = unittest.TestSuite()
   if target:
-    tests_mod = import_module("%s.tests" % target)
+    tests_mod = import_string("%s.tests" % target)
     suite.addTest(unittest.defaultTestLoader.loadTestsFromModule(
         tests_mod))
   else:
     for app_name in settings.INSTALLED_APPS:
+      if app_name.startswith('kay.'):
+        continue
       try:
-        tests_mod = import_module("%s.tests" % app_name)
-      except ImportError:
-        logging.debug("Loading module %s.tests failed." % app_name)
+        tests_mod = import_string("%s.tests" % app_name)
+      except (ImportError, AttributeError), e:
+        logging.error("Loading module %s.tests failed: '%s'." % 
+                      (app_name, e))
       else:
         suite.addTest(unittest.defaultTestLoader.loadTestsFromModule(
             tests_mod))

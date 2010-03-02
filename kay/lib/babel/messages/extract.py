@@ -22,14 +22,10 @@ The main entry points into the extraction functionality are the functions
 """
 
 import os
-try:
-    set
-except NameError:
-    from sets import Set as set
 import sys
 from tokenize import generate_tokens, COMMENT, NAME, OP, STRING
 
-from babel.util import parse_encoding, pathmatch, relpath
+from babel.util import parse_encoding, pathmatch, relpath, set
 from textwrap import dedent
 
 __all__ = ['extract', 'extract_from_dir', 'extract_from_file']
@@ -257,8 +253,10 @@ def extract(method, fileobj, keywords=DEFAULT_KEYWORDS, comment_tags=(),
         # Not to use pkg_resources
         # pkg_resources is not available, so we resort to looking up the
         # builtin extractors directly
-        builtin = {'ignore': extract_nothing, 'python': extract_python}
+        builtin = {'ignore': extract_nothing, 'python': extract_python,
+                   'javascript': extract_javascript,}
         func = builtin.get(method)
+
     if func is None:
         raise ValueError('Unknown extraction method %r' % method)
 
@@ -496,7 +494,7 @@ def extract_javascript(fileobj, keywords, comment_tags, options):
                 else:
                     messages = None
 
-                # Comments don't apply unless they immediately preceed the
+                # Comments don't apply unless they immediately precede the
                 # message
                 if translator_comments and \
                    translator_comments[-1][0] < message_lineno - 1:

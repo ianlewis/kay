@@ -2,33 +2,33 @@
 TODO
 ====
 
+Documentation
+-------------
+
+* Write documentations about
+
+ * How to contribute to Kay
+ * Template strategy
+ * registration app
+
 kay
-----
+---
 
-* Write documentations about modules, middlewares, jinja2 howtos,
-  etc..
+* Capability for compressing css and js media with i18n.
 
-* A tool for dump and restore datastore
+* It could be better than now to allow installing Kay to somewhere on
+  the system paths.
 
+* A script for buildout.
 
-kay.utils.forms
-----------------
+* A capability for veryfying OpenSocial Signed Request.
 
-* Make widgets can have media(javascript, css)
-
- * AjaxModelField
-
- * Implement a widget with JQuery's DatetimePicker
-
+* A urlfetch stub for testing purpose.
 
 kay.auth
 --------
 
-* A command for creating a user entity.
-
-* 'Registration' application needed.
-
-
+* Incorporate Ian's ChoiceBackend.
 
 
 kay.utils.forms
@@ -36,10 +36,4 @@ kay.utils.forms
 
 * Form.freeze() method could be useful in some cases.
 
-
-Local GUI datastore administration tool
----------------------------------------
-
-* An implementation using wxpython is the first option. Using
-  pyqt/Adobe air/tkinter would be also fine.
 

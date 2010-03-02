@@ -1,0 +1,52 @@
+from __future__ import division
+from jinja2.runtime import LoopContext, TemplateReference, Macro, Markup, TemplateRuntimeError, missing, concat, escape, markup_join, unicode_join, to_string, TemplateNotFound
+name = '/activate.html'
+
+def root(context, environment=environment):
+    parent_template = None
+    block_context = context._block()
+    if 0: yield None
+    parent_template = environment.get_template('base.html', '/activate.html')
+    for name, parent_block in parent_template.blocks.iteritems():
+        context.blocks.setdefault(name, []).append(parent_block)
+    for event in parent_template.root_render_func(context):
+        yield event
+
+def block_content(context, environment=environment):
+    l_account = context.resolve('account')
+    l_expiration_duration = context.resolve('expiration_duration')
+    l_gettext = context.resolve('gettext')
+    l_ngettext = context.resolve('ngettext')
+    l__ = context.resolve('_')
+    if 0: yield None
+    yield u'\n'
+    if l_account:
+        if 0: yield None
+        yield u'\n  <h1>%s</h1>\n  <p>' % (
+            escape(context.call(l__, 'Activation successful')), 
+        )
+        yield escape((Markup(context.call(l_gettext, u'Congratulations, %(username)s. Your account has been created successfully.')) % {'username': environment.getattr(l_account, 'user_name')}))
+        yield u'</p>\n'
+    else:
+        if 0: yield None
+        yield u'\n  <h1>%s</h1>\n  <p>' % (
+            escape(context.call(l__, 'Activation failed :(')), 
+        )
+        yield escape(Markup(context.call(l_gettext, u'Sorry, there were problems with the activation. Please make sure that the activation link was opened correctly in your Browser. ')))
+        yield escape((Markup(context.call(l_ngettext, u'Please be also aware that activation links expire automatically in %(seconds)s second.', u'Please be also aware that activation links expire automatically in %(seconds)s seconds.', l_expiration_duration)) % {'seconds': l_expiration_duration}))
+        yield u'</p>\n'
+    yield u'\n'
+
+def block_title(context, environment=environment):
+    l_account = context.resolve('account')
+    l__ = context.resolve('_')
+    if 0: yield None
+    if l_account:
+        if 0: yield None
+        yield escape(context.call(l__, 'Activation successful'))
+    else:
+        if 0: yield None
+        yield escape(context.call(l__, 'Activation failed :('))
+
+blocks = {'content': block_content, 'title': block_title}
+debug_info = '1=9&4=15&5=23&6=26&7=28&8=32&9=33&10=35&11=38&2=40'

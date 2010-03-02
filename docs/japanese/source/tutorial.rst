@@ -2,6 +2,8 @@
 Kay チュートリアル
 ==================
 
+まずは簡単な掲示板を作るチュートリアルをご紹介します。
+
 準備
 ----
 
@@ -28,6 +30,13 @@ macports の python25 を使うばあいは、他に下記もインストール�
 .. code-block:: bash
 
   $ hg clone https://kay-framework.googlecode.com/hg/ kay
+
+もしリリースバージョンを使う場合は http://code.google.com/p/kay-framework/downloads/list から最新版をダウンロードして下記のように解凍します。
+
+.. code-block:: bash
+
+   $ tar zxvf kay-VERSION.tar.gz
+
 
 もし zip 版の appengine SDK をインストールした場合は、下記のようにシンボリックリンクを作ってください。
 
@@ -77,8 +86,10 @@ macports の python25 を使うばあいは、他に下記もインストール�
    1 directory, 5 files
 
 アプリケーションが出来たら ``settings.py`` を編集して、プロジェクトに登録します。
-``settings.py`` の ``INSTALLED_APPS`` に ``myapp`` を登録します。必要なら ``APP_MOUNT_POINTS`` も登録します。下記の例では、アプリケーションをルート URL にマウントする例です。
+まずは ``settings.py`` の ``INSTALLED_APPS`` に ``myapp`` を追加します。必要なら ``APP_MOUNT_POINTS`` も設定してください。下記の例では、アプリケーションをルート URL にマウントする例です。
 ``APP_MOUNT_POINTS`` を設定しない場合は ``/myapp`` というようにアプリケーション名 URL にマウントされます。
+なお、ここでは ``kay.auth`` というアプリケーションも一緒に登録しています。
+
 
 settings.py
 
@@ -89,6 +100,7 @@ settings.py
   #..
 
   INSTALLED_APPS = (
+    'kay.auth',
     'myapp',
   )
 
@@ -97,7 +109,7 @@ settings.py
   }
 
 
-見れば分かると思いますが ``INSTALLED_APPS`` はタプルで ``APP_MOUNT_POINTS`` は dict になっています。
+ご覧になれば分かると思いますが ``INSTALLED_APPS`` はタプルで ``APP_MOUNT_POINTS`` は dict になっています。
 
 アプリケーションを動かす
 ------------------------
@@ -164,7 +176,7 @@ myapp/views.py
     return render_to_response('myapp/index.html', {'message': _('Hello')})
 
 デフォルトのビューがひとつ定義されています。
-``render_to_response`` 関数は第一引数にテンプレート名を受け取ります。第二引数にはテンプレートに渡す辞書を渡せます。
+:func:`kay.utils.render_to_response()` 関数は第一引数にテンプレート名を受け取ります。第二引数にはテンプレートに渡す辞書を渡せます。
 ``_()`` という関数は国際化のために文字列をマークし、表示の時には実際に国際化するための関数です。
 
 ``myapp/index.html`` が実際に指すテンプレートは、myapp/templates/index.html にあります(/templates/ が間に挟まっている事に注意してください)。
@@ -185,7 +197,7 @@ myapp/templates/index.html
   </body>
   </html>
 
-``{{ message }}`` の部分に ``render_to_response`` の第二引数で渡した ``message`` が表示される事になります。
+``{{ message }}`` の部分に :func:`kay.utils.render_to_response()` の第二引数で渡した ``message`` が表示される事になります。
 
 
 url mapping
@@ -227,11 +239,16 @@ myapp/urls.py
 
 ``'/'`` -> ``'myapp/index'`` -> ``myapp.views.index``
 
-
 ユーザー認証
 ------------
 
-ユーザー認証を使用する方法はいくつかありますが、ここでは Google Account での認証を使ってみましょう。デフォルトの ``settings.py`` では Google Account の認証を使用するようになっていますので、特に設定項目はありません。
+ユーザー認証を使用する方法はいくつかありますが、ここでは Google Account での認証を使ってみましょう。デフォルトの ``settings.py`` では Google Account の認証を使用するようになっていますが、認証用のミドルウェアを有効にする必要があります。
+
+.. code-block:: python
+
+  MIDDLEWARE_CLASSES = (
+    'kay.auth.middleware.AuthenticationMiddleware',
+  )
 
 ``myapp/templates/index.html`` を編集して、下記のようにすると、ユーザー認証を使用する事ができます。
 
@@ -257,7 +274,7 @@ myapp/urls.py
   </html>
 
 
-上記のコードでは、ユーザーがログインしていない場合は、ログインフォームへのリンクを表示し、ログイン済みの場合は、user のメールアドレスと、ログアウトリンクを表示します。
+上記のコードでは、ユーザーがログインしていない場合は、ログインフォームへのリンクを表示し、ログイン済みの場合は user のメールアドレスと、ログアウトリンクを表示します。
 
 開発環境と GAE の両方で試してみましょう。
 
@@ -320,7 +337,7 @@ myapp/models.py
   Do you really want to exit ([y]/n)? y
 
 ^D は Ctrl + D です。
-``put()`` を忘れると保存出来ませんので注意してください。データが保存されているかどうか、開発サーバーを起動した状態で http://localhost:8080/_ah/admin/ にアクセスして確認してみましょう。
+``put()`` を忘れると保存出来ませんので注意してください。shell ツールで登録したデータは開発サーバーを再起動しないと反映されませんので開発サーバーを再起動します。再起動後、データが保存されているかどうか http://localhost:8080/_ah/admin/ にアクセスして確認してみましょう。
 
 データを表示する
 ----------------
@@ -346,7 +363,7 @@ myapp/views.py
 			       'comments': comments})
 
 先程定義したモデルクラスを import するのを忘れないようにしましょう。
-``Comment.all().order('-created').fetch(100)`` では、データストアから最新 100 件のコメントを取得しています。そのリストを ``render_to_response`` に渡しています。
+``Comment.all().order('-created').fetch(100)`` で、データストアから最新 100 件のコメントを取得し、そのリストを ``render_to_response`` に渡しています。 :func:`kay.utils.render_to_response()` も参照してください。
 
 myapp/templates/index.html
 
@@ -371,19 +388,19 @@ myapp/templates/index.html
   <div>
   {% for comment in comments %}
   <hr/>
-  {{ comment.body }}
+  {{ comment.body }}&nbsp;by&nbsp;<i>{{ comment.user }}</i>
   {% endfor %}
   </div>
   </body>
   </html>
 
 ``message`` を表示している下に、新しく div を追加しています。
-``{% for ... %}`` と ``{% endfor %}`` はループです。ここでは ``comment.body`` を表示するだけです。
+``{% for ... %}`` と ``{% endfor %}`` はループです。ここでは ``comment.body`` と投稿者を表示するだけです。
 
 コメント投稿フォーム
 --------------------
 
-コメントを投稿できるようにしましょう。html のフォームのために ``forms.py`` というファイルを新規に作成します。
+コメントを投稿できるようにしましょう。html のフォームのために ``myapp`` ディレクトリ内に ``forms.py`` というファイルを新規に作成します。
 
 myapp/forms.py
 
@@ -429,12 +446,15 @@ myapp/views.py
 			       'form': form.as_widget()})
 
 
+POST 値にアクセスするには ``request.form`` を使用します。GET のパラメーターは ``request.args`` で取得できます。またアップロードされたファイルにアクセスするには ``request.files`` を使用します。
+
 myapp/templates/index.html
 
 .. code-block:: html
 
   <div>
-  {{ form.render()|safe }}
+  {{ form()|safe }}
   </div>
 
-ここまでで、コメントを投稿できるようになります。
+ここまでで、コメントを投稿できるようになります。コメントの脇には誰が投稿したかも表示されますね。
+

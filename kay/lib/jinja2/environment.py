@@ -191,7 +191,7 @@ class Environment(object):
     sandboxed = False
 
     #: True if the environment is just an overlay
-    overlay = False
+    overlayed = False
 
     #: the environment this environment is linked to if it is an overlay
     linked_to = None
@@ -303,7 +303,7 @@ class Environment(object):
 
         rv = object.__new__(self.__class__)
         rv.__dict__.update(self.__dict__)
-        rv.overlay = True
+        rv.overlayed = True
         rv.linked_to = self
 
         for key, value in args.iteritems():
@@ -365,12 +365,17 @@ class Environment(object):
         If you are :ref:`developing Jinja2 extensions <writing-extensions>`
         this gives you a good overview of the node tree generated.
         """
+        try:
+            return self._parse(source, name, filename)
+        except TemplateSyntaxError:
+            exc_info = sys.exc_info()
+        self.handle_exception(exc_info, source_hint=source)
+
+    def _parse(self, source, name, filename):
+        """Internal parsing function used by `parse` and `compile`."""
         if isinstance(filename, unicode):
             filename = filename.encode('utf-8')
-        try:
-            return Parser(self, source, name, filename).parse()
-        except TemplateSyntaxError:
-            self.handle_exception(sys.exc_info(), source_hint=source)
+        return Parser(self, source, name, filename).parse()
 
     def lex(self, source, name=None, filename=None):
         """Lex the given sourcecode and return a generator that yields
@@ -386,7 +391,8 @@ class Environment(object):
         try:
             return self.lexer.tokeniter(source, name, filename)
         except TemplateSyntaxError:
-            self.handle_exception(sys.exc_info(), source_hint=source)
+            exc_info = sys.exc_info()
+        self.handle_exception(exc_info, source_hint=source)
 
     def preprocess(self, source, name=None, filename=None):
         """Preprocesses the source with all extensions.  This is automatically
@@ -422,18 +428,24 @@ class Environment(object):
         code equivalent to the bytecode returned otherwise.  This method is
         mainly used internally.
         """
-        if isinstance(source, basestring):
-            source = self.parse(source, name, filename)
-        if self.optimized:
-            source = optimize(source, self)
-        source = generate(source, self, name, filename)
-        if raw:
-            return source
-        if filename is None:
-            filename = '<template>'
-        elif isinstance(filename, unicode):
-            filename = filename.encode('utf-8')
-        return compile(source, filename, 'exec')
+        source_hint = None
+        try:
+            if isinstance(source, basestring):
+                source_hint = source
+                source = self._parse(source, name, filename)
+            if self.optimized:
+                source = optimize(source, self)
+            source = generate(source, self, name, filename)
+            if raw:
+                return source
+            if filename is None:
+                filename = '<template>'
+            elif isinstance(filename, unicode):
+                filename = filename.encode('utf-8')
+            return compile(source, filename, 'exec')
+        except TemplateSyntaxError:
+            exc_info = sys.exc_info()
+        self.handle_exception(exc_info, source_hint=source)
 
     def compile_expression(self, source, undefined_to_none=True):
         """A handy helper method that returns a callable that accepts keyword
@@ -464,6 +476,7 @@ class Environment(object):
         **new in Jinja 2.1**
         """
         parser = Parser(self, source, state='variable')
+        exc_info = None
         try:
             expr = parser.parse_expression()
             if not parser.stream.eos:
@@ -471,7 +484,9 @@ class Environment(object):
                                           parser.stream.current.lineno,
                                           None, None)
         except TemplateSyntaxError:
-            self.handle_exception(sys.exc_info(), source_hint=source)
+            exc_info = sys.exc_info()
+        if exc_info is not None:
+            self.handle_exception(exc_info, source_hint=source)
         body = [nodes.Assign(nodes.Name('result', 'store'), expr, lineno=1)]
         template = self.from_string(nodes.Template(body, lineno=1))
         return TemplateExpression(template, undefined_to_none)
@@ -650,7 +665,8 @@ class Template(object):
         try:
             return concat(self.root_render_func(self.new_context(vars)))
         except:
-            return self.environment.handle_exception(sys.exc_info(), True)
+            exc_info = sys.exc_info()
+        return self.environment.handle_exception(exc_info, True)
 
     def stream(self, *args, **kwargs):
         """Works exactly like :meth:`generate` but returns a
@@ -671,7 +687,10 @@ class Template(object):
             for event in self.root_render_func(self.new_context(vars)):
                 yield event
         except:
-            yield self.environment.handle_exception(sys.exc_info(), True)
+            exc_info = sys.exc_info()
+        else:
+            return
+        yield self.environment.handle_exception(exc_info, True)
 
     def new_context(self, vars=None, shared=False, locals=None):
         """Create a new :class:`Context` for this template.  The vars
