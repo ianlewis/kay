@@ -33,15 +33,15 @@ COMPILE_MEDIA_COMMON = {
   'static_dir': (
     ('media/images', 'images'),
     ('media/css/images', 'css/images'),
-    )
-  }
+  )
+}
 
 COMPILE_MEDIA_CSS_COMMON = {
   'enabled': True,
   'tool': 'csstidy',
   'csstidy': {
     'arguments': '--template=low --preserve_css=true'
-    }
+  }
 }
 
 COMPILE_MEDIA_JS_COMMON = {
@@ -50,23 +50,22 @@ COMPILE_MEDIA_JS_COMMON = {
     'search_paths': (
       "/usr/local/share/google/closure-library",
       "media/js",
-      ),
+    ),
     'externs': (
       "media/js/jquery-1.3.2.min.js",
       "media/js/jquery-ui-1.7.2.custom.min.js",
-      ),
+    ),
     'use_dependency_file': False,
-    },
+  },
   'goog_calcdeps': {
     'path': "/usr/local/share/google/closure-library/closure/bin/calcdeps.py",
-    #'method': 'concat_refs',
     'method': 'concat',
-    },
+  },
   'goog_compiler': {
     'level': 'simple',
     'path': "/usr/local/share/google/closure-library/closure/bin/compiler.jar",
-    }
   }
+}
 
 COMPILE_MEDIA_JS = {
   'toppage.js': {
@@ -74,19 +73,19 @@ COMPILE_MEDIA_JS = {
     'source_files': (
       'media/js/base.js',
       'media/js/toppage.js',
-      ),
-    },
+    ),
+  },
   'subpages.js': {
     'goog_calcdeps': {
       'method': 'concat_refs',
-      },
+    },
     'output_filename': 'subpages.js',
     'source_files': (
       'media/js/base.js',
       'media/js/subpage.js',
-      ),
-    },
-  }
+    ),
+  },
+}
 
 COMPILE_MEDIA_CSS = {
   'toppage.css': {
@@ -97,8 +96,8 @@ COMPILE_MEDIA_CSS = {
       'media/css/fonts.css',
       'media/css/base_layout.css',
       'media/css/toppage.css',
-      ),
-    },
+    ),
+  },
   'subpages.css': {
     'output_filename': 'subpages.css',
     'source_files': (
@@ -107,7 +106,7 @@ COMPILE_MEDIA_CSS = {
       'media/css/fonts.css',
       'media/css/base_layout.css',
       'media/css/subpages.css',
-      ),
-    },
-  }
+    ),
+  },
+}
 
