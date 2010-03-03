@@ -321,6 +321,7 @@ class KayApp(object):
       # Allow sys.exit() to actually exit.
       raise
     except CapabilityDisabledError, e:
+      from kay.i18n import gettext as _
       logging.error(e)
       # Saving session will also fail.
       if hasattr(request, 'session'):
