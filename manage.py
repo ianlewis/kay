@@ -37,6 +37,7 @@ action_bulkloader = do_bulkloader_passthru_argv
 action_clear_datastore = clear_datastore
 action_create_user = create_user
 action_wxadmin = do_wxadmin
+action_compile_media = do_compile_media
 
 if __name__ == '__main__':
   if len(sys.argv) == 1:

@@ -32,6 +32,7 @@ from kay.management.add_translations import do_add_translations
 from kay.management.update_translations import do_update_translations
 from kay.management.compile_translations import do_compile_translations
 from kay.management.wxadmin import do_wxadmin
+from kay.management.compile_media import do_compile_media
 
 __all__ = [
   'runserver_passthru_argv', 'startapp', 'do_appcfg_passthru_argv',
@@ -39,7 +40,7 @@ __all__ = [
   'do_extract_messages', 'do_add_translations', 'do_update_translations',
   'do_compile_translations', 'shell', 'rshell', 'do_preparse_apps',
   'startproject', 'do_wxadmin', 'clear_datastore', 'create_user', 'dump_all',
-  'restore_all',
+  'restore_all', 'do_compile_media'
 ]
 
 def print_status(msg):
