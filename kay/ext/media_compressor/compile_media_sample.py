@@ -1,33 +1,5 @@
 # -*- coding: utf-8 -*-
 
-#--------------------------------------------------------------
-
-# COMPILE_MEDIA_VERSION = 1
-# COMPILE_MEDIA_BASE_DIR = '_generated_media'
-# 
-# COMPILE_MEDIA_STATIC = (
-#   ('media/images', 'images'),
-#   ('media/css/images', 'css/images'),
-#   )
-# 
-# COMPILE_MEDIA_CSS = True
-# COMPILE_MEDIA_CSS_METHOD = 'concat' # concat, minify
-# 
-# COMPILE_MEDIA_JS = True
-# COMPILE_MEDIA_JS_METHOD = 'goog'
-# COMPILE_MEDIA_JS_GOOG_COMPILER_PATH = \
-#     "/usr/local/share/google/closure-library/closure/bin/compiler.jar"
-# 
-# COMPILE_MEDIA_JS_GOOG_SEARCH_PATHS = (
-#   "/usr/local/share/google/closure-library",
-#   "media/js",
-#   )
-# COMPILE_MEDIA_JS_GOOG_LEVEL = 'simple' # concat, strip, simple, advanced
-# COMPILE_MEDIA_JS_GOOG_EXTERNALS = (
-#   "media/js/jquery-1.3.2.min.js",
-#   "media/js/jquery-ui-1.7.2.custom.min.js",
-#   )
-
 COMPILE_MEDIA_COMMON = {
   'version': 1,
   'static_dir': (
