@@ -10,31 +10,41 @@ COMPILE_MEDIA_COMMON = {
 
 COMPILE_MEDIA_CSS_COMMON = {
   'enabled': True,
-  'tool': 'csstidy',
+  # values for tool: 'separate' | 'concat' | 'csstidy'
+  'tool': 'csstidy', 
   'csstidy': {
     'arguments': '--template=low --preserve_css=true'
+    #'arguments': '--template=high'
   }
 }
 
 COMPILE_MEDIA_JS_COMMON = {
-  'tool': 'goog_calcdeps',
+  # values for tool: None | 'jsminify' | 'goog_calcdeps' | 'goog_compiler'
+  'tool': 'goog_calcdeps',  
   'goog_common': {
+    # paths to closure library and others
     'search_paths': (
       "/usr/local/share/google/closure-library",
       "media/js",
     ),
+    # paths to extern scripts
     'externs': (
       "media/js/jquery-1.3.2.min.js",
       "media/js/jquery-ui-1.7.2.custom.min.js",
     ),
+    # whether to use deps.js at runtime
     'use_dependency_file': False,
   },
   'goog_calcdeps': {
+    # path to calcdeps.py
     'path': "/usr/local/share/google/closure-library/closure/bin/calcdeps.py",
+    # values for method: 'separate' | 'concat' | 'concat_refs' | 'compile'
     'method': 'concat',
   },
   'goog_compiler': {
+    # values for level: 'minify' | 'simple' | 'advanced'
     'level': 'simple',
+    # path to compiler.jar
     'path': "/usr/local/share/google/closure-library/closure/bin/compiler.jar",
   }
 }
