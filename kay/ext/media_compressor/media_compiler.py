@@ -607,11 +607,12 @@ def compile_js_(tag_name, js_config, force):
 
     return ([output_path[len(kay.PROJECT_DIR):]], extern_urls)
 
+  selected_tool = js_config['tool']
 
-  if js_config['tool'] not in \
-        ('jsminify', 'concat', 'goog_calcdeps', 'goog_compiler'):
+  if selected_tool not in \
+        (None, 'jsminify', 'concat', 'goog_calcdeps', 'goog_compiler'):
     print_status("COMPILE_MEDIA_JS['tool'] setting is invalid;"
-                 " unknown tool `%s'" % js_config['tool'])
+                 " unknown tool `%s'" % selected_tool)
     sys.exit(1)
 
   global media_info
@@ -622,18 +623,25 @@ def compile_js_(tag_name, js_config, force):
     print_status(' up to date.')
     return
 
-  if js_config['tool'] == 'goog_calcdeps':
+  if selected_tool == 'goog_calcdeps':
     return goog_calcdeps()
-  
+
+  if selected_tool is None:
+    last_info = {'config': copy.deepcopy(js_config),
+                 'result_urls': ['/'+f for f in js_config['source_files']]}
+    media_info.set(js_config['subdir'], tag_name, last_info)
+    media_info.save()
+    return
+
   dest_path = make_output_path_(js_config, js_config['subdir'],
                                 js_config['output_filename'])
   ofile = create_file_(dest_path)
   try:
-    if js_config['tool'] == 'jsminify':
+    if selected_tool == 'jsminify':
       for path in js_config['source_files']:
         src_path = make_input_path_(path)
         ofile.write(jsminify(src_path))
-    elif js_config['tool'] == 'concat':
+    elif selected_tool == 'concat':
       for path in js_config['source_files']:
         src_path = make_input_path_(path)
         ofile.write(concat(src_path))

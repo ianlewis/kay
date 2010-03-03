@@ -17,7 +17,7 @@ COMPILE_MEDIA_CSS = {
 
 COMPILE_MEDIA_JS = {
   'subdir': 'js',
-  # None | 'jsminify' | 'goog_calcdeps' | 'goog_compiler'
+  # 'concat' | 'jsminify' | 'goog_calcdeps' | 'goog_compiler'
   'tool': 'goog_calcdeps',
   'goog_common': {
     'externs': (),      # paths to extern scripts
@@ -31,6 +31,10 @@ COMPILE_MEDIA_JS = {
   'goog_compiler': {
     'level': 'simple',  # 'minify' | 'simple' | 'advanced'
     'path': None,       # path to compiler.jar
+  },
+  'jsminify': {
+    'path': None,
+    'arguments': '',
   },
   'source_files': (),
   'output_filename': None,
