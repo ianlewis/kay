@@ -25,7 +25,7 @@ from kay.ext.media_compressor import media_compiler
 
 class CompileMediaExtension(Extension):
   # a set of names that trigger the extension.
-  tags = set(['compile_css', 'compile_js'])
+  tags = set(['compiled_css', 'compiled_js'])
 
   def __init__(self, environment):
     super(CompileMediaExtension, self).__init__(environment)
@@ -40,15 +40,15 @@ class CompileMediaExtension(Extension):
     lineno = token.lineno
 
     label = parser.parse_expression().value
-    if token.value == 'compile_css':
-      node = self.compile_css(label)
+    if token.value == 'compiled_css':
+      node = self.get_compiled_css_urls(label)
     else:
-      node = self.compile_js(label)
+      node = self.get_compiled_js_urls(label)
     node.set_lineno(lineno)
 
     return [node]
 
-  def compile_js(self, label):
+  def get_compiled_js_urls(self, label):
     t = '<script type="text/javascript" src="%s"></script>\n'
 
     media_compiler.set_verbose_method(media_compiler.VERBOSE_LOGGING)
@@ -57,7 +57,7 @@ class CompileMediaExtension(Extension):
       markup += t.replace('%s', url)
     return nodes.Const(markup)
 
-  def compile_css(self, label):
+  def get_compiled_css_urls(self, label):
     t = '<link type="text/css" rel="stylesheet" href="%s" />\n'
 
     media_compiler.set_verbose_method(media_compiler.VERBOSE_LOGGING)
