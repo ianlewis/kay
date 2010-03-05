@@ -121,18 +121,20 @@ def _merge_config(dst, another, merge_keys):
 
 COMPILE_COMMON = copy.deepcopy(media_conf.COMPILE_MEDIA)
 COMPILE_COMMON.update(getattr(settings, 'COMPILE_MEDIA_COMMON', {}))
-
 COMPILE_CSS = _merge_css_config(copy.deepcopy(COMPILE_COMMON),
                                 media_conf.COMPILE_MEDIA_CSS)
+if IS_DEVSERVER:
+  COMPILE_CSS = _merge_css_config(COMPILE_CSS,
+                                  media_conf.COMPILE_MEDIA_CSS_DEV)
 COMPILE_CSS = _merge_css_config(
-  COMPILE_CSS,
-  getattr(settings, 'COMPILE_MEDIA_CSS_COMMON', {}))
-
+  COMPILE_CSS, getattr(settings, 'COMPILE_MEDIA_CSS_COMMON', {}))
 COMPILE_JS = _merge_js_config(copy.deepcopy(COMPILE_COMMON),
                               media_conf.COMPILE_MEDIA_JS)
+if IS_DEVSERVER:
+  COMPILE_JS = _merge_css_config(COMPILE_JS,
+                                 media_conf.COMPILE_MEDIA_JS_DEV)
 COMPILE_JS = _merge_css_config(
-  COMPILE_JS,
-  getattr(settings, 'COMPILE_MEDIA_JS_COMMON', {}))
+  COMPILE_JS, getattr(settings, 'COMPILE_MEDIA_JS_COMMON', {}))
 
 #--------------------------------------------------------------
 
@@ -158,15 +160,18 @@ def _create_symlinks():
 
 #--------------------------------------------------------------
 
-def get_css_urls(tag_name, auto_compile=False):
+def get_css_config(tag_name):
   if not getattr(settings, 'COMPILE_MEDIA_CSS'):
     raise Exception('settings.COMPILE_MEDIA_CSS is not defined')
   if not tag_name in settings.COMPILE_MEDIA_CSS:
     raise Exception('settings.COMPILE_MEDIA_CSS["%s"] is not defined' %
                     tag_name)
+  return _merge_css_config(copy.deepcopy(COMPILE_CSS), 
+                           settings.COMPILE_MEDIA_CSS[tag_name])  
 
-  css_config = _merge_css_config(copy.deepcopy(COMPILE_CSS), 
-                                 settings.COMPILE_MEDIA_CSS[tag_name])
+def get_css_urls(tag_name, auto_compile=False):
+
+  css_config = get_css_config(tag_name)
   if not css_config['enabled']:
     return [path if re.match(ur'https?://', path) else '/%s' %
             path for path in css_config['source_files']]
@@ -185,24 +190,12 @@ def get_css_urls(tag_name, auto_compile=False):
   return last_info['result_urls']
 
 def compile_css(tag_name=None, force=False):
-  if tag_name:
-    if not getattr(settings, 'COMPILE_MEDIA_CSS', None):
-      raise Exception('settings.COMPILE_MEDIA_CSS is not defined')
-    if not tag_name in settings.COMPILE_MEDIA_CSS:
-      raise Exception('settings.COMPILE_MEDIA_CSS["%s"] is not defined' %
-                      tag_name)
-  else:
-    if not getattr(settings, 'COMPILE_MEDIA_CSS', None):
-      print_status('settings.COMPILE_MEDIA_CSS is not defined; skip.')
-      return False
-
   for name, x in settings.COMPILE_MEDIA_CSS.iteritems():
     if tag_name is not None:
       if tag_name != name:
         continue
     print_status('Compiling css media [%s]' % name)
-    css_config = _merge_css_config(copy.deepcopy(COMPILE_CSS),
-                                   settings.COMPILE_MEDIA_CSS[name])
+    css_config = get_css_config(name)
     compile_css_(name, css_config, force)
   return True
 
@@ -306,15 +299,17 @@ def compile_css_(tag_name, css_config, force):
 
 #--------------------------------------------------------------
 
-def get_js_urls(tag_name, auto_compile=False):
+def get_js_config(tag_name):
   if not getattr(settings, 'COMPILE_MEDIA_JS'):
     raise Exception('settings.COMPILE_MEDIA_JS is not defined')
   if not tag_name in settings.COMPILE_MEDIA_JS:
     raise Exception('settings.COMPILE_MEDIA_JS["%s"] is not defined' %
                     tag_name)
+  return _merge_js_config(copy.deepcopy(COMPILE_JS),
+                          settings.COMPILE_MEDIA_JS[tag_name])
 
-  js_config = _merge_js_config(copy.deepcopy(COMPILE_JS),
-                               settings.COMPILE_MEDIA_JS[tag_name])
+def get_js_urls(tag_name, auto_compile=False):
+  js_config = get_js_config(tag_name)
   if not js_config['enabled']:
     return js_config['source_files']
 
@@ -332,24 +327,12 @@ def get_js_urls(tag_name, auto_compile=False):
   return last_info['result_urls']
 
 def compile_js(tag_name = None, force=False):
-  if tag_name:
-    if not getattr(settings, 'COMPILE_MEDIA_JS', None):
-      raise Exception('settings.COMPILE_MEDIA_JS is not defined')
-    if not tag_name in settings.COMPILE_MEDIA_JS:
-      raise Exception('settings.COMPILE_MEDIA_JS["%s"] is not defined' %
-                      tag_name)
-  else:
-    if not getattr(settings, 'COMPILE_MEDIA_JS', None):
-      print_status('settings.COMPILE_MEDIA_JS is not defined; skip.')
-      return False
-
   for name, x in settings.COMPILE_MEDIA_JS.iteritems():
     if tag_name is not None:
       if tag_name != name:
         continue
     print_status('Compiling js media [%s]' % name)
-    js_config = _merge_js_config(copy.deepcopy(COMPILE_JS),
-                                 settings.COMPILE_MEDIA_JS[name])
+    js_config = get_js_config(name)
     compile_js_(name, js_config, force)
   return True
 
@@ -384,28 +367,15 @@ def compile_js_(tag_name, js_config, force):
         return True
       
   def jsminify(js_path):
-    tmp_file = tempfile.NamedTemporaryFile(mode='w+b')
+    from StringIO import StringIO
+    from kay.ext.media_compressor.jsmin import JavascriptMinify
     ifile = open(js_path)
-    tmp_file.write(ifile.read())
-    ifile.close()
-    tmp_file.flush()
-
-    output_file = tempfile.NamedTemporaryFile(mode='w+b')
-  
-    print_status(" %s %s %s ..." % (js_config['jsminify']['path'],
-                                    js_path,
-                                    js_config['jsminify']['arguments']))
-    command = '%s %s %s %s' % (js_config['jsminify']['path'],
-                               tmp_file.name,
-                               js_config['jsminify']['arguments'],
-                               output_file.name)
-    command_output = os.popen(command).read()
-  
-    filtered_js = output_file.read()
-    output_file.close()
-    tmp_file.close()
-  
-    return filtered_js
+    outs = StringIO()
+    JavascriptMinify().minify(ifile, outs)
+    ret = outs.getvalue()
+    if len(ret) > 0 and ret[0] == '\n':
+      ret = ret[1:]
+    return ret
 
   def concat(js_path):
     print_status(" concat %s" % js_path)
@@ -652,6 +622,7 @@ def compile_js_(tag_name, js_config, force):
   info['output_filename'] = make_output_path_(js_config, js_config['subdir'],
                                               js_config['output_filename'],
                                               relative=True)
+  info['result_urls'] = ['/'+info['output_filename']]
   media_info.set(js_config['subdir'], tag_name, info)
   media_info.save()
   

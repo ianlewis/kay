@@ -13,8 +13,8 @@ COMPILE_MEDIA_CSS_COMMON = {
   # values for tool: 'separate' | 'concat' | 'csstidy'
   'tool': 'csstidy', 
   'csstidy': {
-    'arguments': '--template=low --preserve_css=true'
-    #'arguments': '--template=high'
+    #'arguments': '--template=low --preserve_css=true'
+    'arguments': '--template=high'
   }
 }
 

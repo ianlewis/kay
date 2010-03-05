@@ -6,7 +6,7 @@ COMPILE_MEDIA = {
 
 COMPILE_MEDIA_CSS = {
   'subdir': 'css',
-  'tool': 'csstidy', # 'separate' | 'concat' | 'csstidy'
+  'tool': 'concat', # 'separate' | 'concat' | 'csstidy'
   'csstidy': {
     'path': 'csstidy',
     'arguments': '--template=high',
@@ -15,28 +15,33 @@ COMPILE_MEDIA_CSS = {
   'output_filename': None,
 }
 
+COMPILE_MEDIA_CSS_DEV = {
+  'enabled': False,
+}
+
 COMPILE_MEDIA_JS = {
   'subdir': 'js',
   # 'concat' | 'jsminify' | 'goog_calcdeps' | 'goog_compiler'
-  'tool': 'goog_calcdeps',
+  'tool': 'jsminify',
   'goog_common': {
     'externs': (),      # paths to extern scripts
-    'search_paths': (), # paths to closure library and others
+    # paths to closure library and others
+    'search_paths': ('/usr/local/closure-library',), 
     'use_dependency_file': False, # whether to use deps.js at runtime
   },
   'goog_calcdeps': {
-    'path': None,       # path to calcdeps.py
-    'method': 'concat', # 'separate' | 'concat' | 'concat_refs' | 'compile'
+    # path to calcdeps.py
+    'path': '/usr/local/closure-library/closure/bin/calcdeps.py',
+    'method': 'concat_refs', #'separate' | 'concat' | 'concat_refs' | 'compile'
   },
   'goog_compiler': {
-    'level': 'simple',  # 'minify' | 'simple' | 'advanced'
-    'path': None,       # path to compiler.jar
-  },
-  'jsminify': {
-    'path': None,
-    'arguments': '',
+    'level': 'simple', # 'minify' | 'simple' | 'advanced'
+    'path': '/usr/local/closure-compiler/compiler.jar', # path to compiler.jar
   },
   'source_files': (),
   'output_filename': None,
 }
 
+COMPILE_MEDIA_JS_DEV = {
+  'enabled': False,
+}
