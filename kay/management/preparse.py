@@ -81,13 +81,17 @@ def do_preparse_apps():
 
 
 def prepare_destdir(dir):
-  dest = dir.replace("templates", "templates_compiled")
+  def replace_dirname(orig):
+    if 'templates' in orig:
+      return orig.replace('templates', 'templates_compiled')
+    else:
+      return orig+'_compiled'
+  dest = replace_dirname(dir)
   if path.isdir(dest):
     for d, subdirs, files in os.walk(dest):
       for f in files:
         compiled_filename = "%s/%s" % (d, f)
-        orig_filename = compiled_filename.replace("templates_compiled",
-                                                  "templates")
+        orig_filename = compiled_filename.replace(dest, dir)
         if not path.isfile(orig_filename):
           os.unlink(compiled_filename)
           print_status("%s does not exist. So, '%s' is removed." % (
