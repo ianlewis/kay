@@ -1,0 +1,11 @@
+{% macro render_loginbox() -%}
+  <span class="loginbox">
+  {% call login_box_form(action=url_for('auth/login_box', next=request.url)) %}
+    {{ login_box_form.user_name.label()|safe }}
+    {{ login_box_form.user_name()|safe }}
+    {{ login_box_form.password.label()|safe }}
+    {{ login_box_form.password()|safe }}
+    <input type="submit" value="{{ _('Login') }}">
+  {% endcall %}
+  </span>
+{%- endmacro %}

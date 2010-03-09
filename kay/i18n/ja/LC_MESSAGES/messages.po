@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version:  kay-0.4.0\n"
+"Project-Id-Version:  kay-0.8.0\n"
 "Report-Msgid-Bugs-To: tmatsuo@candit.jp\n"
 "POT-Creation-Date: 2009-11-15 23:30+0900\n"
-"PO-Revision-Date: 2009-11-15 23:32+0900\n"
+"PO-Revision-Date: 2010-03-09 11:02+0900\n"
 "Last-Translator: Takashi Matsuo <tmatsuo@candit.jp>\n"
 "Language-Team: Takashi Matsuo <tmatsuo@candit.jp>\n"
 "Plural-Forms: nplurals=1; plural=0\n"

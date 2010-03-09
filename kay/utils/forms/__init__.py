@@ -2033,6 +2033,7 @@ class Form(object):
   __metaclass__ = FormMeta
 
   csrf_protected = True
+  csrf_key = None
 #    redirect_tracking = True
 
   def __init__(self, initial=None):
@@ -2097,18 +2098,21 @@ class Form(object):
     if self.request is None:
       raise AttributeError('no csrf token because form not bound '
                            'to request')
-    path = self.request.path
-    user_id = -1
-    # TODO: implement
-    #if self.request.user.is_somebody:
-    #    user_id = self.request.user.id
-    try:
-      login_time = self.request.session.get('lt', -1)
-    except AttributeError:
-      login_time = -1
+    if self.csrf_key is not None:
+      csrf_key = self.csrf_key
+    else:
+      csrf_key = self.request.path
+    if hasattr(self.request, 'user'):
+      user_id = self.request.user.key()
+    else:
+      user_id = -1
+    if hasattr(self.request, 'session'):
+      session_key = self.request.session.sid
+    else:
+      session_Key = -1
     from kay.conf import settings
     key = settings.SECRET_KEY
-    return sha1(('%s|%s|%s|%s' % (path, login_time, user_id, key))
+    return sha1(('%s|%s|%s|%s' % (csrf_key, session_key, user_id, key))
                  .encode('utf-8')).hexdigest()
 
   @property

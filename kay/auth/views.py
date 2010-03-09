@@ -31,6 +31,7 @@ from kay.conf import settings
 
 from kay.auth.forms import (
   LoginForm, ChangePasswordForm, ResetPasswordRequestForm, ResetPasswordForm,
+  LoginBoxForm,
 )
 from kay.auth.models import TemporarySession
 
@@ -78,6 +79,36 @@ def login(request):
   return render_to_response("auth/loginform.html",
                             {"form": form.as_widget(),
                              "message": message})
+
+#TODO: refactor this view and above
+@no_cache
+def login_box(request):
+  from kay.auth import login
+
+  next = unquote_plus(request.values.get("next"))
+  owned_domain_hack = request.values.get("owned_domain_hack")
+  message = ""
+  form = LoginBoxForm()
+  if request.method == "POST":
+    if form.validate(request.form):
+      result = login(request, user_name=form.data['user_name'],
+                              password=form.data['password'])
+      if result:
+        if owned_domain_hack == 'True':
+          original_host_url = unquote_plus(
+            request.values.get("original_host_url"))
+          url = original_host_url[:-1] + url_for("auth/post_session")
+          url += '?' + url_encode({'session_id': result.key().name(),
+                                   'next': next})
+          return redirect(url)
+        else:
+          return redirect(next)
+      else:
+        message = _("Failed to login.")
+  return render_to_response("auth/loginform.html",
+                            {"form": form.as_widget(),
+                             "message": message})
+
 
 @no_cache
 def logout(request):
