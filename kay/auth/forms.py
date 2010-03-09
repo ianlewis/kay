@@ -21,6 +21,9 @@ class LoginForm(forms.Form):
   password = forms.TextField(required=True, widget=forms.PasswordInput,
                              label=_("password"))
 
+class LoginBoxForm(LoginForm):
+  csrf_key = 'loginbox'
+
 
 class NotifyUsernameForm(forms.Form):
   mail_address = forms.EmailField(required=True, label=_("email address"))

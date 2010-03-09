@@ -1,0 +1,46 @@
+from __future__ import division
+from jinja2.runtime import LoopContext, TemplateReference, Macro, Markup, TemplateRuntimeError, missing, concat, escape, markup_join, unicode_join, to_string, TemplateNotFound
+name = '/macros.html'
+
+def root(context, environment=environment):
+    t_1 = environment.filters['safe']
+    if 0: yield None
+    def macro():
+        t_2 = []
+        l_login_box_form = context.resolve('login_box_form')
+        l_request = context.resolve('request')
+        l_url_for = context.resolve('url_for')
+        pass
+        t_2.append(
+            u'<span class="loginbox">\n  ', 
+        )
+        def macro():
+            t_3 = []
+            l_login_box_form = context.resolve('login_box_form')
+            l__ = context.resolve('_')
+            pass
+            t_3.extend((
+                u'\n    ', 
+                escape(t_1(context.call(environment.getattr(environment.getattr(l_login_box_form, 'user_name'), 'label')))), 
+                u'\n    ', 
+                escape(t_1(context.call(environment.getattr(l_login_box_form, 'user_name')))), 
+                u'\n    ', 
+                escape(t_1(context.call(environment.getattr(environment.getattr(l_login_box_form, 'password'), 'label')))), 
+                u'\n    ', 
+                escape(t_1(context.call(environment.getattr(l_login_box_form, 'password')))), 
+                u'\n    <input type="submit" value="', 
+                escape(context.call(l__, 'Login')), 
+                u'">\n  ', 
+            ))
+            return Markup(concat(t_3))
+        caller = Macro(environment, macro, None, (), (), False, False, False)
+        t_2.append(context.call(l_login_box_form, action=context.call(l_url_for, 'auth/login_box', next=environment.getattr(l_request, 'url')), caller=caller))
+        t_2.append(
+            u'\n  </span>', 
+        )
+        return Markup(concat(t_2))
+    context.exported_vars.add('render_loginbox')
+    context.vars['render_loginbox'] = l_render_loginbox = Macro(environment, macro, 'render_loginbox', (), (), False, False, False)
+
+blocks = {}
+debug_info = '1=8&2=14&3=17&4=24&5=26&6=28&7=30&8=32&3=37&9=38'
