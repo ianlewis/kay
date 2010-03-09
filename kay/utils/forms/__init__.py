@@ -1120,6 +1120,9 @@ class FormMapping(Mapping):
                       'to convert data')
     if self.form.csrf_protected and self.form.request is not None:
       token = self.form.request.values.get('_csrf_token')
+      import logging
+      logging.debug("token: %s" % token)
+      logging.debug("self.form.csrf_token: %s" % self.form.csrf_token)
       if token != self.form.csrf_token:
         raise ValidationError(_(u'Invalid security token submitted.'))
     return Mapping.convert(self, value)
@@ -2106,12 +2109,17 @@ class Form(object):
       user_id = self.request.user.key()
     else:
       user_id = -1
-    if hasattr(self.request, 'session'):
+    if hasattr(self.request, 'session') and not self.request.session.new:
       session_key = self.request.session.sid
     else:
-      session_Key = -1
+      session_key = -1
     from kay.conf import settings
     key = settings.SECRET_KEY
+    import logging
+    logging.debug("csrf_key: %s" % csrf_key)
+    logging.debug("session_key: %s" % session_key)
+    logging.debug("user_id: %s" % user_id)
+    logging.debug("key: %s" % key)
     return sha1(('%s|%s|%s|%s' % (csrf_key, session_key, user_id, key))
                  .encode('utf-8')).hexdigest()
 
