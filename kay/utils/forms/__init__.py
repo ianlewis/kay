@@ -2106,7 +2106,9 @@ class Form(object):
       user_id = self.request.user.key()
     else:
       user_id = -1
-    if hasattr(self.request, 'session') and not self.request.session.new:
+    if hasattr(self.request, 'session') and \
+          hasattr(self.request.session, 'sid') and \
+          not self.request.session.new:
       session_key = self.request.session.sid
     else:
       session_key = -1
