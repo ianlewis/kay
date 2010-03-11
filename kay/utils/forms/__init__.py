@@ -1425,7 +1425,7 @@ class ModelField(Field):
     self.required = required
     self.message = message
     self.on_not_found = on_not_found
-    self.query = query or self.model.all()
+    self.query = query
     self.option_name = option_name
     self.__choices = None
 
@@ -1438,7 +1438,8 @@ class ModelField(Field):
         raise ValidationError(self.messages['required'])
       return None
     value = self._coerce_value(value)
-    tmp_query = copy.deepcopy(self.query)
+    self._prepare_query()
+    tmp_query = copy.copy(self.query)
     if self.key is None:
       query = tmp_query.filter("__key__ =", db.Key(value))
     else:
@@ -1473,7 +1474,12 @@ class ModelField(Field):
     except AttributeError:
       return entry.__repr__()
 
+  def _prepare_query(self):
+    if self.query is None:
+      self.query = self.model.all()
+
   def _create_choices(self):
+    self._prepare_query()
     self.__choices = [("", u"----")] + \
         [(e.key(), escape(self._get_option_name(e)))
          for e in self.query.fetch(1000)]

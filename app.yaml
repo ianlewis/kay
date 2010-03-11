@@ -54,7 +54,7 @@ skip_files: |
   (README)|
   (README\.pdf)|
   (LICENSE)|
-  (docs\/.*)|
+  (kay\/docs\/.*)|
   (kay\/management\/.*)|
   (kay\/lib\/babel\/localedata\/.*)|
   )$
