@@ -1438,7 +1438,7 @@ class ModelField(Field):
         raise ValidationError(self.messages['required'])
       return None
     value = self._coerce_value(value)
-    tmp_query = copy.copy(self.query)
+    tmp_query = copy.deepcopy(self.query)
     if self.key is None:
       query = tmp_query.filter("__key__ =", db.Key(value))
     else:
