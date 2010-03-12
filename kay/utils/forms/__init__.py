@@ -39,6 +39,7 @@ from kay.utils.crypto import gen_random_identifier
 from kay.utils.validators import ValidationError
 from kay.utils.datastructures import OrderedDict, missing
 
+CSRF_TOKEN_SEED = "csrf_token_seed"
 
 _last_position_hint = -1
 _position_hint_lock = Lock()
@@ -2117,12 +2118,12 @@ class Form(object):
         session_key = self.request.session.sid
       except Exception:
         # SecureSession
-        if 'csrf_seed' in self.request.session:
-          session_key = self.request.session.get('csrf_seed')
+        if CSRF_TOKEN_SEED in self.request.session:
+          session_key = self.request.session.get(CSRF_TOKEN_SEED)
         else:
           import uuid
           session_key = str(uuid.uuid4())
-          self.request.session['csrf_seed'] = session_key
+          self.request.session[CSRF_TOKEN_SEED] = session_key
     else:
       session_key = -1
     from kay.conf import settings
