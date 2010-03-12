@@ -12,10 +12,11 @@ Kay framework.
 
 import os
 import sys
+import logging
 
 import settings
 
-__version__ = "0.7.0"
+__version__ = "0.8.0"
 
 KAY_DIR = os.path.abspath(os.path.dirname(__file__))
 LIB_DIR = os.path.join(KAY_DIR, 'lib')
@@ -83,12 +84,15 @@ def setup():
   from google.appengine.ext.db import polymodel
 
   class _meta(object):
-    __slots__ = ('object_name', 'app_label', 'module_name', '_db_table', 'abstract')
+    __slots__ = ('object_name', 'app_label', 'module_name', '_db_table',
+                 'abstract')
     def __init__(self, model):
       try:
         self.app_label = model.__module__.split('.')[-2]
       except IndexError:
-        raise ValueError('Kay expects models (here: %s.%s) to be defined in their own apps!' % (model.__module__, model.__name__))
+        logging.warn('Kay expects models (here: %s.%s) to be defined in their'
+                     ' own apps!' % (model.__module__, model.__name__))
+        self.app_label = None
       self.module_name = model.__name__.lower()
       self.abstract = model is db.Model
       self.object_name = model.__name__
