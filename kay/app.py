@@ -66,17 +66,20 @@ class NullUndefined(Undefined):
   __slots__ = ()
   def __int__(self):
     return 0
+  def __float__(self):
+    return 0.0
   def __getattr__(self, value):
     return u''
   def __html__(self):
-    self.debug_log()
+    self.warn()
     return u''
-  def debug_log(self):
+  def warn(self, warning_template="%s: %s is undefined."):
     f = sys._getframe(1)
     while not 'templates' in f.f_code.co_filename:
       f = f.f_back
-    logging.warn("%s: %s is undefined." %
+    logging.warn(warning_template %
                  (f.f_code.co_filename, self._undefined_name))
+
 
 def get_app_tailname(app):
   dot = app.rfind('.')
