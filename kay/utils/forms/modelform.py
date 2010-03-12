@@ -60,8 +60,6 @@ Mapping between properties and fields:
 | _ReverseReferenceP.| None              | <iterable>   | always skipped     |
 +====================+===================+==============+====================+
 
-Notes:
-*: this Field subclasses is defined by us, not in Django or Google.
 """
 
 
@@ -245,9 +243,6 @@ class BlobProperty(db.BlobProperty):
   def get_form_field(self, **kwargs):
     """Return a Django form field appropriate for a blob property.
 
-    This defaults to a forms.FileField instance when using Django 0.97
-    or later.  For 0.96 this returns None, as file uploads are not
-    really supported in that version.
     """
     if not hasattr(forms, 'FileField'):
       return None
@@ -379,6 +374,42 @@ class BooleanProperty(db.BooleanProperty):
       return False
     return bool(value)
 
+
+class StringListPropertySeparatedWithComma(db.StringListProperty):
+  def get_form_field(self, **kwargs):
+    """Return a Django form field appropriate for a StringList property.
+
+    This defaults to a Textarea widget with a blank initial value.
+    """
+    defaults = {'field': forms.TextField(), 'form_class': forms.CommaSeparated,
+                'min_size': 0}
+    defaults.update(kwargs)
+    return super(StringListProperty, self).get_form_field(**defaults)
+
+  def get_value_for_form(self, instance):
+    """Extract the property value from the instance for use in a form.
+
+    This joins a list of strings with newlines.
+    """
+    value = super(StringListProperty, self).get_value_for_form(instance)
+    if not value:
+      return None
+    if isinstance(value, list):
+      value = ','.join(value)
+    return value
+
+  def make_value_from_form(self, value):
+    """Convert a form value to a property value.
+
+    This breaks the string into lines.
+    """
+    if not value:
+      return []
+    if isinstance(value, basestring):
+      value = value.split(",")
+    return value
+  
+  
 
 class StringListProperty(db.StringListProperty):
   __metaclass__ = monkey_patch
@@ -530,10 +561,6 @@ class ModelFormOptions(object):
 class ModelFormMetaclass(forms.FormMeta):
   """The metaclass for the ModelForm class defined below.
 
-  This is our analog of Django's own ModelFormMetaclass.  (We
-  can't conveniently subclass that class because there are quite a few
-  differences.)
-
   See the docs for ModelForm below for a usage example.
   """
   bad_attr_names = ('data', 'errors', 'raw_data')
@@ -542,10 +569,6 @@ class ModelFormMetaclass(forms.FormMeta):
 
     The signature of this method is determined by Python internals.
 
-    All Django Field instances are removed from attrs and added to
-    the base_fields attribute instead.  Additional Field instances
-    are added to this based on the Datastore Model class specified
-    by the Meta attribute.
     """
     fields = sorted(((field_name, attrs.pop(field_name))
                      for field_name, obj in attrs.items()
@@ -625,18 +648,12 @@ class BaseModelForm(forms.Form):
 
     Args (all optional and defaulting to None):
       data: dict of data values, typically from a POST request)
-      files: dict of file upload values; Django 0.97 or later only
-      auto_id, prefix: see Django documentation
       initial: dict of initial values
-      error_class, label_suffix: see Django 0.97 or later documentation
       instance: Model instance to be used for additional initial values
 
     Except for initial and instance, these arguments are passed on to
     the forms.BaseForm constructor unchanged, but only if not None.
-    Some arguments (files, error_class, label_suffix) are only
-    supported by Django 0.97 or later.  Leave these blank (i.e. None)
-    when using Django 0.96.  Their default values will be used with
-    Django 0.97 or later even when they are explicitly set to None.
+    Leave these blank (i.e. None)
     """
     opts = self._meta
     self.instance = instance

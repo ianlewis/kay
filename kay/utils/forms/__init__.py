@@ -532,14 +532,24 @@ class Input(Widget):
 
 
 class FileInput(Input):
-  """A widget that holds text."""
+  """A widget for uploading files."""
   type = 'file'
   needs_multipart_form = True
+
+
+class MultipleFieldMixin(object):
+  def __call__(self, **attrs):
+    """form + all_errors list as ul if needed."""
+    return self.render(**attrs) + self.all_errors()
 
 
 class TextInput(Input):
   """A widget that holds text."""
   type = 'text'
+
+
+class MultipleTextInput(MultipleFieldMixin, TextInput):
+  pass
 
 
 class PasswordInput(TextInput):
@@ -553,6 +563,7 @@ class HiddenInput(Input):
   type = 'hidden'
   disable_dt = True 
 
+
 class Textarea(Widget):
   """Displays a textarea."""
 
@@ -564,6 +575,10 @@ class Textarea(Widget):
   def render(self, **attrs):
     self._attr_setdefault(attrs)
     return html.textarea(self.value, name=self.name, **attrs)
+
+
+class MultipleTextarea(MultipleFieldMixin, Textarea):
+  pass
 
 
 class Checkbox(Widget):
@@ -1215,11 +1230,11 @@ class CommaSeparated(Multiple):
   >>> field(u'1, 2, 3')
   [1, 2, 3]
 
-  The default widget is a `TextInput` but `Textarea` would be a possible
-  choices as well.
+  The default widget is a `MultipleTextInput` but `MultipleTextarea`
+  would be a possible choices as well.
   """
 
-  widget = TextInput
+  widget = MultipleTextInput
 
   def __init__(self, field, label=None, help_text=None, min_size=None,
                max_size=None, sep=u',', validators=None, widget=None,
@@ -1249,10 +1264,10 @@ class LineSeparated(CommaSeparated):
   >>> field(u'1\n2\n3')
   [1, 2, 3]
 
-  The default widget is a `Textarea` and taht is pretty much the only thing
-  that makes sense for this widget.
+  The default widget is a `MultipleTextarea` and taht is pretty much
+  the only thing that makes sense for this widget.
   """
-  widget = Textarea
+  widget = MultipleTextarea
 
   def convert(self, value):
     if isinstance(value, basestring):
@@ -1313,6 +1328,16 @@ class TextField(Field):
   def should_validate(self, value):
     """Validate if the string is not empty."""
     return bool(value)
+
+
+class KeyField(TextField):
+ def convert(self, value):
+   value = super(KeyField, self).convert(value)
+   try:
+     return db.Key(value)
+   except Exception, e:
+     raise ValidationError(e)
+
 
 class RegexField(TextField):
   messages = dict(invalid=lazy_gettext(u"The value is invalid."))
