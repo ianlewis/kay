@@ -2112,10 +2112,17 @@ class Form(object):
       user_id = self.request.user.key()
     else:
       user_id = -1
-    if hasattr(self.request, 'session') and \
-          hasattr(self.request.session, 'sid') and \
-          not self.request.session.new:
-      session_key = self.request.session.sid
+    if hasattr(self.request, 'session') and not self.request.session.new:
+      try:
+        session_key = self.request.session.sid
+      except Exception:
+        # SecureSession
+        if 'csrf_seed' in self.request.session:
+          session_key = self.request.session.get('csrf_seed')
+        else:
+          import uuid
+          session_key = str(uuid.uuid4())
+          self.request.session['csrf_seed'] = session_key
     else:
       session_key = -1
     from kay.conf import settings
