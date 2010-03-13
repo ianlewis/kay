@@ -5,13 +5,30 @@ Copyright 2009 by Accense Technology, Inc
 
 Kay framework - Release Notes
 
-Kay-0.4.0 - November ??, 2009
+Kay-0.8.0 - March 10, 2010
 =============================
 
+  - Added login_box context processor and render_loginbox macro to
+    kay.auth module.
+  - Added a media_compressor extension.
+  - Improved a process for detecting user's preferred language.
+  - Added a jsonrpc2 extension.
+  - Improved db_hook feature.
+  - Added password changing/resetting capabilities.
+  - Added a capability for changing entire settings according to the
+    host part of the URL.
+  - Added a flash (quick indicator, not Adobe's flash) library
+  - Added a handler for blobstore upload/download.
+  - Added a registration application.
+  - Allow defining class based handler as tuple which has
+    (handler_name, args, kwargs) style.
+  - Allow disabling automount feature by setting None in
+    APP_MOUNT_POINTS explicitly.
   - Added task_handler for deferred library that corresponds with
     kay's rules.
   - Moved auth backend classes from kay.auth.backend module to
     kay.auth.backends package.
+  - Various improvements.
 
   - Notice about this release
 

@@ -54,7 +54,7 @@ class JsonRpcApplication(object):
     else:
       self.methods = {}
 
-  def addModule(self, mod, namespace=None):
+  def add_module(self, mod, namespace=None):
     if namespace is None:
       namespace = mod.__name__
     for k, v in ((k, v) for k, v in mod.__dict__.iteritems() 
@@ -195,7 +195,7 @@ def make_application(methods):
       modname = value
       mod = getmod(modname)
       if mod:
-        app.addModule(mod, name)
+        app.add_module(mod, name)
   app = HTTPExceptionMiddleware(app)
   return app
 
