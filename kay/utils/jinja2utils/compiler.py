@@ -22,6 +22,7 @@ To compile a whole dir:
 :license: BSD, see LICENSE.txt for more details.
 """
 import re
+import sys
 from os import path, listdir, mkdir
 
 def compile_file(env, src_path, dst_path, encoding='utf-8', base_dir=''):
@@ -36,7 +37,12 @@ def compile_file(env, src_path, dst_path, encoding='utf-8', base_dir=''):
   """
   # Read the template file.
   src_file = file(src_path, 'r')
-  source = src_file.read().decode(encoding)
+  try:
+    source = src_file.read().decode(encoding)
+  except Exception, e:
+    sys.stderr.write("Failed compiling %s. Perhaps you can check the character"
+                     " set of this file.\n" % src_path)
+    raise
   src_file.close()
 
   # Compile the template to raw Python code..
@@ -49,7 +55,7 @@ def compile_file(env, src_path, dst_path, encoding='utf-8', base_dir=''):
   dst_file.close()
 
 
-def compile_dir(env, src_path, dst_path, pattern=r'^.*\..*[^~]$',
+def compile_dir(env, src_path, dst_path, pattern=r'^[^\.].*\..*[^~]$',
                 encoding='utf-8', base_dir=None,
                 negative_pattern=r'^.*\.swp$'):
   """Compiles a directory of Jinja2 templates to python code.
