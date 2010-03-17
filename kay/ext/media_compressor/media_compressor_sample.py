@@ -19,8 +19,7 @@ COMPILE_MEDIA_CSS_COMMON = {
 }
 
 COMPILE_MEDIA_JS_COMMON = {
-  # values for tool: None | 'concat' | 'jsminify' | 'goog_calcdeps' |
-  # 'goog_compiler'
+  # values for tool: None | 'concat' | 'jsminify' | 'goog_calcdeps'
   'tool': 'goog_calcdeps',  
   'goog_common': {
     # paths to closure library and others
@@ -70,6 +69,10 @@ COMPILE_MEDIA_JS = {
   },
 }
 
+COMPILE_MEDIA_JS_DEV = {
+  'enabled': False,
+}
+
 COMPILE_MEDIA_CSS = {
   'toppage.css': {
     'output_filename': 'toppage.css',
@@ -93,3 +96,6 @@ COMPILE_MEDIA_CSS = {
   },
 }
 
+COMPILE_MEDIA_CSS_DEV = {
+  'enabled': False,
+}
