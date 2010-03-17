@@ -35,6 +35,7 @@ Kay ドキュメントへようこそ
   builtin-middleware
   test
   forms_reference
+  db_hook
    
 Indices and tables
 ==================
