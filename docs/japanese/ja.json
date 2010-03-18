@@ -1,6 +1,6 @@
 {
   "embeddedFonts" :
-[["VL-Gothic-Regular.ttf","VL-PGothic-Regular.ttf","ipam.otf","verdanaz.ttf"]],
+[["VL-Gothic-Regular.ttf","VL-PGothic-Regular.ttf","ipam.ttf","ipamp.ttf"]],
   "fontsAlias" : {
     "stdFont": "VL-PGothic-Regular",
     "stdBold": "VL-PGothic-Regular",
