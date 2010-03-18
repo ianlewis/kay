@@ -10,7 +10,7 @@ Kay uses Werkzeug for mapping urls and your views.
 For the full details about how to configure url mappings using Werkzeug,
 please see Werkzeug's manual hosted at following URL:
 
-  http://werkzeug.pocoo.org/documentation/0.5.1/routing.html
+  http://werkzeug.pocoo.org/documentation/0.6/routing.html
 
 For now, kay has one global url mapping and one global
 endpoint-to-view dictionary per project unless you use ``SUBMOUNT_APP``
@@ -114,3 +114,34 @@ strings. Don't forget to remove ``import myapp.views`` statement for this to wor
     'myapp/index': 'myapp.views.index',
     'myapp/index2': 'myapp.views.index2',
   }
+
+Sometimes you may define class based views. How can you set those class based view in your urlmapping in lazily manners? You can do this as follows:
+
+.. code-block:: python
+
+  from werkzeug.routing import EndpointPrefix, Rule
+
+  def make_rules():
+    return [
+      EndpointPrefix('myapp/', [
+	Rule('/', endpoint='index'),
+	Rule('/index2', endpoint='index2'),
+      ]),
+    ]
+
+  all_views = {
+    'myapp/index': 'myapp.views.index',
+    'myapp/index2': ('myapp.views.MyClassBasedView', (),
+                     {"template_name": "myapp/mytemplate.html"}),
+  }
+
+In this example, an instance of ``MyClassBasedView`` will be created
+on demand in the equivalent way as follows:
+
+.. code-block:: python
+
+   from myapp.views import MyClassBasedView
+   view_func = MyClassBasedView(template_name="myapp/mytemplate.html")
+
+.. seealso:: :doc:`views`
+

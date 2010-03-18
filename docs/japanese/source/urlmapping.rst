@@ -9,7 +9,7 @@ Kay は URL と view を関係付けるのに Werkzeug を使っています。
 
 URL マッピングをどのように編集するかについて更に詳しく知るには、下記の URL にホストされている werkzeug のマニュアルを見ると良いでしょう:
 
-  http://werkzeug.pocoo.org/documentation/0.5.1/routing.html
+  http://werkzeug.pocoo.org/documentation/0.6/routing.html
 
 現バージョンの Kay では ``SUBMOUNT_APP`` 機能を使わない限りは、プロジェクトにつき、ひとつのグローバルな url マッピングとひとつの endpoint-view の対応辞書を持ちます。Kay はこれらの値を、インストールされたアプリケーション( ``settings.py`` での設定によります)から自動的に収集し、グローバルな値として保持します。
 
@@ -88,4 +88,34 @@ Kay は ``appname.urls`` モジュールを検知すると、この ``RuleFactor
     'myapp/index': 'myapp.views.index',
     'myapp/index2': 'myapp.views.index2',
   }
+
+時にはクラスベースのビューを作成する事もあります。そのようなビューを遅延ロードさせるためには下記のように設定します:
+
+.. code-block:: python
+
+  from werkzeug.routing import EndpointPrefix, Rule
+
+  def make_rules():
+    return [
+      EndpointPrefix('myapp/', [
+	Rule('/', endpoint='index'),
+	Rule('/index2', endpoint='index2'),
+      ]),
+    ]
+
+  all_views = {
+    'myapp/index': 'myapp.views.index',
+    'myapp/index2': ('myapp.views.MyClassBasedView', (),
+                     {"template_name": "myapp/mytemplate.html"}),
+  }
+
+この例では、 ``MyClassBasedView`` のインスタンスが要求に応じて下記と同
+等の方法で生成されます:
+
+.. code-block:: python
+
+   from myapp.views import MyClassBasedView
+   view_func = MyClassBasedView(template_name="myapp/mytemplate.html")
+
+.. seealso:: :doc:`views`
 
