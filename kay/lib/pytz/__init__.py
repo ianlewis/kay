@@ -78,11 +78,19 @@ class TimezoneLoader(object):
                 raise ValueError('Bad path segment: %r' % part)
 
         cache_key = 'pytz.zoneinfo.%s.%s' % (OLSON_VERSION, name)
-        zonedata = memcache.get(cache_key)
+        try:
+          zonedata = memcache.get(cache_key)
+        except Exception:
+          zonedata = None
         if zonedata is None:
-            zonedata = get_zoneinfo().read(os.path.join('zoneinfo', *name_parts))
-            memcache.add(cache_key, zonedata)
-            logging.info('Added timezone to memcache: %s' % cache_key)
+            zonedata = get_zoneinfo().read(os.path.join('zoneinfo',
+                                                        *name_parts))
+            try:
+              memcache.add(cache_key, zonedata)
+              logging.info('Added timezone to memcache: %s' % cache_key)
+            except Exception:
+              logging.info('Failed adding timezone to memcache: %s' %
+                           cache_key)
         else:
             logging.info('Loaded timezone from memcache: %s' % cache_key)
 
