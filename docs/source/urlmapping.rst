@@ -88,15 +88,16 @@ Here is an example which adds ``index2`` view bound to the url
     'myapp/index2': myapp.views.index2,
   }
 
-In above examples, we defined view functions themselves. To do this,
+In above examples, we defined views with view callables. To do this,
 we need to import our ``views`` module in urls module. Thus, this
-could cause huge startup costs if your ``views`` module is very big
-and you have many apps in your project. We can define these views as
+could cause huge startup costs if your ``views`` module is very big or
+you have many apps in your project. We can define these views as
 string to avoid these costs. It allows Kay to load our views in lazily
 manners.
 
 Here is the re-written version of the last example defining views as
-strings. Don't forget to remove ``import myapp.views`` statement for this to work efficiently.
+strings. Don't forget to remove ``import myapp.views`` statement for
+this to work efficiently.
 
 .. code-block:: python
 
@@ -115,7 +116,9 @@ strings. Don't forget to remove ``import myapp.views`` statement for this to wor
     'myapp/index2': 'myapp.views.index2',
   }
 
-Sometimes you may define class based views. How can you set those class based view in your urlmapping in lazily manners? You can do this as follows:
+Sometimes you may define class based views. How can you set those
+class based view in your urlmapping in lazily manners? You can do this
+as follows:
 
 .. code-block:: python
 
