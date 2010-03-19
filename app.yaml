@@ -12,6 +12,9 @@ handlers:
 - url: /media
   static_dir: media
 
+- url: /_generated_media
+  static_dir: _generated_media
+
 - url: /_media
   static_dir: kay/media
 
