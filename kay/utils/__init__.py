@@ -13,7 +13,7 @@ import os
 import logging
 
 from werkzeug import (
-  Local, LocalManager, Response
+  Local, LocalManager, Response, Headers
 )
 from werkzeug.exceptions import NotFound
 
@@ -39,6 +39,29 @@ def get_kay_locale_path():
   import kay
   return os.path.join(kay.KAY_DIR, 'i18n')
 
+def _prepare_header():
+  if not hasattr(local, "override_headers"):
+    local.override_headers = Headers()
+
+def add_header(_key, _value, **_kw):
+  _prepare_header()
+  local.override_headers.add(_key, _value, **_kw)
+
+def set_header(key, value):
+  _prepare_header()
+  local.override_headers.set(key, value)
+
+def set_cookie(key, value='', max_age=None, expires=None,
+               path='/', domain=None, secure=None, httponly=False):
+  if not hasattr(local, "override_cookies"):
+    local.override_cookies = []
+  local.override_cookies.append({"key": key, "value": value,
+                                 "max_age": max_age, "expires": expires,
+                                 "path": path, "domain": domain,
+                                 "secure": secure, "httponly": httponly})
+
+def delete_cookie(key, path='/', domain=None):
+  set_cookie(key, expires=0, max_age=0, path=path, domain=domain)
 
 def get_timezone(tzname):
   """
