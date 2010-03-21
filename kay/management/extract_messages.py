@@ -83,6 +83,9 @@ def do_extract_messages(target=('t', ''), domain=('d', 'messages'),
     for target in targets:
       do_extract_messages(target=target, domain=domain, i18n_dir=None,
                           all=False)
+    for template_dir in settings.TEMPLATE_DIRS:
+      do_extract_messages(target=template_dir, domain=domain,
+                          i18n_dir=settings.I18N_DIR, all=False)
     sys.exit(0)
   else:
     root = path.abspath(target)

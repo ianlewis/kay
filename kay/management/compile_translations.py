@@ -56,6 +56,7 @@ def do_compile_translations(target=("t", ""), i18n_dir=("i", ""),
     targets = get_user_apps()
     for target in targets:
       do_compile_translations(target=target, i18n_dir=None, all=False)
+    do_compile_translations(target=kay.PROJECT_DIR, i18n_dir=None, all=False)
     sys.exit(0)
   else:
     if i18n_dir:

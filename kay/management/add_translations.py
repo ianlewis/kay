@@ -53,6 +53,8 @@ def do_add_translations(target=("t", ""), lang=("l", ""), force=("f", False),
     for target in targets:
       do_add_translations(target=target, lang=lang, force=force,
                           i18n_dir=None, all=False)
+    do_add_translations(target=kay.PROJECT_DIR, lang=lang, force=force,
+                        i18n_dir=None, all=False)
     sys.exit(0)
   else:
     if not i18n_dir:

@@ -45,6 +45,8 @@ def do_update_translations(target=("t", ""), lang=("l", ""),
     for target in targets:
       do_update_translations(target=target, lang=lang, statistics=statistics,
                              i18n_dir=None, all=False)
+    do_update_translations(target=kay.PROJECT_DIR, lang=lang,
+                           statistics=statistics, i18n_dir=None, all=False)
     sys.exit(0)
   else:
     if i18n_dir:
