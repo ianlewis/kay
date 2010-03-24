@@ -36,6 +36,7 @@ Kay ドキュメントへようこそ
   test
   forms_reference
   db_hook
+  media_compressor
    
 Indices and tables
 ==================
