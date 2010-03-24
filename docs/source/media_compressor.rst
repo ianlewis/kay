@@ -176,8 +176,9 @@ subcommand with ``manage.py`` script.
 
    3 directories, 4 files
 
-To enable serving these files from this directory, you need to add the
-directory to app.yaml file as follows:
+To enable serving these files from this directory, you may need to add
+the directory to app.yaml file (according to the version of Kay you're
+using, you don't need to this) as follows:
 
 .. code-block:: yaml
 
