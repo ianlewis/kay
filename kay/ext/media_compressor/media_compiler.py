@@ -139,11 +139,9 @@ COMPILE_JS = _merge_css_config(
 #--------------------------------------------------------------
 
 def manage_static_files():
-  if not getattr(settings, 'COMPILE_MEDIA_COMMON', None):
-    print_status('settings.COMPILE_MEDIA_COMMON is not defined; skip.')
-    return
-
-  if COMPILE_COMMON['static_dir']:
+  if hasattr(settings, 'COMPILE_MEDIA_COMMON') and \
+        COMPILE_COMMON.has_key('static_dir') and \
+        COMPILE_COMMON['static_dir']:
     _create_symlinks()
 
 def _create_symlinks():
