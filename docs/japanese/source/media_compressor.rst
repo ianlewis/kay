@@ -125,7 +125,8 @@ yourapp/templates/index.html:
    </body>
    </html>
 
-In development server, compression is disabled by default, so these compiled_ tag will expanded just like following:
+In development server, compression is disabled by default, so these
+compiled_*** tag will expanded just like following:
 
 .. code-block:: html
 
