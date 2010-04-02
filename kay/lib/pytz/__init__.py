@@ -83,8 +83,7 @@ class TimezoneLoader(object):
         except Exception:
           zonedata = None
         if zonedata is None:
-            zonedata = get_zoneinfo().read(os.path.join('zoneinfo',
-                                                        *name_parts))
+            zonedata = get_zoneinfo().read('zoneinfo/' + name)
             try:
               memcache.add(cache_key, zonedata)
               logging.info('Added timezone to memcache: %s' % cache_key)
@@ -100,8 +99,7 @@ class TimezoneLoader(object):
         """Return true if the given resource exists"""
         if name not in self.available:
             try:
-                get_zoneinfo().getinfo(os.path.join('zoneinfo',
-                    *name.lstrip('/').split('/')))
+                get_zoneinfo().getinfo('zoneinfo/' + name)
                 self.available[name] = True
             except KeyError:
                 self.available[name] = False
