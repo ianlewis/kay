@@ -21,7 +21,7 @@ COMPILE_MEDIA_CSS_DEV = {
 
 COMPILE_MEDIA_JS = {
   'subdir': 'js',
-  # 'concat' | 'jsminify' | 'goog_calcdeps'
+  # 'concat' | 'jsminify' | 'goog_calcdeps' | 'goog_compiler'
   'tool': 'jsminify',
   'goog_common': {
     'externs': (),      # paths to extern scripts
