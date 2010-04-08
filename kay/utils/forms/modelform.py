@@ -615,7 +615,18 @@ class ModelFormMetaclass(forms.FormMeta):
           raise ImproperlyConfigured("When you use ModelForm, you can not"
                                      " use these names as field names: %s"
                                      % str(ModelFormMetaclass.bad_attr_names))
+
+      # Preserve order in model definition
+      original_ordered_names = model_fields.keys()
       model_fields.update(declared_fields)
+      extra_index = len(original_ordered_names)
+      for name, field in model_fields.iteritems():
+        if name in original_ordered_names:
+          field._position_hint = original_ordered_names.index(name)
+        else:
+          field._position_hint = extra_index
+          extra_index += 1
+          
       attrs['_base_fields'] = model_fields
 
       props = opts.model.properties()
