@@ -1,0 +1,36 @@
+from __future__ import division
+from jinja2.runtime import LoopContext, TemplateReference, Macro, Markup, TemplateRuntimeError, missing, concat, escape, markup_join, unicode_join, to_string, TemplateNotFound
+name = '/main.html'
+
+def root(context, environment=environment):
+    l_present_kinds = context.resolve('present_kinds')
+    l_url_for = context.resolve('url_for')
+    l_kinds = context.resolve('kinds')
+    if 0: yield None
+    yield u'<!DOCTYPE html>\n<html>\n\n  <head>\n    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>\n    <title>Nuke Panel</title>\n<script type="text/javascript">\nfunction verifySubmit(form) {\n\tvar confirmation_message;\n\tif (form.nuke_all_kinds.checked) {\n\t\tconfirmation_message = "This will schedule *all* datastore entities to be deleted. Proceed?";\n\t} else {\n\t\tconfirmation_message = "This will schedule all entities of kind \\"" + form.kind.value + "\\"  to be deleted. Proceed?";\n\t}\n\treturn confirm(confirmation_message);\n}\n\n\n</script>\n  </head>\n  <body>\n    <h1>Nuke the datastore</h1>\n    \n<!--    \n    <h2>Schema kinds:</h2>\n      <ul>\n    '
+    l_kind = missing
+    for l_kind in l_kinds:
+        if 0: yield None
+        yield u'\n      <li>%s</li>\n    ' % (
+            escape(l_kind), 
+        )
+    l_kind = missing
+    yield u'\n  </ul>\n-->\n<form action="%s" method="post" onsubmit="return verifySubmit(this);">\n  ' % (
+        escape(context.call(l_url_for, 'nuke/delete')), 
+    )
+    if l_present_kinds:
+        if 0: yield None
+        yield u'\n  <select name="kind" id="kind_dropdown">\n    '
+        l_kind = missing
+        for l_kind in l_present_kinds:
+            if 0: yield None
+            yield u'\n    <option value="%s">%s</option>\n    ' % (
+                escape(l_kind), 
+                escape(l_kind), 
+            )
+        l_kind = missing
+        yield u'\n  </select>\n  '
+    yield u'\n  <input name="nuke_all_kinds" type="checkbox" value="enabled" id="checkbox_all_kinds" onchange="document.getElementById(\'kind_dropdown\').disabled = this.checked" /><label for="checkbox_all_kinds"> All Kinds</label>\n  <input type="submit" value="Mass Delete" />\n</form>\n\n  </body>\n</html>'
+
+blocks = {}
+debug_info = '1=10&27=12&28=15&29=18&32=19&33=21&35=25&36=28&37=32&39=33'
