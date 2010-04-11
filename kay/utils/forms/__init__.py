@@ -779,6 +779,10 @@ class MappingWidget(Widget):
 class FormWidget(MappingWidget):
   """A widget for forms."""
 
+  def __init__(self, field, name, value, errors):
+    MappingWidget.__init__(self, field, name, value, errors)
+    self._action = field.form._action
+
   def get_hidden_fields(self):
     """This method is called by the `hidden_fields` property to return
     a list of (key, value) pairs for the special hidden fields.
@@ -818,6 +822,10 @@ class FormWidget(MappingWidget):
     return html.div(html.input(type='submit', value=label), **attrs)
 
   def render(self, action='', method='post', **attrs):
+    if action:
+      self._field.form._action = action
+    else:
+      action = self._action
     self._attr_setdefault(attrs)
     with_errors = attrs.pop('with_errors', False)
 
@@ -2066,14 +2074,15 @@ class Form(object):
 
   csrf_protected = True
   csrf_key = None
-#    redirect_tracking = True
+#   redirect_tracking = True
 
-  def __init__(self, initial=None):
+  def __init__(self, initial=None, action=''):
     self.request = get_request()
     if initial is None:
       initial = {}
     self.initial = initial
-#        self.invalid_redirect_targets = set()
+#     self.invalid_redirect_targets = set()
+    self._action = action
 
     self._root_field = _bind(self.__class__._root_field, self, {})
     self.reset()
@@ -2128,10 +2137,11 @@ class Form(object):
   def csrf_token(self):
     """The unique CSRF security token for this form."""
     if self.request is None:
-      raise AttributeError('no csrf token because form not bound '
-                           'to request')
+      raise AttributeError('no csrf token because form not bound to request')
     if self.csrf_key is not None:
       csrf_key = self.csrf_key
+    elif self._action:
+      csrf_key = self._action
     else:
       csrf_key = self.request.path
     if hasattr(self.request, 'user'):
