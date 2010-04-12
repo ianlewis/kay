@@ -73,6 +73,8 @@ def compile_dir(env, src_path, dst_path, pattern=r'^[^\.].*\..*[^~]$',
     base_dir = src_path
 
   for filename in listdir(src_path):
+    if filename.startswith("."):
+      continue
     src_name = path.join(src_path, filename)
     dst_name = path.join(dst_path, filename)
 
