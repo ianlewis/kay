@@ -25,6 +25,8 @@ from kay.misc import get_appid
 
 class DatastoreBackend(object):
   def __init__(self):
+    # avoid 'no implementation for kind' error.
+    import_string(settings.AUTH_USER_MODEL)
     if not 'kay.sessions.middleware.SessionMiddleware' in \
           settings.MIDDLEWARE_CLASSES:
       raise ImproperlyConfigured(

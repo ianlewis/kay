@@ -79,6 +79,7 @@ MIDDLEWARE_CLASSES = (
 
 AUTH_USER_BACKEND = 'kay.auth.backends.googleaccount.GoogleBackend'
 AUTH_USER_MODEL = 'kay.auth.models.GoogleUser'
+USER_TIMEZONE_ATTR = 'tz'
 USE_DB_HOOK = False
 
 ACCOUNT_ACTIVATION_DURATION = 3600

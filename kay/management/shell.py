@@ -179,7 +179,7 @@ def any_thread_alive(threads):
       return True
 
 
-def delete_all_entities(models=None, batch_size=20):
+def delete_all_entities(models=None, batch_size=100):
   models_dict = get_all_models_as_dict(only_polymodel_base=True)
   if models is None:
     models = models_dict.values()
@@ -197,7 +197,7 @@ def delete_all_entities(models=None, batch_size=20):
   job_manager = JobManager(target_models)
   threads = []
   for model in target_models:
-    job_collector = JobCollector(job_manager, model)
+    job_collector = JobCollector(job_manager, model, batch_size)
     threads.append(job_collector)
     job_collector.start()
   for i in range(THREAD_NUM):

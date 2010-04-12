@@ -128,13 +128,22 @@ if IS_DEVSERVER:
                                   media_conf.COMPILE_MEDIA_CSS_DEV)
 COMPILE_CSS = _merge_css_config(
   COMPILE_CSS, getattr(settings, 'COMPILE_MEDIA_CSS_COMMON', {}))
+
+if IS_DEVSERVER:
+  COMPILE_CSS = _merge_css_config(
+    COMPILE_CSS, getattr(settings, 'COMPILE_MEDIA_CSS_DEV', {}))
+
 COMPILE_JS = _merge_js_config(copy.deepcopy(COMPILE_COMMON),
                               media_conf.COMPILE_MEDIA_JS)
 if IS_DEVSERVER:
-  COMPILE_JS = _merge_css_config(COMPILE_JS,
-                                 media_conf.COMPILE_MEDIA_JS_DEV)
-COMPILE_JS = _merge_css_config(
+  COMPILE_JS = _merge_js_config(COMPILE_JS,
+                                media_conf.COMPILE_MEDIA_JS_DEV)
+COMPILE_JS = _merge_js_config(
   COMPILE_JS, getattr(settings, 'COMPILE_MEDIA_JS_COMMON', {}))
+
+if IS_DEVSERVER:
+  COMPILE_JS = _merge_js_config(
+    COMPILE_JS, getattr(settings, 'COMPILE_MEDIA_JS_DEV', {}))
 
 #--------------------------------------------------------------
 
@@ -616,6 +625,22 @@ def compile_js_(tag_name, js_config, force):
         ofile.write(concat(src_path))
   finally:
     ofile.close()
+  
+  if selected_tool == 'goog_compiler':
+    comp_config = copy.deepcopy(js_config['goog_common'])
+    comp_config.update(js_config['goog_compiler'])
+    if comp_config['level'] == 'minify':
+      level = 'WHITESPACE_ONLY'
+    elif comp_config['level'] == 'advanced':
+      level = 'ADVANCED_OPTIMIZATIONS'
+    else:
+      level = 'SIMPLE_OPTIMIZATIONS'
+    command_args = '--compilation_level=%s' % level
+    for path in js_config['source_files']:
+      command_args += ' --js %s' % make_input_path_(path)
+    command_args += ' --js_output_file %s' % dest_path
+    command = 'java -jar %s %s' % (comp_config['path'], command_args)
+    command_output = os.popen(command).read()
 
   info = copy.deepcopy(js_config)
   info['output_filename'] = make_output_path_(js_config, js_config['subdir'],

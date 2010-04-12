@@ -22,6 +22,7 @@ import time     # Needed for Windows
 from kay.conf import global_settings
 from kay.misc.lazy import LazyObject
 
+ENVIRONMENT_VARIABLE = "KAY_SETTINGS_MODULE"
 
 class LazySettings(LazyObject):
   """
@@ -47,13 +48,11 @@ class LazySettings(LazyObject):
     """
     Load the settings module passed to the constructor. 
     """
-    try:
-      if not self.settings_module: # If it's set but is an empty string.
-        raise KeyError
-    except KeyError:
-      # NOTE: This is arguably an EnvironmentError, but that causes
-      # problems with Python's interactive help.
-      raise ImportError("Settings cannot be imported")
+    
+    # override settings_module if user has set settings module in the environment variable
+    self.settings_module = os.environ.get(ENVIRONMENT_VARIABLE, self.settings_module)
+    if not self.settings_module: # If it's set but is an empty string.
+      raise KeyError
 
     self._wrapped = Settings(self.settings_module)
     try:

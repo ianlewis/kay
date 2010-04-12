@@ -106,7 +106,11 @@ class KayApp(object):
     if self.app_settings.APP_MOUNT_POINTS.has_key(app):
       return self.app_settings.APP_MOUNT_POINTS.get(app)
     else:
-      return '/%s' % get_app_tailname(app)
+      try:
+        app_mod = import_string(app)
+        return app_mod.mount_point
+      except Exception:
+        return '/%s' % get_app_tailname(app)
 
   def get_installed_apps(self):
     return self.app_settings.INSTALLED_APPS+['kay._internal']

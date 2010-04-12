@@ -10,19 +10,15 @@ Documentation
  * How to contribute to Kay
  * Template strategy
  * registration app
+ * logging settings on tests
+ * How to add your own management scripts
 
 kay
 ---
 
-* Capability for compressing css and js media with i18n.
-
 * It could be better than now to allow installing Kay to somewhere on
   the system paths.
-
 * A script for buildout.
-
-* A capability for veryfying OpenSocial Signed Request.
-
 * A urlfetch stub for testing purpose.
 
 kay.auth
@@ -35,5 +31,3 @@ kay.utils.forms
 ---------------
 
 * Form.freeze() method could be useful in some cases.
-
-

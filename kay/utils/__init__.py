@@ -203,8 +203,13 @@ def get_standard_processors():
   return _standard_context_processors
 
 
-def to_local_timezone(datetime, tzname=settings.DEFAULT_TIMEZONE):
+def to_local_timezone(datetime, tzname=None):
   """Convert a datetime object to the local timezone."""
+  if tzname is None:
+    try:
+      tzname = getattr(local.request.user, settings.USER_TIMEZONE_ATTR)
+    except Exception:
+      tzname = settings.DEFAULT_TIMEZONE
   if datetime.tzinfo is None:
     from pytz import UTC
     datetime = datetime.replace(tzinfo=UTC)
@@ -212,8 +217,13 @@ def to_local_timezone(datetime, tzname=settings.DEFAULT_TIMEZONE):
   return tzinfo.normalize(datetime.astimezone(tzinfo))
 
 
-def to_utc(datetime, tzname=settings.DEFAULT_TIMEZONE):
+def to_utc(datetime, tzname=None):
   """Convert a datetime object to UTC and drop tzinfo."""
+  if tzname is None:
+    try:
+      tzname = getattr(local.request.user, settings.USER_TIMEZONE_ATTR)
+    except Exception:
+      tzname = settings.DEFAULT_TIMEZONE
   from pytz import UTC
   if datetime.tzinfo is None:
     datetime = get_timezone(tzname).localize(datetime)

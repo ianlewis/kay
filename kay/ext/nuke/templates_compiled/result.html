@@ -1,0 +1,16 @@
+from __future__ import division
+from jinja2.runtime import LoopContext, TemplateReference, Macro, Markup, TemplateRuntimeError, missing, concat, escape, markup_join, unicode_join, to_string, TemplateNotFound
+name = '/result.html'
+
+def root(context, environment=environment):
+    l_url_for = context.resolve('url_for')
+    l_result = context.resolve('result')
+    t_1 = environment.filters['safe']
+    if 0: yield None
+    yield u'<!DOCTYPE html>\n<html>\n\n  <head>\n    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>\n    <title>Nuke</title>\n\n  </head>\n  <body>\n    <h1>Nuke Result</h1>\n    %s\n    <p>[<a href="%s">back</a>]\n  </body>\n</html>' % (
+        escape(t_1(l_result)), 
+        escape(context.call(l_url_for, 'nuke/main')), 
+    )
+
+blocks = {}
+debug_info = '1=10&11=11&12=12'
