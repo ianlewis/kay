@@ -119,3 +119,48 @@ Kay は ``appname.urls`` モジュールを検知すると、この ``RuleFactor
 
 .. seealso:: :doc:`views`
 
+
+view に引数を渡す
+-----------------
+
+``<variable_name>`` というようにマークする事で、URL に変数を設定できま
+す。これらの値は view にキーワード引数として渡されます。例をいくつか:
+
+.. code-block:: python
+
+  from werkzeug.routing import EndpointPrefix, Rule
+
+  def make_rules():
+    return [
+      EndpointPrefix('myapp/', [
+	Rule('/', endpoint='index'),
+	Rule('/user/<username>', endpoint='user'),
+	Rule('/post/<int:post_id>', endpoint='post')
+      ]),
+    ]
+
+  all_views = {
+    'myapp/index': 'myapp.views.index',
+    'myapp/user': 'myapp.views.show_user_profile',
+    'myapp/post': 'myapp.views.show_post',
+  }
+
+
+これらの値を受け取れるように view を書いてください。
+
+.. code-block:: python
+
+  # -*- coding: utf-8 -*-
+
+  from werkzeug import Response
+  from kay.utils import render_to_response
+
+  # ..
+
+  def show_user_profile(request, username):
+    # ..
+    # ..
+
+  def show_post(request, post_id)
+    # ..
+    # ..

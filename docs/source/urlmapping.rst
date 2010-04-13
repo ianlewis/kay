@@ -148,3 +148,49 @@ on demand in the equivalent way as follows:
 
 .. seealso:: :doc:`views`
 
+
+How to pass argments to your view
+---------------------------------
+
+You can add variable parts to a URL by marking these sections as
+``<variable_name>``. These parts are passed as keyword argments to
+your views. Here are some examples:
+
+.. code-block:: python
+
+  from werkzeug.routing import EndpointPrefix, Rule
+
+  def make_rules():
+    return [
+      EndpointPrefix('myapp/', [
+	Rule('/', endpoint='index'),
+	Rule('/user/<username>', endpoint='user'),
+	Rule('/post/<int:post_id>', endpoint='post')
+      ]),
+    ]
+
+  all_views = {
+    'myapp/index': 'myapp.views.index',
+    'myapp/user': 'myapp.views.show_user_profile',
+    'myapp/post': 'myapp.views.show_post',
+  }
+
+
+You need to write your views to accept these variables as follows:
+
+.. code-block:: python
+
+  # -*- coding: utf-8 -*-
+
+  from werkzeug import Response
+  from kay.utils import render_to_response
+
+  # ..
+
+  def show_user_profile(request, username):
+    # ..
+    # ..
+
+  def show_post(request, post_id)
+    # ..
+    # ..
