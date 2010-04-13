@@ -99,3 +99,34 @@ names by using ``-v2`` option.
   Ran 2 tests in 0.093s
 
   OK
+
+Output debug log to a specified file
+------------------------------------
+
+You can configure logging for seeing application's log as follows:
+
+.. code-block:: python
+
+  import logging
+  logging.basicConfig(filename="test-debug.log", level=logging.DEBUG)
+
+You can also put similar lines to individual setUp methods:
+
+.. code-block:: python
+
+  import logging
+  import unittest
+
+  from werkzeug import BaseResponse, Client, Request
+  from kay.app import get_application
+  from google.appengine.ext import db
+
+  from myapp.models import Comment
+
+  class MyappTestCase(unittest.TestCase):
+    def setUp(self):
+      logging.basicConfig(filename="test-debug.log", level=logging.DEBUG)
+      app = get_application()
+      self.client = Client(app, BaseResponse)
+    # ..
+    # ..

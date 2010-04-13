@@ -89,3 +89,34 @@ myapp/tests/__init__.py:
   Ran 2 tests in 0.093s
 
   OK
+
+ログの出力先を指定する
+----------------------
+
+アプリケーションのログを見るためには、下記のように logging の設定を行います。
+
+.. code-block:: python
+
+  import logging
+  logging.basicConfig(filename="test-debug.log", level=logging.DEBUG)
+
+同じような行を個別の setUp メソッド内に書くこともできます:
+
+.. code-block:: python
+
+  import logging
+  import unittest
+
+  from werkzeug import BaseResponse, Client, Request
+  from kay.app import get_application
+  from google.appengine.ext import db
+
+  from myapp.models import Comment
+
+  class MyappTestCase(unittest.TestCase):
+    def setUp(self):
+      logging.basicConfig(filename="test-debug.log", level=logging.DEBUG)
+      app = get_application()
+      self.client = Client(app, BaseResponse)
+    # ..
+    # ..
