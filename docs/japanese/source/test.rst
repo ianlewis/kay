@@ -52,14 +52,14 @@ myapp/tests/__init__.py:
   from werkzeug import BaseResponse, Client, Request
   from kay.app import get_application
   from kay.utils.test import (
-    enable_recording, get_last_context, get_last_template
+    init_recording, get_last_context, get_last_template
   )
 
   from myapp.models import Comment
 
   class MyappTestCase(unittest.TestCase):
     def setUp(self):
-      enable_recording()
+      init_recording()
       app = get_application()
       self.client = Client(app, BaseResponse)
 
@@ -77,7 +77,7 @@ myapp/tests/__init__.py:
       comments = Comment.all().fetch(100)
       self.assertEquals(len(comments), 1)
 
-``werkzeug.Client`` クラスを使用すればアプリケーションの動きをテストできます。また ``enable_recording`` を実行した後ならば ``get_last_template`` と ``get_last_context`` 関数で最後に使用した template の名前や context を知る事ができます。
+``werkzeug.Client`` クラスを使用すればアプリケーションの動きをテストできます。また ``init_recording`` を実行した後ならば ``get_last_template`` と ``get_last_context`` 関数で最後に使用した template の名前や context を知る事ができます。
 
 .. seealso:: `Werkzeug test utitilies <http://werkzeug.pocoo.org/documentation/0.5.1/test.html>`_
 

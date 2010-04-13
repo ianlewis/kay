@@ -60,14 +60,14 @@ myapp/tests/__init__.py:
   from werkzeug import BaseResponse, Client, Request
   from kay.app import get_application
   from kay.utils.test import (
-    enable_recording, get_last_context, get_last_template
+    init_recording, get_last_context, get_last_template
   )
 
   from myapp.models import Comment
 
   class MyappTestCase(unittest.TestCase):
     def setUp(self):
-      enable_recording()
+      init_recording()
       app = get_application()
       self.client = Client(app, BaseResponse)
 
@@ -88,7 +88,7 @@ myapp/tests/__init__.py:
 You can test your views by ``werkzeug.Client``. You can use
 ``get_last_template`` and ``get_last_context`` for getting a name of a
 last-used template and last-used context after invoking
-``enable_recording``.
+``init_recording``.
 
 .. seealso:: `Werkzeug test utitilies <http://werkzeug.pocoo.org/documentation/0.5.1/test.html>`_
 

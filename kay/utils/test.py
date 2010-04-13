@@ -16,7 +16,9 @@ def wrapper(self, *args, **kwargs):
   local.used_contexts.append(vars)
   return render_orig(self, *args, **kwargs)
 
-def enable_recording():
+def init_recording():
+  local.used_templates = []
+  local.used_contexts = []
   global wrapped
   if not wrapped:
     Template.render = wrapper
