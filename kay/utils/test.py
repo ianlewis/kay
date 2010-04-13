@@ -30,7 +30,9 @@ def get_templates():
   return local.used_templates
 
 def get_last_template():
-  return get_templates()[-1]
+  templates = get_templates()
+  if templates:
+    return templates[-1]
 
 def get_contexts():
   if not hasattr(local, 'used_contexts'):
@@ -38,4 +40,6 @@ def get_contexts():
   return local.used_contexts
 
 def get_last_context():
-  return get_contexts()[-1]
+  contexts = get_contexts()
+  if contexts:
+    return contexts[-1]
