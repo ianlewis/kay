@@ -39,7 +39,7 @@ myapp/tests/__init__.py:
 テスト用 Client を使用する
 --------------------------
 
-今度は Web アプリとしての動きをテストしてみましょう。それには werkzeug の Client というクラスを使用すると良いでしょう。
+今度は Web アプリとしての動きをテストしてみましょう。それには werkzeug の Client というクラスと ``kay.utils.test`` モジュールを使用すると良いでしょう。
 
 
 myapp/tests/__init__.py:
@@ -48,14 +48,18 @@ myapp/tests/__init__.py:
 
   import unittest
 
+  from google.appengine.ext import db
   from werkzeug import BaseResponse, Client, Request
   from kay.app import get_application
-  from google.appengine.ext import db
+  from kay.utils.test import (
+    enable_recording, get_last_context, get_last_template
+  )
 
   from myapp.models import Comment
 
   class MyappTestCase(unittest.TestCase):
     def setUp(self):
+      enable_recording()
       app = get_application()
       self.client = Client(app, BaseResponse)
 
@@ -64,15 +68,16 @@ myapp/tests/__init__.py:
 
     def test_post(self):
       response = self.client.get('/')
-      import re
-      m = re.search(r'name="_csrf_token" value="([^"]+)"', response.data)
+      used_template = get_last_template()
+      used_context = get_last_context()
+      csrf_token = used_context['form'].csrf_token
       response = self.client.post('/', data={'comment': 'Hello',
-					     '_csrf_token': m.group(1)},
+					     '_csrf_token': csrf_token},
 				  follow_redirects=True)
       comments = Comment.all().fetch(100)
       self.assertEquals(len(comments), 1)
 
-``werkzeug.Client`` クラスを使用すればアプリケーションの動きをテストできます。現在のところ、Response の解析は手動で(上記の例では re モジュールを使用しています)行うことになります。
+``werkzeug.Client`` クラスを使用すればアプリケーションの動きをテストできます。また ``enable_recording`` を実行した後ならば ``get_last_template`` と ``get_last_context`` 関数で最後に使用した template の名前や context を知る事ができます。
 
 .. seealso:: `Werkzeug test utitilies <http://werkzeug.pocoo.org/documentation/0.5.1/test.html>`_
 
