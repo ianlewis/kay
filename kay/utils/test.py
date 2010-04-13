@@ -6,19 +6,24 @@ wrapped = False
 render_orig = Template.render
 
 def wrapper(self, *args, **kwargs):
-  import logging
-  if not hasattr(local, '_used_templates'):
-    local._used_templates = []
-  if not hasattr(local, '_used_contexts'):
-    local._used_contexts = []
   vars = dict(*args, **kwargs)
   local._used_templates.append(self.name)
   local._used_contexts.append(vars)
   return render_orig(self, *args, **kwargs)
 
-def init_recording():
+def init_recordings():
   local._used_templates = []
   local._used_contexts = []
+
+def disable_recording():
+  init_recordings()
+  global wrapped
+  if wrapped:
+    Template.render = render_orig
+    wrapped = False
+
+def init_recording():
+  init_recordings()
   global wrapped
   if not wrapped:
     Template.render = wrapper
