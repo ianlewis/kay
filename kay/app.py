@@ -23,7 +23,7 @@ from werkzeug import (
   Response, redirect
 )
 from werkzeug.routing import (
-  Submount, RequestRedirect
+  Submount, RequestRedirect, EndpointPrefix
 )
 from werkzeug.utils import import_string
 from jinja2 import (
@@ -140,10 +140,20 @@ class KayApp(object):
           continue
       make_rules = getattr(url_mod, 'make_rules', None)
       if make_rules:
-        self.url_map.add(Submount(mountpoint, make_rules()))
+        rules = make_rules()
+      else:
+        rules = []
       all_views = getattr(url_mod, 'all_views', None)
       if all_views:
         self.views.update(all_views)
+      if hasattr(url_mod, 'view_groups'):
+        for view_group in getattr(url_mod, 'view_groups'):
+          try:
+            rules = rules + [EndpointPrefix(app+'/', [view_group.get_rules()])]
+            self.views.update(view_group.get_views(prefix=app+'/'))
+          except Exception, e:
+            logging.warn("Failed to mount ViewGroup: %s", e)
+      self.url_map.add(Submount(mountpoint, rules))
     # TODO move the block bellow to somewhere else
     if 'kay.auth.middleware.AuthenticationMiddleware' in \
           self.app_settings.MIDDLEWARE_CLASSES:

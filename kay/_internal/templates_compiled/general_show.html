@@ -1,0 +1,27 @@
+from __future__ import division
+from jinja2.runtime import LoopContext, TemplateReference, Macro, Markup, TemplateRuntimeError, missing, concat, escape, markup_join, unicode_join, to_string, TemplateNotFound
+name = '/general_show.html'
+
+def root(context, environment=environment):
+    l_model = context.resolve('model')
+    l__ = context.resolve('_')
+    l_entity = context.resolve('entity')
+    if 0: yield None
+    yield u'<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">\n<html>\n  <head>\n    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">\n    <title>%s</title>\n  </head>\n  <body>\n    <div id="main">\n      <dl>\n      ' % (
+        escape(context.call(l__, ('Detail of a entity of %s' % l_model))), 
+    )
+    l_prop_name = missing
+    l_entity = context.resolve('entity')
+    for l_prop_name in context.call(environment.getattr(context.call(environment.getattr(l_entity, 'fields')), 'keys')):
+        if 0: yield None
+        yield u'\n      <dt>%s</dt>\n      <dd>%s</dd>\n      ' % (
+            escape(l_prop_name), 
+            escape(context.call(environment.getattr(l_entity, '__getattribute__'), l_prop_name)), 
+        )
+    l_prop_name = missing
+    yield u'\n      </dl>\n    </div>\n    <a href="javascript: history.back();">%s</a>\n  </body>\n</html>' % (
+        escape(context.call(l__, 'Go Back')), 
+    )
+
+blocks = {}
+debug_info = '1=10&5=11&10=15&11=18&12=19&13=22&16=23'
