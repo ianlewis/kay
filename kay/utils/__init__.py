@@ -208,6 +208,8 @@ def to_local_timezone(datetime, tzname=None):
   if tzname is None:
     try:
       tzname = getattr(local.request.user, settings.USER_TIMEZONE_ATTR)
+      if tzname is None:
+        tzname = settings.DEFAULT_TIMEZONE
     except Exception:
       tzname = settings.DEFAULT_TIMEZONE
   if datetime.tzinfo is None:
