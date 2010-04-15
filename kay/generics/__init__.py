@@ -24,6 +24,7 @@ from kay.utils.flash import (
   set_flash, get_flash
 )
 from kay.i18n import gettext as _
+from kay.view_group import ViewGroup
 
 endpoints = {
   'list': "list_$model",
@@ -44,7 +45,7 @@ generic_rules = RuleTemplate([
 ])
 
 
-class CRUDViewGroup(object):
+class CRUDViewGroup(ViewGroup):
   entities_per_page = 20
   templates = {
     'list': '_internal/general_list.html',
@@ -53,24 +54,11 @@ class CRUDViewGroup(object):
   }
   forms = {}
   form = None
-  add_app_prefix_to_endpoint = True
 
   def __init__(self, model=None):
     self.model = model or self.model
     self.model_name = self.model.__name__
     self.model_name_lower = self.model_name.lower()
-
-  def get_rules(self, app):
-    if self.add_app_prefix_to_endpoint:
-      return [EndpointPrefix(app+'/', [self._get_rules()])]
-    else:
-      return [self._get_rules()]
-
-  def get_views(self, app):
-    if self.add_app_prefix_to_endpoint:
-      return self._get_views(app+'/')
-    else:
-      return self._get_views()
 
   def get_additional_context_on_create(self, request, form):
     return {}
@@ -203,7 +191,7 @@ class CRUDViewGroup(object):
     return redirect(self.get_list_url())
     
   def _get_rules(self):
-    return generic_rules(model=self.model_name_lower)
+    return [generic_rules(model=self.model_name_lower)]
 
   def _get_views(self, prefix=None):
     self.prefix = prefix
