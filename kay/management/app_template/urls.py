@@ -1,19 +1,10 @@
 # -*- coding: utf-8 -*-
 # %app_name%.urls
 
-
-from werkzeug.routing import (
-  Map, Rule, Submount,
-  EndpointPrefix, RuleTemplate,
+from kay.view_group import (
+  ViewGroup, URL
 )
 
-def make_rules():
-  return [
-    EndpointPrefix('%app_name%/', [
-      Rule('/', endpoint='index'),
-    ]),
-  ]
-
-all_views = {
-  '%app_name%/index': '%app_name%.views.index',
-}
+view_groups = [
+  ViewGroup(URL('/', endpoint='index', view='%app_name%.views.index'))
+]
