@@ -181,6 +181,7 @@ class CRUDViewGroup(object):
                                'title': title,
                                },
                               processors=(self.url_processor,))
+
   def create(self, *args, **kwargs):
     return self.create_or_update(*args, **kwargs)
 
