@@ -2,7 +2,7 @@
 Using generic view groups
 =========================
 
-.. Notice::
+.. Note::
 
    This feature is still an experimental. The implementation might
    change in the future.
