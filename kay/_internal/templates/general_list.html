@@ -7,6 +7,9 @@
   <body>
     <a href="{{ create_url() }}">{{ _('Create new entity') }}</a>
     <div id="main">
+      <div id="message" style="font-weight: bold; color: #DDAAAA;">
+        {{ message }}
+      </div>
       {% for entity in entities %}
         <a href="{{ detail_url(entity) }}">{{ entity }}</a>
         <a href="{{ update_url(entity) }}">{{ _('Update') }}</a>

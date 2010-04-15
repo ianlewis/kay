@@ -10,7 +10,7 @@ Kay generics.
 from string import Template
 
 from werkzeug.routing import (
-  Rule, RuleTemplate,
+  Rule, RuleTemplate, EndpointPrefix,
 )
 from werkzeug.exceptions import NotFound
 from werkzeug import (
@@ -20,7 +20,10 @@ from werkzeug import (
 from kay.utils import (
   render_to_response, url_for
 )
-from kay.i18n import lazy_gettext as _
+from kay.utils.flash import (
+  set_flash, get_flash
+)
+from kay.i18n import gettext as _
 
 endpoints = {
   'list': "list_$model",
@@ -50,11 +53,24 @@ class CRUDViewGroup(object):
   }
   forms = {}
   form = None
+  add_app_prefix_to_endpoint = True
 
   def __init__(self, model=None):
     self.model = model or self.model
     self.model_name = self.model.__name__
     self.model_name_lower = self.model_name.lower()
+
+  def get_rules(self, app):
+    if self.add_app_prefix_to_endpoint:
+      return [EndpointPrefix(app+'/', [self._get_rules()])]
+    else:
+      return [self._get_rules()]
+
+  def get_views(self, app):
+    if self.add_app_prefix_to_endpoint:
+      return self._get_views(app+'/')
+    else:
+      return self._get_views()
 
   def get_additional_context_on_create(self, request, form):
     return {}
@@ -110,6 +126,7 @@ class CRUDViewGroup(object):
                               {'model': self.model_name,
                                'entities': entities,
                                'cursor': next_cursor,
+                               'message': get_flash(),
                               },
                               processors=(self.url_processor,))
 
@@ -148,11 +165,13 @@ class CRUDViewGroup(object):
         if key:
           additional_context = self.get_additional_context_on_update(request,
                                                                      form)
+          message = _("An entity is updated successfully.")
         else:
           additional_context = self.get_additional_context_on_create(request,
                                                                      form)
+          message = _("A new entity is created successfully.")
         new_entity = form.save(**additional_context)
-        # TODO: flash message
+        set_flash(message)
         return redirect(self.get_list_url())
     return render_to_response(self.get_template('update'),
                               {'form': form.as_widget(),
@@ -173,15 +192,14 @@ class CRUDViewGroup(object):
     if entity is None:
       raise NotFound("Specified %s not found." % self.model_name)
     entity.delete()
-    # TODO: flash message
+    set_flash(_("An entity is deleted successfully."))
     # TODO: back to original page
     return redirect(self.get_list_url())
     
-
-  def get_rules(self):
+  def _get_rules(self):
     return generic_rules(model=self.model_name_lower)
 
-  def get_views(self, prefix=None):
+  def _get_views(self, prefix=None):
     self.prefix = prefix
     ret = {}
     for key, val in endpoints.iteritems():
