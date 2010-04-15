@@ -79,7 +79,10 @@ class CRUDViewGroup(object):
     return {}
 
   def get_query(self):
-    return self.model.all()
+    if hasattr(self.model, 'created'):
+      return self.model.all().order('-created')
+    else:
+      return self.model.all()
 
   def get_template(self, name):
     return self.templates[name]
@@ -178,9 +181,11 @@ class CRUDViewGroup(object):
                                'title': title,
                                },
                               processors=(self.url_processor,))
-    
-  create = create_or_update
-  update = create_or_update
+  def create(self, *args, **kwargs):
+    return self.create_or_update(*args, **kwargs)
+
+  def update(self, *args, **kwargs):
+    return self.create_or_update(*args, **kwargs)
 
   def delete(self, request, key):
     from google.appengine.api.datastore_errors import BadKeyError
