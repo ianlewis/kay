@@ -4,12 +4,12 @@
 # Following few lines is an example urlmapping with a newer interface.
 
 """
-from kay.view_group import (
-  ViewGroup, URL
+from kay.routing import (
+  ViewGroup, Rule
 )
 
 view_groups = [
-  ViewGroup(URL('/', endpoint='index', view='%app_name%.views.index'))
+  ViewGroup(Rule('/', endpoint='index', view='%app_name%.views.index'))
 ]
 """
 
