@@ -10,7 +10,7 @@ Kay generics.
 from string import Template
 
 from werkzeug.routing import (
-  Rule, RuleTemplate, EndpointPrefix,
+  Rule, RuleTemplate, EndpointPrefix, Submount,
 )
 from werkzeug.exceptions import NotFound
 from werkzeug import (
@@ -34,16 +34,6 @@ endpoints = {
   'delete': "delete_$model",
 }
 
-# Move this rules to class attr for customization
-generic_rules = RuleTemplate([
-  Rule('/$model/list', endpoint=endpoints['list']),
-  Rule('/$model/list/<cursor>', endpoint=endpoints['list']),
-  Rule('/$model/show/<key>', endpoint=endpoints['show']),
-  Rule('/$model/create', endpoint=endpoints['create']),
-  Rule('/$model/update/<key>', endpoint=endpoints['update']),
-  Rule('/$model/delete/<key>', endpoint=endpoints['delete']),
-])
-
 
 class CRUDViewGroup(ViewGroup):
   entities_per_page = 20
@@ -54,6 +44,15 @@ class CRUDViewGroup(ViewGroup):
   }
   forms = {}
   form = None
+  rule_template = RuleTemplate([
+    Rule('/$model/list', endpoint=endpoints['list']),
+    Rule('/$model/list/<cursor>', endpoint=endpoints['list']),
+    Rule('/$model/show/<key>', endpoint=endpoints['show']),
+    Rule('/$model/create', endpoint=endpoints['create']),
+    Rule('/$model/update/<key>', endpoint=endpoints['update']),
+    Rule('/$model/delete/<key>', endpoint=endpoints['delete']),
+  ])
+  url_prefix = None
 
   def __init__(self, model=None):
     self.model = model or self.model
@@ -191,7 +190,11 @@ class CRUDViewGroup(ViewGroup):
     return redirect(self.get_list_url())
     
   def _get_rules(self):
-    return [generic_rules(model=self.model_name_lower)]
+    if self.url_prefix:
+      return [Submount(self.url_prefix,
+                       [self.rule_template(model=self.model_name_lower)])]
+    else:
+      return [self.rule_template(model=self.model_name_lower)]
 
   def _get_views(self, prefix=None):
     self.prefix = prefix
