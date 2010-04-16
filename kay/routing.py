@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Kay generics.
+Kay routing.
 
 :Copyright: (c) 2009 Takashi Matsuo <tmatsuo@candit.jp> All rights reserved.
 :license: BSD, see LICENSE for more details.
@@ -10,39 +10,47 @@ Kay generics.
 import logging
 
 from werkzeug.routing import (
-  Rule, EndpointPrefix
+  EndpointPrefix, Submount
 )
+from werkzeug.routing import Rule as OriginalRule
 
-class URL(object):
-  __slots__ = ('rule', 'view')
+class Rule(OriginalRule):
   def __init__(self, pattern, **kwargs):
     try:
-      view = kwargs.pop('view')
+      self.view = kwargs.pop('view')
     except KeyError:
-      view = None
-    self.rule = Rule(pattern, **kwargs)
-    self.view = view
+      self.view = None
+    OriginalRule.__init__(self, pattern, **kwargs)
 
 class ViewGroup(object):
   add_app_prefix_to_endpoint = True
+  url_prefix = None
 
-  def __init__(self, *args):
+  def __init__(self, *args, **kwargs):
+    if kwargs.has_key('add_app_prefix_to_endpoint'):
+      self.add_app_prefix_to_endpoint = kwargs['add_app_prefix_to_endpoint']
+    if kwargs.has_key('url_prefix'):
+      self.url_prefix = kwargs['url_prefix']
     self.rules = []
     self.views = {}
-    for url in args:
-      if not isinstance(url, URL):
+    for rule in args:
+      if not isinstance(rule, Rule):
         continue
-      self.rules.append(url.rule)
-      if self.views.has_key(url.rule.endpoint):
+      self.rules.append(rule)
+      if self.views.has_key(rule.endpoint):
         logging.info('An endpoint is already configured, skipped.')
       else:
-        self.views[url.rule.endpoint] = url.view
+        self.views[rule.endpoint] = rule.view
 
   def get_rules(self, app):
     if self.add_app_prefix_to_endpoint:
-      return [EndpointPrefix(app+'/', self._get_rules())]
+      ret = [EndpointPrefix(app+'/', self._get_rules())]
     else:
-      return self._get_rules()
+      ret = self._get_rules()
+    if self.url_prefix:
+      return [Submount(self.url_prefix, ret)]
+    else:
+      return ret
 
   def get_views(self, app):
     if self.add_app_prefix_to_endpoint:

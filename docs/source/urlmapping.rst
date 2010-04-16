@@ -194,3 +194,61 @@ You need to write your views to accept these variables as follows:
   def show_post(request, post_id)
     # ..
     # ..
+
+
+Introducing a new interface for urlmapping
+------------------------------------------
+
+.. Note::
+
+  This interface is still under experimental stage, so detailed
+  implementation/usage might change in the future.
+
+In the new urlmapping system, you need to define ``view_groups``
+global variable in your urls.py. The value must be a list or tuple of
+ViewGroup instances.
+
+``ViewGroup`` is a class which holds url rules and endpoint-view
+mappings as its instance attributes. You can pass unlimited number of
+``Rule`` instances to a constructor method of this class.
+
+A constructor of ``Rule`` class accepts not only all the arguments
+suitable for ``werkzeug.routing.Rule`` class's constructor but also
+accepts ``view`` keyword argument.
+
+Let's see the simplest example.
+
+urls.py:
+
+.. code-block:: python
+
+  from kay.view_group import (
+    ViewGroup, Rule
+  )
+
+  view_groups = [
+    ViewGroup(Rule('/', endpoint='index', view='myapp.views.index'))
+  ]
+
+By default, endpoint is prefixed with ``app_name/`` automatically, so
+in this example, you need to pass 'myapp/index' to ``url_for()``
+helper function.
+
+To suppress this prefixing, you can just pass
+``add_app_prefix_to_endpoint`` keyword argument with ``False`` value.
+You can also define your own ViewGroup subclass and override
+``add_app_prefix_to_endpoint`` class attribute to False:
+
+Suppressing the prefix:
+
+.. code-block:: python
+
+  from kay.view_group import (
+    ViewGroup, Rule
+  )
+
+  view_groups = [
+    ViewGroup(Rule('/', endpoint='index', view='myapp.views.index'),
+              add_app_prefix_to_endpoint=False)
+  ]
+

@@ -24,7 +24,7 @@ from kay.utils.flash import (
   set_flash, get_flash
 )
 from kay.i18n import gettext as _
-from kay.view_group import ViewGroup
+from kay.routing import ViewGroup
 
 endpoints = {
   'list': "list_$model",
@@ -52,9 +52,9 @@ class CRUDViewGroup(ViewGroup):
     Rule('/$model/update/<key>', endpoint=endpoints['update']),
     Rule('/$model/delete/<key>', endpoint=endpoints['delete']),
   ])
-  url_prefix = None
 
-  def __init__(self, model=None):
+  def __init__(self, model=None, **kwargs):
+    super(CRUDViewGroup, self).__init__(**kwargs)
     self.model = model or self.model
     self.model_name = self.model.__name__
     self.model_name_lower = self.model_name.lower()
@@ -190,11 +190,7 @@ class CRUDViewGroup(ViewGroup):
     return redirect(self.get_list_url())
     
   def _get_rules(self):
-    if self.url_prefix:
-      return [Submount(self.url_prefix,
-                       [self.rule_template(model=self.model_name_lower)])]
-    else:
-      return [self.rule_template(model=self.model_name_lower)]
+    return [self.rule_template(model=self.model_name_lower)]
 
   def _get_views(self, prefix=None):
     self.prefix = prefix
