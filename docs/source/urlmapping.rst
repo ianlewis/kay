@@ -222,7 +222,7 @@ urls.py:
 
 .. code-block:: python
 
-  from kay.view_group import (
+  from kay.routing import (
     ViewGroup, Rule
   )
 
@@ -243,7 +243,7 @@ Suppressing the prefix:
 
 .. code-block:: python
 
-  from kay.view_group import (
+  from kay.routing import (
     ViewGroup, Rule
   )
 
