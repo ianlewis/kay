@@ -252,3 +252,19 @@ Suppressing the prefix:
               add_app_prefix_to_endpoint=False)
   ]
 
+
+Please be aware an endpoint which is defined once will never be
+overridden by following definition, because endpoint-view mapping is
+just a dictionary.
+
+If you need to define two or more Rules with the same endpoint, you
+can omit redundant view keyword arguments in this case as follows:
+
+.. code-block:: python
+
+  view_groups = [
+    ViewGroup(
+      Rule('/list_entities', endpoint='index', view='myapp.views.index'),
+      Rule('/list_entities/<cursor>', endpoint='index')
+    )
+  ]
