@@ -145,7 +145,7 @@ class Property(db.Property):
                                'initial' not in kwargs):
         choices.append(('', '---------'))
       for choice in self.choices:
-        choices.append((str(choice), unicode(choice)))
+        choices.append((unicode(choice), unicode(choice)))
       defaults['choices'] = choices
       form_class = forms.ChoiceField
     if self.default is not None:
