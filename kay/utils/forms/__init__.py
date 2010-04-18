@@ -1471,7 +1471,6 @@ class ModelField(Field):
       if self.required:
         raise ValidationError(self.messages['required'])
       return None
-    value = self._coerce_value(value)
     self._prepare_query()
     tmp_query = copy.copy(self.query)
     if self.key is None:
@@ -1486,9 +1485,6 @@ class ModelField(Field):
       raise ValidationError(self.messages['not_found'] %
                             {'value': value})
     return rv
-
-  def _coerce_value(self, value):
-    return value
 
   def to_primitive(self, value):
     if value is None:
@@ -1554,12 +1550,6 @@ class HiddenModelField(ModelField):
     ModelField.__init__(self, model, key, None, None, required,
                         message, validators, widget, messages,
                         default)
-
-  def _coerce_value(self, value):
-    try:
-      return int(value)
-    except (TypeError, ValueError):
-      raise ValidationError(self.messages['invalid'])
 
 
 class ChoiceField(Field):
