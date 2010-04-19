@@ -131,7 +131,157 @@ So, for an opener, you can copy
 ``kay/_internal/tempaltes/general_***.html`` to your application's
 template directory, and you can edit those files as you like.
 
+
+Giving additional context on creating/updating entities
+-------------------------------------------------------
+
+Sometimes you need to have some additional values on creating/updating
+entities other than a modelform takes care about. You can define
+``get_additional_context_on_create`` or
+``get_additional_context_on_update`` methods on your own CRUDView
+classes for this purpose.
+
+These methods must receive ``request`` and ``form`` instances as
+arguments, and must return a dictionary. This dictionary will be
+passed to ``save()`` method of your ModelForm instance.
+
+For example, the default ``get_additional_context_on_create`` of the
+base ``CRUDViewGroup`` class is as follows:
+
+.. code-block:: python
+
+  def get_additional_context_on_create(self, request, form):
+    if self.owner_attr:
+      if request.user.is_anonymous():
+        owner = None
+      else:
+        owner = request.user.key()
+      return {self.owner_attr: owner}
+    else:
+      return {}
+
+
+Setting owner_attr class attribute
+----------------------------------
+
+As you can see in above example, you can set ``owner_attr`` class
+attribute for configuring which attribute is representing entities'
+owner. Here is an another example which is a bit modifiedd from above
+example for storing current user in ``owner`` property.
+
+
+myapp/models.py
+
+.. code-block:: python
+
+  # -*- coding: utf-8 -*-
+  # myapp.models
+
+  from google.appengine.ext import db
+
+  # Create your models here.
+
+  class MyModel(db.Model):
+    comment = db.StringProperty()
+    owner = db.ReferenceProperty()
+
+    def __unicode__(self):
+      return self.comment
+
+I've just added one property.
+
+myapp/forms.py
+
+.. code-block:: python
+
+  from kay.utils.forms.modelform import ModelForm
+
+  from myapp.models import MyModel
+
+  class MyForm(ModelForm):
+    class Meta:
+      model = MyModel
+      exclude = ('owner',)
+
+I've exclude it from autogenerating fields.
+
+myapp/urls.py
+
+.. code-block:: python
+
+  # -*- coding: utf-8 -*-
+  # myapp.urls
+
+  from kay import generics
+
+  from myapp.forms import MyForm
+  from myapp.models import MyModel
+
+  class MyCRUDViewGroup(generics.CRUDViewGroup):
+    model = MyModel
+    form = MyForm
+    owner_attr = 'owner'
+
+  view_groups = [MyCRUDViewGroup()]
+
+
+Thus, current user is stored as ``owner`` property on creation of
+every entity.
+
+.. Note::
+
+  Above example shows how to store current user to a particular
+  property, it definitely works, but it is easier using
+  ``kay.db.OwnerProperty`` for this purpose. If you use this property,
+  you don't need set ``owner_attr`` class attribute any more. So, I'd
+  recommend you to use ``kay.db.OwnerProperty`` instead.
+
+
+Filter which entity to show on the list
+---------------------------------------
+
+You can control which entity to show on the list by defining a
+``get_query`` instance method on your own CRUDViewGroup subclass.
+
+An example bellow shows how to show entities owned by current user:
+
+.. code-block:: python
+
+   class MyCRUDViewGroup(generics.CRUDViewGroup):
+     model = MyModel
+     form = MyForm
+
+     def get_query(self, request):
+       return MyModel.all().filter('owner =', request.user).order('-created')
+
+As you can see, get_query receives only current request object as its
+argument, and must return ``Query`` instance.
+
 Access control
 --------------
 
-TODO
+You can limit a particular operation to a particular set of users by
+defining ``authorize`` instance method on your own CRUDViewGroup
+subclass. These operations are classified in ``list``, ``show``,
+``create``, ``update``, ``delete``.
+
+``kay.generics`` package has useful presets for this method, so you
+can choose one if you like.
+
+* kay.generics.login_required
+* kay.generics.admin_required
+* kay.generics.only_owner_can_write
+* kay.generics.only_owner_can_write_except_for_admin
+
+An example bellow shows how to use one of these presets:
+
+.. code-block:: python
+
+
+   class MyCRUDViewGroup(generics.CRUDViewGroup):
+     model = MyModel
+     form = MyForm
+     authorize = generics.only_owner_can_write_except_for_admin
+
+
+TODO: detailed docs about ``authorize`` method.

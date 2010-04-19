@@ -9,6 +9,7 @@ Kay generics.
 
 from string import Template
 
+from google.appengine.ext import db
 from werkzeug.routing import (
   Rule, RuleTemplate, EndpointPrefix, Submount,
 )
@@ -22,6 +23,7 @@ from werkzeug import (
 from kay.utils import (
   render_to_response, url_for
 )
+from kay.db import OwnerProperty
 from kay.utils.flash import (
   set_flash, get_flash
 )
@@ -43,14 +45,39 @@ OPE_CREATE = 'create'
 OPE_UPDATE = 'update'
 OPE_DELETE = 'delete'
 
+
+# presets for authorization
+
+def login_required(self, request, operation, obj=None):
+  if request.user.is_anonymous():
+    raise NotAuthorized()
+
+def admin_required(self, request, operation, obj=None):
+  if not request.user.is_admin:
+    raise NotAuthorized()
+
 def only_owner_can_write(self, request, operation, obj=None):
   if operation == OPE_CREATE:
     if request.user.is_anonymous():
       raise NotAuthorized()
   elif operation == OPE_UPDATE or operation == OPE_DELETE:
-    owner = getattr(obj, self.owner_attr)
+    if self.owner_attr:
+      owner = getattr(obj, self.owner_attr)
+    else:
+      owner = None
+      for key, val in obj.fields().iteritems():
+        if isinstance(val, OwnerProperty):
+          owner = getattr(obj, key)
+      if owner is None:
+        raise NotAuthorized()
     if owner != request.user:
       raise NotAuthorized()
+
+def only_owner_can_write_except_for_admin(self, request, operation, obj=None):
+  if request.user.is_admin:
+    return True
+  else:
+    return only_owner_can_write(self, request, operation, obj)
 
 class CRUDViewGroup(ViewGroup):
   entities_per_page = 20
@@ -91,8 +118,13 @@ class CRUDViewGroup(ViewGroup):
     return {}
 
   def get_query(self, request):
-    if hasattr(self.model, 'created'):
-      return self.model.all().order('-created')
+    created_timestamp_name = None
+    for k, v in self.model.fields().iteritems():
+      if isinstance(v, db.DateTimeProperty):
+        if hasattr(v, 'auto_now_add') and v.auto_now_add:
+          created_timestamp_name = k
+    if created_timestamp_name:
+      return self.model.all().order('-%s' % created_timestamp_name)
     else:
       return self.model.all()
 
@@ -155,8 +187,10 @@ class CRUDViewGroup(ViewGroup):
       q = q.with_cursor(cursor)
     entities = q.fetch(self.entities_per_page)
     next_cursor = q.cursor()
-    q = q.with_cursor(next_cursor)
-    if q.get() is None:
+
+    q2 = self.get_query(request)
+    q2.with_cursor(next_cursor)
+    if q2.get() is None:
       next_cursor = None
     return render_to_response(self.get_template(request, OPE_LIST),
                               {'model': self.model_name,
