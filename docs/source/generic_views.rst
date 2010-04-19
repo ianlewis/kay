@@ -266,7 +266,7 @@ subclass. These operations are classified in ``list``, ``show``,
 ``create``, ``update``, ``delete``.
 
 ``kay.generics`` package has useful presets for this method, so you
-can choose one if you like.
+can choose one of them if you like.
 
 * kay.generics.login_required
 * kay.generics.admin_required
