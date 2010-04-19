@@ -20,3 +20,7 @@ class ImproperlyConfigured(Exception):
 class SuspiciousOperation(Exception):
   """Assumes that user did something suspicious."""
   pass
+
+class NotAuthorized(Exception):
+  """User is not permitted to do something."""
+  pass

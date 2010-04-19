@@ -65,12 +65,12 @@ myapp/urls.py
   # -*- coding: utf-8 -*-
   # myapp.urls
 
-  from kay.generics import CRUDViewGroup
+  from kay import generics
 
   from myapp.forms import MyForm
   from myapp.models import MyModel
 
-  class MyCRUDViewGroup(CRUDViewGroup):
+  class MyCRUDViewGroup(generics.CRUDViewGroup):
     model = MyModel
     form = MyForm
 
