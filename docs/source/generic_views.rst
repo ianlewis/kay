@@ -250,8 +250,8 @@ An example bellow shows how to use one of these presets:
 .. code-block:: python
 
    class MyCRUDViewGroup(generics.CRUDViewGroup):
-     model = MyModel
-     form = MyForm
+     model = 'myapp.models.MyModel'
+     form = 'myapp.forms.MyForm'
      authorize = generics.only_owner_can_write_except_for_admin
 
 TODO: detailed docs about ``authorize`` method.
