@@ -117,6 +117,19 @@ You can set ``templates`` class attribute for using your own templates for rende
       'update': 'myapp/mymodel_update.html'
     }
 
+Default templates is set as follows:
+
+.. code-block:: python
+
+  templates = {
+    'list': '_internal/general_list.html',
+    'show': '_internal/general_show.html',
+    'update': '_internal/general_update.html',
+  }
+
+So, for an opener, you can copy
+``kay/_internal/tempaltes/general_***.html`` to your application's
+template directory, and you can edit those files as you like.
 
 Access control
 --------------

@@ -68,8 +68,9 @@ for app in settings.INSTALLED_APPS:
       if name.startswith("action_"):
         locals()[name] = getattr(management_mod, name)
         additional_actions.append(name)
-  except Exception:
-    pass
+  except Exception, e:
+    sys.stderr.write("Failed to import management scripts from "
+                     "installed apps: %s" % e)
 
 __all__ = [
   'runserver_passthru_argv', 'startapp', 'do_appcfg_passthru_argv',
