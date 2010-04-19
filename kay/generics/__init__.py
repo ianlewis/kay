@@ -19,6 +19,7 @@ from werkzeug.exceptions import (
 from werkzeug import (
   Response, redirect
 )
+from werkzeug.utils import import_string
 
 from kay.utils import (
   render_to_response, url_for
@@ -39,11 +40,11 @@ endpoints = {
   'delete': "delete_$model",
 }
 
-OPE_LIST = 'list'
-OPE_SHOW = 'show'
-OPE_CREATE = 'create'
-OPE_UPDATE = 'update'
-OPE_DELETE = 'delete'
+OP_LIST = 'list'
+OP_SHOW = 'show'
+OP_CREATE = 'create'
+OP_UPDATE = 'update'
+OP_DELETE = 'delete'
 
 
 # presets for authorization
@@ -57,10 +58,10 @@ def admin_required(self, request, operation, obj=None):
     raise NotAuthorized()
 
 def only_owner_can_write(self, request, operation, obj=None):
-  if operation == OPE_CREATE:
+  if operation == OP_CREATE:
     if request.user.is_anonymous():
       raise NotAuthorized()
-  elif operation == OPE_UPDATE or operation == OPE_DELETE:
+  elif operation == OP_UPDATE or operation == OP_DELETE:
     if self.owner_attr:
       owner = getattr(obj, self.owner_attr)
     else:
@@ -82,27 +83,34 @@ def only_owner_can_write_except_for_admin(self, request, operation, obj=None):
 class CRUDViewGroup(ViewGroup):
   entities_per_page = 20
   templates = {
-    OPE_LIST: '_internal/general_list.html',
-    OPE_SHOW: '_internal/general_show.html',
-    OPE_UPDATE: '_internal/general_update.html',
+    OP_LIST: '_internal/general_list.html',
+    OP_SHOW: '_internal/general_show.html',
+    OP_UPDATE: '_internal/general_update.html',
   }
   forms = {}
   form = None
   owner_attr = None
   rule_template = RuleTemplate([
-    Rule('/$model/list', endpoint=endpoints[OPE_LIST]),
-    Rule('/$model/list/<cursor>', endpoint=endpoints[OPE_LIST]),
-    Rule('/$model/show/<key>', endpoint=endpoints[OPE_SHOW]),
-    Rule('/$model/create', endpoint=endpoints[OPE_CREATE]),
-    Rule('/$model/update/<key>', endpoint=endpoints[OPE_UPDATE]),
-    Rule('/$model/delete/<key>', endpoint=endpoints[OPE_DELETE]),
+    Rule('/$model/list', endpoint=endpoints[OP_LIST]),
+    Rule('/$model/list/<cursor>', endpoint=endpoints[OP_LIST]),
+    Rule('/$model/show/<key>', endpoint=endpoints[OP_SHOW]),
+    Rule('/$model/create', endpoint=endpoints[OP_CREATE]),
+    Rule('/$model/update/<key>', endpoint=endpoints[OP_UPDATE]),
+    Rule('/$model/delete/<key>', endpoint=endpoints[OP_DELETE]),
   ])
 
   def __init__(self, model=None, **kwargs):
     super(CRUDViewGroup, self).__init__(**kwargs)
     self.model = model or self.model
-    self.model_name = self.model.__name__
+    if isinstance(self.model, basestring):
+      self.model_name = self.model.split(".")[-1]
+    else:
+      self.model_name = self.model.__name__
     self.model_name_lower = self.model_name.lower()
+
+  def _import_model_if_not(self):
+    if isinstance(self.model, basestring):
+      self.model = import_string(self.model)
 
   def get_additional_context_on_create(self, request, form):
     if self.owner_attr:
@@ -133,24 +141,28 @@ class CRUDViewGroup(ViewGroup):
 
   def get_form(self, request, name):
     try:
-      return self.forms[name]
+      ret = self.forms[name]
     except KeyError:
-      return self.form
+      ret = self.form
+    if isinstance(ret, basestring):
+      return import_string(ret)
+    else:
+      return ret
 
   def get_list_url(self, cursor=None):
-    return url_for(self.get_endpoint(OPE_LIST), cursor=cursor)
+    return url_for(self.get_endpoint(OP_LIST), cursor=cursor)
 
   def get_detail_url(self, obj):
-    return url_for(self.get_endpoint(OPE_SHOW), key=obj.key())
+    return url_for(self.get_endpoint(OP_SHOW), key=obj.key())
 
   def get_delete_url(self, obj):
-    return url_for(self.get_endpoint(OPE_DELETE), key=obj.key())
+    return url_for(self.get_endpoint(OP_DELETE), key=obj.key())
 
   def get_update_url(self, obj):
-    return url_for(self.get_endpoint(OPE_UPDATE), key=obj.key())
+    return url_for(self.get_endpoint(OP_UPDATE), key=obj.key())
 
   def get_create_url(self):
-    return url_for(self.get_endpoint(OPE_CREATE))
+    return url_for(self.get_endpoint(OP_CREATE))
 
   def url_processor(self, request):
     return {'list_url': self.get_list_url,
@@ -179,7 +191,8 @@ class CRUDViewGroup(ViewGroup):
 
   def list(self, request, cursor=None):
     # TODO: bi-directional pagination instead of one way ticket forward
-    ret = self.check_authority(request, OPE_LIST)
+    self._import_model_if_not()
+    ret = self.check_authority(request, OP_LIST)
     if ret:
       return ret
     q = self.get_query(request)
@@ -192,7 +205,7 @@ class CRUDViewGroup(ViewGroup):
     q2.with_cursor(next_cursor)
     if q2.get() is None:
       next_cursor = None
-    return render_to_response(self.get_template(request, OPE_LIST),
+    return render_to_response(self.get_template(request, OP_LIST),
                               {'model': self.model_name,
                                'entities': entities,
                                'cursor': next_cursor,
@@ -202,6 +215,7 @@ class CRUDViewGroup(ViewGroup):
 
   def show(self, request, key):
     from google.appengine.api.datastore_errors import BadKeyError
+    self._import_model_if_not()
     try:
       entity = self.model.get(key)
     except BadKeyError:
@@ -209,16 +223,17 @@ class CRUDViewGroup(ViewGroup):
       entity = None
     if entity is None:
       raise NotFound("Specified %s not found." % self.model_name)
-    ret = self.check_authority(request, OPE_SHOW, entity)
+    ret = self.check_authority(request, OP_SHOW, entity)
     if ret:
       return ret
-    return render_to_response(self.get_template(request, OPE_SHOW),
+    return render_to_response(self.get_template(request, OP_SHOW),
                               {'entity': entity,
                                'model': self.model_name},
                               processors=(self.url_processor,))
 
   def create_or_update(self, request, key=None):
     from google.appengine.api.datastore_errors import BadKeyError
+    self._import_model_if_not()
     if key:
       try:
         entity = self.model.get(key)
@@ -226,17 +241,17 @@ class CRUDViewGroup(ViewGroup):
         entity = None
       if entity is None:
         raise NotFound("Specified %s not found." % self.model_name)
-      form_class = self.get_form(request, OPE_UPDATE)
+      form_class = self.get_form(request, OP_UPDATE)
       form = form_class(instance=entity)
       title = _("Updating a %s entity") % self.model_name
-      ret = self.check_authority(request, OPE_UPDATE, entity)
+      ret = self.check_authority(request, OP_UPDATE, entity)
       if ret:
         return ret
     else:
-      form_class = self.get_form(request, OPE_CREATE)
+      form_class = self.get_form(request, OP_CREATE)
       form = form_class()
       title = _("Creating a new %s") % self.model_name
-      ret = self.check_authority(request, OPE_CREATE)
+      ret = self.check_authority(request, OP_CREATE)
       if ret:
         return ret
     if request.method == 'POST':
@@ -252,7 +267,7 @@ class CRUDViewGroup(ViewGroup):
         new_entity = form.save(**additional_context)
         set_flash(message)
         return redirect(self.get_list_url())
-    return render_to_response(self.get_template(request, OPE_UPDATE),
+    return render_to_response(self.get_template(request, OP_UPDATE),
                               {'form': form.as_widget(),
                                'title': title,
                                },
@@ -266,6 +281,7 @@ class CRUDViewGroup(ViewGroup):
 
   def delete(self, request, key):
     from google.appengine.api.datastore_errors import BadKeyError
+    self._import_model_if_not()
     try:
       entity = self.model.get(key)
     except BadKeyError:
@@ -273,7 +289,7 @@ class CRUDViewGroup(ViewGroup):
       entity = None
     if entity is None:
       raise NotFound("Specified %s not found." % self.model_name)
-    ret = self.check_authority(request, OPE_DELETE, entity)
+    ret = self.check_authority(request, OP_DELETE, entity)
     if ret:
       return ret
     entity.delete()
