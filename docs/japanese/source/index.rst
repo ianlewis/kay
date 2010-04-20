@@ -37,6 +37,7 @@ Kay ドキュメントへようこそ
   forms_reference
   db_hook
   media_compressor
+  generic_views
    
 Indices and tables
 ==================

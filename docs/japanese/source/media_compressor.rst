@@ -224,6 +224,11 @@ Available tool options for javascript files are:
   Use calcdeps.py in google's closure library for
   compressing/calclating dependencies.
 
+* ``goog_compiler``
+
+  Use closure compiler for compressing js files.
+
+
 Available tool options for css files are:
 
 * ``separate``
