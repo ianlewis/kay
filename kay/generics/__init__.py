@@ -197,13 +197,16 @@ class CRUDViewGroup(ViewGroup):
       return ret
     q = self.get_query(request)
     if cursor:
-      q = q.with_cursor(cursor)
+      q.with_cursor(cursor)
     entities = q.fetch(self.entities_per_page)
-    next_cursor = q.cursor()
+    if entities:
+      next_cursor = q.cursor()
 
-    q2 = self.get_query(request)
-    q2.with_cursor(next_cursor)
-    if q2.get() is None:
+      q2 = self.get_query(request)
+      q2.with_cursor(next_cursor)
+      if q2.get() is None:
+        next_cursor = None
+    else:
       next_cursor = None
     return render_to_response(self.get_template(request, OP_LIST),
                               {'model': self.model_name,
