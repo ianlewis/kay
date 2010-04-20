@@ -151,10 +151,9 @@ def render_error(e):
     template = local.app.jinja2_env.get_template("%d.html" % e.code)
   except TemplateNotFound:
     template = local.app.jinja2_env.get_template("_internal/defaulterror.html")
+  description = e.description if hasattr(e, 'description') else ""
   if local.app.jinja2_env.autoescape:
-    description = Markup(e.get_description(os.environ))
-  else:
-    description = e.get_description(os.environ)
+    description = Markup(description)
   context = {"code": e.code, "name": e.name, "description": description}
   processors = ()
   for processor in get_standard_processors() + processors:
