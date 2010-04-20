@@ -19,7 +19,10 @@
     This file is originally derived from Zine project.
 """
 import re
-from datetime import datetime
+from datetime import (
+  datetime, date, time
+)
+from time import strptime
 from unicodedata import normalize
 from itertools import chain
 from threading import Lock
@@ -1376,6 +1379,46 @@ class EmailField(RegexField):
   def __init__(self, *args, **kwargs):
     RegexField.__init__(self, email_re, *args, **kwargs)
 
+
+class DateField(Field):
+  """Field for datetime objects.
+
+  >>> field = DateField()
+  >>> field('1970-01-12')
+  datetime.date(1970, 1, 12)
+
+  >>> field('foo')
+  Traceback (most recent call last):
+    ...
+  ValidationError: Please enter a valid date.
+  """
+  messages = dict(invalid_date=lazy_gettext('Please enter a valid date.'))
+
+  def __init__(self, label=None, help_text=None, required=False,
+               validators=None, widget=None, messages=None,
+               default=missing):
+    Field.__init__(self, label, help_text, validators, widget, messages,
+                   default)
+    self.required = required
+
+  def convert(self, value):
+    if isinstance(value, date):
+      return value
+    value = _to_string(value)
+    if not value:
+      if self.required:
+        raise ValidationError(self.messages['required'])
+      return None
+    try:
+      return date(*strptime(value, "%Y-%m-%d")[:3])
+    except ValueError:
+      raise ValidationError(self.messages['invalid_date'])
+
+  def to_primitive(self, value):
+    if isinstance(value, date):
+      value = value.strftime("%Y-%m-%d")
+    return value
+  
 
 class DateTimeField(Field):
   """Field for datetime objects.
