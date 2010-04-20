@@ -5,13 +5,14 @@
 
     Compiles nodes into python code.
 
-    :copyright: (c) 2009 by the Jinja Team.
-    :license: BSD.
+    :copyright: (c) 2010 by the Jinja Team.
+    :license: BSD, see LICENSE for more details.
 """
 from cStringIO import StringIO
 from itertools import chain
 from copy import deepcopy
 from jinja2 import nodes
+from jinja2.nodes import EvalContext
 from jinja2.visitor import NodeVisitor, NodeTransformer
 from jinja2.exceptions import TemplateAssertionError
 from jinja2.utils import Markup, concat, escape, is_python_keyword, next
@@ -36,11 +37,29 @@ else:
     have_condexpr = True
 
 
-def generate(node, environment, name, filename, stream=None):
+# what method to iterate over items do we want to use for dict iteration
+# in generated code?  on 2.x let's go with iteritems, on 3.x with items
+if hasattr(dict, 'iteritems'):
+    dict_item_iter = 'iteritems'
+else:
+    dict_item_iter = 'items'
+
+
+# does if 0: dummy(x) get us x into the scope?
+def unoptimize_before_dead_code():
+    x = 42
+    def f():
+        if 0: dummy(x)
+    return f
+unoptimize_before_dead_code = bool(unoptimize_before_dead_code().func_closure)
+
+
+def generate(node, environment, name, filename, stream=None,
+             defer_init=False):
     """Generate the python source for a node tree."""
     if not isinstance(node, nodes.Template):
         raise TypeError('Can\'t compile non template nodes')
-    generator = CodeGenerator(environment, name, filename, stream)
+    generator = CodeGenerator(environment, name, filename, stream, defer_init)
     generator.visit(node)
     if stream is None:
         return generator.stream.getvalue()
@@ -123,7 +142,8 @@ class Identifiers(object):
 class Frame(object):
     """Holds compile time information for us."""
 
-    def __init__(self, parent=None):
+    def __init__(self, eval_ctx, parent=None):
+        self.eval_ctx = eval_ctx
         self.identifiers = Identifiers()
 
         # a toplevel frame is the root + soft frames such as if conditions.
@@ -193,7 +213,7 @@ class Frame(object):
 
     def inner(self):
         """Return an inner frame."""
-        return Frame(self)
+        return Frame(self.eval_ctx, self)
 
     def soft(self):
         """Return a soft frame.  A soft frame may not be modified as
@@ -273,8 +293,7 @@ class FrameIdentifierVisitor(NodeVisitor):
         self.visit(node.test)
         real_identifiers = self.identifiers
 
-        old_names = real_identifiers.declared | \
-                    real_identifiers.declared_locally | \
+        old_names = real_identifiers.declared_locally | \
                     real_identifiers.declared_parameter
 
         def inner_visit(nodes):
@@ -295,7 +314,8 @@ class FrameIdentifierVisitor(NodeVisitor):
 
         # the differences between the two branches are also pulled as
         # undeclared variables
-        real_identifiers.undeclared.update(body.symmetric_difference(else_))
+        real_identifiers.undeclared.update(body.symmetric_difference(else_) -
+                                           real_identifiers.declared)
 
         # remember those that are declared.
         real_identifiers.declared_locally.update(body | else_)
@@ -327,8 +347,7 @@ class FrameIdentifierVisitor(NodeVisitor):
         self.visit(node.iter)
 
     def visit_CallBlock(self, node):
-        for child in node.iter_child_nodes(exclude=('body',)):
-            self.visit(child)
+        self.visit(node.call)
 
     def visit_FilterBlock(self, node):
         self.visit(node.filter)
@@ -349,13 +368,16 @@ class CompilerExit(Exception):
 
 class CodeGenerator(NodeVisitor):
 
-    def __init__(self, environment, name, filename, stream=None):
+    def __init__(self, environment, name, filename, stream=None,
+                 defer_init=False):
         if stream is None:
             stream = StringIO()
         self.environment = environment
         self.name = name
         self.filename = filename
         self.stream = stream
+        self.created_block_context = False
+        self.defer_init = defer_init
 
         # aliases for imports
         self.import_aliases = {}
@@ -402,7 +424,7 @@ class CodeGenerator(NodeVisitor):
     # -- Various compilation helpers
 
     def fail(self, msg, lineno):
-        """Fail with a `TemplateAssertionError`."""
+        """Fail with a :exc:`TemplateAssertionError`."""
         raise TemplateAssertionError(msg, lineno, self.name, self.filename)
 
     def temporary_identifier(self):
@@ -417,7 +439,16 @@ class CodeGenerator(NodeVisitor):
 
     def return_buffer_contents(self, frame):
         """Return the buffer contents of the frame."""
-        if self.environment.autoescape:
+        if frame.eval_ctx.volatile:
+            self.writeline('if context.eval_ctx.autoescape:')
+            self.indent()
+            self.writeline('return Markup(concat(%s))' % frame.buffer)
+            self.outdent()
+            self.writeline('else:')
+            self.indent()
+            self.writeline('return concat(%s)' % frame.buffer)
+            self.outdent()
+        elif frame.eval_ctx.autoescape:
             self.writeline('return Markup(concat(%s))' % frame.buffer)
         else:
             self.writeline('return concat(%s)' % frame.buffer)
@@ -568,8 +599,10 @@ class CodeGenerator(NodeVisitor):
         # is removed.  If that breaks we have to add a dummy function
         # that just accepts the arguments and does nothing.
         if frame.identifiers.declared:
-            self.writeline('if 0: dummy(%s)' % ', '.join(
-                'l_' + name for name in frame.identifiers.declared))
+            self.writeline('%sdummy(%s)' % (
+                unoptimize_before_dead_code and 'if 0: ' or '',
+                ', '.join('l_' + name for name in frame.identifiers.declared)
+            ))
 
     def push_scope(self, frame, extra_vars=()):
         """This function returns all the shadowed variables in a dict
@@ -728,16 +761,21 @@ class CodeGenerator(NodeVisitor):
 
     def visit_Template(self, node, frame=None):
         assert frame is None, 'no root frame allowed'
+        eval_ctx = EvalContext(self.environment, self.name)
+
         from jinja2.runtime import __all__ as exported
         self.writeline('from __future__ import division')
         self.writeline('from jinja2.runtime import ' + ', '.join(exported))
+        if not unoptimize_before_dead_code:
+            self.writeline('dummy = lambda *x: None')
+
+        # if we want a deferred initialization we cannot move the
+        # environment into a local name
+        envenv = not self.defer_init and ', environment=environment' or ''
 
         # do we have an extends tag at all?  If not, we can save some
         # overhead by just not processing any inheritance code.
         have_extends = node.find(nodes.Extends) is not None
-
-        # are there any block tags?  If yes, we need a copy of the scope.
-        have_blocks = node.find(nodes.Block) is not None
 
         # find all blocks
         for block in node.find_all(nodes.Block):
@@ -761,18 +799,16 @@ class CodeGenerator(NodeVisitor):
         self.writeline('name = %r' % self.name)
 
         # generate the root render function.
-        self.writeline('def root(context, environment=environment):', extra=1)
+        self.writeline('def root(context%s):' % envenv, extra=1)
 
         # process the root
-        frame = Frame()
+        frame = Frame(eval_ctx)
         frame.inspect(node.body)
         frame.toplevel = frame.rootlevel = True
         frame.require_output_check = have_extends and not self.has_known_extends
         self.indent()
         if have_extends:
             self.writeline('parent_template = None')
-        if have_blocks:
-            self.writeline('block_context = context._block()')
         if 'self' in find_undeclared(node.body, ('self',)):
             frame.identifiers.add_special('self')
             self.writeline('l_self = TemplateReference(context)')
@@ -795,18 +831,16 @@ class CodeGenerator(NodeVisitor):
 
         # at this point we now have the blocks collected and can visit them too.
         for name, block in self.blocks.iteritems():
-            block_frame = Frame()
+            block_frame = Frame(eval_ctx)
             block_frame.inspect(block.body)
             block_frame.block = name
-            self.writeline('def block_%s(context, environment=environment):'
-                           % name, block, 1)
+            self.writeline('def block_%s(context%s):' % (name, envenv),
+                           block, 1)
             self.indent()
             undeclared = find_undeclared(block.body, ('self', 'super'))
             if 'self' in undeclared:
                 block_frame.identifiers.add_special('self')
                 self.writeline('l_self = TemplateReference(context)')
-            if block.find(nodes.Block) is not None:
-                self.writeline('block_context = context._block(%r)' % name)
             if 'super' in undeclared:
                 block_frame.identifiers.add_special('super')
                 self.writeline('l_super = context.super(%r, '
@@ -836,10 +870,7 @@ class CodeGenerator(NodeVisitor):
                 self.writeline('if parent_template is None:')
                 self.indent()
                 level += 1
-        if node.scoped:
-            context = 'block_context.derived(locals())'
-        else:
-            context = 'block_context'
+        context = node.scoped and 'context.derived(locals())' or 'context'
         self.writeline('for event in context.blocks[%r][0](%s):' % (
                        node.name, context), node)
         self.indent()
@@ -877,7 +908,7 @@ class CodeGenerator(NodeVisitor):
         self.visit(node.template, frame)
         self.write(', %r)' % self.name)
         self.writeline('for name, parent_block in parent_template.'
-                       'blocks.iteritems():')
+                       'blocks.%s():' % dict_item_iter)
         self.indent()
         self.writeline('context.blocks.setdefault(name, []).'
                        'append(parent_block)')
@@ -899,7 +930,17 @@ class CodeGenerator(NodeVisitor):
         if node.ignore_missing:
             self.writeline('try:')
             self.indent()
-        self.writeline('template = environment.get_template(', node)
+
+        func_name = 'get_or_select_template'
+        if isinstance(node.template, nodes.Const):
+            if isinstance(node.template.value, basestring):
+                func_name = 'get_template'
+            elif isinstance(node.template.value, (tuple, list)):
+                func_name = 'select_template'
+        elif isinstance(node.template, (nodes.Tuple, nodes.List)):
+            func_name = 'select_template'
+
+        self.writeline('template = environment.%s(' % func_name, node)
         self.visit(node.template, frame)
         self.write(', %r)' % self.name)
         if node.ignore_missing:
@@ -1196,12 +1237,15 @@ class CodeGenerator(NodeVisitor):
         body = []
         for child in node.nodes:
             try:
-                const = child.as_const()
+                const = child.as_const(frame.eval_ctx)
             except nodes.Impossible:
                 body.append(child)
                 continue
+            # the frame can't be volatile here, becaus otherwise the
+            # as_const() function would raise an Impossible exception
+            # at that point.
             try:
-                if self.environment.autoescape:
+                if frame.eval_ctx.autoescape:
                     if hasattr(const, '__html__'):
                         const = const.__html__()
                     else:
@@ -1239,7 +1283,10 @@ class CodeGenerator(NodeVisitor):
                     else:
                         self.newline(item)
                     close = 1
-                    if self.environment.autoescape:
+                    if frame.eval_ctx.volatile:
+                        self.write('(context.eval_ctx.autoescape and'
+                                   ' escape or to_string)(')
+                    elif frame.eval_ctx.autoescape:
                         self.write('escape(')
                     else:
                         self.write('to_string(')
@@ -1272,7 +1319,11 @@ class CodeGenerator(NodeVisitor):
             for argument in arguments:
                 self.newline(argument)
                 close = 0
-                if self.environment.autoescape:
+                if frame.eval_ctx.volatile:
+                    self.write('(context.eval_ctx.autoescape and'
+                               ' escape or to_string)(')
+                    close += 1
+                elif frame.eval_ctx.autoescape:
                     self.write('escape(')
                     close += 1
                 if self.environment.finalize is not None:
@@ -1339,7 +1390,7 @@ class CodeGenerator(NodeVisitor):
             self.write(repr(val))
 
     def visit_TemplateData(self, node, frame):
-        self.write(repr(node.as_const()))
+        self.write(repr(node.as_const(frame.eval_ctx)))
 
     def visit_Tuple(self, node, frame):
         self.write('(')
@@ -1399,8 +1450,14 @@ class CodeGenerator(NodeVisitor):
     del binop, uaop
 
     def visit_Concat(self, node, frame):
-        self.write('%s((' % (self.environment.autoescape and
-                             'markup_join' or 'unicode_join'))
+        if frame.eval_ctx.volatile:
+            func_name = '(context.eval_ctx.volatile and' \
+                        ' markup_join or unicode_join)'
+        elif frame.eval_ctx.autoescape:
+            func_name = 'markup_join'
+        else:
+            func_name = 'unicode_join'
+        self.write('%s((' % func_name)
         for arg in node.nodes:
             self.visit(arg, frame)
             self.write(', ')
@@ -1451,6 +1508,8 @@ class CodeGenerator(NodeVisitor):
             self.fail('no filter named %r' % node.name, node.lineno)
         if getattr(func, 'contextfilter', False):
             self.write('context, ')
+        elif getattr(func, 'evalcontextfilter', False):
+            self.write('context.eval_ctx, ')
         elif getattr(func, 'environmentfilter', False):
             self.write('environment, ')
 
@@ -1458,7 +1517,11 @@ class CodeGenerator(NodeVisitor):
         # and want to write to the current buffer
         if node.node is not None:
             self.visit(node.node, frame)
-        elif self.environment.autoescape:
+        elif frame.eval_ctx.volatile:
+            self.write('(context.eval_ctx.autoescape and'
+                       ' Markup(concat(%s)) or concat(%s))' %
+                       (frame.buffer, frame.buffer))
+        elif frame.eval_ctx.autoescape:
             self.write('Markup(concat(%s))' % frame.buffer)
         else:
             self.write('concat(%s)' % frame.buffer)
@@ -1547,3 +1610,24 @@ class CodeGenerator(NodeVisitor):
         self.pull_locals(scope_frame)
         self.blockvisit(node.body, scope_frame)
         self.pop_scope(aliases, scope_frame)
+
+    def visit_EvalContextModifier(self, node, frame):
+        for keyword in node.options:
+            self.writeline('context.eval_ctx.%s = ' % keyword.key)
+            self.visit(keyword.value, frame)
+            try:
+                val = keyword.value.as_const(frame.eval_ctx)
+            except nodes.Impossible:
+                frame.eval_ctx.volatile = True
+            else:
+                setattr(frame.eval_ctx, keyword.key, val)
+
+    def visit_ScopedEvalContextModifier(self, node, frame):
+        old_ctx_name = self.temporary_identifier()
+        safed_ctx = frame.eval_ctx.save()
+        self.writeline('%s = context.eval_ctx.save()' % old_ctx_name)
+        self.visit_EvalContextModifier(node, frame)
+        for child in node.body:
+            self.visit(child, frame)
+        frame.eval_ctx.revert(safed_ctx)
+        self.writeline('context.eval_ctx.revert(%s)' % old_ctx_name)
