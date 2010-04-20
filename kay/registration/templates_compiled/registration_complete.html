@@ -4,7 +4,6 @@ name = '/registration_complete.html'
 
 def root(context, environment=environment):
     parent_template = None
-    block_context = context._block()
     if 0: yield None
     parent_template = environment.get_template('base.html', '/registration_complete.html')
     for name, parent_block in parent_template.blocks.iteritems():
@@ -26,4 +25,4 @@ def block_title(context, environment=environment):
     yield escape(context.call(l__, 'Kay Registration'))
 
 blocks = {'content': block_content, 'title': block_title}
-debug_info = '1=9&3=15&4=19&5=20&2=23'
+debug_info = '1=8&3=14&4=18&5=19&2=22'

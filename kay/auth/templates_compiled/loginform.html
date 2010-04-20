@@ -4,7 +4,6 @@ name = '/loginform.html'
 
 def root(context, environment=environment):
     parent_template = None
-    block_context = context._block()
     if 0: yield None
     parent_template = environment.get_template('base.html', '/loginform.html')
     for name, parent_block in parent_template.blocks.iteritems():
@@ -68,4 +67,4 @@ def block_title(context, environment=environment):
     yield escape(context.call(l__, 'Kay Login'))
 
 blocks = {'content': block_content, 'bodytag': block_bodytag, 'title': block_title}
-debug_info = '1=9&4=15&6=23&9=25&11=32&12=36&14=40&15=42&16=44&18=48&19=50&9=55&21=56&23=57&3=61&2=65'
+debug_info = '1=8&4=14&6=22&9=24&11=31&12=35&14=39&15=41&16=43&18=47&19=49&9=54&21=55&23=56&3=60&2=64'
