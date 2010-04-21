@@ -1,0 +1,321 @@
+# Translations template for PROJECT.
+# Copyright (C) 2009 Takashi Matsuo
+# This file is distributed under the same license as the PROJECT project.
+# david <david.hautbois@free.fr>, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Kay\n"
+"Report-Msgid-Bugs-To: tmatsuo@candit.jp\n"
+"POT-Creation-Date: 2009-11-15 23:30+0900\n"
+"PO-Revision-Date: 2010-04-04 11:33+0200\n"
+"Last-Translator: david <david.hautbois@free.fr>\n"
+"Language-Team: French\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel None\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: kay/app.py:344
+msgid "Appengine might be under maintenance."
+msgstr "Appengine semble être en cours de maintenance"
+
+#: kay/auth/forms.py:16 kay/registration/forms.py:18
+msgid "user name"
+msgstr "nom d'utilisateur"
+
+#: kay/auth/forms.py:18 kay/registration/forms.py:22
+msgid "password"
+msgstr "mot de passe"
+
+#: kay/auth/models.py:67 kay/registration/forms.py:31
+msgid "This user name is already taken. Please choose another user name."
+msgstr "Ce nom d'utilisation est déjà utilisé. Veuillez en choisir un autre"
+
+#: kay/auth/views.py:68
+msgid "Failed to login."
+msgstr "La connexion a échoué"
+
+#: kay/auth/templates/loginform.html:2
+msgid "Kay Login"
+msgstr "Connexion Kay"
+
+#: kay/auth/templates/loginform.html:11
+msgid "Kay Login Form"
+msgstr "Formulaire de connexion Kay"
+
+#: kay/auth/templates/loginform.html:19
+msgid "Login"
+msgstr "Connexion"
+
+#: kay/i18n/__init__.py:304
+msgid "now"
+msgstr "maintenant"
+
+#: kay/management/app_template/views.py:26
+msgid "Hello"
+msgstr "Bonjour"
+
+#: kay/registration/forms.py:20
+msgid "email address"
+msgstr "adresse de messagerie"
+
+#: kay/registration/forms.py:24
+msgid "password(again)"
+msgstr "mot de passe (confirmation)"
+
+#: kay/registration/forms.py:36
+msgid "The passwords don't match."
+msgstr "Les mots de passe ne correspondent pas"
+
+#: kay/registration/templates/activate.html:2
+#: kay/registration/templates/activate.html:6
+msgid "Activation successful"
+msgstr "Activation réussie"
+
+#: kay/registration/templates/activate.html:2
+#: kay/registration/templates/activate.html:9
+msgid "Activation failed :("
+msgstr "Echec de l'activation"
+
+#: kay/registration/templates/activate.html:7
+#, python-format
+msgid ""
+"Congratulations, %(username)s. Your account has been created successfully."
+msgstr "Félicitation, %(username)s. Votre compte a été créé"
+
+#: kay/registration/templates/activate.html:10
+msgid ""
+"Sorry, there were problems with the activation. Please make sure that the "
+"activation link was opened correctly in your Browser. "
+msgstr ""
+"Désolé, il y a eu des problèmes lors de l'activation. Veuillez vérifier que le "
+"lien d'activation a correctement été ouvert dans votre navigateur. "
+
+#: kay/registration/templates/activate.html:10
+#, python-format
+msgid ""
+"Please be also aware that activation links expire automatically in %(seconds)"
+"s second."
+msgid_plural ""
+"Please be also aware that activation links expire automatically in %(seconds)"
+"s seconds."
+msgstr[0] "Attention, les liens d'activation expirent automatiquement au bout de %(seconds)"
+msgstr[1] "s secondes"
+
+#: kay/registration/templates/activation_email.txt:1
+msgid ""
+"\n"
+"Hi!\n"
+"In order to activate your account please visit the following link:\n"
+msgstr ""
+"\n"
+"Bonjour!\n"
+"Afin d'activer votre compte, veuillez suivre le lien suivant :\n"
+
+#: kay/registration/templates/activation_email.txt:6
+#, python-format
+msgid ""
+"\n"
+"Thanks,\n"
+"Your %(appname)s team\n"
+msgstr ""
+"\n"
+"Merci,\n"
+"Votre équipe %(appname)s\n"
+
+#: kay/registration/templates/activation_email_subject.txt:1
+#, python-format
+msgid "Activation of your %(appname)s account"
+msgstr "Activation de votre compte %(appname)s"
+
+#: kay/registration/templates/registration_complete.html:2
+#: kay/registration/templates/registration_form.html:2
+msgid "Kay Registration"
+msgstr "Enregistrement Kay"
+
+#: kay/registration/templates/registration_complete.html:4
+msgid "Registration complete"
+msgstr "Enregistrement terminé"
+
+#: kay/registration/templates/registration_complete.html:5
+msgid ""
+"An e-mail has been sent to you. Please follow the instructions in the e-mail."
+msgstr ""
+"Un message vous a été envoyé, Veuillez suivre les instructions fournies dans ce message"
+
+#: kay/registration/templates/registration_form.html:5
+msgid "Register new user"
+msgstr "Enregistrement d'un nouvel utilisateur"
+
+#: kay/registration/templates/registration_form.html:12
+msgid "Kay Registration Form"
+msgstr "Formulaire d'enregistrement Kay"
+
+#: kay/registration/templates/registration_form.html:20
+msgid "Register"
+msgstr "Enregistrement"
+
+#: kay/utils/validators.py:83
+msgid "You have to enter a valid e-mail address."
+msgstr "Vous devez fournir une adresse de messagerie valide"
+
+#: kay/utils/validators.py:104
+msgid "You have to enter a valid URL."
+msgstr "Vous devez fournir une URL valide"
+
+#: kay/utils/validators.py:122
+msgid "The slug is too long"
+msgstr ""
+
+#: kay/utils/validators.py:124
+msgid "The slug must not start with a slash"
+msgstr ""
+
+#: kay/utils/validators.py:142 kay/utils/validators.py:145
+msgid "You have to enter a valid net address."
+msgstr "Vous devez fournir une adresse réseau valide"
+
+#: kay/utils/validators.py:147
+msgid "The port has to be numeric"
+msgstr "Le port doit être un nombre"
+
+#: kay/utils/validators.py:155
+msgid "Invalid character, < or > are not allowed."
+msgstr "Caractère invalide, < or > ne sont pas autorisés."
+
+#: kay/utils/validators.py:157
+msgid "URL prefix must not be a sole slash."
+msgstr "Le préfixe d'URL ne doit pas être un seul slash."
+
+#: kay/utils/validators.py:160
+msgid "URL prefix must start with a slash."
+msgstr "Le préfixe d'URL doit commencer par un slash."
+
+#: kay/utils/validators.py:162
+msgid "URL prefix must not end with a slash."
+msgstr "Le préfixe d'URL ne doit pas se terminer pas un slash."
+
+#: kay/utils/validators.py:171
+msgid "The text must not be empty."
+msgstr "Le texte ne doit pas être vide."
+
+#: kay/utils/forms/__init__.py:700
+msgid "No choices."
+msgstr "Pas de choix."
+
+#: kay/utils/forms/__init__.py:800
+msgid "Submit"
+msgstr "Soumettre"
+
+#: kay/utils/forms/__init__.py:953
+msgid "This field is required."
+msgstr "Ce champ est requis."
+
+#: kay/utils/forms/__init__.py:1124
+msgid "Invalid security token submitted."
+msgstr "Le jeton de sécurité fourni est invalide."
+
+#: kay/utils/forms/__init__.py:1179 kay/utils/forms/__init__.py:1643
+#, python-format
+msgid "Please provide at least %d item."
+msgid_plural "Please provide at least %d items."
+msgstr[0] "Veuillez fournir au moins %s élément."
+msgstr[1] "Veuillez fournir au moins %s éléments."
+
+#: kay/utils/forms/__init__.py:1186 kay/utils/forms/__init__.py:1650
+#, python-format
+msgid "Please provide no more than %d item."
+msgid_plural "Please provide no more than %d items."
+msgstr[0] "Veuillez ne pas fournir plus de %d élément."
+msgstr[1] "Veuillez ne pas fournir plus de %d éléments."
+
+#: kay/utils/forms/__init__.py:1299
+#, python-format
+msgid "Please enter at least %d character."
+msgid_plural "Please enter at least %d characters."
+msgstr[0] "Veuillez fournir au moins %s caractère."
+msgstr[1] "Veuillez fournir au moins %s caractères."
+
+#: kay/utils/forms/__init__.py:1306
+#, python-format
+msgid "Please enter no more than %d character."
+msgid_plural "Please enter no more than %d characters."
+msgstr[0] "Veuillez ne pas fournir plus de %d caractère."
+msgstr[1] "Veuillez ne pas fournir plus de %d caractères."
+
+#: kay/utils/forms/__init__.py:1317
+msgid "The value is invalid."
+msgstr "La valeur est invalide."
+
+#: kay/utils/forms/__init__.py:1339
+msgid "Enter a valid e-mail address."
+msgstr "Entrez une adresse de messagerie valide."
+
+#: kay/utils/forms/__init__.py:1359
+msgid "Please enter a valid date."
+msgstr "Veuillez entrer une date valide."
+
+#: kay/utils/forms/__init__.py:1413
+msgid "The selected entity does not exist, or is not allowed to select."
+msgstr "L'élément sélectionné n'est pas valide ou vous n'êtes pas autorisé à la sélectionner."
+
+#: kay/utils/forms/__init__.py:1507
+msgid "Invalid value."
+msgstr "Valeur invalide."
+
+#: kay/utils/forms/__init__.py:1508
+msgid "Key does not exist."
+msgstr "La clé n'existe pas."
+
+#: kay/utils/forms/__init__.py:1578
+msgid "Please enter a valid choice."
+msgstr "Veuillez faire un choix valide."
+
+#: kay/utils/forms/__init__.py:1637
+#, python-format
+msgid "“%s” is not a valid choice"
+msgstr "“%s” n'est pas un choix valide"
+
+#: kay/utils/forms/__init__.py:1683
+msgid "Please enter a number."
+msgstr "Veuillez entrer un nombre."
+
+#: kay/utils/forms/__init__.py:1709
+#, python-format
+msgid "Ensure this value is greater than or equal to %s."
+msgstr "Vérifiez que la valeur est supérieure ou égale à %s."
+
+#: kay/utils/forms/__init__.py:1715
+#, python-format
+msgid "Ensure this value is less than or equal to %s."
+msgstr "Vérifiez que la valeur est inférieure ou égale à %s."
+
+#: kay/utils/forms/__init__.py:1748
+msgid "Please enter a whole number."
+msgstr "Veuillez entrer un nombre entier."
+
+#: kay/utils/forms/__init__.py:1774
+msgid "Please enter a float number."
+msgstr "Veuillez entrer un nombre décimal."
+
+#: kay/utils/forms/__init__.py:1794
+msgid "Please select a file to upload."
+msgstr "Veuillez sélectioner le fichier à envoyer."
+
+#: kay/utils/forms/__init__.py:1799
+msgid "File must not empty."
+msgstr "Le fichier ne doit pas être vide."
+
+#: kay/utils/forms/__init__.py:1821
+msgid "True"
+msgstr "Vrai"
+
+#: kay/utils/forms/__init__.py:1822
+msgid "False"
+msgstr "Faux"
+
+#: kay/utils/forms/__init__.py:1833
+msgid "Please select True or False."
+msgstr "Veuillez sélectionner Vrai ou Faux"

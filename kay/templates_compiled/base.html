@@ -3,22 +3,21 @@ from jinja2.runtime import LoopContext, TemplateReference, Macro, Markup, Templa
 name = '/base.html'
 
 def root(context, environment=environment):
-    block_context = context._block()
     if 0: yield None
     yield u'<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">\n<html>\n  <head>\n    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">\n    <title>'
-    for event in context.blocks['title'][0](block_context):
+    for event in context.blocks['title'][0](context):
         yield event
     yield u'</title>'
-    for event in context.blocks['css'][0](block_context):
+    for event in context.blocks['css'][0](context):
         yield event
-    for event in context.blocks['js'][0](block_context):
+    for event in context.blocks['js'][0](context):
         yield event
-    for event in context.blocks['additional_headers'][0](block_context):
+    for event in context.blocks['additional_headers'][0](context):
         yield event
     yield u'\n  </head>'
-    for event in context.blocks['bodytag'][0](block_context):
+    for event in context.blocks['bodytag'][0](context):
         yield event
-    for event in context.blocks['content'][0](block_context):
+    for event in context.blocks['content'][0](context):
         yield event
     yield u'\n  </body>\n</html>'
 
@@ -49,4 +48,4 @@ def block_css(context, environment=environment):
     )
 
 blocks = {'additional_headers': block_additional_headers, 'title': block_title, 'js': block_js, 'content': block_content, 'bodytag': block_bodytag, 'css': block_css}
-debug_info = '1=8&5=9&6=12&9=14&11=16&12=18&14=19&15=21&16=23&11=25&5=29&9=32&15=36&14=40&6=44&7=48'
+debug_info = '1=7&5=8&6=11&9=13&11=15&12=17&14=18&15=20&16=22&11=24&5=28&9=31&15=35&14=39&6=43&7=47'

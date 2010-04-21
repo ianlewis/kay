@@ -1,0 +1,18 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>{{ _('Detail of a entity of %s' % model) }}</title>
+  </head>
+  <body>
+    <div id="main">
+      <dl>
+      {% for prop_name in entity.fields().keys() %}
+      <dt>{{ prop_name }}</dt>
+      <dd>{{ entity.__getattribute__(prop_name) }}</dd>
+      {% endfor %}
+      </dl>
+    </div>
+    <a href="javascript: history.back();">{{ _('Go Back') }}</a>
+  </body>
+</html>

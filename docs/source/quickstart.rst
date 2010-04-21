@@ -464,6 +464,19 @@ myapp/forms.py
 
 .. code-block:: python
 
+  from kay.i18n import lazy_gettext as _
+  from kay.utils import forms
+
+
+  class CommentForm(forms.Form):
+    comment = forms.TextField(_("comment"), required=True)
+
+You can create a class that extends from ``kay.utils.forms.Form``, and add a field for comment property. You need to modify views.py and templates for displaying this form.
+
+myapp/views.py
+
+.. code-block:: python
+
   # -*- coding: utf-8 -*-
   # myapp.views
   #...

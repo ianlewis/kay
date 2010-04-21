@@ -13,7 +13,7 @@ import os
 import logging
 
 from werkzeug import (
-  Local, LocalManager, Response
+  Local, LocalManager, Response, Headers
 )
 from werkzeug.exceptions import NotFound
 
@@ -39,6 +39,29 @@ def get_kay_locale_path():
   import kay
   return os.path.join(kay.KAY_DIR, 'i18n')
 
+def _prepare_header():
+  if not hasattr(local, "override_headers"):
+    local.override_headers = Headers()
+
+def add_header(_key, _value, **_kw):
+  _prepare_header()
+  local.override_headers.add(_key, _value, **_kw)
+
+def set_header(key, value):
+  _prepare_header()
+  local.override_headers.set(key, value)
+
+def set_cookie(key, value='', max_age=None, expires=None,
+               path='/', domain=None, secure=None, httponly=False):
+  if not hasattr(local, "override_cookies"):
+    local.override_cookies = []
+  local.override_cookies.append({"key": key, "value": value,
+                                 "max_age": max_age, "expires": expires,
+                                 "path": path, "domain": domain,
+                                 "secure": secure, "httponly": httponly})
+
+def delete_cookie(key, path='/', domain=None):
+  set_cookie(key, expires=0, max_age=0, path=path, domain=domain)
 
 def get_timezone(tzname):
   """
@@ -128,10 +151,9 @@ def render_error(e):
     template = local.app.jinja2_env.get_template("%d.html" % e.code)
   except TemplateNotFound:
     template = local.app.jinja2_env.get_template("_internal/defaulterror.html")
+  description = e.description if hasattr(e, 'description') else ""
   if local.app.jinja2_env.autoescape:
-    description = Markup(e.get_description(os.environ))
-  else:
-    description = e.get_description(os.environ)
+    description = Markup(description)
   context = {"code": e.code, "name": e.name, "description": description}
   processors = ()
   for processor in get_standard_processors() + processors:
@@ -180,8 +202,15 @@ def get_standard_processors():
   return _standard_context_processors
 
 
-def to_local_timezone(datetime, tzname=settings.DEFAULT_TIMEZONE):
+def to_local_timezone(datetime, tzname=None):
   """Convert a datetime object to the local timezone."""
+  if tzname is None:
+    try:
+      tzname = getattr(local.request.user, settings.USER_TIMEZONE_ATTR)
+      if tzname is None:
+        tzname = settings.DEFAULT_TIMEZONE
+    except Exception:
+      tzname = settings.DEFAULT_TIMEZONE
   if datetime.tzinfo is None:
     from pytz import UTC
     datetime = datetime.replace(tzinfo=UTC)
@@ -189,8 +218,13 @@ def to_local_timezone(datetime, tzname=settings.DEFAULT_TIMEZONE):
   return tzinfo.normalize(datetime.astimezone(tzinfo))
 
 
-def to_utc(datetime, tzname=settings.DEFAULT_TIMEZONE):
+def to_utc(datetime, tzname=None):
   """Convert a datetime object to UTC and drop tzinfo."""
+  if tzname is None:
+    try:
+      tzname = getattr(local.request.user, settings.USER_TIMEZONE_ATTR)
+    except Exception:
+      tzname = settings.DEFAULT_TIMEZONE
   from pytz import UTC
   if datetime.tzinfo is None:
     datetime = get_timezone(tzname).localize(datetime)

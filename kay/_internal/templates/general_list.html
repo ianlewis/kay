@@ -1,0 +1,25 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>{{ _('List of model: %s' % model) }}</title>
+  </head>
+  <body>
+    <a href="{{ create_url() }}">{{ _('Create new entity') }}</a>
+    <div id="main">
+      <div id="message" style="font-weight: bold; color: #DDAAAA;">
+        {{ message }}
+      </div>
+      {% for entity in entities %}
+        <a href="{{ detail_url(entity) }}">{{ entity }}</a>
+        <a href="{{ update_url(entity) }}">{{ _('Update') }}</a>
+        <a href="{{ delete_url(entity) }}">{{ _('Delete') }}</a>
+        <br/>
+      {% endfor %}
+    </div>
+    <a href="{{ create_url() }}">{{ _('Create new entity') }}</a><br/>
+    {% if cursor %}
+      <a href="{{ list_url(cursor) }}">{{ _('Next Page') }}</a>
+    {% endif %}
+  </body>
+</html>

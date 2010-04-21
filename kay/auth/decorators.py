@@ -18,6 +18,7 @@ from werkzeug.exceptions import Forbidden
 from kay.utils import (
   create_login_url, create_logout_url
 )
+from kay.utils.decorators import auto_adapt_to_methods
 
 def login_required(func):
   def inner(request, *args, **kwargs):
@@ -29,6 +30,8 @@ def login_required(func):
     return func(request, *args, **kwargs)
   update_wrapper(inner, func)
   return inner
+
+login_required = auto_adapt_to_methods(login_required)
 
 def admin_required(func):
   def inner(request, *args, **kwargs):
@@ -47,4 +50,6 @@ def admin_required(func):
     return func(request, *args, **kwargs)
   update_wrapper(inner, func)
   return inner
+
+admin_required = auto_adapt_to_methods(admin_required)
 

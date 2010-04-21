@@ -179,7 +179,7 @@ def any_thread_alive(threads):
       return True
 
 
-def delete_all_entities(models=None, batch_size=20):
+def delete_all_entities(models=None, batch_size=100):
   models_dict = get_all_models_as_dict(only_polymodel_base=True)
   if models is None:
     models = models_dict.values()
@@ -197,7 +197,7 @@ def delete_all_entities(models=None, batch_size=20):
   job_manager = JobManager(target_models)
   threads = []
   for model in target_models:
-    job_collector = JobCollector(job_manager, model)
+    job_collector = JobCollector(job_manager, model, batch_size)
     threads.append(job_collector)
     job_collector.start()
   for i in range(THREAD_NUM):
@@ -230,7 +230,7 @@ def create_useful_locals_for_rshell():
 
 
 def shell(datastore_path='', history_path='', useful_imports=True,
-          use_ipython=True):
+          use_ipython=True, use_sqlite=False):
   """ Start a new interactive python session."""
   banner = 'Interactive Kay Shell'
   if useful_imports:
@@ -245,8 +245,13 @@ def shell(datastore_path='', history_path='', useful_imports=True,
   if not history_path:
     history_path = p[1]
   apiproxy_stub_map.apiproxy = apiproxy_stub_map.APIProxyStubMap()
-  stub = datastore_file_stub.DatastoreFileStub(appid, datastore_path,
-                                               history_path)
+  if use_sqlite:
+    from google.appengine.datastore import datastore_sqlite_stub
+    stub = datastore_sqlite_stub.DatastoreSqliteStub(appid, datastore_path,
+                                                     history_path)
+  else:
+    stub = datastore_file_stub.DatastoreFileStub(appid, datastore_path,
+                                                 history_path)
   apiproxy_stub_map.apiproxy.RegisterStub('datastore_v3', stub)
   if use_ipython:
     try:

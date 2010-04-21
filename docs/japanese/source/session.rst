@@ -10,12 +10,12 @@ Kay には匿名セッションの仕組があります。この仕組を有効�
 設定
 ----
 
-セッションを使用するには ``kay.sessions`` アプリケーション を :attr:`settings.INSTALLED_APPS` へ ``kay.sessions.middleware.SessionMiddleware`` を :attr:`settings.MIDDLEWARE_CLASSES` にセットする必要があります。また :attr:`settings.SESSION_STORE` の設定でセッションをどのように保存するか選べます。有効な値は ``kay.sessions.sessionstore.GAESessionStore`` か ``kay.session.sessionstore.SecureCookieSessionStore`` です。
+セッションを使用するには ``kay.sessions`` アプリケーション を :attr:`settings.INSTALLED_APPS` へ ``kay.sessions.middleware.SessionMiddleware`` を :attr:`settings.MIDDLEWARE_CLASSES` にセットする必要があります。また :attr:`settings.SESSION_STORE` の設定でセッションをどのように保存するか選べます。有効な値は ``kay.sessions.sessionstore.GAESessionStore`` か ``kay.sessions.sessionstore.SecureCookieSessionStore`` です。
 
 .. code-block:: python
 
-  SESSION_STORE = 'kay.session.sessionstore.GAESessionStore'
-  #SESSION_STORE = 'kay.session.sessionstore.SecureCookieSessionStore'
+  SESSION_STORE = 'kay.sessions.sessionstore.GAESessionStore'
+  #SESSION_STORE = 'kay.sessions.sessionstore.SecureCookieSessionStore'
 
   INSTALLED_APPS = (
     'kay.sessions',

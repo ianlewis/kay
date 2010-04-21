@@ -1,0 +1,48 @@
+from __future__ import division
+from jinja2.runtime import LoopContext, TemplateReference, Macro, Markup, TemplateRuntimeError, missing, concat, escape, markup_join, unicode_join, to_string, TemplateNotFound
+name = '/general_list.html'
+
+def root(context, environment=environment):
+    l_cursor = context.resolve('cursor')
+    l_entities = context.resolve('entities')
+    l_list_url = context.resolve('list_url')
+    l_model = context.resolve('model')
+    l_create_url = context.resolve('create_url')
+    l_message = context.resolve('message')
+    l__ = context.resolve('_')
+    if 0: yield None
+    yield u'<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">\n<html>\n  <head>\n    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">\n    <title>%s</title>\n  </head>\n  <body>\n    <a href="%s">%s</a>\n    <div id="main">\n      <div id="message" style="font-weight: bold; color: #DDAAAA;">\n        %s\n      </div>\n      ' % (
+        escape(context.call(l__, ('List of model: %s' % l_model))), 
+        escape(context.call(l_create_url)), 
+        escape(context.call(l__, 'Create new entity')), 
+        escape(l_message), 
+    )
+    l_entity = missing
+    l_update_url = context.resolve('update_url')
+    l_detail_url = context.resolve('detail_url')
+    l_delete_url = context.resolve('delete_url')
+    for l_entity in l_entities:
+        if 0: yield None
+        yield u'\n        <a href="%s">%s</a>\n        <a href="%s">%s</a>\n        <a href="%s">%s</a>\n        <br/>\n      ' % (
+            escape(context.call(l_detail_url, l_entity)), 
+            escape(l_entity), 
+            escape(context.call(l_update_url, l_entity)), 
+            escape(context.call(l__, 'Update')), 
+            escape(context.call(l_delete_url, l_entity)), 
+            escape(context.call(l__, 'Delete')), 
+        )
+    l_entity = missing
+    yield u'\n    </div>\n    <a href="%s">%s</a><br/>\n    ' % (
+        escape(context.call(l_create_url)), 
+        escape(context.call(l__, 'Create new entity')), 
+    )
+    if l_cursor:
+        if 0: yield None
+        yield u'\n      <a href="%s">%s</a>\n    ' % (
+            escape(context.call(l_list_url, l_cursor)), 
+            escape(context.call(l__, 'Next Page')), 
+        )
+    yield u'\n  </body>\n</html>'
+
+blocks = {}
+debug_info = '1=14&5=15&8=16&11=18&13=24&14=27&15=29&16=31&18=35&20=36&21=39&22=42&23=45'

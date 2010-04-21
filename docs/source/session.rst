@@ -23,8 +23,8 @@ and ``kay.session.sessionstore.SecureCookieSessionStore``.
 
 .. code-block:: python
 
-  SESSION_STORE = 'kay.session.sessionstore.GAESessionStore'
-  #SESSION_STORE = 'kay.session.sessionstore.SecureCookieSessionStore'
+  SESSION_STORE = 'kay.sessions.sessionstore.GAESessionStore'
+  #SESSION_STORE = 'kay.sessions.sessionstore.SecureCookieSessionStore'
 
   INSTALLED_APPS = (
     'kay.sessions',

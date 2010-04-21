@@ -23,7 +23,7 @@ from werkzeug import (
   Response, redirect
 )
 from werkzeug.routing import (
-  Submount, RequestRedirect
+  Submount, RequestRedirect, EndpointPrefix
 )
 from werkzeug.utils import import_string
 from jinja2 import (
@@ -106,7 +106,11 @@ class KayApp(object):
     if self.app_settings.APP_MOUNT_POINTS.has_key(app):
       return self.app_settings.APP_MOUNT_POINTS.get(app)
     else:
-      return '/%s' % get_app_tailname(app)
+      try:
+        app_mod = import_string(app)
+        return app_mod.mount_point
+      except Exception:
+        return '/%s' % get_app_tailname(app)
 
   def get_installed_apps(self):
     return self.app_settings.INSTALLED_APPS+['kay._internal']
@@ -136,10 +140,20 @@ class KayApp(object):
           continue
       make_rules = getattr(url_mod, 'make_rules', None)
       if make_rules:
-        self.url_map.add(Submount(mountpoint, make_rules()))
+        rules = make_rules()
+      else:
+        rules = []
       all_views = getattr(url_mod, 'all_views', None)
       if all_views:
         self.views.update(all_views)
+      if hasattr(url_mod, 'view_groups'):
+        for view_group in getattr(url_mod, 'view_groups'):
+          try:
+            rules = rules + view_group.get_rules(app)
+            self.views.update(view_group.get_views(app))
+          except Exception, e:
+            logging.warn("Failed to mount ViewGroup: %s", e)
+      self.url_map.add(Submount(mountpoint, rules))
     # TODO move the block bellow to somewhere else
     if 'kay.auth.middleware.AuthenticationMiddleware' in \
           self.app_settings.MIDDLEWARE_CLASSES:
@@ -399,7 +413,12 @@ class KayApp(object):
 
     for middleware_method in self._response_middleware:
       response = middleware_method(request, response)
-
+    if hasattr(local, "override_headers") and hasattr(response, "headers"):
+      response.headers.extend(getattr(local, "override_headers"))
+    if hasattr(local, "override_cookies") and hasattr(response, "set_cookie"):
+      for d in local.override_cookies:
+        key = d.pop("key")
+        response.set_cookie(key, **d)
     return ClosingIterator(response(environ, start_response),
         [local_manager.cleanup])
 

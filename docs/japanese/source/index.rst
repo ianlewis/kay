@@ -8,8 +8,8 @@ Kay ドキュメントへようこそ
 このドキュメントは開発版です。古いバージョンのドキュメントは下記をクリッ
 クしてください。
 
+  - http://kay-docs-jp.shehas.net/0.8.0/
   - http://kay-docs-jp.shehas.net/0.3.0/
-  - http://kay-docs-jp.shehas.net/0.2.0/
 
 目次:
 
@@ -35,6 +35,9 @@ Kay ドキュメントへようこそ
   builtin-middleware
   test
   forms_reference
+  db_hook
+  media_compressor
+  generic_views
    
 Indices and tables
 ==================

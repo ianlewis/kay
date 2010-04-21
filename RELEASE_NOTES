@@ -5,7 +5,7 @@ Copyright 2009 by Accense Technology, Inc
 
 Kay framework - Release Notes
 
-Kay-0.8.0 - March 10, 2010
+Kay-0.8.0 - March 31, 2010
 =============================
 
   - Added login_box context processor and render_loginbox macro to

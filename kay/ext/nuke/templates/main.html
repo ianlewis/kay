@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>Nuke Panel</title>
+<script type="text/javascript">
+function verifySubmit(form) {
+	var confirmation_message;
+	if (form.nuke_all_kinds.checked) {
+		confirmation_message = "This will schedule *all* datastore entities to be deleted. Proceed?";
+	} else {
+		confirmation_message = "This will schedule all entities of kind \"" + form.kind.value + "\"  to be deleted. Proceed?";
+	}
+	return confirm(confirmation_message);
+}
+
+
+</script>
+  </head>
+  <body>
+    <h1>Nuke the datastore</h1>
+    
+<!--    
+    <h2>Schema kinds:</h2>
+      <ul>
+    {% for kind in kinds %}
+      <li>{{kind}}</li>
+    {% endfor %}
+  </ul>
+-->
+<form action="{{ url_for('nuke/delete') }}" method="post" onsubmit="return verifySubmit(this);">
+  {% if present_kinds %}
+  <select name="kind" id="kind_dropdown">
+    {% for kind in present_kinds %}
+    <option value="{{kind}}">{{kind}}</option>
+    {% endfor %}
+  </select>
+  {% endif %}
+  <input name="nuke_all_kinds" type="checkbox" value="enabled" id="checkbox_all_kinds" onchange="document.getElementById('kind_dropdown').disabled = this.checked" /><label for="checkbox_all_kinds"> All Kinds</label>
+  <input type="submit" value="Mass Delete" />
+</form>
+
+  </body>
+</html>

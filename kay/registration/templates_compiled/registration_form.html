@@ -4,7 +4,6 @@ name = '/registration_form.html'
 
 def root(context, environment=environment):
     parent_template = None
-    block_context = context._block()
     if 0: yield None
     parent_template = environment.get_template('base.html', '/registration_form.html')
     for name, parent_block in parent_template.blocks.iteritems():
@@ -60,4 +59,4 @@ def block_title(context, environment=environment):
     yield escape(context.call(l__, 'Kay Registration'))
 
 blocks = {'content': block_content, 'title': block_title}
-debug_info = '1=9&4=15&5=22&7=23&10=25&12=31&13=35&15=39&16=41&17=43&19=47&20=49&10=54&22=55&2=57'
+debug_info = '1=8&4=14&5=21&7=22&10=24&12=30&13=34&15=38&16=40&17=42&19=46&20=48&10=53&22=54&2=56'

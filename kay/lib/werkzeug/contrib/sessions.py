@@ -53,6 +53,7 @@ r"""
 """
 import re
 import os
+import sys
 import tempfile
 from os import path
 from time import time
@@ -132,14 +133,6 @@ class Session(ModificationTrackingDict):
            modified, not if it is new like it was before.
         """
         return self.modified
-
-    def __repr__(self):
-        return '<%s %s %s%s>' % (
-            self.__class__.__name__,
-            self.sid,
-            dict.__repr__(self),
-            self.should_save and '*' or ''
-        )
 
 
 class SessionStore(object):

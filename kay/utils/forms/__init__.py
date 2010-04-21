@@ -19,7 +19,10 @@
     This file is originally derived from Zine project.
 """
 import re
-from datetime import datetime
+from datetime import (
+  datetime, date, time
+)
+from time import strptime
 from unicodedata import normalize
 from itertools import chain
 from threading import Lock
@@ -779,6 +782,10 @@ class MappingWidget(Widget):
 class FormWidget(MappingWidget):
   """A widget for forms."""
 
+  def __init__(self, field, name, value, errors):
+    MappingWidget.__init__(self, field, name, value, errors)
+    self._action = field.form._action
+
   def get_hidden_fields(self):
     """This method is called by the `hidden_fields` property to return
     a list of (key, value) pairs for the special hidden fields.
@@ -818,6 +825,10 @@ class FormWidget(MappingWidget):
     return html.div(html.input(type='submit', value=label), **attrs)
 
   def render(self, action='', method='post', **attrs):
+    if action:
+      self._field.form._action = action
+    else:
+      action = self._action
     self._attr_setdefault(attrs)
     with_errors = attrs.pop('with_errors', False)
 
@@ -1369,6 +1380,46 @@ class EmailField(RegexField):
     RegexField.__init__(self, email_re, *args, **kwargs)
 
 
+class DateField(Field):
+  """Field for datetime objects.
+
+  >>> field = DateField()
+  >>> field('1970-01-12')
+  datetime.date(1970, 1, 12)
+
+  >>> field('foo')
+  Traceback (most recent call last):
+    ...
+  ValidationError: Please enter a valid date.
+  """
+  messages = dict(invalid_date=lazy_gettext('Please enter a valid date.'))
+
+  def __init__(self, label=None, help_text=None, required=False,
+               validators=None, widget=None, messages=None,
+               default=missing):
+    Field.__init__(self, label, help_text, validators, widget, messages,
+                   default)
+    self.required = required
+
+  def convert(self, value):
+    if isinstance(value, date):
+      return value
+    value = _to_string(value)
+    if not value:
+      if self.required:
+        raise ValidationError(self.messages['required'])
+      return None
+    try:
+      return date(*strptime(value, "%Y-%m-%d")[:3])
+    except ValueError:
+      raise ValidationError(self.messages['invalid_date'])
+
+  def to_primitive(self, value):
+    if isinstance(value, date):
+      value = value.strftime("%Y-%m-%d")
+    return value
+  
+
 class DateTimeField(Field):
   """Field for datetime objects.
 
@@ -1463,7 +1514,6 @@ class ModelField(Field):
       if self.required:
         raise ValidationError(self.messages['required'])
       return None
-    value = self._coerce_value(value)
     self._prepare_query()
     tmp_query = copy.copy(self.query)
     if self.key is None:
@@ -1478,9 +1528,6 @@ class ModelField(Field):
       raise ValidationError(self.messages['not_found'] %
                             {'value': value})
     return rv
-
-  def _coerce_value(self, value):
-    return value
 
   def to_primitive(self, value):
     if value is None:
@@ -1546,12 +1593,6 @@ class HiddenModelField(ModelField):
     ModelField.__init__(self, model, key, None, None, required,
                         message, validators, widget, messages,
                         default)
-
-  def _coerce_value(self, value):
-    try:
-      return int(value)
-    except (TypeError, ValueError):
-      raise ValidationError(self.messages['invalid'])
 
 
 class ChoiceField(Field):
@@ -2066,14 +2107,15 @@ class Form(object):
 
   csrf_protected = True
   csrf_key = None
-#    redirect_tracking = True
+#   redirect_tracking = True
 
-  def __init__(self, initial=None):
+  def __init__(self, initial=None, action=''):
     self.request = get_request()
     if initial is None:
       initial = {}
     self.initial = initial
-#        self.invalid_redirect_targets = set()
+#     self.invalid_redirect_targets = set()
+    self._action = action
 
     self._root_field = _bind(self.__class__._root_field, self, {})
     self.reset()
@@ -2128,10 +2170,11 @@ class Form(object):
   def csrf_token(self):
     """The unique CSRF security token for this form."""
     if self.request is None:
-      raise AttributeError('no csrf token because form not bound '
-                           'to request')
+      raise AttributeError('no csrf token because form not bound to request')
     if self.csrf_key is not None:
       csrf_key = self.csrf_key
+    elif self._action:
+      csrf_key = self._action
     else:
       csrf_key = self.request.path
     if hasattr(self.request, 'user'):

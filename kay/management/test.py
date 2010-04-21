@@ -43,6 +43,7 @@ from google.appengine.api import mail_stub
 from google.appengine.api import urlfetch_stub
 from google.appengine.api.memcache import memcache_stub
 from google.appengine.api import user_service_stub
+from google.appengine.api.labs.taskqueue import taskqueue_stub
 
 from kay.conf import settings
 
@@ -57,6 +58,12 @@ def setup_stub():
 
   apiproxy_stub_map.apiproxy.RegisterStub(
     'memcache', memcache_stub.MemcacheServiceStub())
+
+  apiproxy_stub_map.apiproxy.RegisterStub(
+    'urlfetch', urlfetch_stub.URLFetchServiceStub())
+
+  apiproxy_stub_map.apiproxy.RegisterStub(
+    'taskqueue', taskqueue_stub.TaskQueueServiceStub())
 
 
 def runtest(target='', verbosity=0):
@@ -79,7 +86,7 @@ def runtest(target='', verbosity=0):
             tests_mod))
   unittest.TextTestRunner(verbosity=verbosity).run(suite)
 
-def do_runtest(target='',verbosity=("v", 0)):
+def do_runtest(target=('t', ''), verbosity=("v", 0)):
   """
   Run test for installed applications.
   """

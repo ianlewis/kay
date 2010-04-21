@@ -1,5 +1,5 @@
 COMPILE_MEDIA = {
-  'version': None,
+  'version': 1,
   'enabled': True,
   'output_base_dir': '_generated_media',
 }

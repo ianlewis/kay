@@ -491,3 +491,38 @@ potファイルで翻訳ファイルを更新します。
 
    翻訳の完成度合いを出力します。
 
+
+Adding your own management script
+---------------------------------
+
+You can add your own management script by creating a module named
+``management`` in your application directory and defining a function
+with a name prefixed with ``action_`` (e.g. action_foo,
+action_bar). The latter part of the function becomes a name of
+subcommand when invoking ``manage.py``. For example, if you add
+``action_foo``, you can call this function by invoking ``python
+manage.py foo``.
+
+Your first management script
+============================
+
+Here is a simple example with a rather simple management script that
+will add ``foo`` subcommand to your project.
+
+myapp/management.py
+
+.. code-block:: python
+
+   def action_foo(foo_arg=("f", ""), use_bar=True):
+     print"foo_arg: %s" % foo_arg
+     print"use_bar: %s" % use_bar
+
+``foo_arg`` in this example can be specified by using ``--foo-arg
+ARG`` or ``-f ARG`` from the shell. ``use_bar`` is set to True by
+default, but you can override it to False by specifying
+``--no-use-bar`` from the shell.
+
+This management script mechanism is based on the werkzeug's one. So it
+might be helpful to refer `werkzeug documentation
+<http://werkzeug.pocoo.org/documentation/0.6.1/script.html>`_ for
+learning how it works.

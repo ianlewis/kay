@@ -10,7 +10,7 @@ Kay uses Werkzeug for mapping urls and your views.
 For the full details about how to configure url mappings using Werkzeug,
 please see Werkzeug's manual hosted at following URL:
 
-  http://werkzeug.pocoo.org/documentation/0.5.1/routing.html
+  http://werkzeug.pocoo.org/documentation/0.6/routing.html
 
 For now, kay has one global url mapping and one global
 endpoint-to-view dictionary per project unless you use ``SUBMOUNT_APP``
@@ -88,15 +88,16 @@ Here is an example which adds ``index2`` view bound to the url
     'myapp/index2': myapp.views.index2,
   }
 
-In above examples, we defined view functions themselves. To do this,
+In above examples, we defined views with view callables. To do this,
 we need to import our ``views`` module in urls module. Thus, this
-could cause huge startup costs if your ``views`` module is very big
-and you have many apps in your project. We can define these views as
+could cause huge startup costs if your ``views`` module is very big or
+you have many apps in your project. We can define these views as
 string to avoid these costs. It allows Kay to load our views in lazily
 manners.
 
 Here is the re-written version of the last example defining views as
-strings. Don't forget to remove ``import myapp.views`` statement for this to work efficiently.
+strings. Don't forget to remove ``import myapp.views`` statement for
+this to work efficiently.
 
 .. code-block:: python
 
@@ -114,3 +115,156 @@ strings. Don't forget to remove ``import myapp.views`` statement for this to wor
     'myapp/index': 'myapp.views.index',
     'myapp/index2': 'myapp.views.index2',
   }
+
+Sometimes you may define class based views. How can you set those
+class based view in your urlmapping in lazily manners? You can do this
+as follows:
+
+.. code-block:: python
+
+  from werkzeug.routing import EndpointPrefix, Rule
+
+  def make_rules():
+    return [
+      EndpointPrefix('myapp/', [
+	Rule('/', endpoint='index'),
+	Rule('/index2', endpoint='index2'),
+      ]),
+    ]
+
+  all_views = {
+    'myapp/index': 'myapp.views.index',
+    'myapp/index2': ('myapp.views.MyClassBasedView', (),
+                     {"template_name": "myapp/mytemplate.html"}),
+  }
+
+In this example, an instance of ``MyClassBasedView`` will be created
+on demand in the equivalent way as follows:
+
+.. code-block:: python
+
+   from myapp.views import MyClassBasedView
+   view_func = MyClassBasedView(template_name="myapp/mytemplate.html")
+
+.. seealso:: :doc:`views`
+
+
+How to pass argments to your view
+---------------------------------
+
+You can add variable parts to a URL by marking these sections as
+``<variable_name>``. These parts are passed as keyword argments to
+your views. Here are some examples:
+
+.. code-block:: python
+
+  from werkzeug.routing import EndpointPrefix, Rule
+
+  def make_rules():
+    return [
+      EndpointPrefix('myapp/', [
+	Rule('/', endpoint='index'),
+	Rule('/user/<username>', endpoint='user'),
+	Rule('/post/<int:post_id>', endpoint='post')
+      ]),
+    ]
+
+  all_views = {
+    'myapp/index': 'myapp.views.index',
+    'myapp/user': 'myapp.views.show_user_profile',
+    'myapp/post': 'myapp.views.show_post',
+  }
+
+
+You need to write your views to accept these variables as follows:
+
+.. code-block:: python
+
+  # -*- coding: utf-8 -*-
+
+  from werkzeug import Response
+  from kay.utils import render_to_response
+
+  # ..
+
+  def show_user_profile(request, username):
+    # ..
+    # ..
+
+  def show_post(request, post_id)
+    # ..
+    # ..
+
+
+Introducing a new interface for urlmapping
+------------------------------------------
+
+.. Note::
+
+  This interface is still under experimental stage, so detailed
+  implementation/usage might change in the future.
+
+In the new urlmapping system, you need to define ``view_groups``
+global variable in your urls.py. The value must be a list or tuple of
+ViewGroup instances.
+
+``ViewGroup`` is a class which holds url rules and endpoint-view
+mappings as its instance attributes. You can pass unlimited number of
+``Rule`` instances to a constructor method of this class.
+
+A constructor of ``Rule`` class accepts not only all the arguments
+suitable for ``werkzeug.routing.Rule`` class's constructor but also
+accepts ``view`` keyword argument.
+
+Let's see the simplest example.
+
+urls.py:
+
+.. code-block:: python
+
+  from kay.routing import (
+    ViewGroup, Rule
+  )
+
+  view_groups = [
+    ViewGroup(Rule('/', endpoint='index', view='myapp.views.index'))
+  ]
+
+By default, endpoint is prefixed with ``app_name/`` automatically, so
+in this example, you need to pass 'myapp/index' to ``url_for()``
+helper function.
+
+To suppress this prefixing, you can just pass
+``add_app_prefix_to_endpoint`` keyword argument with ``False`` value.
+You can also define your own ViewGroup subclass and override
+``add_app_prefix_to_endpoint`` class attribute to False:
+
+Suppressing the prefix:
+
+.. code-block:: python
+
+  from kay.routing import (
+    ViewGroup, Rule
+  )
+
+  view_groups = [
+    ViewGroup(Rule('/', endpoint='index', view='myapp.views.index'),
+              add_app_prefix_to_endpoint=False)
+  ]
+
+
+Please be aware an endpoint which is defined once will never be
+overridden by following definition, because endpoint-view mapping is
+just a dictionary.
+
+If you need to define two or more Rules with the same endpoint, you
+can omit redundant view keyword arguments in this case as follows:
+
+.. code-block:: python
+
+  view_groups = [
+    ViewGroup(
+      Rule('/list_entities', endpoint='index', view='myapp.views.index'),
+      Rule('/list_entities/<cursor>', endpoint='index')
+    )
+  ]

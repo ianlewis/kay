@@ -16,7 +16,7 @@ import logging
 
 import settings
 
-__version__ = "0.8.0"
+__version__ = "0.10.0"
 
 KAY_DIR = os.path.abspath(os.path.dirname(__file__))
 LIB_DIR = os.path.join(KAY_DIR, 'lib')
@@ -55,18 +55,57 @@ def setup_env(manage_py_env=False):
                        ' for installation instructions.\n')
       sys.exit(1)
     # Add the SDK and the libraries within it to the system path.
-    EXTRA_PATHS = [SDK_PATH]
-    lib = os.path.join(SDK_PATH, 'lib')
-    # Automatically add all packages in the SDK's lib folder:
-    for dir in os.listdir(lib):
-      path = os.path.join(lib, dir)
-      # Package can be under 'lib/<pkg>/<pkg>/' or 'lib/<pkg>/lib/<pkg>/'
-      detect = (os.path.join(path, dir), os.path.join(path, 'lib', dir))
-      for path in detect:
-        if os.path.isdir(path):
-          EXTRA_PATHS.append(os.path.dirname(path))
-          break
-    sys.path = EXTRA_PATHS + sys.path
+    SDK_PATH = os.path.realpath(SDK_PATH)
+    # if SDK_PATH points to a file, it could be a zip file.
+    if os.path.isfile(SDK_PATH):
+      import zipfile
+      gae_zip = zipfile.ZipFile(SDK_PATH)
+      lib_prefix = os.path.join('google_appengine', 'lib')
+      lib = os.path.join(SDK_PATH, lib_prefix)
+      pkg_names = []
+      # add all packages archived under lib in SDK_PATH zip.
+      for filename in sorted(e.filename for e in gae_zip.filelist):
+        # package should have __init__.py
+        if (filename.startswith(lib_prefix) and
+            filename.endswith('__init__.py')):
+          pkg_path = filename.replace(os.sep+'__init__.py', '')
+          # True package root should have __init__.py in upper directory,
+          # thus we can treat only the shortest unique path as package root.
+          for pkg_name in pkg_names:
+            if pkg_path.startswith(pkg_name):
+              break
+          else:
+            pkg_names.append(pkg_path)
+      # insert populated EXTRA_PATHS into sys.path.
+      EXTRA_PATHS = ([os.path.dirname(os.path.join(SDK_PATH, pkg_name))
+                      for pkg_name in pkg_names]
+                     + [os.path.join(SDK_PATH, 'google_appengine')])
+      sys.path = EXTRA_PATHS + sys.path
+      # tweak dev_appserver so to make zipimport and templates work well.
+      from google.appengine.tools import dev_appserver
+      # make GAE SDK to grant opening library zip.
+      dev_appserver.FakeFile.ALLOWED_FILES.add(SDK_PATH)
+      template_dir = 'google_appengine/templates/'
+      dev_appserver.ApplicationLoggingHandler.InitializeTemplates(
+        gae_zip.read(template_dir+dev_appserver.HEADER_TEMPLATE),
+        gae_zip.read(template_dir+dev_appserver.SCRIPT_TEMPLATE),
+        gae_zip.read(template_dir+dev_appserver.MIDDLE_TEMPLATE),
+        gae_zip.read(template_dir+dev_appserver.FOOTER_TEMPLATE))
+    # ... else it could be a directory.
+    else:
+      EXTRA_PATHS = [SDK_PATH]
+      lib = os.path.join(SDK_PATH, 'lib')
+      # Automatically add all packages in the SDK's lib folder:
+      for dir in os.listdir(lib):
+        path = os.path.join(lib, dir)
+        # Package can be under 'lib/<pkg>/<pkg>/' or 'lib/<pkg>/lib/<pkg>/'
+        detect = (os.path.join(path, dir), os.path.join(path, 'lib', dir))
+        for path in detect:
+          if os.path.isdir(path):
+            EXTRA_PATHS.append(os.path.dirname(path))
+            break
+      sys.path = EXTRA_PATHS + sys.path
+
     # corresponds with another google package
     if sys.modules.has_key('google'):
       del sys.modules['google']

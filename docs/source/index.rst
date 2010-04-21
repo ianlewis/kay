@@ -7,8 +7,8 @@ Welcome to Kay documentation!
 
 This document might be newer version than you need. Please visit following urls for older releases:
 
+  - http://kay-docs.shehas.net/0.8.0/
   - http://kay-docs.shehas.net/0.3.0/
-  - http://kay-docs.shehas.net/0.2.0/
 
 Contents:
 
@@ -36,6 +36,8 @@ Contents:
   test
   forms_reference
   db_hook
+  media_compressor
+  generic_views
 
 Indices and tables
 ==================

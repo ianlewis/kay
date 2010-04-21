@@ -27,15 +27,18 @@ Functions
 
 .. function:: register_pre_save_hook(func, model)
 
-   Register ``func`` to apiproxy's PreCallHooks. This function will be
-   invoked only before an entity of specified model is saved.
+   Register ``func`` to apiproxy's PreCallHooks indirectly. This
+   function will be invoked only before an entity of specified model
+   is saved.
 
 .. function:: register_post_save_hook(func, model)
 
-   Register ``func`` to apiproxy's PostCallHooks. This function will
-   be invoked only after an entity of specified model is saved.
+   Register ``func`` to apiproxy's PostCallHooks indirectly. This
+   function will be invoked only after an entity of specified model is
+   saved.
 
-To these save hooks, you can pass functions with following signature:
+To these functions for registration, you can pass functions with
+following signature:
 
 .. code-block:: python
 
@@ -66,9 +69,14 @@ guessing. put_type is defined in the module
    def get_name(type):
      return type_names.get(type, None)
 
-AFAIC, its impossible to detect whether an entity is going to be newly created or just updated, only from low-level request/response object without checking if there is stored entity with the same key. So in this implementation, Kay just guess it by checking created/updated timestamp of the entity.
+AFAIC, its impossible to detect perfectly whether an entity is going
+to be newly created or just updated, only from low-level
+request/response object without checking if there is stored entity
+with the same key. So in this implementation, Kay just guess it by
+checking created/updated timestamp of the entity.
 
-You can check it in your pre save hook function by invoking db.get(entity.key()) by yourself just like following:
+You can check it in your pre save hook function by invoking
+db.get(entity.key()) by yourself just like following:
 
 .. code-block:: python
 
@@ -90,8 +98,9 @@ You can check it in your pre save hook function by invoking db.get(entity.key())
 
 .. function:: register_pre_delete_hook(func, model)
 
-   Register ``func`` to apiproxy's PreCallHooks. This function will be
-   invoked before an entity of specified model is deleted.
+   Register ``func`` to apiproxy's PreCallHooks indirectly. This
+   function will be invoked before an entity of specified model is
+   deleted.
 
 To this delete hook, you can pass functions with following signature:
 

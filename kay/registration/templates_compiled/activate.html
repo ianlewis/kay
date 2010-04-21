@@ -4,7 +4,6 @@ name = '/activate.html'
 
 def root(context, environment=environment):
     parent_template = None
-    block_context = context._block()
     if 0: yield None
     parent_template = environment.get_template('base.html', '/activate.html')
     for name, parent_block in parent_template.blocks.iteritems():
@@ -49,4 +48,4 @@ def block_title(context, environment=environment):
         yield escape(context.call(l__, 'Activation failed :('))
 
 blocks = {'content': block_content, 'title': block_title}
-debug_info = '1=9&4=15&5=23&6=26&7=28&8=32&9=33&10=35&11=38&2=40'
+debug_info = '1=8&4=14&5=22&6=25&7=27&8=31&9=32&10=34&11=37&2=39'

@@ -128,22 +128,29 @@ if IS_DEVSERVER:
                                   media_conf.COMPILE_MEDIA_CSS_DEV)
 COMPILE_CSS = _merge_css_config(
   COMPILE_CSS, getattr(settings, 'COMPILE_MEDIA_CSS_COMMON', {}))
+
+if IS_DEVSERVER:
+  COMPILE_CSS = _merge_css_config(
+    COMPILE_CSS, getattr(settings, 'COMPILE_MEDIA_CSS_DEV', {}))
+
 COMPILE_JS = _merge_js_config(copy.deepcopy(COMPILE_COMMON),
                               media_conf.COMPILE_MEDIA_JS)
 if IS_DEVSERVER:
-  COMPILE_JS = _merge_css_config(COMPILE_JS,
-                                 media_conf.COMPILE_MEDIA_JS_DEV)
-COMPILE_JS = _merge_css_config(
+  COMPILE_JS = _merge_js_config(COMPILE_JS,
+                                media_conf.COMPILE_MEDIA_JS_DEV)
+COMPILE_JS = _merge_js_config(
   COMPILE_JS, getattr(settings, 'COMPILE_MEDIA_JS_COMMON', {}))
+
+if IS_DEVSERVER:
+  COMPILE_JS = _merge_js_config(
+    COMPILE_JS, getattr(settings, 'COMPILE_MEDIA_JS_DEV', {}))
 
 #--------------------------------------------------------------
 
 def manage_static_files():
-  if not getattr(settings, 'COMPILE_MEDIA_COMMON', None):
-    print_status('settings.COMPILE_MEDIA_COMMON is not defined; skip.')
-    return
-
-  if COMPILE_COMMON['static_dir']:
+  if hasattr(settings, 'COMPILE_MEDIA_COMMON') and \
+        COMPILE_COMMON.has_key('static_dir') and \
+        COMPILE_COMMON['static_dir']:
     _create_symlinks()
 
 def _create_symlinks():
@@ -311,7 +318,8 @@ def get_js_config(tag_name):
 def get_js_urls(tag_name, auto_compile=False):
   js_config = get_js_config(tag_name)
   if not js_config['enabled']:
-    return js_config['source_files']
+    return [path if re.match(ur'https?://', path) else '/%s' %
+            path for path in js_config['source_files']]
 
   if auto_compile:
     compile_js(tag_name)
@@ -617,6 +625,22 @@ def compile_js_(tag_name, js_config, force):
         ofile.write(concat(src_path))
   finally:
     ofile.close()
+  
+  if selected_tool == 'goog_compiler':
+    comp_config = copy.deepcopy(js_config['goog_common'])
+    comp_config.update(js_config['goog_compiler'])
+    if comp_config['level'] == 'minify':
+      level = 'WHITESPACE_ONLY'
+    elif comp_config['level'] == 'advanced':
+      level = 'ADVANCED_OPTIMIZATIONS'
+    else:
+      level = 'SIMPLE_OPTIMIZATIONS'
+    command_args = '--compilation_level=%s' % level
+    for path in js_config['source_files']:
+      command_args += ' --js %s' % make_input_path_(path)
+    command_args += ' --js_output_file %s' % dest_path
+    command = 'java -jar %s %s' % (comp_config['path'], command_args)
+    command_output = os.popen(command).read()
 
   info = copy.deepcopy(js_config)
   info['output_filename'] = make_output_path_(js_config, js_config['subdir'],
