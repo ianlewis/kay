@@ -330,7 +330,7 @@ class KayApp(object):
             return response
         raise
     except RequestRedirect, e:
-      response = e
+      response = e.get_response(None)
     except HTTPException, e:
       logging.warning(e)
       response = render_error(e)
