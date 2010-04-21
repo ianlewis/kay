@@ -16,7 +16,7 @@ def root(context, environment=environment):
         )
     l_kind = missing
     yield u'\n  </ul>\n-->\n<form action="%s" method="post" onsubmit="return verifySubmit(this);">\n  ' % (
-        escape(context.call(l_url_for, 'nuke/delete')), 
+        escape(context.call(l_url_for, 'kay.ext.nuke/delete')), 
     )
     if l_present_kinds:
         if 0: yield None

@@ -8,20 +8,13 @@ kay.nuke.urls
 :license: BSD, see LICENSE for more details.
 """
 
-from werkzeug.routing import (
-  Map, Rule, Submount,
-  EndpointPrefix, RuleTemplate,
+from kay.routing import (
+  ViewGroup, Rule
 )
 
-def make_rules():
-  return [
-    EndpointPrefix('nuke/', [
-      Rule('/', endpoint='main'),
-      Rule('/delete', endpoint='delete'),
-    ]),
-  ]
-
-all_views = {
-  'nuke/main': 'kay.ext.nuke.views.main_handler',
-  'nuke/delete': 'kay.ext.nuke.views.mass_delete',
-}
+view_groups = [
+  ViewGroup(
+    Rule('/', endpoint='main', view='kay.ext.nuke.views.main_handler'),
+    Rule('/delete', endpoint='delete', view='kay.ext.nuke.views.mass_delete'),
+  )
+]
