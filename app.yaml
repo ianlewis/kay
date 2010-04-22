@@ -57,6 +57,7 @@ skip_files: |
   (README)|
   (README\.pdf)|
   (LICENSE)|
+  (gaema-LICENSE)|
   (kay\/docs\/.*)|
   (kay\/management\/.*)|
   (kay\/lib\/babel\/localedata\/.*)|
