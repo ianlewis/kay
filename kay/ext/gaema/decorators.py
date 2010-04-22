@@ -26,28 +26,15 @@ def create_inner_func_for_auth(name, func):
       return redirect(create_gaema_login_url(name, request.url))
   return inner
 
-def goog_openid_login_required(func):
-  inner = create_inner_func_for_auth("goog_openid", func)
-  update_wrapper(inner, func)
-  return inner
-
-def twitter_login_required(func):
-  inner = create_inner_func_for_auth("twitter", func)
-  update_wrapper(inner, func)
-  return inner
-
-def facebook_login_required(func):
-  inner = create_inner_func_for_auth("facebook", func)
-  update_wrapper(inner, func)
-  return inner
-
 def gaema_login_required(name):
   def outer(func):
     inner = create_inner_func_for_auth(name, func)
     update_wrapper(inner, func)
     return inner
-  return outer
+  return auto_adapt_to_methods(outer)
 
-goog_openid_login_required = auto_adapt_to_methods(goog_openid_login_required)
-twitter_login_required = auto_adapt_to_methods(twitter_login_required)
-facebook_login_required = auto_adapt_to_methods(facebook_login_required)
+goog_hybrid_login_required = gaema_login_required("goog_hybrid")
+goog_openid_login_required = gaema_login_required("goog_openid")
+twitter_login_required = gaema_login_required("twitter")
+facebook_login_required = gaema_login_required("facebook")
+

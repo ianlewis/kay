@@ -19,12 +19,12 @@ from kay.ext.gaema import (
 def create_gaema_login_url(name, nexturl):
   next_url_key = NEXT_URL_KEY_FORMAT % name
   set_cookie(next_url_key, nexturl)
-  return url_for("kay.ext.gaema/%s_login" % name)
+  return url_for("gaema/%s_login" % name)
 
 def create_gaema_logout_url(name, nexturl):
   next_url_key = NEXT_URL_KEY_FORMAT % name
   set_cookie(next_url_key, nexturl)
-  return url_for("kay.ext.gaema/%s_logout" % name)
+  return url_for("gaema/%s_logout" % name)
 
 def get_gaema_user(name):
   gaema_user_key = GAEMA_USER_KEY_FORMAT % name

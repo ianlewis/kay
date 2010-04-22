@@ -26,11 +26,12 @@ from kay.ext.gaema.utils import (
 
 auth_modules = {
   'goog_openid': GoogleAuth,
+  'goog_hybrid': GoogleAuth,
   'twitter': TwitterAuth,
   'facebook': FacebookAuth,
 }
 
-def create_login_view(name):
+def create_login_view(name, oauth_scope=None):
   auth_module = auth_modules[name]
   next_url_key =  NEXT_URL_KEY_FORMAT % name
   def login_view(request, *args, **kwargs):
@@ -45,7 +46,10 @@ def create_login_view(name):
     if auth_instance.is_callback():
       auth_instance.get_authenticated_user(auth_callback)
       return redirect(next_url)
-    auth_instance.authenticate_redirect()
+    if oauth_scope:
+      auth_instance.authorize_redirect(oauth_scope)
+    else:
+      auth_instance.authenticate_redirect()
   return login_view
 
 def create_logout_view(name):
@@ -58,10 +62,15 @@ def create_logout_view(name):
     return redirect(next_url)
   return logout_view
 
+goog_hybrid_login = create_login_view(
+  "goog_hybrid",
+  oauth_scope = "http://www.google.com/m8/feeds/ "
+  "http://finance.google.com/finance/feeds/")
 goog_openid_login = create_login_view("goog_openid")
 twitter_login = create_login_view("twitter")
 facebook_login = create_login_view("facebook")
 
+goog_hybrid_logout = create_logout_view("goog_hybrid")
 goog_openid_logout = create_logout_view("goog_openid")
 twitter_logout = create_logout_view("twitter")
 facebook_logout = create_logout_view("facebook")
