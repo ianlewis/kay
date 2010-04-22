@@ -9,35 +9,33 @@ Kay internal urls.
 :license: BSD, see LICENSE for more details.
 """
 
-from werkzeug.routing import (
-  Map, Rule, Submount,
-  EndpointPrefix, RuleTemplate,
+from kay.routing import (
+  ViewGroup, Rule
 )
 
-def make_rules():
-  return [
-    EndpointPrefix('_internal/', [
-      Rule('/cron/hourly', endpoint='cron/hourly'),
-      Rule('/cron/frequent', endpoint='cron/frequent'),
-      Rule('/expire_registration/<registration_key>',
-           endpoint='expire_registration'),
-      Rule('/expire_temporary_session/<session_key>',
-           endpoint='expire_temporary_session'),
-      Rule('/send_registration_confirm/<registration_key>',
-           endpoint='send_registration_confirm'),
-      Rule('/send_reset_password_instruction/<user_key>/<session_key>',
-           endpoint='send_reset_password_instruction'),
-    ]),
-  ]
+view_groups = [
+  ViewGroup(
+    Rule('/cron/hourly', endpoint='cron/hourly',
+         view='kay._internal.views.cron_hourly'),
 
-all_views = {
-  '_internal/cron/hourly': 'kay._internal.views.cron_hourly',
-  '_internal/cron/frequent': 'kay._internal.views.cron_frequent',
-  '_internal/expire_registration': 'kay._internal.views.expire_registration',
-  '_internal/expire_temporary_session':
-    'kay._internal.views.expire_temporary_session',
-  '_internal/send_registration_confirm':
-    'kay._internal.views.send_registration_confirm',
-  '_internal/send_reset_password_instruction':
-    'kay._internal.views.send_reset_password_instruction',
-}
+    Rule('/cron/frequent', endpoint='cron/frequent',
+         view='kay._internal.views.cron_frequent'),
+
+    Rule('/expire_registration/<registration_key>',
+         endpoint='expire_registration',
+         view='kay._internal.views.expire_registration'),
+
+    Rule('/expire_temporary_session/<session_key>',
+         endpoint='expire_temporary_session',
+         view='kay._internal.views.expire_temporary_session'),
+
+    Rule('/send_registration_confirm/<registration_key>',
+         endpoint='send_registration_confirm',
+         view='kay._internal.views.send_registration_confirm'),
+
+    Rule('/send_reset_password_instruction/<user_key>/<session_key>',
+         endpoint='send_reset_password_instruction',
+         view='kay._internal.views.send_reset_password_instruction'),
+  )
+]
+

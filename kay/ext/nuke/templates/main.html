@@ -29,7 +29,7 @@ function verifySubmit(form) {
     {% endfor %}
   </ul>
 -->
-<form action="{{ url_for('kay.ext.nuke/delete') }}" method="post" onsubmit="return verifySubmit(this);">
+<form action="{{ url_for('nuke/delete') }}" method="post" onsubmit="return verifySubmit(this);">
   {% if present_kinds %}
   <select name="kind" id="kind_dropdown">
     {% for kind in present_kinds %}

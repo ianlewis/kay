@@ -9,29 +9,22 @@ Kay authentication urls.
 :license: BSD, see LICENSE for more details.
 """
 
-from werkzeug.routing import (
-  Rule, EndpointPrefix,
+from kay.routing import (
+  ViewGroup, Rule
 )
 
-def make_rules():
-  return [
-    EndpointPrefix('auth/', [
-      Rule('/login', endpoint='login'),
-      Rule('/login_box', endpoint='login_box'),
-      Rule('/post_session', endpoint='post_session'),
-      Rule('/logout', endpoint='logout'),
-      Rule('/change_password', endpoint='change_password'),
-      Rule('/request_reset_password', endpoint='request_reset_password'),
-      Rule('/reset_password/<session_key>', endpoint='reset_password'),
-    ]),
-  ]
-
-all_views = {
-  'auth/login_box': 'kay.auth.views.login_box',
-  'auth/login': 'kay.auth.views.login',
-  'auth/post_session': 'kay.auth.views.post_session',
-  'auth/logout': 'kay.auth.views.logout',
-  'auth/change_password': ('kay.auth.views.ChangePasswordHandler',(), {}),
-  'auth/request_reset_password': 'kay.auth.views.request_reset_password',
-  'auth/reset_password': 'kay.auth.views.reset_password',
-}
+view_groups = [
+  ViewGroup(
+    Rule('/login', endpoint='login', view='kay.auth.views.login'),
+    Rule('/login_box', endpoint='login_box', view='kay.auth.views.login_box'),
+    Rule('/post_session', endpoint='post_session',
+         view='kay.auth.views.post_session'),
+    Rule('/logout', endpoint='logout', view='kay.auth.views.logout'),
+    Rule('/change_password', endpoint='change_password',
+         view=('kay.auth.views.ChangePasswordHandler',(), {})),
+    Rule('/request_reset_password', endpoint='request_reset_password',
+         view='kay.auth.views.request_reset_password'),
+    Rule('/reset_password/<session_key>', endpoint='reset_password',
+         view='kay.auth.views.reset_password'),
+  )
+]

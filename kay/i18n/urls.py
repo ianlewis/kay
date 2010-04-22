@@ -7,18 +7,14 @@ Kay i18n urls.
 :license: BSD, see LICENSE for more details.
 """
 
-from werkzeug.routing import (
-  Map, Rule, Submount,
-  EndpointPrefix, RuleTemplate,
+from kay.routing import (
+  ViewGroup, Rule
 )
 
-def make_rules():
-  return [
-    EndpointPrefix('i18n/', [
-      Rule('/set_language', endpoint='set_language'),
-    ]),
-  ]
+view_groups = [
+  ViewGroup(
+    Rule('/set_language', endpoint='set_language',
+         view='kay.i18n.views.set_language'),
+  )
+]
 
-all_views = {
-  'i18n/set_language': 'kay.i18n.views.set_language',
-}

@@ -7,22 +7,18 @@ Kay registration urls.
 :license: BSD, see LICENSE for more details.
 """
 
-from werkzeug.routing import (
-  Rule, EndpointPrefix,
+from kay.routing import (
+  ViewGroup, Rule
 )
 
-def make_rules():
-  return [
-    EndpointPrefix('registration/', [
-      Rule('/activate/<activation_key>', endpoint='activate'),
-      Rule('/register', endpoint='register'),
-      Rule('/registration_complete', endpoint='registration_complete'),
-    ]),
-  ]
+view_groups = [
+  ViewGroup(
+    Rule('/activate/<activation_key>', endpoint='activate',
+         view=('kay.registration.views.ActivateHandler', (), {})),
+    Rule('/register', endpoint='register',
+         view=('kay.registration.views.RegisterHandler', (), {})),
+    Rule('/registration_complete', endpoint='registration_complete',
+         view='kay.registration.views.registration_complete'),
+  )
+]
 
-all_views = {
-  'registration/activate': ('kay.registration.views.ActivateHandler', (), {}),
-  'registration/register': ('kay.registration.views.RegisterHandler', (), {}),
-  'registration/registration_complete':
-    'kay.registration.views.registration_complete',
-}
