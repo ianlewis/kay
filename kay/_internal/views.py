@@ -12,6 +12,7 @@ Views of Kay internal applications.
 import logging
 
 from werkzeug import Response
+from werkzeug.utils import import_string
 from google.appengine.ext import db
 from google.appengine.api import mail
 
@@ -73,6 +74,7 @@ def send_reset_password_instruction(request, user_key, session_key):
 @no_session
 def send_registration_confirm(request, registration_key):
   from kay.registration.models import RegistrationProfile
+  import_string(settings.AUTH_USER_MODEL)
   p = db.get(registration_key)
   subject = render_to_string('registration/activation_email_subject.txt',
                              {'appname': settings.APP_NAME})
