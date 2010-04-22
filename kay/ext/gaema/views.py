@@ -8,8 +8,6 @@ kay.ext.gaema.views
 
 """
 
-import logging
-
 from werkzeug import (
   redirect, Response
 )
@@ -37,7 +35,6 @@ def create_login_view(name):
   next_url_key =  NEXT_URL_KEY_FORMAT % name
   def login_view(request, *args, **kwargs):
     def auth_callback(user):
-      logging.debug("auth_callback called. user: %s" % user)
       set_gaema_user(name, user)
     next_url = request.cookies.get(next_url_key, None)
     if next_url is None:
