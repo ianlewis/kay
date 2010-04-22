@@ -96,7 +96,8 @@ Here is a simple example that shows how to authenticate users with
 twitter OAuth. Firstly, you need to register your application on
 `Twitter's website <http://twitter.com/apps>`_, and set a key and
 secret from twitter to :attr:`settings.GAEMA_SETTIGNS` as well as
-:attr:`settings.INSTALLED_APPS` as follows:
+:attr:`settings.INSTALLED_APPS`, and activate
+``kay.sessions.middleware.SessionMiddleware`` as follows:
 
 .. code-block:: python
 
@@ -110,6 +111,9 @@ secret from twitter to :attr:`settings.GAEMA_SETTIGNS` as well as
     "twitter_consumer_secret": "fugafugafugafugafugafugafugafuga",
   }
 
+  MIDDLEWARE_CLASSES = (
+    'kay.sessions.middleware.SessionMiddleware',
+  )
 
 Here is an example for views:
 
