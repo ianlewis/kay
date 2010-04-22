@@ -149,8 +149,9 @@ class KayApp(object):
       if hasattr(url_mod, 'view_groups'):
         for view_group in getattr(url_mod, 'view_groups'):
           try:
-            rules = rules + view_group.get_rules(app)
-            self.views.update(view_group.get_views(app))
+            endpoint_prefix = app.split(".")[-1]
+            rules = rules + view_group.get_rules(endpoint_prefix)
+            self.views.update(view_group.get_views(endpoint_prefix))
           except Exception, e:
             logging.warn("Failed to mount ViewGroup: %s", e)
       self.url_map.add(Submount(mountpoint, rules))
