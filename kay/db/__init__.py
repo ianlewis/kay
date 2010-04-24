@@ -30,8 +30,7 @@ class StringListPropertySeparatedWithComma(db.StringListProperty):
 
     This joins a list of strings with newlines.
     """
-    value = super(StringListPropertySeparatedWithComma, self).\
-        get_value_for_form(instance)
+    value = db.ListProperty.get_value_for_form(self, instance)
     if not value:
       return None
     if isinstance(value, list):
