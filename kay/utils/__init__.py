@@ -13,9 +13,10 @@ import os
 import logging
 
 from werkzeug import (
-  Local, LocalManager, Response, Headers
+  Local, LocalManager, Headers
 )
 from werkzeug.exceptions import NotFound
+from werkzeug.utils import import_string
 
 from kay.conf import settings
 from kay.exceptions import ImproperlyConfigured
@@ -28,6 +29,9 @@ _default_translations = None
 _standard_context_processors = None
 
 _timezone_cache = {}
+
+def get_response_cls():
+  return import_string(settings.RESPONSE_CLASS)
 
 def set_trace():
   import pdb, sys
@@ -158,9 +162,9 @@ def render_error(e):
   processors = ()
   for processor in get_standard_processors() + processors:
     context.update(processor(get_request()))
-  return Response(template.render(context),
-                  content_type="text/html; charset=utf-8",
-                  status=e.code)
+  return get_response_cls()(template.render(context),
+                            content_type="text/html; charset=utf-8",
+                            status=e.code)
 
 def render_to_string(template, context={}, processors=None):
   """
@@ -176,17 +180,16 @@ def render_to_string(template, context={}, processors=None):
   template = local.app.jinja2_env.get_template(template)
   return template.render(context)
 
-
 def render_to_response(template, context={}, mimetype='text/html',
-                       processors=None):
+                       processors=None, **kwargs):
   """
   A function for render html pages.
   """
-  return Response(render_to_string(template, context, processors),
-                  mimetype=mimetype)
+  return get_response_cls()(
+    render_to_string(template, context, processors),
+    mimetype=mimetype, **kwargs)
 
 def get_standard_processors():
-  from werkzeug.utils import import_string
   from kay.conf import settings
   global _standard_context_processors
   if _standard_context_processors is None:

@@ -97,3 +97,5 @@ JSONRPC2_MOUNT_POINT = None
 JSONRPC2_METHODS = {
     
 }
+
+RESPONSE_CLASS = 'kay.wrappers.Response'
