@@ -15,6 +15,7 @@ import sys
 import datetime
 import logging
 import copy
+import getpass
 from os import makedirs
 
 from google.appengine.tools import bulkloader
@@ -47,9 +48,44 @@ def do_bulkloader_passthru_argv():
 
 do_bulkloader_passthru_argv.passthru = True
 
+
+cached_email = None
+cached_password = None
+
 def dummy_auth_func(self, raw_input_fn=None, password_input_fn=None):
   self.auth_called = True
   return ("admin", "pass")
+
+def real_auth_func(self, 
+                   raw_input_fn=raw_input,
+                   password_input_fn=getpass.getpass):
+  global cached_email, cached_password
+  if self.email:
+    email = self.email
+  else:
+    if cached_email is None:
+      print 'Please enter login credentials for %s' % (self.host)
+      email = raw_input_fn('Email: ')
+      cached_email = email
+    else:
+      email = cached_email
+
+  if email:
+    password_prompt = 'Password for %s: ' % email
+    if cached_password is None:
+      if self.passin:
+        password = raw_input_fn(password_prompt)
+      else:
+        password = password_input_fn(password_prompt)
+      cached_password = password
+    else:
+      password = cached_password
+  else:
+    password = None
+
+  self.auth_called = True
+  return (email, password)
+  
 
 def dump_or_restore_all(help, data_set_name, app_id, url, directory, op):
   if help:
@@ -83,6 +119,8 @@ def dump_or_restore_all(help, data_set_name, app_id, url, directory, op):
   if "localhost" in url:
     base_args.append("--app_id=%s" % app_id)
     bulkloader.RequestManager.AuthFunction = dummy_auth_func
+  else:
+    bulkloader.RequestManager.AuthFunction = real_auth_func
   for key, model in models.iteritems():
     kind = model.kind()
     db_filename = os.path.join(target_dir, "bulkloader-%s-%s.progress" %
