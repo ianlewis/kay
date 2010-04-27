@@ -8,9 +8,7 @@ kay.ext.gaema.views
 
 """
 
-from werkzeug import (
-  redirect, Response
-)
+from werkzeug import redirect
 
 from kay.utils import set_cookie
 from kay.utils import render_to_response
