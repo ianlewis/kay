@@ -13,6 +13,7 @@ Taken from django.
 
 
 import sys
+import os
 
 from werkzeug.utils import import_string
 
@@ -63,12 +64,18 @@ additional_actions = []
 
 for app in settings.INSTALLED_APPS:
   try:
+    appmod = import_string(app)
+    if not os.path.exists(os.path.join(os.path.dirname(appmod.__file__),
+                                       'management.py')):
+      continue
     management_mod = import_string("%s.management" % app)
     for name, val in vars(management_mod).iteritems():
       if name.startswith("action_"):
         locals()[name] = getattr(management_mod, name)
         additional_actions.append(name)
   except Exception, e:
+    import traceback
+    sys.stderr.write('\n'.join(traceback.format_exception(*(sys.exc_info()))))
     pass
 
 __all__ = [
