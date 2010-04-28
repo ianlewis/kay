@@ -484,7 +484,7 @@ manage.py update_translations
 Update translation files using pot file.
 
 .. code-block:: bash
-
+   
    $ python manage.py update_translations [options]
 
 .. cmdoption:: -t <target>, --target <target>
@@ -539,3 +539,92 @@ might be helpful to refer `werkzeug documentation
 <http://werkzeug.pocoo.org/documentation/0.6.1/script.html>`_ for
 learning how it works.
 
+A helper function for creating management script
+================================================
+
+.. function:: kay.management.utils.create_db_manage_script(main_func=None, clean_func=None, description=None)
+
+   This is a helper function for creating management scripts for
+   accessing datastore on both of development environment and appspot
+   environment.
+     
+   :param main_func: a main function that executes db operation.
+   :param clean_func: a function that will be invoked before main function if -c/--clean option is specified.
+   :param description: a description of this action.
+
+
+Here is a simple example.
+
+myapp/management.py:
+
+.. code-block:: python
+
+  # -*- coding: utf-8 -*-
+
+  from google.appengine.ext import db
+
+  from kay.management.utils import (
+    print_status, create_datastore_operation_function
+  )
+  from myapp.models import Prefecture
+
+  prefectures = {
+    1: u'Hokkaido',
+    2: u'Aomori',
+    3: u'Iwate',
+    # ..
+    # ..
+  }
+
+  def create_prefectures():
+    entities = []
+    for idnum, name in prefectures.iteritems():
+      entities.append(
+	Prefecture(name=name,
+		   key=db.Key.from_path(Prefecture.kind(), idnum)))
+    db.put(entities)
+    print_status("Created prefectures.")
+
+  def delete_prefectures():
+    db.delete(Prefecture.all().fetch(100))
+    print_status("Deleted prefectures.")
+
+  action_create_prefectures = create_datastore_operation_function(
+    main_func=create_prefectures, clean_func=delete_prefectures,
+    description="Create Prefectures")
+
+You can invoke this action by typing ``python manage.py
+create_prefectures``. Available parameters are as follows:
+
+.. program:: manage.py create_prefectures
+
+.. code-block:: bash
+
+  $ python manage.py create_prefectures
+
+.. cmdoption:: -a <appid>, --appid <appid>
+
+   Specify the target application by ``app-id``. By default this command uses the value of ``application`` in ``app.yaml``.
+
+.. cmdoption:: -h <host>, --host <host>
+
+   Specify the target application by host. The default is ``app-id.appspot.com``.
+
+.. cmdoption:: -p <path>, --path <path>
+
+   The path to the remote APIs. The default is ``/remote_api``.
+
+.. cmdoption:: --no-secure
+
+   Use HTTP instead of HTTPS to communicate with App Engine.
+
+.. cmdoption:: -c, --clean
+
+   Clear all data before creation.
+
+
+You can use this action against a development server like:
+
+.. code-block:: bash
+
+  $ python manage.py create_prefectures -h localhost:8080 --no-secure

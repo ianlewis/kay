@@ -29,9 +29,3 @@ kay.utils.forms
 ---------------
 
 * Form.freeze() method could be useful in some cases.
-
-kay.management
---------------
-
-* Implement a helper class or function for creating management scripts
-  in charge of preparing initial data.

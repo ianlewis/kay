@@ -492,22 +492,20 @@ potファイルで翻訳ファイルを更新します。
    翻訳の完成度合いを出力します。
 
 
-Adding your own management script
----------------------------------
+独自の management script を追加する
+-----------------------------------
 
-You can add your own management script by creating a module named
-``management`` in your application directory and defining a function
-with a name prefixed with ``action_`` (e.g. action_foo,
-action_bar). The latter part of the function becomes a name of
-subcommand when invoking ``manage.py``. For example, if you add
-``action_foo``, you can call this function by invoking ``python
-manage.py foo``.
+アプリケーションディレクトリ内に ``management`` モジュールを置き、その
+中に ``action_`` で始まる関数(例: action_foo, action_bar)を定義すること
+で、独自の管理スクリプトを追加できます。関数の後半部分が ``manage.py``
+から使用するサブコマンドの名前になります。例えば ``action_foo`` を追加
+したなら、この関数を ``python manage.py foo`` で呼出せます。
 
-Your first management script
-============================
 
-Here is a simple example with a rather simple management script that
-will add ``foo`` subcommand to your project.
+簡単な例
+========
+
+``foo`` サブコマンドをプロジェクトに追加する簡単な例を見てみましょう。
 
 myapp/management.py
 
@@ -517,12 +515,101 @@ myapp/management.py
      print"foo_arg: %s" % foo_arg
      print"use_bar: %s" % use_bar
 
-``foo_arg`` in this example can be specified by using ``--foo-arg
-ARG`` or ``-f ARG`` from the shell. ``use_bar`` is set to True by
-default, but you can override it to False by specifying
-``--no-use-bar`` from the shell.
+この例で ``foo_arg`` はシェル上で ``--foo-arg <値>`` とするか ``-f <値
+>`` とする事で指定できます。 ``use_bar`` の値はデフォルトで True ですが
+False で上書きするには ``--no-use-bar`` と指定します。
 
-This management script mechanism is based on the werkzeug's one. So it
-might be helpful to refer `werkzeug documentation
-<http://werkzeug.pocoo.org/documentation/0.6.1/script.html>`_ for
-learning how it works.
+この管理スクリプトの仕組みは werkzeug の機能をベースにしています。です
+ので `werkzeug documentation
+<http://werkzeug.pocoo.org/documentation/0.6.1/script.html>`_ を参照す
+るとより深く動きを理解する事ができるでしょう。
+
+
+管理スクリプトを作成するためのヘルパー関数
+==========================================
+
+.. function:: kay.management.utils.create_db_manage_script(main_func=None, clean_func=None, description=None)
+
+   これは開発サーバー及び本番サーバーのデータストアにアクセスするための
+   管理スクリプトを作成するためのヘルパー関数です。
+     
+   :param main_func: メインの動作を関数を渡す事により指定します
+   :param clean_func: -c 又は --clean が指定された時にメインの関数より前に実行する関数を渡します。
+   :param description: サブコマンドの説明を指定します。
+
+簡単な例を見てみましょう。
+
+myapp/management.py:
+
+.. code-block:: python
+
+  # -*- coding: utf-8 -*-
+
+  from google.appengine.ext import db
+
+  from kay.management.utils import (
+    print_status, create_datastore_operation_function
+  )
+  from myapp.models import Prefecture
+
+  prefectures = {
+    1: u'Hokkaido',
+    2: u'Aomori',
+    3: u'Iwate',
+    # ..
+    # ..
+  }
+
+  def create_prefectures():
+    entities = []
+    for idnum, name in prefectures.iteritems():
+      entities.append(
+	Prefecture(name=name,
+		   key=db.Key.from_path(Prefecture.kind(), idnum)))
+    db.put(entities)
+    print_status("Created prefectures.")
+
+  def delete_prefectures():
+    db.delete(Prefecture.all().fetch(100))
+    print_status("Deleted prefectures.")
+
+  action_create_prefectures = create_datastore_operation_function(
+    main_func=create_prefectures, clean_func=delete_prefectures,
+    description="Create Prefectures")
+
+このサブコマンドは ``python manage.py create_prefectures`` で実行できま
+す。有効なパラメーターは下記の通りです。
+
+.. program:: manage.py create_prefectures
+
+.. code-block:: bash
+
+  $ python manage.py create_prefectures
+
+.. cmdoption:: -a <appid>, --appid <appid>
+
+   対象となるアプリケーションを ``appid`` で指定します。指定が無ければ ``app.yaml`` 内の ``application`` に設定された値が使用されます。
+
+.. cmdoption:: -h <host>, --host <host>
+
+   対象となるアプリケーションをホスト名で指定します。デフォルト値は ``appid.appspot.com`` です。
+
+.. cmdoption:: -p <path>, --path <path>
+
+   リモートAPIのパスを指定します。デフォルト値は ``/remote_api`` です。
+
+.. cmdoption:: --no-secure
+
+   HTTPSを使用せずに通信します。
+
+.. cmdoption:: -c, --clean
+
+   データ作成の前にデータを一度全部削除します。
+
+
+下記のようにすれば、このサブコマンドを開発サーバーに対して実行する事が
+できます。
+
+.. code-block:: bash
+
+  $ python manage.py create_prefectures -h localhost:8080 --no-secure
