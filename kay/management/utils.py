@@ -44,8 +44,7 @@ def auth():
 def dummy_auth():
   return ('a', 'a')
 
-def create_datastore_operation_function(main_func=None, clean_func=None,
-                                        description=None):
+def create_db_manage_script(main_func=None, clean_func=None, description=None):
   def inner(appid=('a', ''), host=('h', ''), path=('p', ''),
             secure=True, clean=('c', False)):
     if not appid:
