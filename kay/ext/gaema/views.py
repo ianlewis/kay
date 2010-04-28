@@ -9,7 +9,9 @@ kay.ext.gaema.views
 """
 
 from werkzeug import redirect
+from urllib import unquote_plus
 
+from kay.conf import settings
 from kay.utils import set_cookie
 from kay.utils import render_to_response
 from kay.ext.gaema import (
@@ -17,58 +19,46 @@ from kay.ext.gaema import (
   NEXT_URL_KEY_FORMAT
 )
 from kay.ext.gaema.utils import (
-  set_gaema_user, get_gaema_user
+  set_gaema_user, get_gaema_user, create_gaema_login_url
+)
+from kay.ext.gaema.services import (
+  get_service_verbose_name, get_auth_module, GOOG_OPENID, GOOG_HYBRID,
+  TWITTER, FACEBOOK, YAHOO
 )
 
 # Create your views here.
 
-auth_modules = {
-  'goog_openid': GoogleAuth,
-  'goog_hybrid': GoogleAuth,
-  'twitter': TwitterAuth,
-  'facebook': FacebookAuth,
-}
+def select_service(request, targets):
+  targets = targets.split('|')
+  next_url = unquote_plus(request.args.get('next_url'))
+  urls = []
+  for target in targets:
+    verbose_name = 'Sign in with %s' % get_service_verbose_name(target)
+    url = create_gaema_login_url(target, next_url)
+    urls.append((target, verbose_name, url))
+  return render_to_response('gaema/select_service.html',
+                            {'urls': urls})
 
-def create_login_view(name, oauth_scope=None):
-  auth_module = auth_modules[name]
-  next_url_key =  NEXT_URL_KEY_FORMAT % name
-  def login_view(request, *args, **kwargs):
-    def auth_callback(user):
-      set_gaema_user(name, user)
-    next_url = request.cookies.get(next_url_key, None)
-    if next_url is None:
-      next_url = "/"
-    if get_gaema_user(name):
-      return redirect(next_url)
-    auth_instance = auth_module(request)
-    if auth_instance.is_callback():
-      auth_instance.get_authenticated_user(auth_callback)
-      return redirect(next_url)
-    if oauth_scope:
-      auth_instance.authorize_redirect(oauth_scope)
-    else:
-      auth_instance.authenticate_redirect()
-  return login_view
-
-def create_logout_view(name):
-  next_url_key = NEXT_URL_KEY_FORMAT % name
-  def logout_view(request, *args, **kwargs):
-    set_gaema_user(name, None)
-    next_url = request.cookies.get(next_url_key, None)
-    if next_url is None:
-      next_url = "/"
+def login(request, service):
+  auth_module = get_auth_module(service)
+  next_url_key = NEXT_URL_KEY_FORMAT % service
+  def auth_callback(user):
+    set_gaema_user(service, user)
+  next_url = request.cookies.get(next_url_key, "/")
+  if get_gaema_user(service):
     return redirect(next_url)
-  return logout_view
+  auth_instance = auth_module(request)
+  if auth_instance.is_callback():
+    auth_instance.get_authenticated_user(auth_callback)
+    return redirect(next_url)
+  if service == GOOG_HYBRID:
+    oauth_scope = getattr(settings, 'GAEMA_OAUTH_SCOPE', [])
+    auth_instance.authorize_redirect(oauth_scope)
+  else:
+    auth_instance.authenticate_redirect()
 
-goog_hybrid_login = create_login_view(
-  "goog_hybrid",
-  oauth_scope = "http://www.google.com/m8/feeds/ "
-  "http://finance.google.com/finance/feeds/")
-goog_openid_login = create_login_view("goog_openid")
-twitter_login = create_login_view("twitter")
-facebook_login = create_login_view("facebook")
-
-goog_hybrid_logout = create_logout_view("goog_hybrid")
-goog_openid_logout = create_logout_view("goog_openid")
-twitter_logout = create_logout_view("twitter")
-facebook_logout = create_logout_view("facebook")
+def logout(request, service):
+  next_url_key = NEXT_URL_KEY_FORMAT % service
+  set_gaema_user(service, None)
+  next_url = request.cookies.get(next_url_key, "/")
+  return redirect(next_url)

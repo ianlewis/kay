@@ -1,0 +1,39 @@
+from __future__ import division
+from jinja2.runtime import LoopContext, TemplateReference, Macro, Markup, TemplateRuntimeError, missing, concat, escape, markup_join, unicode_join, to_string, TemplateNotFound
+name = '/select_service.html'
+
+def root(context, environment=environment):
+    parent_template = None
+    if 0: yield None
+    parent_template = environment.get_template('base.html', '/select_service.html')
+    for name, parent_block in parent_template.blocks.iteritems():
+        context.blocks.setdefault(name, []).append(parent_block)
+    for event in parent_template.root_render_func(context):
+        yield event
+
+def block_content(context, environment=environment):
+    l_urls = context.resolve('urls')
+    l__ = context.resolve('_')
+    if 0: yield None
+    yield u'\n<h3>%s</h3>\n<ul>\n' % (
+        escape(context.call(l__, 'You need to sign in with one of following services.')), 
+    )
+    l_url = l_target = l_verbose_name = missing
+    for (l_target, l_verbose_name, l_url) in l_urls:
+        if 0: yield None
+        yield u'\n  <li id="list_for_%s">\n    <a href="%s" id="a_for_%s">%s</a>\n' % (
+            escape(l_target), 
+            escape(l_url), 
+            escape(l_target), 
+            escape(l_verbose_name), 
+        )
+    l_url = l_target = l_verbose_name = missing
+    yield u'\n</ul>\n'
+
+def block_title(context, environment=environment):
+    l__ = context.resolve('_')
+    if 0: yield None
+    yield escape(context.call(l__, 'Kay SocialAuth Login'))
+
+blocks = {'content': block_content, 'title': block_title}
+debug_info = '1=8&3=14&4=19&6=22&7=25&8=26&9=31&2=33'

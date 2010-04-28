@@ -12,29 +12,29 @@ import logging
 from functools import update_wrapper
 
 from werkzeug import redirect
+from werkzeug.urls import url_quote_plus
 
+from kay.utils import url_for
+from kay.utils.decorators import auto_adapt_to_methods
 from kay.ext.gaema.utils import (
   get_gaema_user, create_gaema_login_url
 )
-from kay.utils.decorators import auto_adapt_to_methods
+from kay.ext.gaema.services import (
+  GOOG_OPENID, GOOG_HYBRID, TWITTER, FACEBOOK,
+)
 
-def create_inner_func_for_auth(name, func):
+def create_inner_func_for_auth(func, *targets):
   def inner(request, *args, **kwargs):
-    if get_gaema_user(name):
-      return func(request, *args, **kwargs)
-    else:
-      return redirect(create_gaema_login_url(name, request.url))
+    for service in targets:
+      if get_gaema_user(service):
+        return func(request, *args, **kwargs)
+    return redirect(url_for('gaema/select_service', targets='|'.join(targets),
+                            next_url=url_quote_plus(request.url)))
   return inner
 
-def gaema_login_required(name):
+def gaema_login_required(*targets):
   def outer(func):
-    inner = create_inner_func_for_auth(name, func)
+    inner = create_inner_func_for_auth(func, *targets)
     update_wrapper(inner, func)
     return inner
   return auto_adapt_to_methods(outer)
-
-goog_hybrid_login_required = gaema_login_required("goog_hybrid")
-goog_openid_login_required = gaema_login_required("goog_openid")
-twitter_login_required = gaema_login_required("twitter")
-facebook_login_required = gaema_login_required("facebook")
-

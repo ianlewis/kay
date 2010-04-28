@@ -20,6 +20,7 @@ mount_point = "/_ah/gaema"
 GAEMA_USER_KEY_FORMAT = "_%s_user"
 NEXT_URL_KEY_FORMAT = "_nexturl_%s"
 
+
 class RequestAdapter(object):
   """Adapter to transform a `webob` request into a request with the
   attributes expected by `tornado.auth`.
@@ -128,3 +129,6 @@ class TwitterAuth(GAEMultiAuthMixin, auth.TwitterMixin):
 class FacebookAuth(GAEMultiAuthMixin, auth.FacebookMixin):
   arg_in_callback = 'session'
 
+
+class YahooAuth(GAEMultiAuthMixin, auth.YahooMixin):
+  arg_in_callback = 'openid.mode'

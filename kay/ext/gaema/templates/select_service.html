@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}{{_('Kay SocialAuth Login')}}{% endblock title %}
+{% block content %}
+<h3>{{ _('You need to sign in with one of following services.') }}</h3>
+<ul>
+{% for target, verbose_name, url in urls %}
+  <li id="list_for_{{ target }}">
+    <a href="{{ url }}" id="a_for_{{ target }}">{{ verbose_name }}</a>
+{% endfor %}
+</ul>
+{% endblock content %}
