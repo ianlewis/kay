@@ -26,8 +26,8 @@ kay.setup_env()
 
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-# extensions = ['sphinx.ext.autodoc', 'rst2pdf.pdfbuilder']
-extensions = ['sphinx.ext.autodoc']
+extensions = ['sphinx.ext.autodoc', 'rst2pdf.pdfbuilder']
+# extensions = ['sphinx.ext.autodoc']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['.templates']
@@ -216,7 +216,7 @@ pdf_documents = [
 ]
 
 # A comma-separated list of custom stylesheets. Example:
-pdf_stylesheets = ['sphinx','kerning','a4']
+pdf_stylesheets = ['sphinx', 'a4']
 
 # Create a compressed PDF
 # Use True/False or 1/0
