@@ -38,6 +38,7 @@ Kay ドキュメントへようこそ
   db_hook
   media_compressor
   generic_views
+  extensions
    
 Indices and tables
 ==================
