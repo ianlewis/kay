@@ -42,8 +42,8 @@ class ViewGroup(object):
       else:
         self.views[rule.endpoint] = rule.view
 
-  def get_rules(self, app):
-    if self.add_app_prefix_to_endpoint:
+  def get_rules(self, app=None):
+    if self.add_app_prefix_to_endpoint and app is not None:
       ret = [EndpointPrefix(app+'/', self._get_rules())]
     else:
       ret = self._get_rules()
@@ -52,8 +52,8 @@ class ViewGroup(object):
     else:
       return ret
 
-  def get_views(self, app):
-    if self.add_app_prefix_to_endpoint:
+  def get_views(self, app=None):
+    if self.add_app_prefix_to_endpoint and app is not None:
       return self._get_views(app+'/')
     else:
       return self._get_views()

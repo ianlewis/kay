@@ -23,7 +23,7 @@ from werkzeug import (
   Response, redirect
 )
 from werkzeug.routing import (
-  Submount, RequestRedirect, EndpointPrefix
+  Map, Submount, RequestRedirect, EndpointPrefix
 )
 from werkzeug.utils import import_string
 from jinja2 import (
@@ -118,11 +118,21 @@ class KayApp(object):
   def init_url_map(self, url_module):
     self.has_error_on_init_url_map = False
     mod = import_string(url_module)
-
-    make_url = getattr(mod, 'make_url')
-    all_views = getattr(mod, 'all_views')
-    self.views = all_views
-    self.url_map = make_url()
+    if hasattr(mod, 'view_groups'):
+      base_rules = []
+      self.views = {}
+      for view_group in getattr(mod, 'view_groups'):
+        try:
+          base_rules = base_rules + view_group.get_rules()
+          self.views.update(view_group.get_views())
+        except Exception, e:
+          logging.warn("Failed to mount ViewGroup: %s", e)
+      self.url_map = Map(base_rules)
+    else:
+      make_url = getattr(mod, 'make_url')
+      all_views = getattr(mod, 'all_views')
+      self.views = all_views
+      self.url_map = make_url()
     for app in self.get_installed_apps():
       mountpoint = self.get_mount_point(app)
       if mountpoint is None:
