@@ -8,8 +8,12 @@ Kay framework.
 """
 
 import sys
+import getpass
+
+from google.appengine.ext.remote_api import remote_api_stub
 
 import kay.app
+from kay.misc import get_appid
 
 def print_status(msg='',nl=True):
   if nl:
@@ -34,3 +38,38 @@ def get_user_apps():
       ret.append(user_app)
   return ret
     
+def auth():
+  return (raw_input('Username:'), getpass.getpass('Password:'))
+
+def dummy_auth():
+  return ('a', 'a')
+
+def create_datastore_operation_function(main_func=None, clean_func=None,
+                                        description=None):
+  def inner(appid=('a', ''), host=('h', ''), path=('p', ''),
+            secure=True, clean=('c', False)):
+    if not appid:
+      appid = get_appid()
+    if not host:
+      host = "%s.appspot.com" % appid
+    if not path:
+      path = '/remote_api'
+
+    if 'localhost' in host:
+      auth_func = dummy_auth
+    else:
+      auth_func = auth
+
+    remote_api_stub.ConfigureRemoteApi(appid, path, auth_func,
+                                       host, secure=secure)
+    remote_api_stub.MaybeInvokeAuthentication()
+
+    if clean and callable(clean_func):
+      clean_func()
+    if callable(main_func):
+      main_func()
+
+  if description:
+    inner.__doc__ = description
+
+  return inner
