@@ -56,7 +56,7 @@ def post_session(request):
 def login(request):
   from kay.auth import login
 
-  next = unquote_plus(request.values.get("next"))
+  next = unquote_plus(request.values.get("next", "/"))
   owned_domain_hack = request.values.get("owned_domain_hack")
   message = ""
   form = LoginForm()
