@@ -29,8 +29,8 @@ configuration in app.yaml.
 Media compressor quick start
 ============================
 
-To use media compressor, you need to add one jinja2 extension to
-xJINJA2_EXTENSIONS variable, and add two configuratoin variables.
+To use media compressor, you need to add a context_processor to
+``CONTEXT_PROCESSORS`` variable, and add two configuratoin variables.
 
 Let's say you have following media directory:
 
@@ -53,7 +53,7 @@ Let's say you have following media directory:
        |-- subpage.js
        `-- toppage.js
 
-In your toppage, you're using jquery stuff, base.js, toppage.js, and all the css files except for subpages.css. In your subpage, you're using base.js, subpage.js, and all the css files except for toppage.css.
+Let's say in your toppage, you're using jquery stuff, base.js, toppage.js, and all the css files except for subpages.css. In your subpage, you're using base.js, subpage.js, and all the css files except for toppage.css.
 
 Here are simple configurations for this situation:
 
@@ -61,9 +61,11 @@ settings.py:
 
 .. code-block:: python
 
-   JINJA2_EXTENSIONS = (
-     'jinja2.ext.i18n',
-     'kay.ext.media_compressor.jinja2ext.compress',
+   CONTEXT_PROCESSORS = (
+     'kay.context_processors.request',
+     'kay.context_processors.url_functions',
+     'kay.context_processors.media_url',
+     'kay.ext.media_compressor.context_processors.media_urls',
    )
 
    COMPILE_MEDIA_JS = {
@@ -117,8 +119,8 @@ yourapp/templates/index.html:
    <head>
    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
    <title>Top Page</title>
-   {% compiled_css('toppage.css') %}
-   {% compiled_js('toppage.js') %}
+   {{ compiled_css('toppage.css') }}
+   {{ compiled_js('toppage.js') }}
    </head>
    <body>
    Your html goes here
