@@ -148,15 +148,8 @@ class KayApp(object):
           logging.warning("Failed to import app '%s.urls', skipped." % app)
           logging.debug("Reason:\n%s" % self._get_traceback(sys.exc_info()))
           continue
-      make_rules = getattr(url_mod, 'make_rules', None)
-      if make_rules:
-        rules = make_rules()
-      else:
-        rules = []
-      all_views = getattr(url_mod, 'all_views', None)
-      if all_views:
-        self.views.update(all_views)
       if hasattr(url_mod, 'view_groups'):
+        rules = []
         for view_group in getattr(url_mod, 'view_groups'):
           try:
             endpoint_prefix = app.split(".")[-1]
@@ -164,6 +157,13 @@ class KayApp(object):
             self.views.update(view_group.get_views(endpoint_prefix))
           except Exception, e:
             logging.warn("Failed to mount ViewGroup: %s", e)
+      else:
+        make_rules = getattr(url_mod, 'make_rules', None)
+        if make_rules:
+          rules = make_rules()
+        all_views = getattr(url_mod, 'all_views', None)
+        if all_views:
+          self.views.update(all_views)
       self.url_map.add(Submount(mountpoint, rules))
     # TODO move the block bellow to somewhere else
     if 'kay.auth.middleware.AuthenticationMiddleware' in \
