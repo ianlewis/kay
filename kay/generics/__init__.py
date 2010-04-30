@@ -57,6 +57,12 @@ def admin_required(self, request, operation, obj=None):
   if not request.user.is_admin:
     raise NotAuthorized()
 
+def only_admin_can_write(self, request, operation, obj=None):
+  if operation == OP_CREATE or operation == OP_UPDATE or \
+        operation == OP_DELETE:
+    if not request.user.is_admin:
+      raise NotAuthorized()
+
 def only_owner_can_write(self, request, operation, obj=None):
   if operation == OP_CREATE:
     if request.user.is_anonymous():
