@@ -8,6 +8,8 @@ kay.ext.gaema.utils
 :license: BSD, see LICENSE for more details.
 """
 
+from werkzeug.contrib.securecookie import SecureCookie
+
 from kay.utils import (
   set_cookie, url_for, local
 )
@@ -29,14 +31,19 @@ def create_gaema_logout_url(service, nexturl):
 def get_gaema_user(service):
   gaema_user_key = GAEMA_USER_KEY_FORMAT % service
   if hasattr(settings, "GAEMA_STORAGE") and settings.GAEMA_STORAGE == "cookie":
-    return local.request.cookies.get(gaema_user_key, None)
+    user_data = local.request.cookies.get(gaema_user_key, None)
+    if user_data:
+      return SecureCookie.unserialize(user_data,
+                                      secret_key=settings.SECRET_KEY)
   else:
     return local.request.session.get(gaema_user_key, None)
 
 def set_gaema_user(service, user):
   gaema_user_key = GAEMA_USER_KEY_FORMAT % service
   if hasattr(settings, "GAEMA_STORAGE") and settings.GAEMA_STORAGE == "cookie":
-    set_cookie(gaema_user_key, user)
+    secure_cookie = SecureCookie(user, secret_key=settings.SECRET_KEY)
+    user_data = secure_cookie.serialize()
+    set_cookie(gaema_user_key, user_data)
   else:
     local.request.session[gaema_user_key] = user
   
