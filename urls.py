@@ -2,26 +2,10 @@
 
 """
 Kay URL dispatch setting.
-
-:Copyright: (c) 2009 Accense Technology, Inc. All rights reserved.
-:license: BSD, see LICENSE for more details.
 """
 
+# following few lines is a urlmapping with an older interface.
 """
-from kay.routing import (
-  ViewGroup, Rule
-)
-
-view_groups = [
-  ViewGroup(
-    Rule('/_ah/queue/deferred', endpoint='deferred',
-         view='kay.handlers.task.task_handler'),
-    Rule('/maintenance_page', endpoint='_internal/maintenance_page',
-         view='kay._internal.views.maintenance_page'),
-  )
-]
-"""
-
 from werkzeug.routing import (
   Map, Rule, Submount,
   EndpointPrefix, RuleTemplate,
@@ -37,3 +21,17 @@ all_views = {
   'deferred': 'kay.handlers.task.task_handler',
   '_internal/maintenance_page': 'kay._internal.views.maintenance_page',
 }
+"""
+
+from kay.routing import (
+  ViewGroup, Rule
+)
+
+view_groups = [
+  ViewGroup(
+    Rule('/_ah/queue/deferred', endpoint='deferred',
+         view='kay.handlers.task.task_handler'),
+    Rule('/maintenance_page', endpoint='_internal/maintenance_page',
+         view='kay._internal.views.maintenance_page'),
+  )
+]
