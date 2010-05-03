@@ -48,3 +48,24 @@ class StringListPropertySeparatedWithComma(db.StringListProperty):
       value = value.split(",")
     return value
   
+
+class StringListPropertyPassThrough(db.StringListProperty):
+
+  def get_value_for_form(self, instance):
+    """Extract the property value from the instance for use in a form.
+
+    This joins a list of strings with newlines.
+    """
+    value = db.ListProperty.get_value_for_form(self, instance)
+    if not value:
+      return None
+    return value
+
+  def make_value_from_form(self, value):
+    """Convert a form value to a property value.
+
+    This breaks the string into lines.
+    """
+    if not value:
+      return []
+    return value
