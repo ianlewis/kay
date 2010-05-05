@@ -683,8 +683,9 @@ class BaseModelForm(forms.Form):
       iter([('key_name', StringProperty(name='key_name'))])
       )
     for name, prop in propiter:
-      value = cleaned_data.get(name)
-      converted_data[name] = prop.make_value_from_form(value)
+      if cleaned_data.has_key(name):
+        value = cleaned_data.get(name)
+        converted_data[name] = prop.make_value_from_form(value)
     try:
       converted_data.update(kwargs)
       if instance is None:
