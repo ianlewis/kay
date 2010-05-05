@@ -564,7 +564,7 @@ myapp/management.py:
   from google.appengine.ext import db
 
   from kay.management.utils import (
-    print_status, create_datastore_operation_function
+    print_status, create_db_manage_script
   )
   from myapp.models import Prefecture
 
@@ -589,7 +589,7 @@ myapp/management.py:
     db.delete(Prefecture.all().fetch(100))
     print_status("Deleted prefectures.")
 
-  action_create_prefectures = create_datastore_operation_function(
+  action_create_prefectures = create_db_manage_script(
     main_func=create_prefectures, clean_func=delete_prefectures,
     description="Create Prefectures")
 

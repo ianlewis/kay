@@ -185,7 +185,7 @@ myapp/models.py
   # Create your models here.
 
   class MyModel(db.Model):
-    owner = OwnerProperty()
+    user = OwnerProperty()
     comment = db.StringProperty()
 
     def __unicode__(self):
@@ -202,7 +202,7 @@ myapp/forms.py
   class MyForm(ModelForm):
     class Meta:
       model = MyModel
-      exclude = ('owner',)
+      exclude = ('user',)
 
 Then, you can just create an object for CRUD operation in urls.py.
 
@@ -222,7 +222,7 @@ An example bellow shows how to show entities owned by current user:
      form = 'myapp.forms.MyForm'
 
      def get_query(self, request):
-       return self.model.all().filter('owner =', request.user.key()).\
+       return self.model.all().filter('user =', request.user.key()).\
          order('-created')
 
 As you can see, get_query receives only current request object as its

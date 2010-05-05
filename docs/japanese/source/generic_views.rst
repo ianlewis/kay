@@ -185,7 +185,7 @@ myapp/models.py
   # Create your models here.
 
   class MyModel(db.Model):
-    owner = OwnerProperty()
+    user = OwnerProperty()
     comment = db.StringProperty()
 
     def __unicode__(self):
@@ -202,7 +202,7 @@ myapp/forms.py
   class MyForm(ModelForm):
     class Meta:
       model = MyModel
-      exclude = ('owner',)
+      exclude = ('user',)
 
 urls.py は変更しなくとも大丈夫です。
 
@@ -223,7 +223,7 @@ urls.py は変更しなくとも大丈夫です。
      form = 'myapp.forms.MyForm'
 
      def get_query(self, request):
-       return self.model.all().filter('owner =', request.user.key()).\
+       return self.model.all().filter('user =', request.user.key()).\
          order('-created')
 
 見て分かるとおり、 ``get_query`` は現在の ``request`` を引数として取り、
