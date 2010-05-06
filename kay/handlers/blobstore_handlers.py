@@ -24,9 +24,11 @@ Contains handlers to help with uploading and downloading blobs.
   BlobstoreUploadHandler: Handler for receiving upload notification requests.
 """
 
-import logging
 import cgi
 import email
+import logging
+import datetime
+import time
 
 from werkzeug import FileStorage
 from werkzeug import Response
@@ -35,8 +37,11 @@ from google.appengine.ext import blobstore
 from google.appengine.api import blobstore as api_blobstore
 from kay.handlers import BaseHandler
 
-
+_BASE_CREATION_HEADER_FORMAT = '%Y-%m-%d %H:%M:%S'
 _CONTENT_DISPOSITION_FORMAT = 'attachment; filename="%s"'
+
+class CreationFormatError(api_blobstore.Error):
+  """Raised when attempting to parse bad creation date format."""
 
 class BlobstoreDownloadHandler(BaseHandler):
   """Base class for creating handlers that may send blobs to users."""
@@ -135,8 +140,8 @@ def parse_blob_info(file_storage):
       '%s is not a valid value for %s size.' % (size, field_name))
 
   try:
-    creation = api_blobstore.parse_creation(creation_string)
-  except blobstore.CreationFormatError, e:
+    creation = parse_creation(creation_string, field_name)
+  except CreationFormatError, e:
     raise blobstore.BlobInfoParseError(
       'Could not parse creation for %s: %s' % (
         field_name, str(e)))
@@ -187,3 +192,45 @@ class BlobstoreUploadHandler(BaseHandler):
       for uploads in self.__uploads.itervalues():
         results += uploads
       return results
+
+
+def parse_creation(creation_string, field_name):
+  """Parses upload creation string from header format.
+
+  Parse creation date of the format:
+
+    YYYY-mm-dd HH:MM:SS.ffffff
+
+    Y: Year
+    m: Month (01-12)
+    d: Day (01-31)
+    H: Hour (00-24)
+    M: Minute (00-59)
+    S: Second (00-59)
+    f: Microsecond
+
+  Args:
+    creation_string: String creation date format.
+
+  Returns:
+    datetime object parsed from creation_string.
+
+  Raises:
+    CreationFormatError when the creation string is formatted incorrectly.
+  """
+  split_creation_string = creation_string.split('.', 1)
+  if len(split_creation_string) != 2:
+    raise CreationFormatError(
+      'Could not parse creation %s in field %s.' % (creation_string,
+                                                    field_name))
+  timestamp_string, microsecond = split_creation_string
+
+  try:
+    timestamp = time.strptime(timestamp_string,
+                              _BASE_CREATION_HEADER_FORMAT)
+    microsecond = int(microsecond)
+  except ValueError:
+    raise CreationFormatError('Could not parse creation %s in field %s.'
+                              % (creation_string, field_name))
+
+  return datetime.datetime(*timestamp[:6] + tuple([microsecond]))
