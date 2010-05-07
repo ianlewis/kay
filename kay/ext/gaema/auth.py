@@ -48,6 +48,7 @@ import urllib
 import urlparse
 import uuid
 
+from werkzeug.exceptions import HTTPException
 
 class OpenIdMixin(object):
     """Abstract implementation of OpenID and Attribute Exchange.
@@ -251,7 +252,7 @@ class OAuthMixin(object):
 
     def _on_request_token(self, authorize_url, callback_uri, response):
         if response.error:
-            raise Exception("Could not get request token")
+            raise HTTPException("Could not get request token")
         request_token = _oauth_parse_response(response.body)
         data = "|".join([request_token["key"], request_token["secret"]])
         self.set_cookie("_oauth_request_token", data)
@@ -844,8 +845,8 @@ def _oauth_signature(consumer_token, method, url, parameters={}, token=None):
                                for k, v in sorted(parameters.items())))
     base_string =  "&".join(_oauth_escape(e) for e in base_elems)
 
-    key_elems = [consumer_token["secret"]]
-    key_elems.append(token["secret"] if token else "")
+    key_elems = [_oauth_escape(consumer_token["secret"])]
+    key_elems.append(_oauth_escape(token["secret"] if token else ""))
     key = "&".join(key_elems)
 
     hash = hmac.new(key, base_string, hashlib.sha1)

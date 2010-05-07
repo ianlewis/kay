@@ -32,9 +32,9 @@ def create_inner_func_for_auth(func, *targets):
                             next_url=url_quote_plus(request.url)))
   return inner
 
-def gaema_login_required(*targets):
+def gaema_login_required(*services):
   def outer(func):
-    inner = create_inner_func_for_auth(func, *targets)
+    inner = create_inner_func_for_auth(func, *services)
     update_wrapper(inner, func)
     return inner
   return auto_adapt_to_methods(outer)

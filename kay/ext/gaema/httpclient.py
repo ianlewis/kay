@@ -32,10 +32,12 @@ class AsyncHTTPClient(object):
           code = result.status_code
           setattr(result, 'body', result.content)
           if code < 200 or code >= 300:
+            logging.debug(result.body)
             setattr(result, 'error', 'Error %d' % code)
           else:
             setattr(result, 'error', None)
         except urlfetch.DownloadError, e:
+          logging.debug(e)
           result = HttpResponseError()
         args = () + (result,)
         return callback(*args)
