@@ -18,15 +18,25 @@ from kay.ext.gaema import (
   NEXT_URL_KEY_FORMAT, GAEMA_USER_KEY_FORMAT
 )
 
-def create_gaema_login_url(service, nexturl):
+def create_gaema_login_url(service, nexturl="/"):
   next_url_key = NEXT_URL_KEY_FORMAT % service
   set_cookie(next_url_key, nexturl)
   return url_for("gaema/login", service=service)
 
-def create_gaema_logout_url(service, nexturl):
+def create_marketplace_login_url(domain, nexturl="/"):
+  next_url_key = NEXT_URL_KEY_FORMAT % domain
+  set_cookie(next_url_key, nexturl)
+  return url_for("gaema/marketplace_login", domain=domain)
+
+def create_gaema_logout_url(service, nexturl="/"):
   next_url_key = NEXT_URL_KEY_FORMAT % service
   set_cookie(next_url_key, nexturl)
   return url_for("gaema/logout", service=service)
+
+def create_marketplace_logout_url(domain, nexturl="/"):
+  next_url_key = NEXT_URL_KEY_FORMAT % domain
+  set_cookie(next_url_key, nexturl)
+  return url_for("gaema/marketplace_logout", domain=domain)
 
 def get_gaema_user(service):
   gaema_user_key = GAEMA_USER_KEY_FORMAT % service

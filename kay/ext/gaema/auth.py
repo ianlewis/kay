@@ -48,7 +48,14 @@ import urllib
 import urlparse
 import uuid
 
-from werkzeug.exceptions import HTTPException
+from werkzeug.exceptions import InternalServerError
+
+def make_full_url(base, args):
+  if "?" in base:
+    delimiter = "&"
+  else:
+    delimiter = "?"
+  return base + delimiter + urllib.urlencode(args)
 
 class OpenIdMixin(object):
     """Abstract implementation of OpenID and Attribute Exchange.
@@ -69,7 +76,7 @@ class OpenIdMixin(object):
         """
         callback_uri = callback_uri or self.request.path
         args = self._openid_args(callback_uri, ax_attrs=ax_attrs)
-        self.redirect(self._OPENID_ENDPOINT + "?" + urllib.urlencode(args))
+        self.redirect(make_full_url(self._OPENID_ENDPOINT, args))
 
     def get_authenticated_user(self, callback):
         """Fetches the authenticated user data upon redirect.
@@ -81,13 +88,17 @@ class OpenIdMixin(object):
         # Verify the OpenID response via direct request to the OP
         args = dict((k, v[-1]) for k, v in self.request.arguments.iteritems())
         args["openid.mode"] = u"check_authentication"
-        url = self._OPENID_ENDPOINT + "?" + urllib.urlencode(args)
+        url = make_full_url(self._OPENID_ENDPOINT, args)
         http = httpclient.AsyncHTTPClient()
         http.fetch(url, self.async_callback(
             self._on_authentication_verified, callback))
 
     def _openid_args(self, callback_uri, ax_attrs=[], oauth_scope=None):
         url = urlparse.urljoin(self.request.full_url(), callback_uri)
+        if hasattr(self, "openid_realm"):
+          openid_realm = self.openid_realm
+        else:
+          openid_realm = "http://" + self.request.host + "/"
         args = {
             "openid.ns": "http://specs.openid.net/auth/2.0",
             "openid.claimed_id":
@@ -95,7 +106,7 @@ class OpenIdMixin(object):
             "openid.identity":
                 "http://specs.openid.net/auth/2.0/identifier_select",
             "openid.return_to": url,
-            "openid.realm": "http://" + self.request.host + "/",
+            "openid.realm": openid_realm,
             "openid.mode": "checkid_setup",
         }
         if ax_attrs:
@@ -221,17 +232,19 @@ class OAuthMixin(object):
         to this service on behalf of the user.
         """
         request_key = self.get_argument("oauth_token")
+        oauth_verifier = self.get_argument("oauth_verifier")
         request_cookie = self.get_cookie("_oauth_request_token")
         if not request_cookie:
             logging.warning("Missing OAuth request token cookie")
             callback(None)
             return
+        self.clear_cookie("_oauth_request_token") 
         cookie_key, cookie_secret = request_cookie.split("|")
         if cookie_key != request_key:
             logging.warning("Request token does not match cookie")
             callback(None)
             return
-        token = dict(key=cookie_key, secret=cookie_secret)
+        token = dict(key=cookie_key, secret=cookie_secret, verifier=oauth_verifier)
         http = httpclient.AsyncHTTPClient()
         http.fetch(self._oauth_access_token_url(token), self.async_callback(
             self._on_access_token, callback))
@@ -244,15 +257,16 @@ class OAuthMixin(object):
             oauth_signature_method="HMAC-SHA1",
             oauth_timestamp=str(int(time.time())),
             oauth_nonce=binascii.b2a_hex(uuid.uuid4().bytes),
-            oauth_version="1.0",
+            oauth_version="1.0a",
+            oauth_callback=self.request.full_url(),
         )
         signature = _oauth_signature(consumer_token, "GET", url, args)
         args["oauth_signature"] = signature
-        return url + "?" + urllib.urlencode(args)
+        return make_full_url(url, args)
 
     def _on_request_token(self, authorize_url, callback_uri, response):
         if response.error:
-            raise HTTPException("Could not get request token")
+            raise InternalServerError("Could not get request token")
         request_token = _oauth_parse_response(response.body)
         data = "|".join([request_token["key"], request_token["secret"]])
         self.set_cookie("_oauth_request_token", data)
@@ -260,7 +274,7 @@ class OAuthMixin(object):
         if callback_uri:
             args["oauth_callback"] = urlparse.urljoin(
                 self.request.full_url(), callback_uri)
-        self.redirect(authorize_url + "?" + urllib.urlencode(args))
+        self.redirect(make_full_url(authorize_url, args))
 
     def _oauth_access_token_url(self, request_token):
         consumer_token = self._oauth_consumer_token()
@@ -268,15 +282,16 @@ class OAuthMixin(object):
         args = dict(
             oauth_consumer_key=consumer_token["key"],
             oauth_token=request_token["key"],
+            oauth_verifier=request_token["verifier"], 
             oauth_signature_method="HMAC-SHA1",
             oauth_timestamp=str(int(time.time())),
             oauth_nonce=binascii.b2a_hex(uuid.uuid4().bytes),
-            oauth_version="1.0",
+            oauth_version="1.0a",
         )
         signature = _oauth_signature(consumer_token, "GET", url, args,
                                      request_token)
         args["oauth_signature"] = signature
-        return url + "?" + urllib.urlencode(args)
+        return make_full_url(url, args)
 
     def _on_access_token(self, callback, response):
         if response.error:
@@ -421,7 +436,7 @@ class TwitterMixin(OAuthMixin):
             oauth = self._oauth_request_parameters(
                 url, access_token, all_args, method=method)
             args.update(oauth)
-        if args: url += "?" + urllib.urlencode(args)
+        if args: url = make_full_url(url, args)
         callback = self.async_callback(self._on_twitter_request, callback)
         http = httpclient.AsyncHTTPClient()
         if post_args is not None:
@@ -541,7 +556,7 @@ class FriendFeedMixin(OAuthMixin):
             oauth = self._oauth_request_parameters(
                 url, access_token, all_args, method=method)
             args.update(oauth)
-        if args: url += "?" + urllib.urlencode(args)
+        if args: url = make_full_url(url, args)
         callback = self.async_callback(self._on_friendfeed_request, callback)
         http = httpclient.AsyncHTTPClient()
         if post_args is not None:
@@ -621,7 +636,7 @@ class GoogleMixin(OpenIdMixin, OAuthMixin):
         callback_uri = callback_uri or self.request.path
         args = self._openid_args(callback_uri, ax_attrs=ax_attrs,
                                  oauth_scope=oauth_scope)
-        self.redirect(self._OPENID_ENDPOINT + "?" + urllib.urlencode(args))
+        self.redirect(make_full_url(self._OPENID_ENDPOINT, args))
 
     def get_authenticated_user(self, callback):
         """Fetches the authenticated user data upon redirect."""
@@ -635,7 +650,7 @@ class GoogleMixin(OpenIdMixin, OAuthMixin):
         token = self.get_argument("openid." + oauth_ns + ".request_token", "")
         if token:
             http = httpclient.AsyncHTTPClient()
-            token = dict(key=token, secret="")
+            token = dict(key=token, secret="", verifier="")
             http.fetch(self._oauth_access_token_url(token),
                        self.async_callback(self._on_access_token, callback))
         else:

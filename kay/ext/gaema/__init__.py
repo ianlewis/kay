@@ -10,6 +10,9 @@ import logging
 import base64
 
 from werkzeug.routing import RequestRedirect
+from werkzeug.exceptions import (
+  HTTPException, InternalServerError
+)
 
 from kay.ext.gaema import auth
 from kay.utils import set_cookie
@@ -42,13 +45,13 @@ class RequestAdapter(object):
     self.arguments = {}
     for k, v in request.args.items():
       self.arguments.setdefault(k, []).append(v)
+    for k, v in request.form.items():
+      self.arguments.setdefault(k, []).append(v)
 
     self.full_url = lambda: request.url
     self.host = request.host
     self.path = request.path
 
-class HttpException(Exception):
-  pass
 
 class GAEMultiAuthMixin(object):
 
@@ -61,7 +64,12 @@ class GAEMultiAuthMixin(object):
     self.redirect_to = None
 
   def is_callback(self):
-    return self._request.args.get(self.arg_in_callback, None) is not None
+    v = self._request.args.get(self.arg_in_callback, None)
+    if v is not None:
+      return True
+    v = self._request.form.get(self.arg_in_callback, None)
+    if v is not None:
+      return True
 
   def require_setting(self, name, feature=None):
     if not self.settings.has_key(name):
@@ -83,6 +91,8 @@ class GAEMultiAuthMixin(object):
         return callback(*args, **kwargs)
       except RequestRedirect:
         raise
+      except HTTPException:
+        raise
       except Exception, e:
         logging.error('Exception during callback', exc_info=True)
 
@@ -95,7 +105,9 @@ class GAEMultiAuthMixin(object):
   def get_argument(self, name, default=_ARG_DEFAULT, strip=True):
     value = self._request.args.get(name, default)
     if value is self._ARG_DEFAULT:
-      raise HttpException('Missing request argument %s' % name)
+      value = self._request.form.get(name, default)
+      if value is self._ARG_DEFAULT:
+        raise InternalServerError('Missing request argument %s' % name)
 
     if strip:
       value = value.strip()
@@ -107,6 +119,9 @@ class GAEMultiAuthMixin(object):
     if cookie is None:
       return default
     return str(base64.b64decode(cookie))
+
+  def clear_cookie(self, name):
+    self.set_cookie(name, "")
 
   def set_cookie(self, name, value, domain=None, expires=None, path='/',
                  expires_days=None):
@@ -132,3 +147,23 @@ class FacebookAuth(GAEMultiAuthMixin, auth.FacebookMixin):
 
 class YahooAuth(GAEMultiAuthMixin, auth.YahooMixin):
   arg_in_callback = 'openid.mode'
+
+
+class GoogleMarketPlaceAuth(GoogleAuth):
+
+  def __init__(self, request, domain):
+    GAEMultiAuthMixin.__init__(self, request)
+    self.openid_realm = settings.GAEMA_MARKETPLACE_REALM
+    self.domain = domain
+    xrds_url = "https://www.google.com/accounts/o8/site-xrds?hd=%s" % domain
+    try:
+      from openid.consumer import discover
+      d = discover.discover(xrds_url)
+      self.set_endpoint(d[1][0].server_url)
+    except Exception:
+      self.set_endpoint("https://www.google.com/a/%s/o8/ud?be=o8" % domain)
+    
+  def set_endpoint(self, endpoint):
+    self._OPENID_ENDPOINT = endpoint
+
+
