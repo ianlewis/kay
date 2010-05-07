@@ -153,7 +153,8 @@ class GoogleMarketPlaceAuth(GoogleAuth):
 
   def __init__(self, request, domain):
     GAEMultiAuthMixin.__init__(self, request)
-    self.openid_realm = settings.GAEMA_MARKETPLACE_REALM
+    if hasattr(settings, 'GAEMA_MARKETPLACE_REALM'):
+      self.openid_realm = settings.GAEMA_MARKETPLACE_REALM
     self.domain = domain
     xrds_url = "https://www.google.com/accounts/o8/site-xrds?hd=%s" % domain
     try:
