@@ -444,6 +444,11 @@ class Widget(_Renderable):
     return self._field.to_primitive(self._value)
 
   @property
+  def value_for_freeze(self):
+    """The value for frozen form widgets."""
+    return self.value
+
+  @property
   def label(self):
     """The label for the widget."""
     if self._field.label is not None:
@@ -476,12 +481,17 @@ class Widget(_Renderable):
 
   def as_dd(self, **attrs):
     """Return a dt/dd item."""
+    freeze = attrs.pop('freeze', False)
     rv = []
     if not self.disable_dt:
       label = self.label
       if label:
         rv.append(html.dt(label()))
-    rv.append(html.dd(self(**attrs)))
+    if freeze:
+      if not self.disable_dt:
+        rv.append(html.dd(escape(self.value_for_freeze)))
+    else:
+      rv.append(html.dd(self(**attrs)))
     if self.help_text:
       rv.append(html.dd(self.help_text, class_='explanation'))
     return u''.join(rv)
@@ -593,7 +603,14 @@ class Checkbox(Widget):
 
   def with_help_text(self, **attrs):
     """Render the checkbox with help text."""
-    data = self(**attrs)
+    freeze = attrs.pop('freeze', False)
+    if freeze:
+      if self.checked:
+        data = _('Checked')
+      else:
+        data = _('Not checked')
+    else:
+      data = self(**attrs)
     if self.help_text:
       data += u' ' + html.label(self.help_text, class_='explanation',
                                 for_=self.id)
@@ -605,7 +622,7 @@ class Checkbox(Widget):
     label = self.label
     if label:
       rv.append(html.dt(label()))
-    rv.append(html.dd(self.with_help_text()))
+    rv.append(html.dd(self.with_help_text(**attrs)))
     return u''.join(rv)
 
   def as_li(self, **attrs):
@@ -644,6 +661,16 @@ class SelectBox(Widget):
                                selected=selected))
     return html.select(name=self.name, *items, **attrs)
 
+  @property
+  def value_for_freeze(self):
+    for choice in self._field.choices:
+      if isinstance(choice, tuple):
+        key, value = choice
+      else:
+        key = value = choice
+      if _is_choice_selected(self._field, self.value, key):
+        return value
+    return u'-----'
 
 class _InputGroupMember(InternalWidget):
   """A widget that is a single radio button."""
@@ -769,7 +796,8 @@ class MappingWidget(Widget):
     return subwidget
 
   def as_dl(self, **attrs):
-    return html.dl(*[x.as_dd() for x in self], **attrs)
+    freeze = attrs.pop('freeze', False)
+    return html.dl(*[x.as_dd(freeze=freeze) for x in self], **attrs)
 
   def __call__(self, *args, **kwargs):
     return self.as_dl(*args, **kwargs)
@@ -785,6 +813,7 @@ class FormWidget(MappingWidget):
   def __init__(self, field, name, value, errors):
     MappingWidget.__init__(self, field, name, value, errors)
     self._action = field.form._action
+    self._frozen = self._field.form._frozen
 
   def get_hidden_fields(self):
     """This method is called by the `hidden_fields` property to return
@@ -794,6 +823,8 @@ class FormWidget(MappingWidget):
     if self._field.form.request is not None:
       if self._field.form.csrf_protected:
         fields.append(('_csrf_token', self.csrf_token))
+    if self._field.form.use_confirmation:
+      fields.append(('_confirmed', self._confirmed))
 #             if self._field.form.redirect_tracking:
 #                 target = self.redirect_target
 #                 if target is not None:
@@ -805,6 +836,11 @@ class FormWidget(MappingWidget):
     """The hidden fields as string."""
     return u''.join(html.input(type='hidden', name=name, value=value)
                     for name, value in self.get_hidden_fields())
+
+  @property
+  def _confirmed(self):
+    """"""
+    return self._field.form._confirmed
 
   @property
   def csrf_token(self):
@@ -820,7 +856,13 @@ class FormWidget(MappingWidget):
     """Returns a default action div with a submit button."""
     label = attrs.pop('label', None)
     if label is None:
-      label = _('Submit')
+      if self._field.form.use_confirmation:
+        if self._field.form._confirmed == "1":
+          label = _('Save')
+        else:
+          label = _('Confirm')
+      else:
+        label = _('Submit')
     attrs.setdefault('class', 'actions')
     return html.div(html.input(type='submit', value=label), **attrs)
 
@@ -829,15 +871,21 @@ class FormWidget(MappingWidget):
       self._field.form._action = action
     else:
       action = self._action
+    button_label = attrs.pop('button_label', None)
     self._attr_setdefault(attrs)
     with_errors = attrs.pop('with_errors', False)
+    freeze = attrs.get('freeze', False)
 
     # support jinja's caller
     caller = attrs.pop('caller', None)
     if caller is not None:
       body = caller()
     else:
-      body = self.as_dl() + self.default_actions()
+      if freeze:
+        body = '<div style="display: none">%s</div>' % self.hidden() + \
+            self.as_dl(freeze=True) + self.default_actions(label=button_label)
+      else:
+        body = self.as_dl() + self.default_actions(label=button_label)
 
     hidden = self.hidden_fields
     if hidden:
@@ -846,7 +894,7 @@ class FormWidget(MappingWidget):
       # childs of a <form> tag...
       body = '<div style="display: none">%s</div>%s' % (hidden, body)
 
-    if with_errors:
+    if with_errors and not freeze:
       body = self.errors() + body
     if self.is_multipart:
       attrs['enctype'] = 'multipart/form-data'
@@ -860,9 +908,11 @@ class FormWidget(MappingWidget):
     return False
 
   def __call__(self, *args, **attrs):
+    if self._frozen:
+      attrs['freeze'] = True
     attrs.setdefault('with_errors', True)
     return self.render(*args, **attrs)
-
+    
 
 class ListWidget(Widget):
   """Special widget for list-like fields."""
@@ -2109,8 +2159,11 @@ class Form(object):
   csrf_key = None
 #   redirect_tracking = True
 
-  def __init__(self, initial=None, action=''):
+  def __init__(self, initial=None, action='', use_confirmation=False):
+    self.use_confirmation = use_confirmation
     self.request = get_request()
+    self._frozen = False
+    self._confirmed = "0"
     if initial is None:
       initial = {}
     self.initial = initial
@@ -2122,6 +2175,17 @@ class Form(object):
     for name, field in self._root_field.fields.iteritems():
       if field.label is None:
         field.label = name.capitalize().replace("_", " ")
+
+  @property
+  def is_confirmed(self):
+    try:
+      return self.raw_data["_confirmed"] == "1"
+    except Exception:
+      return False
+    
+  def set_confirmed(self):
+    self._confirmed = "1"
+    self._frozen = True
 
   def __getitem__(self, key):
     return self.data[key]
