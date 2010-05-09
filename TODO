@@ -29,5 +29,3 @@ kay.utils.forms
 ---------------
 
 * Capability to customize buttons on forms
-* Force fields to be hidden
-* Form.freeze() method could be useful in some cases.
