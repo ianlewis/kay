@@ -126,8 +126,10 @@ class KayApp(object):
           base_rules = base_rules + view_group.get_rules()
           self.views.update(view_group.get_views())
         except Exception, e:
-          logging.warn("Failed to mount ViewGroup: %s", e)
-      self.url_map = Map(base_rules)
+          logging.error("Failed to mount ViewGroup: %s", e)
+          raise
+      import copy
+      self.url_map = Map(copy.deepcopy(base_rules))
     else:
       make_url = getattr(mod, 'make_url')
       all_views = getattr(mod, 'all_views')
@@ -145,9 +147,9 @@ class KayApp(object):
         try:
           url_mod = import_string("%s.urls" % app)
         except (ImportError, AttributeError):
-          logging.warning("Failed to import app '%s.urls', skipped." % app)
+          logging.error("Failed to import app '%s.urls'." % app)
           logging.debug("Reason:\n%s" % self._get_traceback(sys.exc_info()))
-          continue
+          raise
       if hasattr(url_mod, 'view_groups'):
         rules = []
         for view_group in getattr(url_mod, 'view_groups'):
@@ -156,7 +158,8 @@ class KayApp(object):
             rules = rules + view_group.get_rules(endpoint_prefix)
             self.views.update(view_group.get_views(endpoint_prefix))
           except Exception, e:
-            logging.warn("Failed to mount ViewGroup: %s", e)
+            logging.error("Failed to mount ViewGroup: %s", e)
+            raise InternalServerError(e)
       else:
         make_rules = getattr(url_mod, 'make_rules', None)
         if make_rules:
@@ -324,7 +327,7 @@ class KayApp(object):
         assert(callable(view_func))
       except StandardError, e:
           logging.error(self._get_traceback(sys.exc_info()))
-          return render_error(NotFound())
+          raise InternalServerError(e)
       for mw_method in self._view_middleware:
         response = mw_method(request, view_func, **values)
         if response:
