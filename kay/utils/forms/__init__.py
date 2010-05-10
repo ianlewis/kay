@@ -2160,10 +2160,10 @@ class Form(object):
 #   redirect_tracking = True
 
   def __init__(self, initial=None, action='', use_confirmation=False):
-    self.use_confirmation = use_confirmation
-    self.request = get_request()
+    self._use_confirmation = use_confirmation
     self._frozen = False
     self._confirmed = "0"
+    self.request = get_request()
     if initial is None:
       initial = {}
     self.initial = initial
