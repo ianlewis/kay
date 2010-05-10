@@ -10,22 +10,17 @@ Documentation
  * How to contribute to Kay
  * Template strategy
  * registration app
+ * jsonrpc2 feature
 
 kay
 ---
 
 * It could be better than now to allow installing Kay to somewhere on
   the system paths.
-* A script for buildout.
 * A urlfetch stub for testing purpose.
 
 kay.auth
 --------
 
+* Implement a backend for gaema
 * Incorporate Ian's ChoiceBackend.
-
-
-kay.utils.forms
----------------
-
-* Capability to customize buttons on forms

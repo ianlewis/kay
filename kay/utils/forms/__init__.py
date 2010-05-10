@@ -823,7 +823,7 @@ class FormWidget(MappingWidget):
     if self._field.form.request is not None:
       if self._field.form.csrf_protected:
         fields.append(('_csrf_token', self.csrf_token))
-    if self._field.form.use_confirmation:
+    if self._field.form._use_confirmation:
       fields.append(('_confirmed', self._confirmed))
 #             if self._field.form.redirect_tracking:
 #                 target = self.redirect_target
@@ -856,7 +856,7 @@ class FormWidget(MappingWidget):
     """Returns a default action div with a submit button."""
     label = attrs.pop('label', None)
     if label is None:
-      if self._field.form.use_confirmation:
+      if self._field.form._use_confirmation:
         if self._field.form._confirmed == "1":
           label = _('Save')
         else:
