@@ -306,16 +306,19 @@ class KayApp(object):
       )
     request.lang = lang
 
-    # apply request middleware
     if self._request_middleware is None:
       self.load_middleware()
-    for mw_method in self._request_middleware:
-      response = mw_method(request)
-      if response:
-        return response
-
     try:
       endpoint, values = local.url_adapter.match()
+      if self.app_settings.IS_MARKETPLACE_APP:
+        if values.has_key(settings.MARKETPLACE_DOMAIN_NAME_KEY):
+          setattr(request, settings.MARKETPLACE_DOMAIN_NAME_KEY,
+                  values[settings.MARKETPLACE_DOMAIN_NAME_KEY])
+      # apply request middleware
+      for mw_method in self._request_middleware:
+        response = mw_method(request)
+        if response:
+          return response
       view_func = self.views.get(endpoint, None)
       try:
         if isinstance(view_func, tuple):

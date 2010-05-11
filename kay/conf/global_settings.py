@@ -99,3 +99,6 @@ JSONRPC2_METHODS = {
 }
 
 RESPONSE_CLASS = 'kay.wrappers.Response'
+
+IS_MARKETPLACE_APP = False
+MARKETPLACE_DOMAIN_NAME_KEY = 'domain_name'

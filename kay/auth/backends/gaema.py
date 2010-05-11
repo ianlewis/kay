@@ -45,6 +45,16 @@ class GAEMABackend(object):
   def get_user(self, request):
     '''check for gaema authenticated user and return the user
     '''
+    if hasattr(request, settings.MARKETPLACE_DOMAIN_NAME_KEY):
+      # marketplace
+      domain = getattr(request, settings.MARKETPLACE_DOMAIN_NAME_KEY)
+      user = get_gaema_user(domain)
+      if user:
+        user['_service'] = domain
+        key_name = "%s:%s" % (domain, user['claimed_id'])
+        return self.user_model.get_or_insert(key_name, user)
+      else:
+        return AnonymousUser()
     for service in self.valid_services:
       user = get_gaema_user(service)
       if user:
