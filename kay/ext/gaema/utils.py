@@ -9,6 +9,7 @@ kay.ext.gaema.utils
 """
 
 from werkzeug.contrib.securecookie import SecureCookie
+from werkzeug.exceptions import InternalServerError
 
 from kay.utils import (
   set_cookie, url_for, local
@@ -17,6 +18,11 @@ from kay.conf import settings
 from kay.ext.gaema import (
   NEXT_URL_KEY_FORMAT, GAEMA_USER_KEY_FORMAT
 )
+
+from kay.ext.gaema import services
+
+def get_valid_services():
+  return getattr(settings, 'GAEMA_VALID_SERVICES', [services.GOOG_OPENID])
 
 def create_gaema_login_url(service, nexturl="/"):
   next_url_key = NEXT_URL_KEY_FORMAT % service
@@ -39,14 +45,18 @@ def create_marketplace_logout_url(domain, nexturl="/"):
   return url_for("gaema/marketplace_logout", domain=domain)
 
 def get_gaema_user(service):
-  gaema_user_key = GAEMA_USER_KEY_FORMAT % service
-  if hasattr(settings, "GAEMA_STORAGE") and settings.GAEMA_STORAGE == "cookie":
-    user_data = local.request.cookies.get(gaema_user_key, None)
-    if user_data:
-      return SecureCookie.unserialize(user_data,
-                                      secret_key=settings.SECRET_KEY)
-  else:
-    return local.request.session.get(gaema_user_key, None)
+  try:
+    gaema_user_key = GAEMA_USER_KEY_FORMAT % service
+    if hasattr(settings, "GAEMA_STORAGE") and \
+          settings.GAEMA_STORAGE == "cookie":
+      user_data = local.request.cookies.get(gaema_user_key, None)
+      if user_data:
+        return SecureCookie.unserialize(user_data,
+                                        secret_key=settings.SECRET_KEY)
+    else:
+      return local.request.session.get(gaema_user_key, None)
+  except Exception, e:
+    raise InternalServerError('Getting gaema_user failed, reason: %s' % e)
 
 def set_gaema_user(service, user):
   gaema_user_key = GAEMA_USER_KEY_FORMAT % service
@@ -56,4 +66,5 @@ def set_gaema_user(service, user):
     set_cookie(gaema_user_key, user_data)
   else:
     local.request.session[gaema_user_key] = user
+    local.request.session.modified = True
   

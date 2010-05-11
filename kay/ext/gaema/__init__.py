@@ -23,7 +23,6 @@ mount_point = "/_ah/gaema"
 GAEMA_USER_KEY_FORMAT = "_%s_user"
 NEXT_URL_KEY_FORMAT = "_nexturl_%s"
 
-
 class RequestAdapter(object):
   """Adapter to transform a `webob` request into a request with the
   attributes expected by `tornado.auth`.
@@ -60,7 +59,7 @@ class GAEMultiAuthMixin(object):
   def __init__(self, request):
     self.request = RequestAdapter(request)
     self._request = request
-    self.settings = settings.GAEMA_SECRETS
+    self.settings = getattr(settings, "GAEMA_SECRETS", {})
     self.redirect_to = None
 
   def is_callback(self):

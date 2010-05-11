@@ -18,6 +18,7 @@ from kay.utils import url_for
 from kay.utils.decorators import auto_adapt_to_methods
 from kay.ext.gaema.utils import (
   get_gaema_user, create_gaema_login_url, create_marketplace_login_url,
+  get_valid_services
 )
 from kay.ext.gaema.services import (
   GOOG_OPENID, GOOG_HYBRID, TWITTER, FACEBOOK,

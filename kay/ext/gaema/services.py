@@ -47,6 +47,15 @@ verbose_names = {
   YAHOO: u'Yahoo OpenID',
 }
 
+def get_key_name(user):
+  service = user['_service']
+  if service in [GOOG_OPENID, GOOG_HYBRID, YAHOO]:
+    return "%s:%s" % (service, user['claimed_id'])
+  if service in [TWITTER]:
+    return "%s:%s" % (service, user['id'])
+  if service in [FACEBOOK]:
+    return "%s:%s" % (service, user['uid'])
+
 def use_hybrid(service_name):
   return service_name in hybrid_services
 
@@ -61,6 +70,12 @@ def register_gaema_service(key, auth_module, verbose_name, use_hybrid=False):
   if key in available_services:
     raise exceptions.ImproperlyConfigured(
       'Service "%s" is already registered.' % key)
+  if "." in key:
+    raise exceptions.ImproperlyConfigured(
+      'The service_name "%s" contains ".", which is not allowed.' % key)
+  if ":" in key:
+    raise exceptions.ImproperlyConfigured(
+      'The service_name "%s" contains ":", which is not allowed.' % key)
   available_services.append(key)
   auth_modules[key] = auth_module
   verbose_names[key] = verbose_name

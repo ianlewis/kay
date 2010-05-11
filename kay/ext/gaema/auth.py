@@ -171,6 +171,7 @@ class OpenIdMixin(object):
             if not ax_name: return u""
             return self.get_argument(ax_name, u"")
 
+        claimed_id = self.get_argument("openid.claimed_id", None)
         email = get_ax_arg("http://axschema.org/contact/email")
         name = get_ax_arg("http://axschema.org/namePerson")
         first_name = get_ax_arg("http://axschema.org/namePerson/first")
@@ -194,6 +195,7 @@ class OpenIdMixin(object):
         if email: user["email"] = email
         if locale: user["locale"] = locale
         if username: user["username"] = username
+        if claimed_id: user["claimed_id"] = claimed_id
         callback(user)
 
 

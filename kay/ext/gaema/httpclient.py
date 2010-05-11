@@ -36,6 +36,7 @@ class AsyncHTTPClient(object):
             setattr(result, 'error', 'Error %d' % code)
           else:
             setattr(result, 'error', None)
+            logging.debug(result.body)
         except urlfetch.DownloadError, e:
           logging.debug(e)
           result = HttpResponseError()
