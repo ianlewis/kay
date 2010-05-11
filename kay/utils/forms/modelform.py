@@ -681,10 +681,12 @@ class BaseModelForm(forms.Form):
     propiter = itertools.chain(
       opts.model.properties().iteritems(),
       iter([('key_name', StringProperty(name='key_name'))])
-      )
+    )
     for name, prop in propiter:
       if cleaned_data.has_key(name):
         value = cleaned_data.get(name)
+        if not value and prop.default is not None:
+          value = prop.default
         converted_data[name] = prop.make_value_from_form(value)
     try:
       converted_data.update(kwargs)
