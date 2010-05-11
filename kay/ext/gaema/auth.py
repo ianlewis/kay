@@ -51,11 +51,16 @@ import uuid
 from werkzeug.exceptions import InternalServerError
 
 def make_full_url(base, args):
+  def normalize(s):
+    if isinstance(s, unicode):
+      return s.encode('utf-8')
+    return s
+  encoded = dict([(normalize(k), normalize(v)) for k, v in args.items()])
   if "?" in base:
     delimiter = "&"
   else:
     delimiter = "?"
-  return base + delimiter + urllib.urlencode(args)
+  return base + delimiter + urllib.urlencode(encoded)
 
 class OpenIdMixin(object):
     """Abstract implementation of OpenID and Attribute Exchange.
