@@ -74,6 +74,10 @@ class GAEMABackend(object):
                    next_url=url_quote_plus(next_url))
 
   def create_logout_url(self, next_url='/'):
+    if hasattr(local.request, settings.MARKETPLACE_DOMAIN_NAME_KEY):
+      # marketplace
+      domain = getattr(local.request, settings.MARKETPLACE_DOMAIN_NAME_KEY)
+      return create_marketplace_logout_url(domain, next_url)
     user = self.get_user(local.request)
     return create_gaema_logout_url(user.service, nexturl=next_url)
 
