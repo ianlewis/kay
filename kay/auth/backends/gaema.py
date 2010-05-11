@@ -24,7 +24,7 @@ from kay.utils import (
 from kay.auth.models import AnonymousUser
 from kay.ext.gaema.utils import (
   get_gaema_user, get_valid_services, create_gaema_logout_url,
-  create_marketplace_login_url,
+  create_marketplace_login_url, create_marketplace_logout_url,
 )
 from kay.ext.gaema import services
 from kay.ext.gaema.models import GAEMAUser
