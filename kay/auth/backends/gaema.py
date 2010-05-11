@@ -31,7 +31,7 @@ from kay.conf import settings
 from kay.exceptions import ImproperlyConfigured
 from kay.auth.models import AnonymousUser
 
-class GaemaBackend(object):
+class GAEMABackend(object):
 
   def __init__(self):
     self.user_model = getattr(settings, 'GAEMA_USER_MODEL', GAEMAUser)
