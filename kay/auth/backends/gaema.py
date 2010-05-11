@@ -23,7 +23,8 @@ from kay.utils import (
 )
 from kay.auth.models import AnonymousUser
 from kay.ext.gaema.utils import (
-  get_gaema_user, get_valid_services, create_gaema_logout_url
+  get_gaema_user, get_valid_services, create_gaema_logout_url,
+  create_marketplace_login_url,
 )
 from kay.ext.gaema import services
 from kay.ext.gaema.models import GAEMAUser
@@ -64,6 +65,10 @@ class GAEMABackend(object):
     return AnonymousUser()
 
   def create_login_url(self, next_url='/'):
+    if hasattr(local.request, settings.MARKETPLACE_DOMAIN_NAME_KEY):
+      # marketplace
+      domain = getattr(local.request, settings.MARKETPLACE_DOMAIN_NAME_KEY)
+      return create_marketplace_login_url(domain, next_url)
     return url_for('gaema/select_service',
                    targets='|'.join(self.valid_services),
                    next_url=url_quote_plus(next_url))
