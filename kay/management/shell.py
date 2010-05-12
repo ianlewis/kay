@@ -293,7 +293,7 @@ def create_user(user_name=('u', ''), password=('P', ''), is_admin=('A', False),
     path = '/remote_api'
     
   remote_api_stub.ConfigureRemoteApi(appid, path, auth_func,
-                                     host, secure=secure)
+                                     host, secure=secure, save_cookies=True)
   remote_api_stub.MaybeInvokeAuthentication()
   try:
     create_new_user(user_name, password, is_admin=is_admin)
@@ -323,7 +323,7 @@ def clear_datastore(appid=('a', ''), host=('h', ''), path=('p', ''),
       models.append(db.class_for_kind(kind))
       
   remote_api_stub.ConfigureRemoteApi(appid, path, auth_func,
-                                     host, secure=secure)
+                                     host, secure=secure, save_cookies=True)
   remote_api_stub.MaybeInvokeAuthentication()
   delete_all_entities(models)
   if clear_memcache:
@@ -353,7 +353,7 @@ def rshell(appid=('a', ''), host=('h', ''), path=('p', ''),
     path = '/remote_api'
 
   remote_api_stub.ConfigureRemoteApi(appid, path, auth_func,
-                                     host, secure=secure)
+                                     host, secure=secure, save_cookies=True)
   remote_api_stub.MaybeInvokeAuthentication()
   if use_ipython:
     try:
