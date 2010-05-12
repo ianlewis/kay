@@ -233,15 +233,15 @@ class CRUDViewGroup(ViewGroup):
     if entity is None:
       raise NotFound("Specified %s not found." % self.model_name)
     self.check_authority(request, OP_SHOW, entity)
-    prop_names = [
+    sorted_prop_names = [
       prop_name for prop_name, prop in
       sorted(entity.fields().items(), key=lambda x: x[1].creation_counter)
     ]
-    prop_names += entity.dynamic_properties()
+    sorted_prop_names += entity.dynamic_properties()
     return render_to_response(self.get_template(request, OP_SHOW),
                               {'entity': entity,
                                'model': self.model_name,
-                               'sorted_prop_names': prop_names},
+                               'sorted_prop_names': sorted_prop_names},
                               processors=(self.url_processor,))
 
   def create_or_update(self, request, key=None):
