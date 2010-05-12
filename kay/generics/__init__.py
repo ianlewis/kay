@@ -32,6 +32,7 @@ from kay.utils.flash import (
 )
 from kay.exceptions import NotAuthorized
 from kay.i18n import gettext as _
+from kay.i18n import lazy_gettext
 from kay.routing import ViewGroup
 
 endpoints = {
@@ -114,6 +115,13 @@ class CRUDViewGroup(ViewGroup):
     Rule('/$model/update/<key>', endpoint=endpoints[OP_UPDATE]),
     Rule('/$model/delete/<key>', endpoint=endpoints[OP_DELETE]),
   ])
+  messages = {
+    'title_update': lazy_gettext(u"Updating a %s entity"),
+    'title_create': lazy_gettext(u"Creating a new %s"),
+    'result_update': lazy_gettext(u"An entity is updated successfully."),
+    'result_create': lazy_gettext(u"A new entity is created successfully."),
+    'result_delete': lazy_gettext(u"An entity is deleted successfully."),
+  }
 
   def __init__(self, model=None, **kwargs):
     super(CRUDViewGroup, self).__init__(**kwargs)
@@ -270,30 +278,29 @@ class CRUDViewGroup(ViewGroup):
         raise NotFound("Specified %s not found." % self.model_name)
       form_class = self.get_form(request, OP_UPDATE)
       form = form_class(instance=entity)
-      title = _("Updating a %s entity") % self.model_name
+      title = self.messages['title_update'] % self.model_name
       self.check_authority(request, OP_UPDATE, entity)
     else:
       form_class = self.get_form(request, OP_CREATE)
       form = form_class()
-      title = _("Creating a new %s") % self.model_name
+      title = self.messages['title_create'] % self.model_name
       self.check_authority(request, OP_CREATE)
     if request.method == 'POST':
       if form.validate(request.form, request.files):
         if key:
           additional_context = self.get_additional_context_on_update(request,
                                                                      form)
-          message = _("An entity is updated successfully.")
+          message = self.messages['result_update']
         else:
           additional_context = self.get_additional_context_on_create(request,
                                                                      form)
-          message = _("A new entity is created successfully.")
+          message = self.messages['result_create']
         new_entity = form.save(**additional_context)
         set_flash(message)
         return redirect(self.get_list_url())
     return render_to_response(self.get_template(request, OP_UPDATE),
                               {'form': form.as_widget(),
-                               'title': title,
-                               },
+                               'title': title},
                               processors=(self.url_processor,))
 
   def create(self, *args, **kwargs):
@@ -314,7 +321,7 @@ class CRUDViewGroup(ViewGroup):
       raise NotFound("Specified %s not found." % self.model_name)
     self.check_authority(request, OP_DELETE, entity)
     entity.delete()
-    set_flash(_("An entity is deleted successfully."))
+    set_flash(self.messages['result_delete'])
     # TODO: back to original page
     return redirect(self.get_list_url())
     

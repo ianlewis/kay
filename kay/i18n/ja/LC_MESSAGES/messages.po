@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  kay-0.8.0\n"
 "Report-Msgid-Bugs-To: tmatsuo@candit.jp\n"
-"POT-Creation-Date: 2009-11-15 23:30+0900\n"
-"PO-Revision-Date: 2010-03-09 11:02+0900\n"
+"POT-Creation-Date: 2010-05-12 22:59+0900\n"
+"PO-Revision-Date: 2010-05-12 23:08+0900\n"
 "Last-Translator: Takashi Matsuo <tmatsuo@candit.jp>\n"
 "Language-Team: Takashi Matsuo <tmatsuo@candit.jp>\n"
 "Plural-Forms: nplurals=1; plural=0\n"
@@ -17,25 +17,77 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel None\n"
 
-#: kay/app.py:344
+#: kay/app.py:366
 msgid "Appengine might be under maintenance."
 msgstr "Appengine はメンテナンス中のようです。"
 
-#: kay/auth/forms.py:16 kay/registration/forms.py:18
+#: kay/auth/forms.py:20 kay/auth/forms.py:33 kay/registration/forms.py:18
 msgid "user name"
 msgstr "ユーザー名"
 
-#: kay/auth/forms.py:18 kay/registration/forms.py:22
+#: kay/auth/forms.py:22 kay/registration/forms.py:22
 msgid "password"
 msgstr "パスワード"
 
-#: kay/auth/models.py:67 kay/registration/forms.py:31
+#: kay/auth/forms.py:29 kay/registration/forms.py:20
+msgid "email address"
+msgstr "電子メールアドレス"
+
+#: kay/auth/forms.py:37
+msgid "Old password"
+msgstr "古いパスワード"
+
+#: kay/auth/forms.py:41
+msgid "New password"
+msgstr "新しいパスワード"
+
+#: kay/auth/forms.py:44
+msgid "Confirm password"
+msgstr "パスワードの確認"
+
+#: kay/auth/forms.py:48 kay/auth/forms.py:76
+msgid "The new passwords don't match."
+msgstr "パスワードが一致しません。"
+
+#: kay/auth/forms.py:61
+msgid "Invalid temporary session."
+msgstr "不正な一時セッション"
+
+#: kay/auth/forms.py:72
+msgid "Can not validate old password."
+msgstr "古いパスワードが不正です。"
+
+#: kay/auth/forms.py:78
+msgid "The new password must differ from the old one."
+msgstr "新しいパスワードは古いパスワードから変更する必要があります。"
+
+#: kay/auth/models.py:66 kay/registration/forms.py:31
 msgid "This user name is already taken. Please choose another user name."
 msgstr "このユーザー名は既に使われています。別のユーザー名を選んでください。"
 
-#: kay/auth/views.py:68
+#: kay/auth/views.py:78 kay/auth/views.py:107
 msgid "Failed to login."
 msgstr "ログインできません。"
+
+#: kay/auth/views.py:176
+msgid "You must sign in for this operation."
+msgstr "この操作を行うにはログインする必要があります。"
+
+#: kay/auth/views.py:188
+msgid "Password changed successfully."
+msgstr "パスワードが変更されました。"
+
+#: kay/auth/templates/change_password.html:2
+msgid "Change Password"
+msgstr "パスワードの変更"
+
+#: kay/auth/templates/change_password.html:11
+msgid "Changing password"
+msgstr "パスワードを変更します"
+
+#: kay/auth/templates/change_password.html:19
+msgid "Change"
+msgstr "変更"
 
 #: kay/auth/templates/loginform.html:2
 msgid "Kay Login"
@@ -45,21 +97,113 @@ msgstr "Kay ログイン"
 msgid "Kay Login Form"
 msgstr "Kay ログインフォーム"
 
-#: kay/auth/templates/loginform.html:19
+#: kay/auth/templates/loginform.html:19 kay/auth/templates/macros.html:8
 msgid "Login"
 msgstr "ログイン"
 
-#: kay/i18n/__init__.py:304
+#: kay/auth/templates/loginform.html:23
+msgid "Forgot password?"
+msgstr "パスワードを忘れた場合"
+
+#: kay/auth/templates/no_such_user.html:2
+#: kay/auth/templates/request_reset_password.html:2
+#: kay/auth/templates/request_reset_password.html:12
+#: kay/auth/templates/reset_password_finish.html:2
+msgid "Kay Reset Password Request"
+msgstr "パスワード変更の申請"
+
+#: kay/auth/templates/request_reset_password.html:5
+msgid "Please input your user name."
+msgstr "ユーザー名を入力してください。"
+
+#: kay/auth/templates/request_reset_password.html:20
+msgid "Request Resetting Password"
+msgstr "パスワードのリセットを申請します"
+
+#: kay/auth/templates/reset_password.html:2
+#: kay/auth/templates/reset_password.html:12
+#: kay/auth/templates/reset_password_success.html:2
+msgid "Kay Reset Password"
+msgstr "パスワードのリセット"
+
+#: kay/auth/templates/reset_password.html:5
+msgid "Please input your new password."
+msgstr "新しいパスワードを入力してください。"
+
+#: kay/auth/templates/reset_password.html:20
+msgid "Reset Your Password"
+msgstr "パスワードのリセット"
+
+#: kay/auth/templates/reset_password_finish.html:4
+msgid ""
+"An e-mail has been sent to you. Please follow the instruction in the e-mail "
+"for resetting your password."
+msgstr "あなたにメールを送りました。パスワードをリセットするには、メールに記載の手順に従ってください。"
+
+#: kay/auth/templates/reset_password_instruction.txt:1
+msgid ""
+"\n"
+"Hi!\n"
+"In order to reset your password please visit the following link:\n"
+msgstr ""
+"\n"
+"こんにちは\n"
+"パスワードをリセットするためには下記のリンクをクリックしてください:\n"
+
+#: kay/auth/templates/reset_password_instruction.txt:6
+#: kay/registration/templates/activation_email.txt:6
+#, python-format
+msgid ""
+"\n"
+"Thanks,\n"
+"Your %(appname)s team\n"
+msgstr ""
+"\n"
+"ありがとうございました。\n"
+"%(appname)s チームより\n"
+
+#: kay/auth/templates/reset_password_instruction_subject.txt:1
+#, python-format
+msgid "An instructions for resetting your password of %(appname)s."
+msgstr "%(appname)s のパスワードをリセットする手順です。"
+
+#: kay/auth/templates/reset_password_success.html:4
+msgid "Your password has been changed successfully."
+msgstr "あなたのパスワードが変更されました。"
+
+#: kay/ext/gaema/templates/select_service.html:2
+msgid "Kay SocialAuth Login"
+msgstr "Kay ソーシャル認証 ログイン"
+
+#: kay/ext/gaema/templates/select_service.html:4
+msgid "You need to sign in with one of following services."
+msgstr "次のうちどれかのサービスを使ってログインする必要があります。"
+
+#: kay/generics/__init__.py:119
+#, python-format
+msgid "Updating a %s entity"
+msgstr "%s のエンティティを更新します"
+
+#: kay/generics/__init__.py:120
+#, python-format
+msgid "Creating a new %s"
+msgstr "新しく %s のエンティティを作成します"
+
+#: kay/generics/__init__.py:121
+msgid "An entity is updated successfully."
+msgstr "エンティティが更新されました。"
+
+#: kay/generics/__init__.py:122
+msgid "A new entity is created successfully."
+msgstr "新しいエンティティが作成されました。"
+
+#: kay/generics/__init__.py:123
+msgid "An entity is deleted successfully."
+msgstr "エンティティが削除されました。"
+
+#: kay/i18n/__init__.py:325
 msgid "now"
 msgstr "現在"
-
-#: kay/management/app_template/views.py:26
-msgid "Hello"
-msgstr "こんにちは"
-
-#: kay/registration/forms.py:20
-msgid "email address"
-msgstr "電子メールアドレス"
 
 #: kay/registration/forms.py:24
 msgid "password(again)"
@@ -110,17 +254,6 @@ msgstr ""
 "こんにちは\n"
 "アカウントのアクティベーションのために下記のリンクをクリックしてください:\n"
 
-#: kay/registration/templates/activation_email.txt:6
-#, python-format
-msgid ""
-"\n"
-"Thanks,\n"
-"Your %(appname)s team\n"
-msgstr ""
-"\n"
-"ありがとうございました。\n"
-"%(appname)s チームより\n"
-
 #: kay/registration/templates/activation_email_subject.txt:1
 #, python-format
 msgid "Activation of your %(appname)s account"
@@ -151,162 +284,178 @@ msgstr "Kay ユーザー登録フォーム"
 msgid "Register"
 msgstr "ユーザー登録"
 
-#: kay/utils/validators.py:83
+#: kay/utils/validators.py:85
 msgid "You have to enter a valid e-mail address."
 msgstr "正しい電子メールアドレスを入力してください。"
 
-#: kay/utils/validators.py:104
+#: kay/utils/validators.py:106
 msgid "You have to enter a valid URL."
 msgstr "正しいURLを入力してください。"
 
-#: kay/utils/validators.py:122
+#: kay/utils/validators.py:124
 msgid "The slug is too long"
 msgstr "slug が長過ぎます。"
 
-#: kay/utils/validators.py:124
+#: kay/utils/validators.py:126
 msgid "The slug must not start with a slash"
 msgstr "slug はスラッシュで始める事は出来ません。"
 
-#: kay/utils/validators.py:142 kay/utils/validators.py:145
+#: kay/utils/validators.py:144 kay/utils/validators.py:147
 msgid "You have to enter a valid net address."
 msgstr "正しいネットワークアドレスを入力してください。"
 
-#: kay/utils/validators.py:147
+#: kay/utils/validators.py:149
 msgid "The port has to be numeric"
 msgstr "ポート番号は数字で入力してください。"
 
-#: kay/utils/validators.py:155
+#: kay/utils/validators.py:157
 msgid "Invalid character, < or > are not allowed."
 msgstr "不正な文字です。< と > は使えません。"
 
-#: kay/utils/validators.py:157
+#: kay/utils/validators.py:159
 msgid "URL prefix must not be a sole slash."
 msgstr "URL prefix はスラッシュだけでは駄目です。"
 
-#: kay/utils/validators.py:160
+#: kay/utils/validators.py:162
 msgid "URL prefix must start with a slash."
 msgstr "URL prefix はスラッシュで始めてください。"
 
-#: kay/utils/validators.py:162
+#: kay/utils/validators.py:164
 msgid "URL prefix must not end with a slash."
 msgstr "URL prefix はスラッシュで終る事ができません。"
 
-#: kay/utils/validators.py:171
+#: kay/utils/validators.py:173
 msgid "The text must not be empty."
 msgstr "何らかのテキストを入力してください。"
 
-#: kay/utils/forms/__init__.py:700
+#: kay/utils/forms/__init__.py:609
+msgid "Checked"
+msgstr "チェック"
+
+#: kay/utils/forms/__init__.py:611
+msgid "Not checked"
+msgstr "未チェック"
+
+#: kay/utils/forms/__init__.py:746
 msgid "No choices."
 msgstr "選択肢がありません。"
 
-#: kay/utils/forms/__init__.py:800
+#: kay/utils/forms/__init__.py:861
+msgid "Save"
+msgstr "保存"
+
+#: kay/utils/forms/__init__.py:863
+msgid "Confirm"
+msgstr "確認画面へ"
+
+#: kay/utils/forms/__init__.py:865
 msgid "Submit"
 msgstr "送信"
 
-#: kay/utils/forms/__init__.py:953
+#: kay/utils/forms/__init__.py:1030
 msgid "This field is required."
 msgstr "このフィールドは必須です。"
 
-#: kay/utils/forms/__init__.py:1124
+#: kay/utils/forms/__init__.py:1201
 msgid "Invalid security token submitted."
 msgstr "不正なセキュリティトークンが検出されました。"
 
-#: kay/utils/forms/__init__.py:1179 kay/utils/forms/__init__.py:1643
+#: kay/utils/forms/__init__.py:1256 kay/utils/forms/__init__.py:1766
 #, python-format
 msgid "Please provide at least %d item."
 msgid_plural "Please provide at least %d items."
 msgstr[0] "少なくともアイテムが %d 個必要です。"
 
-#: kay/utils/forms/__init__.py:1186 kay/utils/forms/__init__.py:1650
+#: kay/utils/forms/__init__.py:1263 kay/utils/forms/__init__.py:1773
 #, python-format
 msgid "Please provide no more than %d item."
 msgid_plural "Please provide no more than %d items."
 msgstr[0] "アイテムの数は %d 個以内である必要があります。"
 
-#: kay/utils/forms/__init__.py:1299
+#: kay/utils/forms/__init__.py:1376
 #, python-format
 msgid "Please enter at least %d character."
 msgid_plural "Please enter at least %d characters."
 msgstr[0] "%d 文字以上入力してください。"
 
-#: kay/utils/forms/__init__.py:1306
+#: kay/utils/forms/__init__.py:1383
 #, python-format
 msgid "Please enter no more than %d character."
 msgid_plural "Please enter no more than %d characters."
 msgstr[0] "%d 文字以内で入力してください。"
 
-#: kay/utils/forms/__init__.py:1317
+#: kay/utils/forms/__init__.py:1404
 msgid "The value is invalid."
 msgstr "この値は不正です。"
 
-#: kay/utils/forms/__init__.py:1339
+#: kay/utils/forms/__init__.py:1426
 msgid "Enter a valid e-mail address."
 msgstr "正しい電子メールアドレスを入力してください。"
 
-#: kay/utils/forms/__init__.py:1359
+#: kay/utils/forms/__init__.py:1445 kay/utils/forms/__init__.py:1486
 msgid "Please enter a valid date."
 msgstr "有効な日付を入力してください。"
 
-#: kay/utils/forms/__init__.py:1413
+#: kay/utils/forms/__init__.py:1540
 msgid "The selected entity does not exist, or is not allowed to select."
 msgstr "選択されたエンティティは存在しないか、選択する事ができません。"
 
-#: kay/utils/forms/__init__.py:1507
+#: kay/utils/forms/__init__.py:1636
 msgid "Invalid value."
 msgstr "不正な値です。"
 
-#: kay/utils/forms/__init__.py:1508
+#: kay/utils/forms/__init__.py:1637
 msgid "Key does not exist."
 msgstr "キーが存在しません。"
 
-#: kay/utils/forms/__init__.py:1578
+#: kay/utils/forms/__init__.py:1701
 msgid "Please enter a valid choice."
 msgstr "有効な選択肢を選んでください。"
 
-#: kay/utils/forms/__init__.py:1637
+#: kay/utils/forms/__init__.py:1760
 #, python-format
 msgid "“%s” is not a valid choice"
 msgstr "“%s” は有効な選択肢ではありません。"
 
-#: kay/utils/forms/__init__.py:1683
+#: kay/utils/forms/__init__.py:1806
 msgid "Please enter a number."
 msgstr "数字を入力してください。"
 
-#: kay/utils/forms/__init__.py:1709
+#: kay/utils/forms/__init__.py:1832
 #, python-format
 msgid "Ensure this value is greater than or equal to %s."
 msgstr "この値は %s 以上を入力してください。"
 
-#: kay/utils/forms/__init__.py:1715
+#: kay/utils/forms/__init__.py:1838
 #, python-format
 msgid "Ensure this value is less than or equal to %s."
 msgstr "この値は %s 以下を入力してください。"
 
-#: kay/utils/forms/__init__.py:1748
+#: kay/utils/forms/__init__.py:1871
 msgid "Please enter a whole number."
 msgstr "整数を入力してください。"
 
-#: kay/utils/forms/__init__.py:1774
+#: kay/utils/forms/__init__.py:1897
 msgid "Please enter a float number."
 msgstr "浮動小数点数を入力してください。"
 
-#: kay/utils/forms/__init__.py:1794
+#: kay/utils/forms/__init__.py:1917
 msgid "Please select a file to upload."
 msgstr "アップロードするファイルを選択してください。"
 
-#: kay/utils/forms/__init__.py:1799
+#: kay/utils/forms/__init__.py:1922
 msgid "File must not empty."
 msgstr "ファイルは空でした。中身のあるファイルをアップロードしてください。"
 
-#: kay/utils/forms/__init__.py:1821
+#: kay/utils/forms/__init__.py:1944
 msgid "True"
 msgstr "はい"
 
-#: kay/utils/forms/__init__.py:1822
+#: kay/utils/forms/__init__.py:1945
 msgid "False"
 msgstr "いいえ"
 
-#: kay/utils/forms/__init__.py:1833
+#: kay/utils/forms/__init__.py:1956
 msgid "Please select True or False."
 msgstr "TrueかFalseを選択してください。"
 

@@ -8,7 +8,7 @@ kay.utils.flash
 :license: BSD, see LICENSE for more details.
 """
 from base64 import b64encode, b64decode
-import simplejson
+import pickle
 
 from kay.conf import settings
 from kay.utils import local
@@ -28,7 +28,7 @@ def get_flash():
       data = local.request.cookies[key]
   local.flash_message = None
   if data:
-    return simplejson.loads(b64decode(data))
+    return pickle.loads(b64decode(data))
   return u''
 
 
@@ -41,7 +41,7 @@ def set_flash(data):
   :return:
     ``None``.
   """
-  local.flash_message = b64encode(simplejson.dumps(data))
+  local.flash_message = b64encode(pickle.dumps(data))
 
 
 class FlashMiddleware(object):
