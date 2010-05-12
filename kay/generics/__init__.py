@@ -42,6 +42,14 @@ endpoints = {
   'delete': "delete_$model",
 }
 
+per_domain_endpoints = {
+  'list': "a/list_$model",
+  'show': "a/show_$model",
+  'create': "a/create_$model",
+  'update': "a/update_$model",
+  'delete': "a/delete_$model",
+}
+
 OP_LIST = 'list'
 OP_SHOW = 'show'
 OP_CREATE = 'create'
@@ -313,7 +321,7 @@ class CRUDViewGroup(ViewGroup):
   def _get_views(self, prefix=None):
     self.prefix = prefix
     ret = {}
-    for key, val in endpoints.iteritems():
+    for key, val in self.endpoints.iteritems():
       s = Template(val)
       endpoint = s.substitute(model=self.model_name_lower)
       if prefix:
@@ -322,7 +330,72 @@ class CRUDViewGroup(ViewGroup):
     return ret
 
   def get_endpoint(self, key):
-    endpoint = Template(endpoints[key]).substitute(model=self.model_name_lower)
+    endpoint = Template(self.endpoints[key]).\
+        substitute(model=self.model_name_lower)
     if self.prefix:
       endpoint = self.prefix+endpoint
     return endpoint
+
+  @property
+  def endpoints(self):
+    return endpoints
+
+class PerDomainCRUDViewGroup(CRUDViewGroup):
+  rule_template = RuleTemplate([
+    Rule('/a/<domain_name>/$model/list',
+         endpoint=per_domain_endpoints[OP_LIST]),
+    Rule('/a/<domain_name>$model/list/<cursor>',
+         endpoint=per_domain_endpoints[OP_LIST]),
+    Rule('/a/<domain_name>/$model/show/<key>',
+         endpoint=per_domain_endpoints[OP_SHOW]),
+    Rule('/a/<domain_name>/$model/create',
+         endpoint=per_domain_endpoints[OP_CREATE]),
+    Rule('/a/<domain_name>/$model/update/<key>',
+         endpoint=per_domain_endpoints[OP_UPDATE]),
+    Rule('/a/<domain_name>/$model/delete/<key>',
+         endpoint=per_domain_endpoints[OP_DELETE]),
+  ])
+  
+  def get_list_url(self, cursor=None):
+    return url_for(self.get_endpoint(OP_LIST), cursor=cursor,
+                   domain_name=self.domain)
+
+  def get_detail_url(self, obj):
+    return url_for(self.get_endpoint(OP_SHOW), key=obj.key(),
+                   domain_name=self.domain)
+
+  def get_delete_url(self, obj):
+    return url_for(self.get_endpoint(OP_DELETE), key=obj.key(),
+                   domain_name=self.domain)
+
+  def get_update_url(self, obj):
+    return url_for(self.get_endpoint(OP_UPDATE), key=obj.key(),
+                   domain_name=self.domain)
+
+  def get_create_url(self):
+    return url_for(self.get_endpoint(OP_CREATE),
+                   domain_name=self.domain)
+
+  def list(self, *args, **kwargs):
+    self.domain = kwargs.pop('domain_name')
+    return CRUDViewGroup.list(self, *args, **kwargs)
+
+  def show(self, *args, **kwargs):
+    self.domain = kwargs.pop('domain_name')
+    return CRUDViewGroup.show(self, *args, **kwargs)
+
+  def create(self, *args, **kwargs):
+    self.domain = kwargs.pop('domain_name')
+    return CRUDViewGroup.create(self, *args, **kwargs)
+
+  def update(self, *args, **kwargs):
+    self.domain = kwargs.pop('domain_name')
+    return CRUDViewGroup.update(self, *args, **kwargs)
+
+  def delete(self, *args, **kwargs):
+    self.domain = kwargs.pop('domain_name')
+    return CRUDViewGroup.delete(self, *args, **kwargs)
+
+  @property
+  def endpoints(self):
+    return per_domain_endpoints
