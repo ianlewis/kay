@@ -12,6 +12,7 @@ from kay import exceptions
 from kay.ext.gaema import (
   GoogleAuth, TwitterAuth, FacebookAuth, YahooAuth
 )
+from kay.ext.gaema.auth import OpenIdMixin
 
 GOOG_OPENID = 'goog_openid'
 GOOG_HYBRID = 'goog_hybrid'
@@ -55,6 +56,10 @@ def get_key_name(user):
     return "%s:%s" % (service, user['id'])
   if service in [FACEBOOK]:
     return "%s:%s" % (service, user['uid'])
+  auth_module = get_auth_module(service)
+  if issubclass(auth_module, OpenIdMixin):
+    return "%s:%s" % (service, user['claimed_id'])
+  raise RuntimeError('Cannot create key_name')
 
 def use_hybrid(service_name):
   return service_name in hybrid_services

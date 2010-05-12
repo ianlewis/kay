@@ -35,6 +35,8 @@ def select_service(request, targets):
     verbose_name = 'Sign in with %s' % get_service_verbose_name(target)
     url = create_gaema_login_url(target, next_url)
     urls.append((target, verbose_name, url))
+  if len(targets) == 1:
+    return redirect(url)
   return render_to_response('gaema/select_service.html',
                             {'urls': urls})
 
