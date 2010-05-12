@@ -7,7 +7,7 @@
   <body>
     <div id="main">
       <dl>
-      {% for prop_name in entity.fields().keys() %}
+      {% for prop_name in sorted_prop_names %}
       <dt>{{ prop_name }}</dt>
       <dd>{{ entity.__getattribute__(prop_name) }}</dd>
       {% endfor %}

@@ -7,6 +7,7 @@ Kay generics.
 :license: BSD, see LICENSE for more details.
 """
 
+import logging
 from string import Template
 
 from google.appengine.ext import db
@@ -20,6 +21,7 @@ from werkzeug import (
   Response, redirect
 )
 from werkzeug.utils import import_string
+from werkzeug.routing import RequestRedirect
 
 from kay.utils import (
   render_to_response, url_for
@@ -191,16 +193,14 @@ class CRUDViewGroup(ViewGroup):
             settings.MIDDLEWARE_CLASSES and \
             request.user.is_anonymous():
         from kay.utils import create_login_url
-        return redirect(create_login_url(request.url))
+        raise RequestRedirect(create_login_url(request.url))
       else:
         raise Forbidden("Access not allowed.")
 
   def list(self, request, cursor=None):
     # TODO: bi-directional pagination instead of one way ticket forward
     self._import_model_if_not()
-    ret = self.check_authority(request, OP_LIST)
-    if ret:
-      return ret
+    self.check_authority(request, OP_LIST)
     q = self.get_query(request)
     if cursor:
       q.with_cursor(cursor)
@@ -227,17 +227,21 @@ class CRUDViewGroup(ViewGroup):
     self._import_model_if_not()
     try:
       entity = self.model.get(key)
-    except BadKeyError:
-      # just ignore it
+    except BadKeyError, e:
+      logging.warn("Failed to get an entity: %s" % e)
       entity = None
     if entity is None:
       raise NotFound("Specified %s not found." % self.model_name)
-    ret = self.check_authority(request, OP_SHOW, entity)
-    if ret:
-      return ret
+    self.check_authority(request, OP_SHOW, entity)
+    prop_names = [
+      prop_name for prop_name, prop in
+      sorted(entity.fields().items(), key=lambda x: x[1].creation_counter)
+    ]
+    prop_names += entity.dynamic_properties()
     return render_to_response(self.get_template(request, OP_SHOW),
                               {'entity': entity,
-                               'model': self.model_name},
+                               'model': self.model_name,
+                               'sorted_prop_names': prop_names},
                               processors=(self.url_processor,))
 
   def create_or_update(self, request, key=None):
@@ -253,16 +257,12 @@ class CRUDViewGroup(ViewGroup):
       form_class = self.get_form(request, OP_UPDATE)
       form = form_class(instance=entity)
       title = _("Updating a %s entity") % self.model_name
-      ret = self.check_authority(request, OP_UPDATE, entity)
-      if ret:
-        return ret
+      self.check_authority(request, OP_UPDATE, entity)
     else:
       form_class = self.get_form(request, OP_CREATE)
       form = form_class()
       title = _("Creating a new %s") % self.model_name
-      ret = self.check_authority(request, OP_CREATE)
-      if ret:
-        return ret
+      self.check_authority(request, OP_CREATE)
     if request.method == 'POST':
       if form.validate(request.form, request.files):
         if key:
@@ -298,9 +298,7 @@ class CRUDViewGroup(ViewGroup):
       entity = None
     if entity is None:
       raise NotFound("Specified %s not found." % self.model_name)
-    ret = self.check_authority(request, OP_DELETE, entity)
-    if ret:
-      return ret
+    self.check_authority(request, OP_DELETE, entity)
     entity.delete()
     set_flash(_("An entity is deleted successfully."))
     # TODO: back to original page
