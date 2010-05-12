@@ -165,20 +165,23 @@ class CRUDViewGroup(ViewGroup):
     else:
       return ret
 
-  def get_list_url(self, cursor=None):
-    return url_for(self.get_endpoint(OP_LIST), cursor=cursor)
+  def url_for(self, *args, **kwargs):
+    return url_for(*args, **kwargs)
 
+  def get_list_url(self, cursor=None):
+    return self.url_for(self.get_endpoint(OP_LIST), cursor=cursor)
+  
   def get_detail_url(self, obj):
-    return url_for(self.get_endpoint(OP_SHOW), key=obj.key())
+    return self.url_for(self.get_endpoint(OP_SHOW), key=obj.key())
 
   def get_delete_url(self, obj):
-    return url_for(self.get_endpoint(OP_DELETE), key=obj.key())
+    return self.url_for(self.get_endpoint(OP_DELETE), key=obj.key())
 
   def get_update_url(self, obj):
-    return url_for(self.get_endpoint(OP_UPDATE), key=obj.key())
+    return self.url_for(self.get_endpoint(OP_UPDATE), key=obj.key())
 
   def get_create_url(self):
-    return url_for(self.get_endpoint(OP_CREATE))
+    return self.url_for(self.get_endpoint(OP_CREATE))
 
   def url_processor(self, request):
     return {'list_url': self.get_list_url,
@@ -326,8 +329,11 @@ class CRUDViewGroup(ViewGroup):
       endpoint = s.substitute(model=self.model_name_lower)
       if prefix:
         endpoint = prefix+endpoint
-      ret[endpoint] = getattr(self, key)
+      ret[endpoint] = self.get_method(key)
     return ret
+
+  def get_method(self, key):
+    return getattr(self, key)
 
   def get_endpoint(self, key):
     endpoint = Template(self.endpoints[key]).\
@@ -355,46 +361,19 @@ class PerDomainCRUDViewGroup(CRUDViewGroup):
     Rule('/a/<domain_name>/$model/delete/<key>',
          endpoint=per_domain_endpoints[OP_DELETE]),
   ])
+
+  def extract_domain(self, func):
+    def inner(*args, **kwargs):
+      self.domain = kwargs.pop('domain_name')
+      return func(*args, **kwargs)
+    return inner
+
+  def get_method(self, key):
+    return self.extract_domain(getattr(self, key))
   
-  def get_list_url(self, cursor=None):
-    return url_for(self.get_endpoint(OP_LIST), cursor=cursor,
-                   domain_name=self.domain)
-
-  def get_detail_url(self, obj):
-    return url_for(self.get_endpoint(OP_SHOW), key=obj.key(),
-                   domain_name=self.domain)
-
-  def get_delete_url(self, obj):
-    return url_for(self.get_endpoint(OP_DELETE), key=obj.key(),
-                   domain_name=self.domain)
-
-  def get_update_url(self, obj):
-    return url_for(self.get_endpoint(OP_UPDATE), key=obj.key(),
-                   domain_name=self.domain)
-
-  def get_create_url(self):
-    return url_for(self.get_endpoint(OP_CREATE),
-                   domain_name=self.domain)
-
-  def list(self, *args, **kwargs):
-    self.domain = kwargs.pop('domain_name')
-    return CRUDViewGroup.list(self, *args, **kwargs)
-
-  def show(self, *args, **kwargs):
-    self.domain = kwargs.pop('domain_name')
-    return CRUDViewGroup.show(self, *args, **kwargs)
-
-  def create(self, *args, **kwargs):
-    self.domain = kwargs.pop('domain_name')
-    return CRUDViewGroup.create(self, *args, **kwargs)
-
-  def update(self, *args, **kwargs):
-    self.domain = kwargs.pop('domain_name')
-    return CRUDViewGroup.update(self, *args, **kwargs)
-
-  def delete(self, *args, **kwargs):
-    self.domain = kwargs.pop('domain_name')
-    return CRUDViewGroup.delete(self, *args, **kwargs)
+  def url_for(self, *args, **kwargs):
+    kwargs['domain_name'] = self.domain
+    return url_for(*args, **kwargs)
 
   @property
   def endpoints(self):
