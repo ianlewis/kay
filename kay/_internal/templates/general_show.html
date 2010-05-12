@@ -7,9 +7,9 @@
   <body>
     <div id="main">
       <dl>
-      {% for prop_name in sorted_prop_names %}
-      <dt>{{ prop_name }}</dt>
-      <dd>{{ entity.__getattribute__(prop_name) }}</dd>
+      {% for prop in sorted_props %}
+      <dt>{{ prop[1] }}</dt>
+      <dd>{{ prop[2] }}</dd>
       {% endfor %}
       </dl>
     </div>
