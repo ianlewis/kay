@@ -48,6 +48,7 @@ class RequestAdapter(object):
       self.arguments.setdefault(k, []).append(v)
 
     self.full_url = lambda: request.url
+    self.url_root = request.url_root
     self.host = request.host
     self.path = request.path
 
@@ -152,8 +153,6 @@ class GoogleMarketPlaceAuth(GoogleAuth):
 
   def __init__(self, request, domain):
     GAEMultiAuthMixin.__init__(self, request)
-    if hasattr(settings, 'GAEMA_MARKETPLACE_REALM'):
-      self.openid_realm = settings.GAEMA_MARKETPLACE_REALM
     self.domain = domain
     xrds_url = "https://www.google.com/accounts/o8/site-xrds?hd=%s" % domain
     try:

@@ -103,7 +103,7 @@ class OpenIdMixin(object):
         if hasattr(self, "openid_realm"):
           openid_realm = self.openid_realm
         else:
-          openid_realm = "http://" + self.request.host + "/"
+          openid_realm = self.request.url_root
         args = {
             "openid.ns": "http://specs.openid.net/auth/2.0",
             "openid.claimed_id":
