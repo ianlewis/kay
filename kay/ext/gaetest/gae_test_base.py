@@ -5,10 +5,14 @@ import os, sys
 import functools
 import unittest
 
-APP_ID = u'tagomoris-test'
-LOCAL_GAE_HOME = '/home/tagomoris/google_appengine'
-LOCAL_PROJECT_HOME = '/home/tagomoris/tagomoris-test/trunk'
+import kay
+kay.setup()
+from kay.misc import get_appid
+
+APP_ID = get_appid()
 REMOTE_API_ENTRY_POINT = '/remote_api'
+
+from google.appengine.ext.db import KindError
 
 def is_in_production():
     try:
@@ -20,16 +24,6 @@ def is_in_production():
 
 if not is_in_production():
     import getpass
-
-    EXTRA_PATHS = [
-        LOCAL_GAE_HOME,
-        LOCAL_PROJECT_HOME,
-        os.path.join(LOCAL_GAE_HOME, 'google', 'appengine', 'api'),
-        os.path.join(LOCAL_GAE_HOME, 'google', 'appengine', 'ext'),
-        os.path.join(LOCAL_GAE_HOME, 'lib', 'yaml', 'lib'),
-        os.path.join(LOCAL_GAE_HOME, 'lib', 'webob'),
-        ]
-    sys.path = EXTRA_PATHS + sys.path
 
     from google.appengine.tools import appengine_rpc
     from google.appengine.ext.remote_api import remote_api_stub
@@ -94,7 +88,8 @@ class GAETestBase(unittest.TestCase):
 
     def __init__(self, *args, **kwargs):
         unittest.TestCase.__init__(self, *args, **kwargs)
-
+        self.authenticated_for_remote_api = False
+        
         if hasattr(self, 'setUp'):
             self.test_setup = self.setUp
             def setup_env_and_test():
@@ -131,12 +126,14 @@ class GAETestBase(unittest.TestCase):
         return not getattr(self.__class__, 'KIND_NAME_UNSWAPPED', GAETestBase.DEFAULT_KIND_NAME_UNSWAPPED)
 
     def swap_model_kind(self):
+        if self.kind_method_swapped:
+          return
         self.kind_method_swapped = True
         self.original_class_for_kind_method = db.class_for_kind
         kprefix = self.kind_prefix()
 
         def kind_for_test_with_store_kinds(cls):
-            k = kprefix + cls.__name__
+            k = kprefix + cls._meta.db_table
             global kind_names_for_test
             if not kind_names_for_test:
                 kind_names_for_test = {}
@@ -144,9 +141,8 @@ class GAETestBase(unittest.TestCase):
             return k
 
         def kind_for_test(cls):
-            return kprefix + cls.__name__
+            return kprefix + cls._meta.db_table
             
-
         def class_for_kind_for_test(kind):
             if kind.find(kprefix) == 0 and db._kind_map.has_key(kind[len(kprefix):]):
                 return db._kind_map[kind[len(kprefix):]]
@@ -155,7 +151,6 @@ class GAETestBase(unittest.TestCase):
                     return db._kind_map[kind]
                 except KeyError:
                     raise KindError('No implementation for kind \'%s\'' % kind)
-
         if self.may_cleanup_used_kind():
             db.Model.kind = classmethod(kind_for_test_with_store_kinds)
         else:
@@ -163,9 +158,10 @@ class GAETestBase(unittest.TestCase):
         db.class_for_kind = class_for_kind_for_test
 
     def reswap_model_kind(self):
+        @classmethod
         def original_kind(cls):
-            return cls.__name__
-        db.Model.kind = classmethod(original_kind)
+            return cls._meta.db_table
+        db.Model.kind = original_kind
         db.class_for_kind = self.original_class_for_kind_method
 
     def _env_setUp(self):
@@ -189,7 +185,9 @@ class GAETestBase(unittest.TestCase):
             remote_api_stub.ConfigureRemoteApi(APP_ID, REMOTE_API_ENTRY_POINT,
                                                auth_func,
                                                secure=True, save_cookies=True)
-            remote_api_stub.MaybeInvokeAuthentication()
+            if not self.authenticated_for_remote_api:
+              remote_api_stub.MaybeInvokeAuthentication()
+              self.authenticated_for_remote_api = True
         else:
             apiproxy_stub_map.apiproxy = get_dev_apiproxy()
 
