@@ -183,9 +183,7 @@ class KayApp(object):
     """
     Initialize the environment for jinja2.
     """
-    if os.environ['APPLICATION_ID'] == 'test' or \
-          ('SERVER_SOFTWARE' in os.environ and \
-          os.environ['SERVER_SOFTWARE'].startswith('Dev')):
+    if os.environ.get("SERVER_SOFTWARE", "").startswith("Dev"):
       from jinja2 import (FileSystemLoader, ChoiceLoader, PrefixLoader,)
       template_postfix = ""
     else:

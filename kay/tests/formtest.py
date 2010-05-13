@@ -13,7 +13,6 @@ import os
 import unittest
 import logging
 
-
 from google.appengine.ext import db
 import kay
 kay.setup()
@@ -35,11 +34,9 @@ from base import get_env
 class ModelFormTest(GAETestBase):
   KIND_NAME_UNSWAPPED = False
   USE_PRODUCTION_STUBS = True
-  CLEANUP_USED_KIND = True
+  CLEANUP_USED_KIND = False
   def setUp(self):
-    super(ModelFormTest, self).setUp()
-    entries = TestModel.all().fetch(100)
-    db.delete(entries)
+    pass
 
   def test_modify(self):
     """Test for modifying existing entity with ModelForm."""
@@ -106,8 +103,11 @@ class ModelFormTest(GAETestBase):
     
 
   def tearDown(self):
-    entries = TestModel.all().fetch(100)
-    db.delete(entries)
+    def mydelete(key):
+      db.delete(key)
+    keys = TestModel.all(keys_only=True).fetch(100)
+    for key in keys:
+      db.run_in_transaction(mydelete, key)
     
 
 class TestForm(forms.Form):
@@ -129,14 +129,17 @@ class TestForm(forms.Form):
 class FormTest(GAETestBase):
   KIND_NAME_UNSWAPPED = False
   USE_PRODUCTION_STUBS = True
-  CLEANUP_USED_KIND = True
+  CLEANUP_USED_KIND = False
   def setUp(self):
-    super(FormTest, self).setUp()
     if TestModel.all().count() == 0:
+      def mycreate(d):
+        e = TestModel(**d)
+        e.put()
       for i in range(10):
-        t = TestModel(number=i, data_field='Test Data %02d' % i,
-                      is_active=(i%2==0))
-        t.put()
+        db.run_in_transaction(
+          mycreate,
+          dict(number=i, data_field='Test Data %02d' % i, is_active=(i%2==0)))
+
 
   def test_form(self):
     """Form validation test with context_validate."""
@@ -154,13 +157,17 @@ class FormTest(GAETestBase):
     }
     result = f.validate(params)
     self.assertEqual(result, True)
+    logging.error(f.errors)
     params['password_again'] = 'moge'
     result = f.validate(params)
     self.assertEqual(result, False)
 
   def tearDown(self):
-    entries = TestModel.all().fetch(100)
-    db.delete(entries)
+    def mydelete(key):
+      db.delete(key)
+    keys = TestModel.all(keys_only=True).fetch(100)
+    for key in keys:
+      db.run_in_transaction(mydelete, key)
 
 class TestForm2(forms.Form):
   csrf_protected = False
@@ -170,7 +177,6 @@ class TestForm2(forms.Form):
 
 class NumberFieldTest(unittest.TestCase):
   def setUp(self):
-    super(NumberFieldTest, self).setUp()
     os.environ['REQUEST_METHOD'] = 'POST'
     local.request = Request(get_env())
 

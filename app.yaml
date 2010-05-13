@@ -30,6 +30,9 @@ handlers:
   script: kay/main.py
   login: admin
 
+- url: /_ah/test.*
+  script: kay/ext/gaetest/gaeunit.py
+
 - url: /.*
   script: kay/main.py
 

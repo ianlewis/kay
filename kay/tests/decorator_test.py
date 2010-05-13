@@ -13,6 +13,10 @@ import re
 
 from google.appengine.api import apiproxy_stub_map
 from google.appengine.api.capabilities import capability_stub
+from google.appengine.api import datastore_file_stub
+from google.appengine.api import urlfetch_stub
+from google.appengine.api.memcache import memcache_stub
+from google.appengine.api import user_service_stub
 
 from werkzeug import BaseResponse, Client, Request
 
@@ -20,14 +24,24 @@ import kay
 from kay.app import get_application
 from kay.conf import LazySettings
 from kay.tests import capability_stub as mocked_capability_stub
-from kay.ext.gaetest.gae_test_base import GAETestBase
 
-class MaintenanceCheckTestCase(GAETestBase):
-  KIND_NAME_UNSWAPPED = False
-  USE_PRODUCTION_STUBS = False
-  CLEANUP_USED_KIND = True
+class MaintenanceCheckTestCase(unittest.TestCase):
   
   def setUp(self):
+    apiproxy_stub_map.apiproxy = apiproxy_stub_map.APIProxyStubMap()
+    stub = datastore_file_stub.DatastoreFileStub('test','/dev/null',
+                                                 '/dev/null')
+    apiproxy_stub_map.apiproxy.RegisterStub('datastore_v3', stub)
+
+    apiproxy_stub_map.apiproxy.RegisterStub(
+      'user', user_service_stub.UserServiceStub())
+
+    apiproxy_stub_map.apiproxy.RegisterStub(
+      'memcache', memcache_stub.MemcacheServiceStub())
+
+    apiproxy_stub_map.apiproxy.RegisterStub(
+      'urlfetch', urlfetch_stub.URLFetchServiceStub())
+
     s = LazySettings(settings_module='kay.tests.settings')
     app = get_application(settings=s)
     self.client = Client(app, BaseResponse)
