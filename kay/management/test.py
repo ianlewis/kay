@@ -30,12 +30,6 @@ import kay
 kay.setup()
 from kay.misc import get_appid
 
-APP_ID = get_appid()
-os.environ['APPLICATION_ID'] = APP_ID
-os.environ['USER_EMAIL'] = ''
-os.environ['SERVER_NAME'] = 'localhost'
-os.environ['SERVER_PORT'] = '80'
-
 from werkzeug.utils import import_string
 from google.appengine.ext import db
 from google.appengine.api import apiproxy_stub_map
@@ -47,6 +41,13 @@ from google.appengine.api import user_service_stub
 from google.appengine.api.labs.taskqueue import taskqueue_stub
 
 from kay.conf import settings
+
+def setup_env():
+  os.environ['APPLICATION_ID'] = get_appid()
+  os.environ['USER_EMAIL'] = ''
+  os.environ['SERVER_NAME'] = 'localhost'
+  os.environ['SERVER_PORT'] = '80'
+
 
 def setup_stub():
   apiproxy_stub_map.apiproxy = apiproxy_stub_map.APIProxyStubMap()
@@ -91,6 +92,7 @@ def do_runtest(target=('t', ''), verbosity=("v", 0)):
   """
   Run test for installed applications.
   """
+  setup_env()
   setup_stub()
   runtest(target, verbosity)
 

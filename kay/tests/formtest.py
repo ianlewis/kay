@@ -28,10 +28,14 @@ from kay.utils import local
 from kay.utils import forms
 from kay.utils.forms import ValidationError
 from kay.tests.models import TestModel, TestModelForm
+from kay.ext.gaetest.gae_test_base import GAETestBase
 
 from base import get_env
 
-class ModelFormTest(unittest.TestCase):
+class ModelFormTest(GAETestBase):
+  KIND_NAME_UNSWAPPED = False
+  USE_PRODUCTION_STUBS = True
+  CLEANUP_USED_KIND = True
   def setUp(self):
     super(ModelFormTest, self).setUp()
     entries = TestModel.all().fetch(100)
@@ -122,7 +126,10 @@ class TestForm(forms.Form):
     if data['password'] != data['password_again']:
       raise ValidationError(u'The two passwords must be the same')
 
-class FormTest(unittest.TestCase):
+class FormTest(GAETestBase):
+  KIND_NAME_UNSWAPPED = False
+  USE_PRODUCTION_STUBS = True
+  CLEANUP_USED_KIND = True
   def setUp(self):
     super(FormTest, self).setUp()
     if TestModel.all().count() == 0:

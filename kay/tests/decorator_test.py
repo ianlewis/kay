@@ -20,9 +20,13 @@ import kay
 from kay.app import get_application
 from kay.conf import LazySettings
 from kay.tests import capability_stub as mocked_capability_stub
+from kay.ext.gaetest.gae_test_base import GAETestBase
 
-class MaintenanceCheckTestCase(unittest.TestCase):
-
+class MaintenanceCheckTestCase(GAETestBase):
+  KIND_NAME_UNSWAPPED = False
+  USE_PRODUCTION_STUBS = False
+  CLEANUP_USED_KIND = True
+  
   def setUp(self):
     s = LazySettings(settings_module='kay.tests.settings')
     app = get_application(settings=s)
@@ -52,7 +56,7 @@ class MaintenanceCheckTestCase(unittest.TestCase):
     response = self.client.get('/')
     self.assertEqual(response.status_code, 302)
     self.assertEqual(response.headers['Location'],
-                     'http://localhost/_kay/maintenance_page')
+                     'http://localhost/maintenance_page')
 
     response = self.client.get('/index2')
     self.assertEqual(response.status_code, 302)

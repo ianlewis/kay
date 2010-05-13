@@ -15,12 +15,11 @@ REMOTE_API_ENTRY_POINT = '/remote_api'
 from google.appengine.ext.db import KindError
 
 def is_in_production():
-    try:
-        from google3.apphosting.runtime import _apphosting_runtime___python__apiproxy
-        _apphosting_runtime___python__apiproxy = None
-        return True
-    except ImportError:
-        return False
+    if os.environ.get("SERVER_NAME", None) == "localhost":
+      return False
+    if os.environ.get("SERVER_SOFTWARE", "").startswith('Dev'):
+      return False
+    return True
 
 if not is_in_production():
     import getpass
@@ -56,11 +55,14 @@ def auth_func():
 def get_gaeunit_frame():
     frame = sys._getframe()
     frame = frame.f_back.f_back
-    while frame:
-        if (frame.f_code.co_filename.find('gaeunit') > -1 and
-            frame.f_code.co_name == '_run_test_suite'):
-            return frame
-        frame = frame.f_back
+    try:
+        while frame:
+            if (frame.f_code.co_filename.find('gaeunit') > -1 and
+                frame.f_code.co_name == '_run_test_suite'):
+                return frame
+            frame = frame.f_back
+    except:
+      pass
     return None
 
 def is_in_gaeunit():
