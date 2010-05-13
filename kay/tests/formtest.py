@@ -13,12 +13,14 @@ import os
 import unittest
 import logging
 
-APP_ID = u'test'
-os.environ['APPLICATION_ID'] = APP_ID
 
 from google.appengine.ext import db
 import kay
 kay.setup()
+from kay.misc import get_appid
+
+APP_ID = get_appid()
+os.environ['APPLICATION_ID'] = APP_ID
 
 from werkzeug import Request
 

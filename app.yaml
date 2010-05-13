@@ -50,8 +50,6 @@ skip_files: |
   (index\.yaml\.sample)|
   (cron\.yaml\.sample)|
   (manage\.py)|
-  (^[^\/]+\/tests\.py$)|
-  (^[^\/]+\/tests\/.*$)|
   (TODO)|
   (TODO\.pdf)|
   (README)|

@@ -26,14 +26,15 @@ import os
 import sys
 import unittest
 
-APP_ID = u'test'
+import kay
+kay.setup()
+from kay.misc import get_appid
+
+APP_ID = get_appid()
 os.environ['APPLICATION_ID'] = APP_ID
 os.environ['USER_EMAIL'] = ''
 os.environ['SERVER_NAME'] = 'localhost'
 os.environ['SERVER_PORT'] = '80'
-
-import kay
-kay.setup()
 
 from werkzeug.utils import import_string
 from google.appengine.ext import db
