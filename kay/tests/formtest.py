@@ -26,7 +26,7 @@ from werkzeug import Request
 from kay.utils import local
 from kay.utils import forms
 from kay.utils.forms import ValidationError
-from kay.tests.models import TestModel, TestModelForm
+from kay.tests.models import TestModel, TestModel2, TestModelForm
 from kay.ext.gaetest.gae_test_base import GAETestBase
 
 from base import get_env
@@ -34,11 +34,11 @@ from base import get_env
 class ModelFormTest(GAETestBase):
   KIND_NAME_UNSWAPPED = False
   USE_PRODUCTION_STUBS = True
-  CLEANUP_USED_KIND = False
+  CLEANUP_USED_KIND = True
   def setUp(self):
     pass
 
-  def test_modify(self):
+  def test_form(self):
     """Test for modifying existing entity with ModelForm."""
     os.environ['REQUEST_METHOD'] = 'POST'
     local.request = Request(get_env())
@@ -68,7 +68,6 @@ class ModelFormTest(GAETestBase):
     self.assertEqual(entity.is_active, True)
     self.assertEqual(entity.string_list_field, ["line 1", "line 2"])
 
-  def test_form(self):
     """Form validation test with ModelForm."""
     os.environ['REQUEST_METHOD'] = 'POST'
     local.request = Request(get_env())
@@ -99,25 +98,19 @@ class ModelFormTest(GAETestBase):
               "is_active": "False", "string_list_field": "list"}
     self.assertEqual(f.validate(params), True)
     f.save()
-    self.assertEqual(TestModel.all().count(), 1)
+    self.assertEqual(TestModel.all().count(), 2)
     
 
   def tearDown(self):
-    def mydelete(key):
-      db.delete(key)
-    keys = TestModel.all(keys_only=True).fetch(100)
-    for key in keys:
-      db.run_in_transaction(mydelete, key)
-    
+    pass
 
 class TestForm(forms.Form):
   csrf_protected = False
   username = forms.TextField("user name", required=True)
   password = forms.TextField("password", required=True)
   password_again = forms.TextField("confirm password", required=True)
-  model_field = forms.ModelField(TestModel, label="ModelField Test",
+  model_field = forms.ModelField(TestModel2, label="ModelField Test",
                                  required=True,
-                                 query=TestModel.all().filter('is_active =', True),
                                  option_name='data_field')
   string_list_field = forms.LineSeparated(forms.TextField(),
                                           "string list field", required=True)
@@ -129,15 +122,16 @@ class TestForm(forms.Form):
 class FormTest(GAETestBase):
   KIND_NAME_UNSWAPPED = False
   USE_PRODUCTION_STUBS = True
-  CLEANUP_USED_KIND = False
+  CLEANUP_USED_KIND = True
+
   def setUp(self):
-    if TestModel.all().count() == 0:
-      def mycreate(d):
-        e = TestModel(**d)
+    if TestModel2.all().count() == 0:
+      def txn(d):
+        e = TestModel2(**d)
         e.put()
       for i in range(10):
         db.run_in_transaction(
-          mycreate,
+          txn,
           dict(number=i, data_field='Test Data %02d' % i, is_active=(i%2==0)))
 
 
@@ -146,6 +140,7 @@ class FormTest(GAETestBase):
     os.environ['REQUEST_METHOD'] = 'POST'
     local.request = Request(get_env())
     f = TestForm()
+    f.model_field.set_query(TestModel2.all().filter('is_active =', True))
     params = {'username': 'hoge'}
     self.assertEqual(f.validate(params), False)
     params = {
@@ -153,21 +148,17 @@ class FormTest(GAETestBase):
       'password': 'fugafuga',
       'password_again': 'fugafuga',
       'string_list_field': 'hoge',
-      'model_field': str(TestModel.all().get().key())
+      'model_field': str(TestModel2.all().filter('is_active =', True).get().key())
     }
     result = f.validate(params)
     self.assertEqual(result, True)
-    logging.error(f.errors)
+
     params['password_again'] = 'moge'
     result = f.validate(params)
     self.assertEqual(result, False)
 
   def tearDown(self):
-    def mydelete(key):
-      db.delete(key)
-    keys = TestModel.all(keys_only=True).fetch(100)
-    for key in keys:
-      db.run_in_transaction(mydelete, key)
+    pass
 
 class TestForm2(forms.Form):
   csrf_protected = False

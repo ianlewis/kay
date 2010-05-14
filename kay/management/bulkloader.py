@@ -115,7 +115,7 @@ def dump_or_restore_all(help, data_set_name, app_id, url, directory, op):
   if op == RESTORE:
     base_args = ["bulkloader", "--restore"]
   else:
-    base_args = ["bulkloader", "--download", "--dump"]
+    base_args = ["bulkloader", "--dump"]
   if "localhost" in url:
     base_args.append("--app_id=%s" % app_id)
     bulkloader.RequestManager.AuthFunction = dummy_auth_func

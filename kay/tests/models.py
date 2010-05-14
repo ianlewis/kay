@@ -30,6 +30,13 @@ class TestModel(db.Model):
   is_active = db.BooleanProperty(required=True)
   string_list_field = db.StringListProperty(required=True)
 
+class TestModel2(db.Model):
+  number = db.IntegerProperty(required=True)
+  data_field = db.StringProperty(required=True,
+                                 validator=MaxLengthValidator(20))
+  is_active = db.BooleanProperty(required=True)
+  string_list_field = db.StringListProperty(required=True)
+
 
 class TestModelForm(ModelForm):
   csrf_protected = False
@@ -38,3 +45,5 @@ class TestModelForm(ModelForm):
   def __init__(self, instance=None, initial=None):
     super(TestModelForm, self).__init__(instance, initial)
     self.string_list_field.min_size = 1
+
+
