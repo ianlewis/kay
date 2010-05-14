@@ -5,6 +5,7 @@
 GAETestBase adapted to Kay framework.
 
 :Copyright: (c) 2009 Takashi Matsuo <tmatsuo@candit.jp>,
+                     TAGOMORI Satoshi <tagomoris@gmail.com>
                      All rights reserved.
 :license: BSD, see LICENSE for more details.
 """
