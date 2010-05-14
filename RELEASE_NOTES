@@ -5,6 +5,35 @@ Copyright 2009 by Accense Technology, Inc
 
 Kay framework - Release Notes
 
+Kay-0.10.0 - May, 2010
+=============================
+
+- Model driven CRUD+list auto generation
+
+- A new authentication backend for OpenID, OAuth, Facebook connect
+  - You can also write apps for Google Apps MarketPlace easily
+
+- A brand new URL mapping syntax which is more intuitable than before
+  http://kay-docs.shehas.net/urlmapping.html#introducing-a-new-interface-for-urlmapping
+
+- Added some useful properties such as OwnerProperty
+
+- Fully functional test helper
+  - A new test runner allows you to 
+    - run your tests by web browser
+    - run your tests on production environment
+
+- Now you can add your own management script
+
+- Nuke is bundled in Kay now.
+  - Nuke is a small web handler for wiping the datastore completely
+  - Nuke is hosted at: http://code.google.com/p/jobfeed/wiki/Nuke
+  - Detailed instructions:
+    http://kay-docs.shehas.net/extensions.html#module-kay.ext.nuke
+
+- Many small improvements and bug fixes
+
+
 Kay-0.8.0 - March 31, 2010
 =============================
 

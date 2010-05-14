@@ -1,6 +1,14 @@
 #!/usr/bin/env python2.5
 # -*- coding:utf-8 -*-
 
+"""
+GAETestBase adapted to Kay framework.
+
+:Copyright: (c) 2009 Takashi Matsuo <tmatsuo@candit.jp>,
+                     All rights reserved.
+:license: BSD, see LICENSE for more details.
+"""
+
 import os, sys
 import functools
 import unittest
