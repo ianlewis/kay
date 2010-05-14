@@ -361,7 +361,9 @@ def rshell(appid=('a', ''), host=('h', ''), path=('p', ''),
     except ImportError:
       pass
     else:
-      sh = IPython.Shell.IPShellEmbed(argv='', banner=banner)
+      sh = IPython.Shell.IPShellEmbed(
+        argv=['-pi1', '%s[\#]: ' % appid, '-po', '%s[\#]: ' % appid],
+        banner=banner)
       sh(global_ns={}, local_ns=namespace)
       return
   sys.ps1 = '%s> ' % appid
