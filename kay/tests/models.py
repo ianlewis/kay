@@ -47,3 +47,5 @@ class TestModelForm(ModelForm):
     self.string_list_field.min_size = 1
 
 
+class JsonTestModel(db.Model):
+  s = db.StringProperty()

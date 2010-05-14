@@ -189,6 +189,15 @@ def render_to_response(template, context={}, mimetype='text/html',
     render_to_string(template, context, processors),
     mimetype=mimetype, **kwargs)
 
+def render_json_response(data, mimetype='application/json', **kwargs):
+  """
+  A function to render JSON responses.
+  """
+  import simplejson
+  simplejson_kwargs = kwargs.pop("simplejson_kwargs", {})
+  return get_response_cls()(simplejson.dumps(data, **simplejson_kwargs),
+                            mimetype=mimetype, **kwargs)
+
 def get_standard_processors():
   from kay.conf import settings
   global _standard_context_processors
