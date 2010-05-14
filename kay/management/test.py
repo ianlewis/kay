@@ -43,7 +43,14 @@ from google.appengine.api.labs.taskqueue import taskqueue_stub
 from kay.conf import settings
 
 def setup_env():
-  os.environ['APPLICATION_ID'] = get_appid()
+  try:
+    os.environ['APPLICATION_ID'] = get_appid()
+  except Exception:
+    fake_appid = os.path.basename(
+      os.path.dirname(
+        os.path.dirname(
+          os.path.dirname(os.path.abspath(__file__)))))
+    os.environ['APPLICATION_ID'] = fake_appid
   os.environ['USER_EMAIL'] = ''
   os.environ['SERVER_NAME'] = 'localhost'
   os.environ['SERVER_PORT'] = '80'
