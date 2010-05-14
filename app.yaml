@@ -31,7 +31,8 @@ handlers:
   login: admin
 
 - url: /_ah/test.*
-  script: kay/ext/gaetest/gaeunit.py
+  script: kay/ext/testutils/gaeunit.py
+  login: admin
 
 - url: /.*
   script: kay/main.py

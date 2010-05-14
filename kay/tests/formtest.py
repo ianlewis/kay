@@ -27,7 +27,7 @@ from kay.utils import local
 from kay.utils import forms
 from kay.utils.forms import ValidationError
 from kay.tests.models import TestModel, TestModel2, TestModelForm
-from kay.ext.gaetest.gae_test_base import GAETestBase
+from kay.ext.testutils.gae_test_base import GAETestBase
 
 from base import get_env
 
