@@ -22,5 +22,15 @@ kay
 kay.auth
 --------
 
-* Implement a backend for gaema
 * Incorporate Ian's ChoiceBackend.
+
+kay.sessions
+------------
+
+* Implement lazy loading session data(as well as request.user)
+
+kay.utils.forms
+---------------
+
+* Fix an issue when use_confirmation is set to True and form is
+  customised on its appearance with {% call %}.
