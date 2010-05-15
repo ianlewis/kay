@@ -11,6 +11,7 @@ import kay.sessions
 from kay.conf import settings
 from werkzeug import import_string
 
+
 class SessionMiddleware(object):
 
   def __init__(self):
