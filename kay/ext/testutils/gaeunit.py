@@ -65,7 +65,7 @@ import time
 import types
 import logging
 import cgi
-import django.utils.simplejson
+import simplejson
 
 from google.appengine.ext import webapp
 from google.appengine.api import apiproxy_stub_map  
@@ -158,7 +158,7 @@ class JsonTestResult(unittest.TestResult):
             'failures': self._list(self.failures),
         }
 
-        stream.write(django.utils.simplejson.dumps(result).replace('},', '},\n'))
+        stream.write(simplejson.dumps(result))
 
     def _list(self, list):
         dict = []
@@ -299,7 +299,7 @@ def _test_suite_to_json(suite):
                 method_list = mod_dict[class_name]
                 method_list.append(method_name)
                 
-    return django.utils.simplejson.dumps(test_dict)
+    return simplejson.dumps(test_dict)
 
 
 def _run_test_suite(runner, suite):
