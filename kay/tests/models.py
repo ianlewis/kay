@@ -49,3 +49,7 @@ class TestModelForm(ModelForm):
 
 class JsonTestModel(db.Model):
   s = db.StringProperty()
+  i = db.IntegerProperty()
+  b = db.BooleanProperty()
+  l = db.StringListProperty()
+  r = db.ReferenceProperty()
