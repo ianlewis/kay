@@ -14,8 +14,9 @@ from kay.routing import (
 view_groups = [
   ViewGroup(
     Rule('/', endpoint='index', view='kay.tests.views.index'),
+    Rule('/countup', endpoint='countup', view='kay.tests.views.countup'),
     Rule('/index2', endpoint='index2', view='kay.tests.views.index2'),
-    Rule('/no_decorator', endpoint='no_decorato',
+    Rule('/no_decorator', endpoint='no_decorator',
          view='kay.tests.views.no_decorator'),
     Rule('/oldpage', endpoint='oldpage', redirect_to='newpage',
          view='kay.tests.views.oldpage'),

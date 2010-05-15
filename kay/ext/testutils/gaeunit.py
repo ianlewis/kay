@@ -65,7 +65,6 @@ import time
 import types
 import logging
 import cgi
-import simplejson
 
 from google.appengine.ext import webapp
 from google.appengine.api import apiproxy_stub_map  
@@ -74,6 +73,8 @@ from google.appengine.ext.webapp.util import run_wsgi_app
 
 import kay
 kay.setup()
+
+import simplejson
 
 from kay.conf import settings
 from werkzeug.utils import import_string

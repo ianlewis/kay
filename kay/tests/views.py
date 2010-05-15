@@ -34,3 +34,7 @@ def oldpage(request):
 def newpage(request):
   return Response("New")
   
+def countup(request):
+  count = request.session.get('count', 0) + 1
+  request.session['count'] = count
+  return Response(str(count))
