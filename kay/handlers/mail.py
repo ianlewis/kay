@@ -18,11 +18,6 @@ class MailBaseHandler(BaseHandler):
   """A baseclass for Inbound mail handlers.
   """
 
-  def __init__(self):
-    import kay.sessions
-    super(MailBaseHandler, self).__init__()
-    setattr(self, kay.sessions.NO_SESSION, True)
-
   def post(self, address):
     """Transforms body to email request."""
     self.receive(mail.InboundEmailMessage(self.request.data), address)

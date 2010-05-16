@@ -39,24 +39,10 @@ Kay には匿名セッションの仕組があります。この仕組を有効�
 デコレーター
 ------------
 
-``kay.sessions.decorators.no_session`` デコレーターを使用すれば、特定のビューではセッションを使用しないようにできます。下記のように使用します:
-
-.. code-block:: python
-
-  from kay.sessions.decorators import no_session
-
-  def custom_page(request):
-    """ This view use session capability.
-    """
-    #...
-    #...
-
-  @no_session
-  def public_page(request):
-    """ This view doesn't use session
-    """
-    #...
-    #...
+かつて ``kay.sessions.decorators.no_session`` というデコレーターがあり
+ましたが、今は使用する必要はありません。 ``request.session`` の値は遅延
+評価されるので、使わない場合は datastore/memcache のアクセスは発生しま
+せん。
 
 
 古いセッションを破棄する

@@ -18,10 +18,8 @@ from kay.handlers import BaseHandler
 
 class TaskHandler(BaseHandler):
   def __init__(self):
-    import kay.sessions
     import kay.cache
     super(TaskHandler, self).__init__()
-    setattr(self, kay.sessions.NO_SESSION, True)
     setattr(self, kay.cache.NO_CACHE, True)
 
   def post(self):

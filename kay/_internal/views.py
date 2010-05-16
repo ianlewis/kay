@@ -19,28 +19,23 @@ from google.appengine.api import mail
 from kay.utils import (
   render_to_response, render_to_string
 )
-from kay.sessions.decorators import no_session
 from kay.i18n import gettext as _
 from kay.conf import settings
 
 # TODO implement
 
-@no_session
 def cron_frequent(request):
   logging.debug("cron frequent handler called.")
   return Response("OK")
 
-@no_session
 def cron_hourly(request):
   logging.debug("cron hourly handler called.")
   return Response("OK")
 
-@no_session
 def maintenance_page(request):
   return render_to_response("_internal/maintenance.html",
                             {"message": _('Now it\'s under maintenance.')})
 
-@no_session
 def expire_temporary_session(request, session_key):
   from kay.auth.models import TemporarySession
   session = db.get(session_key)
@@ -48,7 +43,6 @@ def expire_temporary_session(request, session_key):
     session.delete()
   return Response("OK")
 
-@no_session
 def expire_registration(request, registration_key):
   from kay.registration.models import RegistrationProfile
   p = db.get(registration_key)
@@ -59,7 +53,6 @@ def expire_registration(request, registration_key):
   db.run_in_transaction(txn)
   return Response("OK")
 
-@no_session
 def send_reset_password_instruction(request, user_key, session_key):
   user = db.get(user_key)
   subject = render_to_string('auth/reset_password_instruction_subject.txt',
@@ -71,7 +64,6 @@ def send_reset_password_instruction(request, user_key, session_key):
                  sender=settings.DEFAULT_MAIL_FROM, to=user.email)
   return Response("OK")
   
-@no_session
 def send_registration_confirm(request, registration_key):
   from kay.registration.models import RegistrationProfile
   import_string(settings.AUTH_USER_MODEL)

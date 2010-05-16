@@ -21,7 +21,6 @@ from kay.utils import (
   render_to_response, render_to_string
 )
 from kay.cache.decorators import no_cache
-from kay.sessions.decorators import no_session
 from kay.i18n import gettext as _
 from kay.conf import settings
 
@@ -75,7 +74,6 @@ def get_schema_kinds():
   return list(kind_set)
 
 @no_cache
-@no_session
 def main_handler(request):
   model_list = get_all_models()
   all_kinds = get_schema_kinds()
@@ -89,7 +87,6 @@ def main_handler(request):
                              'present_kinds': present_kinds})
 
 @no_cache
-@no_session
 def mass_delete(request):
   import bulkupdate
   model_list = get_all_models()

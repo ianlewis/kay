@@ -150,12 +150,6 @@ def maintenance_check(endpoint='_internal/maintenance_page'):
         logging.warn('Datastore is not writable. %s' %
                      datastore_write.admin_message())
         if not request.is_xhr:
-          # Saving session will also fail.
-          if hasattr(request, 'session'):
-            try:
-              del(request.session)
-            except Exception:
-              pass
           return redirect(url_for(endpoint))
       return view(request, *args, **kwargs)
     return wrapped

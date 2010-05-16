@@ -43,26 +43,10 @@ When using ``GAESessionStore``, session data will be stored in Datastore, and on
 Decorator
 ---------
 
-There is a decorator for marking particular view not to use session
-capability at ``kay.sessions.decorators.no_session``. You can mark any
-view not to use session capability like following:
-
-.. code-block:: python
-
-  from kay.sessions.decorators import no_session
-
-  def custom_page(request):
-    """ This view use session capability.
-    """
-    #...
-    #...
-
-  @no_session
-  def public_page(request):
-    """ This view doesn't use session
-    """
-    #...
-    #...
+Once kay has ``kay.sessions.decorators.no_session`` decorater, but you
+don't need to use it any more. The attribute value of request.session
+is evaluated lazily, so there is no datastore/memcache access unless
+you use session's value.
 
 
 Purging old sessions

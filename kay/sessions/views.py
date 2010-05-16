@@ -13,7 +13,6 @@ import datetime
 from werkzeug import Response
 
 from kay.conf import settings
-from kay.sessions.decorators import no_session
 
 batch_num = 30
 
@@ -21,7 +20,6 @@ def use_session():
   return 'kay.sessions.middleware.SessionMiddleware' in \
       settings.MIDDLEWARE_CLASSES
 
-@no_session
 def purge_old_sessions(request):
   if use_session():
     from google.appengine.ext import db

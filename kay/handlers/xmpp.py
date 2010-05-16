@@ -24,12 +24,6 @@ class XMPPBaseHandler(BaseHandler):
   convenient .reply() method on the Message object.
   """
 
-  def __init__(self):
-    import kay.sessions
-    super(XMPPBaseHandler, self).__init__()
-    setattr(self, kay.sessions.NO_SESSION, True)
-
-
   def message_received(self, message):
     """Called when a message is sent to the XMPP bot.
 

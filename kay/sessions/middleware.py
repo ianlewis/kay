@@ -25,9 +25,7 @@ class LazySession(object):
 
 class SessionMiddleware(object):
 
-  def process_view(self, request, view_func, **kwargs):
-    if hasattr(view_func, kay.sessions.NO_SESSION):
-      return None
+  def process_request(self, request):
     request.__class__.session = LazySession()
 
   def process_response(self, request, response):

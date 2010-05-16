@@ -15,7 +15,6 @@ from werkzeug import (
 from urllib import unquote_plus
 
 from kay.utils import render_to_response
-from kay.sessions.decorators import no_session
 from kay.i18n import gettext as _
 from kay.conf import settings
 
