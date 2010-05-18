@@ -65,6 +65,8 @@ def set_gaema_user(service, user):
     user_data = secure_cookie.serialize()
     set_cookie(gaema_user_key, user_data)
   else:
+    from kay.sessions import renew_session
+    renew_session(local.request)
     local.request.session[gaema_user_key] = user
     local.request.session.modified = True
   
