@@ -114,7 +114,7 @@ def url_for(endpoint, **args):
     rv += '#' + url_quote(anchor)
   return rv
 
-def create_auth_url(url, action):
+def create_auth_url(url, action, **kwargs):
   if url is None:
     url = local.request.url
   method_name = 'create_%s_url' % action
@@ -125,21 +125,21 @@ def create_auth_url(url, action):
   elif 'kay.auth.middleware.AuthenticationMiddleware' in \
         settings.MIDDLEWARE_CLASSES:
     method = getattr(local.app.auth_backend, method_name)
-  return method(url)
+  return method(url, **kwargs)
       
 
-def create_logout_url(url=None):
+def create_logout_url(url=None, **kwargs):
   """
   Get the URL for a logout page.
   """
-  return create_auth_url(url, 'logout')
+  return create_auth_url(url, 'logout', **kwargs)
     
 
-def create_login_url(url=None):
+def create_login_url(url=None, **kwargs):
   """
   Get the URL for a login page.
   """
-  return create_auth_url(url, 'login')
+  return create_auth_url(url, 'login', **kwargs)
 
 
 def reverse(endpoint, _external=False, method='GET', **values):
