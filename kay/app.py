@@ -45,6 +45,8 @@ translations_cache = {}
 hook_installed = False
 
 def get_application(settings=_settings):
+  global hook_installed
+  hook_installed = False
   application = KayApp(settings)
   submount_apps = {}
   for app_name in settings.SUBMOUNT_APPS:
@@ -183,7 +185,8 @@ class KayApp(object):
     """
     Initialize the environment for jinja2.
     """
-    if os.environ.get("SERVER_SOFTWARE", "").startswith("Dev"):
+    if os.environ.get("SERVER_NAME", None) == "localhost" or \
+          os.environ.get("SERVER_SOFTWARE", "").startswith("Dev"):
       from jinja2 import (FileSystemLoader, ChoiceLoader, PrefixLoader,)
       template_postfix = ""
     else:
