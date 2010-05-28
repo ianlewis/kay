@@ -135,7 +135,7 @@ myapp/tests/__init__.py:
   from werkzeug import BaseResponse, Client, Request
   from kay.app import get_application
   from kay.utils.test import (
-    init_recording, get_last_context, get_last_template
+    init_recording, get_last_context, get_last_template, disable_recording,
   )
   from kay.ext.testutils.gae_test_base import GAETestBase
 
@@ -149,6 +149,9 @@ myapp/tests/__init__.py:
       init_recording()
       app = get_application()
       self.client = Client(app, BaseResponse)
+
+    def tearDown(self):
+      disable_recording()
 
     def test_post(self):
       response = self.client.get('/')

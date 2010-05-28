@@ -1,9 +1,5 @@
 cron:
-- description: hourly job
-  url: /_kay/cron/hourly
+- description: purge old session data
+  url: /sessions/purge_old_sessions
   schedule: every 1 hours
-
-- description: frequent job
-  url: /_kay/cron/frequent
-  schedule: every 1 minutes
 

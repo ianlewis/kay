@@ -332,17 +332,19 @@ First, you need to add ``MIDDLEWARE_CLASES`` including
      'kay.auth.middleware.AuthenticationMiddleware',
    )
 
-Don't forget the comma after middleware definition because you need to
-place a comma after the element explicitly when a tuple has only one
-element.
+Don't forget the comma after the middleware definition because when a
+tuple has only one element, you need to place a comma after the
+element explicitly.
 
-このままでも認証自体は動くのですが、さらにユーザー情報を入れるモデルを
-自分で定義する事をお勧めします。後でユーザーに紐付く情報を殖やしたくなっ
-た時など、独自のモデルを定義しておいた方が何かと楽です。
+After that, the auth module certainly work properly, I'd recommend you
+define a model for storing information of a user. If you want to have
+additional information later and so on, you can easily do this by your
+own model.
 
-Google Account での認証を行う場合は ``kay.auth.models.GoogleUser`` を継
-承したモデルを定義し、そのモデル名を ``settings.py`` の
-``AUTH_USER_MODEL`` に記載します(文字列で構いません)。
+If you use the authentication against Google Account and you want to
+define own model, you need to extend ``kay.auth.models.GoogleUser``
+and set the name of this extended model to
+``settings.AUTH_USER_MODEL`` as a string.
 
 myapp.models:
 
@@ -360,40 +362,39 @@ settings.py
 
    AUTH_USER_MODEL = 'myapp.models.MyUser'
 
-ここでは、モデルにはまだ独自プロパティを定義していませんが、将来のため
-に始めから独自モデルにしておく事をお勧めします。
 
-使用方法
-========
+How to use
+==========
 
 request.user
 ++++++++++++
 
-認証用ミドルウェアを有効にすると ``request.user`` が設定されます。ユー
-ザーがログインしていればユーザーエンティティ、そうでなければ
-``kay.auth.models.AnonymousUser`` というクラスのインスタンスが入ってい
-ます。
+Once you enable the authentication middleware, it will add ``user``
+attribute to the request object. If a user visiting web sites are
+signed in, the content of the user attribute is an entity of the User
+model, otherwise an instance of a class
+``kay.auth.models.AnonymousUser``.
 
-これらのクラスに共通して使用できるアトリビュートとメソッドを示します。
+Here are common attributes and methods between those classes.
 
 * is_admin
 
-  このアトリビュートは、そのユーザーが管理者かどうかを表す真偽値です。
+  This attribute indicates if the user is an administrator as a
+  boolean value.
 
 * is_anonymous()
 
-  このメソッドはユーザーがログインしていれば False をログインしてなけれ
-  ば True を返します。
+  This method returns False if the user is signed in, otherwise, True.
 
 * is_authenticated()
 
-  ログインしていれば True, そうでなければ False を返します。
+  This method returns True if the user is signed in, otherwise, False.
 
 
-template 内での使用例
-+++++++++++++++++++++
+An example usage in template
+++++++++++++++++++++++++++++
 
-下記のような断片を ``myapp/templates/index.html`` に入れてみましょう。
+Let's put a fragment of code like following.
 
 .. code-block:: html
 
@@ -405,19 +406,19 @@ template 内での使用例
      {% endif %}
    </div>
 
-このコードは、ユーザーがログインしていなければログイン画面へのリンクを
-表示し、ログインしていればログアウトするためのリンクを表示します。
+This part of code will show a link for the login screen if the user
+doesn't sign in, otherwise, a link for signing out.
 
-デコレーター
-++++++++++++
+Decorators
+++++++++++
 
-認証しないとアクセスできないページを簡単に作るには、デコレーターを使い
-ます。ログインしないとアクセスできないようにするには
-``kay.auth.decorators.login_required`` で、管理者アカウントにてログイン
-が必要なページを作成するには、 ``kay.auth.decorators.admin_required``
-で view 関数を修飾します。
+To protect a page from anonymous access, you can use following
+decorators.  You can use ``kay.auth.decorators.login_required`` for
+the page needs just an authorization and can use
+``kay.auth.decorators.admin_required`` if the page has an admin
+restriction.
 
-例:
+Example:
 
 .. code-block:: python
 
@@ -430,23 +431,29 @@ template 内での使用例
    def index(request):
      return render_to_response('myapp/index.html', {'message': 'Hello'})
 
-index へのアクセス時にログインが必要になっている事を確認してみましょう。
+Let's confirm that you're recested to sign in when accessing the index
+page.
 
 ゲストブックの実装 - Step 1
----------------------------
 
-このチュートリアルでは簡単なゲストブックを作成します。その過程で、Kay
-の機能をできるだけ紹介していく予定です。
 
-まずはモデルとフォームの基本的な使い方についてご紹介します。
+Guestbook implementation - Step 1
+---------------------------------
 
-モデル定義
-==========
+In this tutorial, we're gonna create a simple guestbook. I will
+introduce various features as much as possible thorough out the
+tutorial.
 
-Kay でのモデル定義には基本的に appengine の db モジュールをそのまま使い
-ます。 ``kay.db`` パッケージ内に少しだけ Kay 独自のプロパティがあります。
+Firstly, let's look through a basic usage of Models ans Forms.
 
-ここではゲストブック用のモデルを定義してみましょう。
+Model Definition
+================
+
+To define models, you can basically use appengine's db module
+directly. Additionally there are special properties in ``kay.db``
+package.
+
+Here is a simple model for the guestbook.
 
 myapp/models.py:
 
@@ -463,24 +470,25 @@ myapp/models.py:
      body = db.TextProperty(required=True)
      created = db.DateTimeProperty(auto_now_add=True)
 
-``user`` に割り当てた ``kay.db.OwnerProperty`` は Kay 独自のプロパティ
-で、現在ログイン中であるユーザーの key を自動で格納するためのプロパティ
-です。
+``kay.db.OwnerProperty`` which is difined in an attribute ``usser`` is
+a property specially offerred by Kay. This is a property for storing a
+key of a user who sines in automatically.
 
-``body`` にはコメント本体を保存します。また ``created`` には作成日時が
-自動で入ります。
+``body`` is a property for storing comment body itself, and
+``created`` stores a date at which the comment is created
+automatically.
 
 
-フォーム定義
-============
+Form definition
+===============
 
-次に投稿用のフォームを作ります。テンプレート内に直に html フォームを書
-いても動かす事はできますが、値の検証などの事も考えると
-``kay.utils.forms`` パッケージを使用してフォームを作成した方が良いでしょ
-う。
+Next, let's create a form for comment submission. Certainly you can
+write an html form directly in your html templates, considering a
+validation, I'd recommend you to create your form by using
+``kay.utils.forms`` package.
 
-フォーム定義の場所に特にきまりはありませんが ``myapp/forms.py`` に定義
-しましょう。
+There is no restriction about where to define your forms though,
+``myapp/forms.py`` is one of appropriate places.
 
 myapp/forms.py:
 
@@ -493,21 +501,21 @@ myapp/forms.py:
    class CommentForm(forms.Form):
      body = forms.TextField("Your Comment", required=True)
 
-``kay.utils.forms.Form`` を継承したクラスを定義する事によりフォームを作
-成できます。このクラスでは ``body`` という名前で ``forms.TextField`` の
-インスタンスを指定しています。初めの引数はフォームフィールドのラベルに
-なります。 ``required`` に True を指定すると、このフィールドは入力が必
-須になります。
+You can define a form by creating a class that extends
+``kay.utils.forms.Form``. In this example, ``body`` is an instance of
+``form.TextField`` class. The first argument will become a label of a
+generated form. If you specify ``required`` as True, the field will be
+a mandatry field.
 
-他にどのようなフィールドがあるか、またそれらの使い方については
-``kay.utils.forms`` パッケージについての `ドキュメント
-<http://kay-docs-jp.shehas.net/forms_reference.html>`_ も参照してくださ
-い。
+For more details about this form library, please refer to a `document
+<http://kay-docs-jp.shehas.net/forms_reference.html>`_ about
+``kay.utils.forms`` package.
 
-ビュー定義
-==========
 
-これらのモデルとフォームを使用して投稿用のビューを書きましょう。
+View definition
+===============
+
+Let's write a view with these models and forms.
 
 myapp/views.py:
 
@@ -540,16 +548,17 @@ myapp/views.py:
      return render_to_response('myapp/index.html',
 			       {'form': form.as_widget()})
 
-``werkzeug.redirect``, ``kay.utils.url_for`` と先程作成したモデル・フォー
-ムを import しています。 ``index`` ビューの内部ではフォームを作成し、
-http メソッドが POST の時にはフォームのバリデーションを行っています。
+You can see the new import statement of four lines:
+``werkzeug.redirect``, ``kay.utils.url_for``, and newly created models
+and forms. You can see that this view creates a form and validate
+values from a form if the request method is POST.
 
-フォームのバリデーションに成功した場合には ``Comment`` オブジェクトを作
-成した後に、トップページへリダイレクトしています。
+After the validation succeeds, this view creates a new entity of
+``Comment``, and redirect to the top page.
 
-``url_for`` というのは URL 逆引きのための関数で、引数で与えられた
-endpoint に対応する URL を返します。ここでデフォルトの urls.py を思い返
-してみましょう。
+``url_for`` is a function for URL reverse lookup, and returns a URL
+for an endpoint which is given as an argument. Let's look back the
+default urls.py.
 
 .. code-block:: python
 
@@ -559,17 +568,16 @@ endpoint に対応する URL を返します。ここでデフォルトの urls.
      )
    ]
 
-urls.py では endpoint として 'index' を指定していました。ですが逆引きの
-時には 'myapp/index' を使用しています。実は Kay ではアプリケーション間
-で endpoint が衝突する事を防ぐために、自動でアプリケーション名を前置し
-ます。
+In this ``urls.py``, we set 'index' as an endpoint. Hawever, when it
+comes to reverse lookup, we used 'myapp/index'. Actually Kay adds an
+application name and a slash to an endpoint automatically in order to
+avoid conflicts between endpoints from multiple applications.
 
-ですので、逆引きを行う時には ``urls.py`` で設定した endpoint そのままで
-は無く ``app_name/endpoint`` という形で endpoint を指定する必要がありま
-す。
+So, you need to specify an endpoint like ``app_name/endpoint``.
 
-テンプレート
-============
+
+Template
+========
 
 .. code-block:: html
 
@@ -594,12 +602,11 @@ urls.py では endpoint として 'index' を指定していました。です�
    </body>
    </html>
 
-ここまでで、フォームから投稿したコメントを datastore に保存できるように
-なりました。
+Now you can store comments submitted from the form to the datastore.
 
-開発用サーバーでデータが保存できるか試してみましょう。いくつかコメント
-を投稿した後に http://localhost:8080/_ah/admin へアクセスすると、データ
-ストアの中身を見る事ができます。
+Let's try submitting on the development server. After submitting some
+comments, you can visit http://localhost:8080/_ah/admin for viewing
+contents of the datastore.
 
 kind が ``myapp_comment`` というのが今回作成したコメントのエンティティ
 です。kind にもアプリケーション名が前置されている事がわかります。デフォ

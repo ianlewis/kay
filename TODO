@@ -12,6 +12,8 @@ Documentation
  * registration app
  * jsonrpc2 feature
 
+ * a description about disable_recording() in tearDown
+
 kay
 ---
 
