@@ -245,7 +245,7 @@ class CRUDViewGroup(ViewGroup):
     from google.appengine.api.datastore_errors import BadKeyError
     self._import_model_if_not()
     try:
-      entity = self.model.get(key)
+      entity = db.get(key)
     except BadKeyError, e:
       logging.warn("Failed to get an entity: %s" % e)
       entity = None
@@ -271,7 +271,7 @@ class CRUDViewGroup(ViewGroup):
     self._import_model_if_not()
     if key:
       try:
-        entity = self.model.get(key)
+        entity = db.get(key)
       except BadKeyError:
         entity = None
       if entity is None:
@@ -313,7 +313,7 @@ class CRUDViewGroup(ViewGroup):
     from google.appengine.api.datastore_errors import BadKeyError
     self._import_model_if_not()
     try:
-      entity = self.model.get(key)
+      entity = db.get(key)
     except BadKeyError:
       # just ignore it
       entity = None
