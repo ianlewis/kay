@@ -168,7 +168,8 @@ class GAETestBase(unittest.TestCase):
         def original_kind(cls):
             return cls._meta.db_table
         db.Model.kind = original_kind
-        db._kind_map = self._original_kind_map
+        if hasattr(self, '_original_kind_map'):
+          db._kind_map = self._original_kind_map
         
 
     def _env_setUp(self):
