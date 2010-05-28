@@ -17,7 +17,7 @@ Contents:
   :maxdepth: 1
   :glob:
 
-  quickstart
+  tutorial
   debugging
   settings
   manage_py
