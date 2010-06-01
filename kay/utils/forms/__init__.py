@@ -1429,6 +1429,42 @@ class EmailField(RegexField):
   def __init__(self, *args, **kwargs):
     RegexField.__init__(self, email_re, *args, **kwargs)
 
+class TimeField(Field):
+  """Field for time objects.
+  """
+  messages = dict(invalid_time=lazy_gettext('Please enter a valid time.'))
+
+  def __init__(self, label=None, help_text=None, required=False,
+               validators=None, widget=None, messages=None,
+               default=missing):
+    Field.__init__(self, label, help_text, validators, widget, messages,
+                   default)
+    self.required = required
+
+  def convert(self, value):
+    if isinstance(value, time):
+      return value
+    value = _to_string(value)
+    if not value:
+      if self.required:
+        raise ValidationError(self.messages['required'])
+      return None
+    formats = ["%H:%M:%S", "%H:%M", "%H"]
+    for format in formats:
+      try:
+        return time(*strptime(value, format)[3:6])
+      except ValueError:
+        pass
+    raise ValidationError(self.messages['invalid_time'])
+
+  def to_primitive(self, value):
+    if isinstance(value, time):
+      if t.second:
+        value = value.strftime("%H:%M:%S")
+      else:
+        value = value.strftime("%H:%M")
+    return value
+
 
 class DateField(Field):
   """Field for datetime objects.
