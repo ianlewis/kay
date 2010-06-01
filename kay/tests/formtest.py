@@ -160,6 +160,31 @@ class FormTest(GAETestBase):
   def tearDown(self):
     pass
 
+
+class TimeFieldForm(forms.Form):
+  csrf_protected = False
+  time_field = forms.TimeField("time", required=True)
+
+class TimeFieldTest(unittest.TestCase):
+  def setUp(self):
+    os.environ['REQUEST_METHOD'] = 'POST'
+    local.request = Request(get_env())
+
+  def test_validate(self):
+    """TimeField validation test."""
+    import datetime
+    form = TimeFieldForm()
+    result = form.validate({})
+    self.assertEqual(result, False)
+    form.reset()
+    result = form.validate({'time_field': 'hoge'})
+    self.assertEqual(result, False)
+    form.reset()
+    result = form.validate({'time_field': '10:15'})
+    self.assertEqual(result, True)
+    self.assertEqual(form['time_field'], datetime.time(10, 15))
+    
+
 class TestForm2(forms.Form):
   csrf_protected = False
   int_field = forms.IntegerField("int", min_value=5, max_value=99)
