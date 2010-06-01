@@ -2023,7 +2023,6 @@ class FormMeta(type):
   def fields(cls):
     return cls._root_field.fields
 
-
 class FieldDescriptor(object):
 
   def __init__(self, name):
