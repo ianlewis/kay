@@ -1460,7 +1460,7 @@ class TimeField(Field):
 
   def to_primitive(self, value):
     if isinstance(value, time):
-      if t.second:
+      if value.second:
         value = value.strftime("%H:%M:%S")
       else:
         value = value.strftime("%H:%M")
