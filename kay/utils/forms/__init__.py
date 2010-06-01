@@ -1195,7 +1195,8 @@ class FormMapping(Mapping):
     if self.form is None:
       raise TypeError('form mapping without form passed is unable '
                       'to convert data')
-    if self.form.csrf_protected and self.form.request is not None:
+    if self.form.csrf_protected and self.form.request is not None and \
+          not self.form.request.is_xhr:
       token = self.form.request.values.get('_csrf_token')
       if token != self.form.csrf_token:
         raise ValidationError(_(u'Invalid security token submitted.'))
