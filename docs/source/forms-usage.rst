@@ -158,29 +158,29 @@ of our form.
   <body>
   {% call form() %}
     <div class="fieldWrapper">
-      {{ form.subject.label(class_="myLabel")|safe }}
-      {{ form.subject()|safe }}
+      {{ form['subject'].label(class_="myLabel")|safe }}
+      {{ form['subject']()|safe }}
     </div>
     <div class="fieldWrapper">
-      {{ form.message.errors()|safe }}
-      {{ form.message.label()|safe }}
-      {{ form.message.render()|safe }}
+      {{ form['message'].errors()|safe }}
+      {{ form['message'].label()|safe }}
+      {{ form['message'].render()|safe }}
     </div>
     <div class="fieldWrapper">
-      {{ form.sender.label()|safe }}
-      {{ form.sender.render()|safe }}
-      {% if form.message.errors %}
+      {{ form['sender'].label()|safe }}
+      {{ form['sender'].render()|safe }}
+      {% if form['sender'].errors %}
 	<span class="errors">
-	  {% for error in form.message.errors %}
+	  {% for error in form['sender'].errors %}
 	    {{ error }}&nbsp;
 	  {% endfor %}
 	</span>
       {% endif %}
     </div>
     <div class="fieldWrapper">
-      {{ form.cc_myself.label()|safe }}
-      {{ form.cc_myself.render()|safe }}
-      {{ form.cc_myself.errors(class_="myErrors")|safe }}
+      {{ form['cc_myself'].label()|safe }}
+      {{ form['cc_myself'].render()|safe }}
+      {{ form['cc_myself'].errors(class_="myErrors")|safe }}
     </div>
     {{ form.default_actions()|safe }}
   {% endcall %}
@@ -195,8 +195,8 @@ attribute. Let's take a look in turn.
 .. code-block:: html
 
     <div class="fieldWrapper">
-      {{ form.subject.label(class_="myLabel")|safe }}
-      {{ form.subject()|safe }}
+      {{ form['subject'].label(class_="myLabel")|safe }}
+      {{ form['subject']()|safe }}
     </div>
 
 This code renders the label of the ``subject`` field in ``myLabel``
@@ -210,9 +210,9 @@ get HTML for both of the input field and error messages at a time.
 .. code-block:: html
 
     <div class="fieldWrapper">
-      {{ form.message.errors()|safe }}
-      {{ form.message.label()|safe }}
-      {{ form.message.render()|safe }}
+      {{ form['message'].errors()|safe }}
+      {{ form['message'].label()|safe }}
+      {{ form['message'].render()|safe }}
     </div>
 
 The second example shows you how to separate HTMLs of input field and
@@ -232,11 +232,11 @@ What if you don't like <ul> tags?
 .. code-block:: html
 
     <div class="fieldWrapper">
-      {{ form.sender.label()|safe }}
-      {{ form.sender.render()|safe }}
-      {% if form.message.errors %}
+      {{ form['sender'].label()|safe }}
+      {{ form['sender'].render()|safe }}
+      {% if form['sender'].errors %}
 	<span class="errors">
-	  {% for error in form.message.errors %}
+	  {% for error in form['sender'].errors %}
 	    {{ error }}&nbsp;
 	  {% endfor %}
 	</span>
@@ -251,14 +251,15 @@ is easy?
 .. code-block:: html
 
     <div class="fieldWrapper">
-      {{ form.cc_myself.label()|safe }}
-      {{ form.cc_myself.render()|safe }}
-      {{ form.cc_myself.errors(class_="myErrors")|safe }}
+      {{ form['cc_myself'].label()|safe }}
+      {{ form['cc_myself'].render()|safe }}
+      {{ form['cc_myself'].errors(class_="myErrors")|safe }}
     </div>
 
-The last example show you how to specify class on error
-messages. Actually, you can specify any attribute on any renderable
-widget by passing keyword argument on rendering.
+The last example show you how to specify a class attribute on error
+messages(be sure its 'class_', not 'class'). Actually, you can specify
+any attribute on any renderable widget by passing keyword argument on
+rendering.
 
 
 Handling file upload

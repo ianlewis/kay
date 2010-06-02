@@ -84,9 +84,12 @@ Here is a example for a simple class based view:
 	return redirect(url_for('myapp/index'))
       return self.get()
 
-  comment_handler = CommentHandler()
+  # If you want a fancy import name, you might want to instantiate
+  # here as follows:
+  # comment_handler = CommentHandler()
 
 These handler must have one or more methods with a name as the same as
 lower-cased HTTP Methods to corresponds with. It can have ``prepare``
 method to do some task before above methods whatever HTTP method the
 current HTTP request uses.
+

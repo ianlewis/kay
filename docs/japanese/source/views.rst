@@ -79,6 +79,8 @@ view には呼び出し可能なオブジェクトを使うことができます
 	return redirect(url_for('myapp/index'))
       return self.get()
 
-  comment_handler = CommentHandler()
+  # If you want a fancy import name, you might want to instantiate
+  # here as follows:
+  # comment_handler = CommentHandler()
 
 このハンドラは HTTP メソッドを小文字で書いたのと同名のメソッドをひとつ以上持っていなければなりません。また、現在の HTTP リクエストが使っている HTTP メソッドを実行する前に何らかの処理をさせるために、 ``perpare`` メソッドをもたせることができます。

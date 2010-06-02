@@ -131,29 +131,29 @@ Widget は callable で、call するとレンダーされた HTML form が得�
   <body>
   {% call form() %}
     <div class="fieldWrapper">
-      {{ form.subject.label(class_="myLabel")|safe }}
-      {{ form.subject()|safe }}
+      {{ form['subject'].label(class_="myLabel")|safe }}
+      {{ form['subject']()|safe }}
     </div>
     <div class="fieldWrapper">
-      {{ form.message.errors()|safe }}
-      {{ form.message.label()|safe }}
-      {{ form.message.render()|safe }}
+      {{ form['message'].errors()|safe }}
+      {{ form['message'].label()|safe }}
+      {{ form['message'].render()|safe }}
     </div>
     <div class="fieldWrapper">
-      {{ form.sender.label()|safe }}
-      {{ form.sender.render()|safe }}
-      {% if form.message.errors %}
+      {{ form['sender'].label()|safe }}
+      {{ form['sender'].render()|safe }}
+      {% if form['sender'].errors %}
 	<span class="errors">
-	  {% for error in form.message.errors %}
+	  {% for error in form['sender'].errors %}
 	    {{ error }}&nbsp;
 	  {% endfor %}
 	</span>
       {% endif %}
     </div>
     <div class="fieldWrapper">
-      {{ form.cc_myself.label()|safe }}
-      {{ form.cc_myself.render()|safe }}
-      {{ form.cc_myself.errors(class_="myErrors")|safe }}
+      {{ form['cc_myself'].label()|safe }}
+      {{ form['cc_myself'].render()|safe }}
+      {{ form['cc_myself'].errors(class_="myErrors")|safe }}
     </div>
     {{ form.default_actions()|safe }}
   {% endcall %}
@@ -166,8 +166,8 @@ Widget は callable で、call するとレンダーされた HTML form が得�
 .. code-block:: html
 
     <div class="fieldWrapper">
-      {{ form.subject.label(class_="myLabel")|safe }}
-      {{ form.subject()|safe }}
+      {{ form['subject'].label(class_="myLabel")|safe }}
+      {{ form['subject']()|safe }}
     </div>
 
 このコードは ``subject`` フィールドのラベルを ``myLabel`` class として描画します。
@@ -179,9 +179,9 @@ Widget は callable で、call するとレンダーされた HTML form が得�
 .. code-block:: html
 
     <div class="fieldWrapper">
-      {{ form.message.errors()|safe }}
-      {{ form.message.label()|safe }}
-      {{ form.message.render()|safe }}
+      {{ form['message'].errors()|safe }}
+      {{ form['message'].label()|safe }}
+      {{ form['message'].render()|safe }}
     </div>
 
 二番目の例では、input フィールドとエラーメッセージを別々に描画しています。フィールド Widget を直接 call する代りに ``render()`` メソッドを呼出せば input フィールドのみを表す HTML が得られます。ですので多くの場合、エラーメッセージを表示するコードが別途必要になるでしょう。この例ではエラーメッセージとして下記のような出力が得られます:
@@ -197,11 +197,11 @@ Widget は callable で、call するとレンダーされた HTML form が得�
 .. code-block:: html
 
     <div class="fieldWrapper">
-      {{ form.sender.label()|safe }}
-      {{ form.sender.render()|safe }}
-      {% if form.message.errors %}
+      {{ form['sender'].label()|safe }}
+      {{ form['sender'].render()|safe }}
+      {% if form['sender'].errors %}
 	<span class="errors">
-	  {% for error in form.message.errors %}
+	  {% for error in form['sender'].errors %}
 	    {{ error }}&nbsp;
 	  {% endfor %}
 	</span>
@@ -215,12 +215,12 @@ Widget は callable で、call するとレンダーされた HTML form が得�
 .. code-block:: html
 
     <div class="fieldWrapper">
-      {{ form.cc_myself.label()|safe }}
-      {{ form.cc_myself.render()|safe }}
-      {{ form.cc_myself.errors(class_="myErrors")|safe }}
+      {{ form['cc_myself'].label()|safe }}
+      {{ form['cc_myself'].render()|safe }}
+      {{ form['cc_myself'].errors(class_="myErrors")|safe }}
     </div>
 
-最後の例ではエラーメッセージの描画に class 指定をしています。実際にはレンダーの際にキーワード引数を与える事で、どんな HTML 属性も追加できます。
+最後の例ではエラーメッセージの描画に class 指定をしています('class' では無く 'class_' である事に注意)。実際にはレンダーの際にキーワード引数を与える事で、どんな HTML 属性も追加できます。
 
 
 ファイルアップロード
