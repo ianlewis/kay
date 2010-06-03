@@ -404,7 +404,7 @@ class KayApp(object):
     except UnicodeDecodeError:
       return ret
 
-  def __call__(self, environ, start_response):
+  def _prepare(self, environ):
     kay.setup_syspath()
     if _settings.USE_DB_HOOK:
       global hook_installed
@@ -418,7 +418,6 @@ class KayApp(object):
           'pre_hook', pre_hook, 'datastore_v3')
         hook_installed = True
     local.app = self
-    local.request = request = Request(environ)
     if self.url_map is None or self.has_error_on_init_url_map:
       try:
         self.init_url_map(self.app_settings.ROOT_URL_MODULE)
@@ -427,6 +426,11 @@ class KayApp(object):
         raise
     local.url_adapter = self.url_map.bind_to_environ(environ)
 
+  def __call__(self, environ, start_response):
+
+    self._prepare(environ)
+
+    local.request = request = Request(environ)
     response = self.get_response(request)
 
     for middleware_method in self._response_middleware:
