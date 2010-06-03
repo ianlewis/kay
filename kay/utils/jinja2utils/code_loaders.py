@@ -57,7 +57,9 @@ class BaseCodeLoader(object):
       source, filename, uptodate = self.get_source(environment, name)
       code = compile(source, filename, 'exec')
       set_code(name, code)
-    return environment.template_class.from_code(environment, code, globals)
+    ret = environment.template_class.from_code(environment, code, globals)
+    ret.name = name
+    return ret
 
 
 class FileSystemCodeLoader(BaseCodeLoader, FileSystemLoader):
