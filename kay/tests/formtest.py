@@ -27,7 +27,8 @@ from kay.utils import local
 from kay.utils import forms
 from kay.utils.forms import ValidationError
 from kay.tests.models import (
-  TestModel, TestModel2, TestModelForm, ModelFormTestModel, ModelFormTestForm
+  TestModel, TestModel2, TestModelForm, ModelFormTestModel, ModelFormTestForm,
+  ValidationTestForm,
 )
 from kay.ext.testutils.gae_test_base import GAETestBase
 
@@ -39,11 +40,16 @@ class ModelFormTest(GAETestBase):
   CLEANUP_USED_KIND = True
 
   def setUp(self):
-    pass
-
-  def test_override(self):
     os.environ['REQUEST_METHOD'] = 'POST'
     local.request = Request(get_env())
+
+  def test_context_validate(self):
+    f = ValidationTestForm()
+    f.validate({"slist": 'hoge fuga'})
+    w = f.as_widget()
+    w()
+
+  def test_override(self):
     e1 = ModelFormTestModel(s_name='s_name', zip_code='1111111', addr='addr')
     e1.put()
     f = ModelFormTestForm(instance=e1)
@@ -56,8 +62,6 @@ class ModelFormTest(GAETestBase):
 
   def test_form(self):
     """Test for modifying existing entity with ModelForm."""
-    os.environ['REQUEST_METHOD'] = 'POST'
-    local.request = Request(get_env())
 
     # first create a new entity
     f = TestModelForm()

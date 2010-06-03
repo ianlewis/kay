@@ -64,3 +64,13 @@ class ModelFormTestForm(ModelForm):
   class Meta:
     model = ModelFormTestModel
     fields = ('s_name')
+
+class ValidationTestModel(db.Model):
+  slist = db.StringListProperty()
+
+class ValidationTestForm(ModelForm):
+  csrf_protected = False
+  class Meta:
+    model = ValidationTestModel
+  def context_validate(self, data):
+    raise ValidationError("Error!")

@@ -475,7 +475,8 @@ class Widget(_Renderable):
       return ErrorList(chain(*(item[1] for item in items)))
     result = ErrorList()
     for key, value in items:
-      if key == self.name or key.startswith(self.name + '.'):
+      if key == self.name or \
+            (key is not None and key.startswith(self.name + '.')):
         result.extend(value)
     return result
 
