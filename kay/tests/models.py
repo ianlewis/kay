@@ -53,3 +53,14 @@ class JsonTestModel(db.Model):
   b = db.BooleanProperty()
   l = db.StringListProperty()
   r = db.ReferenceProperty()
+
+class ModelFormTestModel(db.Model):
+  s_name = db.StringProperty()
+  zip_code = db.StringProperty()
+  addr = db.StringProperty()
+
+class ModelFormTestForm(ModelForm):
+  csrf_protected = False
+  class Meta:
+    model = ModelFormTestModel
+    fields = ('s_name')

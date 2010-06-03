@@ -26,7 +26,9 @@ from werkzeug import Request
 from kay.utils import local
 from kay.utils import forms
 from kay.utils.forms import ValidationError
-from kay.tests.models import TestModel, TestModel2, TestModelForm
+from kay.tests.models import (
+  TestModel, TestModel2, TestModelForm, ModelFormTestModel, ModelFormTestForm
+)
 from kay.ext.testutils.gae_test_base import GAETestBase
 
 from base import get_env
@@ -35,8 +37,22 @@ class ModelFormTest(GAETestBase):
   KIND_NAME_UNSWAPPED = False
   USE_PRODUCTION_STUBS = True
   CLEANUP_USED_KIND = True
+
   def setUp(self):
     pass
+
+  def test_override(self):
+    os.environ['REQUEST_METHOD'] = 'POST'
+    local.request = Request(get_env())
+    e1 = ModelFormTestModel(s_name='s_name', zip_code='1111111', addr='addr')
+    e1.put()
+    f = ModelFormTestForm(instance=e1)
+    f.validate({"s_name": "hoge"})
+    f.save()
+    e2 = ModelFormTestModel.all().get()
+    self.assertEqual(e2.s_name, "hoge")
+    self.assertEqual(e2.zip_code, "1111111")
+    self.assertEqual(e2.addr, "addr")
 
   def test_form(self):
     """Test for modifying existing entity with ModelForm."""
@@ -183,7 +199,7 @@ class TimeFieldTest(unittest.TestCase):
     result = form.validate({'time_field': '10:15'})
     self.assertEqual(result, True)
     self.assertEqual(form['time_field'], datetime.time(10, 15))
-    
+
 
 class TestForm2(forms.Form):
   csrf_protected = False
