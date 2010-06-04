@@ -50,3 +50,4 @@ MIDDLEWARE_CLASSES = (
 )
 
 AUTH_USER_BACKEND = "kay.auth.backends.datastore.DatastoreBackend"
+AUTH_USER_MODEL = "kay.auth.models.DatastoreUser"

@@ -39,6 +39,12 @@ class GoogleBackendTestCase(GAETestBase):
     self.assertEqual(response.status_code, 200)
     response = self.client.get(url_for('auth_testapp/secret'))
     self.assertEqual(response.status_code, 302)
+    self.client.test_login(email="test@example.com", is_admin="1")
+    response = self.client.get(url_for('auth_testapp/secret'))
+    self.assertEqual(response.status_code, 200)
+    self.client.test_logout()
+    response = self.client.get(url_for('auth_testapp/secret'))
+    self.assertEqual(response.status_code, 302)
 
 class DatastoreBackendTestCase(GAETestBase):
   KIND_NAME_UNSWAPPED = False
@@ -46,9 +52,11 @@ class DatastoreBackendTestCase(GAETestBase):
   CLEANUP_USED_KIND = True
   
   def setUp(self):
+    from kay.auth import create_new_user
     s = LazySettings(settings_module='kay.tests.datastore_settings')
     app = get_application(settings=s)
     self.client = Client(app, BaseResponse)
+    create_new_user("foobar", "password", is_admin=False)
 
   def tearDown(self):
     pass
@@ -60,6 +68,13 @@ class DatastoreBackendTestCase(GAETestBase):
     self.assertEqual(response.status_code, 302)
     self.assert_(response.headers.get('Location').endswith(
         '/auth/login?next=http%253A%252F%252Flocalhost%252Fsecret'))
+
+    self.client.test_login(username='foobar')
+    response = self.client.get(url_for('auth_testapp/secret'))
+    self.assertEqual(response.status_code, 200)
+    self.client.test_logout()
+    response = self.client.get(url_for('auth_testapp/secret'))
+    self.assertEqual(response.status_code, 302)
 
 class GAEMABackendTestCase(GAETestBase):
   KIND_NAME_UNSWAPPED = False

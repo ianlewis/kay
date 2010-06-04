@@ -69,7 +69,7 @@ class GoogleBackend(object):
   def login(self, request, user_name, password):
     return
 
-  def test_login(self, client, email, is_admin):
+  def test_login(self, client, email='', is_admin=''):
     import os
     os.environ['USER_EMAIL'] = email
     os.environ['USER_IS_ADMIN'] = '1' if is_admin else ''

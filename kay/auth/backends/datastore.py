@@ -65,7 +65,7 @@ class DatastoreBackend(object):
       return self.store_user(user)
     return False
 
-  def test_login_or_logout(self, client, username):
+  def test_login_or_logout(self, client, username=''):
     from cookielib import Cookie
     args = [None, None, '', None, None, '/', None, None, 86400, None, None,
             None, None]
@@ -74,7 +74,7 @@ class DatastoreBackend(object):
     except (ImportError, AttributeError), e:
       raise ImproperlyConfigured, \
           'Failed to import %s: "%s".' % (settings.AUTH_USER_MODEL, e)
-    user = auth_model_class.get_by_user_name(user_name)
+    user = auth_model_class.get_by_user_name(username)
     session_store = import_string(settings.SESSION_STORE)()
     data = None
     for cookie in client.cookie_jar:
@@ -94,7 +94,7 @@ class DatastoreBackend(object):
                                         data,
                                         *args))
     
-  def test_login(self, client, username):
+  def test_login(self, client, username=''):
     self.test_login_or_logout(client, username)
 
   def test_logout(self, client):
