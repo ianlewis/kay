@@ -87,40 +87,13 @@ class GAEMABackend(object):
   def login(self, request, user_name, password):
     pass
 
-  def test_logout(self, client, service):
+  def test_login_or_logout(self, client, service, user_data):
     from cookielib import Cookie
     args = [None, None, '', None, None, '/', None, None, 86400, None, None,
             None, None]
     gaema_user_key = GAEMA_USER_KEY_FORMAT % service
     if hasattr(settings, "GAEMA_STORAGE") and \
           settings.GAEMA_STORAGE == "cookie":
-      client.cookie_jar.set_cookie(Cookie(1, gaema_user_key, '', *args))
-    else:
-      session_store = import_string(settings.SESSION_STORE)()
-      data = None
-      for cookie in client.cookie_jar:
-        if cookie.name == settings.COOKIE_NAME:
-          data = cookie.value
-      if data is None:
-        session = session_store.new()
-      else:
-        session = session_store.get(data)
-      session[gaema_user_key] = ''
-      session_store.save(session)
-      data = "\"%s\"" % session_store.get_data(session)
-      client.cookie_jar.set_cookie(Cookie(1, settings.COOKIE_NAME,
-                                          data,
-                                          *args))
-
-  def test_login(self, client, service, user_data):
-    from cookielib import Cookie
-    args = [None, None, '', None, None, '/', None, None, 86400, None, None,
-            None, None]
-    gaema_user_key = GAEMA_USER_KEY_FORMAT % service
-    if hasattr(settings, "GAEMA_STORAGE") and \
-          settings.GAEMA_STORAGE == "cookie":
-      secure_cookie = SecureCookie(user, secret_key=settings.SECRET_KEY)
-      user_data = "\"%s\"" % secure_cookie.serialize()
       client.cookie_jar.set_cookie(Cookie(1, gaema_user_key, user_data, *args))
     else:
       session_store = import_string(settings.SESSION_STORE)()
@@ -138,3 +111,10 @@ class GAEMABackend(object):
       client.cookie_jar.set_cookie(Cookie(1, settings.COOKIE_NAME,
                                           data,
                                           *args))
+
+  def test_login(self, client, service, user_data):
+    self.test_login_or_logout(client, service, user_data)
+
+  def test_logout(self, client, service):
+    self.test_login_or_logout(client, service, '')
+    

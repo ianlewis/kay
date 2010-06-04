@@ -65,6 +65,41 @@ class DatastoreBackend(object):
       return self.store_user(user)
     return False
 
+  def test_login_or_logout(self, client, username):
+    from cookielib import Cookie
+    args = [None, None, '', None, None, '/', None, None, 86400, None, None,
+            None, None]
+    try:
+      auth_model_class = import_string(settings.AUTH_USER_MODEL)
+    except (ImportError, AttributeError), e:
+      raise ImproperlyConfigured, \
+          'Failed to import %s: "%s".' % (settings.AUTH_USER_MODEL, e)
+    user = auth_model_class.get_by_user_name(user_name)
+    session_store = import_string(settings.SESSION_STORE)()
+    data = None
+    for cookie in client.cookie_jar:
+      if cookie.name == settings.COOKIE_NAME:
+        data = cookie.value
+    if data is None:
+      session = session_store.new()
+    else:
+      session = session_store.get(data)
+    if user:
+      session['_user'] = user.key()
+    elif session.has_key('_user'):
+      del session['_user']
+    session_store.save(session)
+    data = "\"%s\"" % session_store.get_data(session)
+    client.cookie_jar.set_cookie(Cookie(1, settings.COOKIE_NAME,
+                                        data,
+                                        *args))
+    
+  def test_login(self, client, username):
+    self.test_login_or_logout(client, username)
+
+  def test_logout(self, client):
+    self.test_login_or_logout(client, '')
+
 class DatastoreBackendWithOwnedDomainHack(DatastoreBackend):
 
   def store_user(self, user):

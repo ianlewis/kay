@@ -12,8 +12,6 @@ ROOT_URL_MODULE = 'kay.tests.globalurls'
 
 MIDDLEWARE_CLASSES = (
   'kay.sessions.middleware.SessionMiddleware',
-  'kay.auth.middleware.AuthenticationMiddleware',
-  'kay.cache.middleware.CacheMiddleware',
 )
 SESSION_STORE = 'kay.sessions.sessionstore.SecureCookieSessionStore'
 

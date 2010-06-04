@@ -44,8 +44,6 @@ if not is_in_production():
 
 
     AUTH_DOMAIN = 'gmail.com'
-    LOGGED_IN_USER = 'test@gmail.com'
-
 
 from google.appengine.api import apiproxy_stub_map
 from google.appengine.ext import db
@@ -56,7 +54,6 @@ def set_environments(testcase):
         testcase.original_env = os.environ.copy()
         os.environ['APPLICATION_ID'] = APP_ID
         os.environ['AUTH_DOMAIN'] = AUTH_DOMAIN
-        os.environ['USER_EMAIL'] = LOGGED_IN_USER
 
 def restore_environments(testcase):
     if hasattr(testcase, 'original_env'):
