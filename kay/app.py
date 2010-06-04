@@ -437,10 +437,12 @@ class KayApp(object):
       response = middleware_method(request, response)
     if hasattr(local, "override_headers") and hasattr(response, "headers"):
       response.headers.extend(getattr(local, "override_headers"))
+      del local.override_headers
     if hasattr(local, "override_cookies") and hasattr(response, "set_cookie"):
       for d in local.override_cookies:
         key = d.pop("key")
         response.set_cookie(key, **d)
+      del local.override_cookies
     return ClosingIterator(response(environ, start_response),
         [local_manager.cleanup])
 
