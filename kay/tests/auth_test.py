@@ -1,4 +1,6 @@
 
+import os
+
 from werkzeug import (
   BaseResponse, Request
 )
@@ -15,12 +17,22 @@ class GoogleBackendTestCase(GAETestBase):
   CLEANUP_USED_KIND = True
   
   def setUp(self):
+    try:
+      self.original_user = os.environ['USER_EMAIL']
+      self.original_is_admin = os.environ['USER_IS_ADMIN']
+      del os.environ['USER_EMAIL']
+      del os.environ['USER_IS_ADMIN']
+    except Exception:
+      pass
     s = LazySettings(settings_module='kay.tests.google_settings')
     app = get_application(settings=s)
     self.client = Client(app, BaseResponse)
 
   def tearDown(self):
-    pass
+    if hasattr(self, "original_user"):
+      os.environ["USER_EMAIL"] = self.original_user
+    if hasattr(self, "original_is_admin"):
+      os.environ["USER_IS_ADMIN"] = self.original_is_admin
 
   def test_login(self):
     response = self.client.get(url_for('auth_testapp/index'))
