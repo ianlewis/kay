@@ -35,6 +35,10 @@ from kay.i18n import gettext as _
 from kay.i18n import lazy_gettext
 from kay.routing import ViewGroup
 
+from kay.generics import (
+  OP_LIST, OP_SHOW, OP_CREATE, OP_UPDATE, OP_DELETE
+)
+
 endpoints = {
   'list': "list_$model",
   'show': "show_$model",
@@ -50,13 +54,6 @@ per_domain_endpoints = {
   'update': "a/update_$model",
   'delete': "a/delete_$model",
 }
-
-OP_LIST = 'list'
-OP_SHOW = 'show'
-OP_CREATE = 'create'
-OP_UPDATE = 'update'
-OP_DELETE = 'delete'
-
 
 # presets for authorization
 
