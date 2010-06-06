@@ -153,6 +153,11 @@ class HTTPException(Exception):
     def __repr__(self):
         return '<%s \'%s\'>' % (self.__class__.__name__, self)
 
+    @property
+    def status_code(self):
+        # This property is added for more robust consistency between
+        # BaseResponse and HTTPException.
+        return self.code
 
 class _ProxyException(HTTPException):
     """An HTTP exception that expands renders a WSGI application on error."""
