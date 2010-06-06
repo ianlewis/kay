@@ -10,9 +10,9 @@ Using generic view groups
 Overview
 --------
 
-You can use ``kay.generics.CRUDViewGroup`` in order to define generic
-CRUD views easily. You just need your own model, modelform definition,
-and your own templates for rendering htmls.
+You can use ``kay.generics.crud.CRUDViewGroup`` in order to define
+generic CRUD views easily. You just need your own model, modelform
+definition, and your own templates for rendering htmls.
 
 Your first CRUD
 ---------------
@@ -65,12 +65,12 @@ myapp/urls.py
   # -*- coding: utf-8 -*-
   # myapp.urls
 
-  from kay import generics
+  from kay.generics import crud
 
   from myapp.forms import MyForm
   from myapp.models import MyModel
 
-  class MyCRUDViewGroup(generics.CRUDViewGroup):
+  class MyCRUDViewGroup(crud.CRUDViewGroup):
     model = MyModel
     form = MyForm
 
@@ -110,9 +110,9 @@ myapp/urls.py
   # -*- coding: utf-8 -*-
   # myapp.urls
 
-  from kay import generics
+  from kay.generics import crud
 
-  class MyCRUDViewGroup(generics.CRUDViewGroup):
+  class MyCRUDViewGroup(crud.CRUDViewGroup):
     model = 'myapp.models.MyModel'
     form = 'myapp.forms.MyForm'
 
@@ -126,7 +126,7 @@ You can set ``templates`` class attribute for using your own templates for rende
 
 .. code-block:: python
 
-  class MyCRUDViewGroup(CRUDViewGroup):
+  class MyCRUDViewGroup(crud.CRUDViewGroup):
     model = 'myapp.models.MyModel'
     form = 'myapp.forms.MyForm'
     templates = {
@@ -217,7 +217,7 @@ An example bellow shows how to show entities owned by current user:
 
 .. code-block:: python
 
-   class MyCRUDViewGroup(generics.CRUDViewGroup):
+   class MyCRUDViewGroup(crud.CRUDViewGroup):
      model = 'myapp.models.MyModel'
      form = 'myapp.forms.MyForm'
 
@@ -237,21 +237,21 @@ defining ``authorize`` instance method on your own CRUDViewGroup
 subclass. These operations are classified in ``list``, ``show``,
 ``create``, ``update``, ``delete``.
 
-``kay.generics`` package has useful presets for this method, so you
-can choose one of them if you like.
+``kay.generics.crud`` module has useful presets for this method, so
+you can choose one of them if you like.
 
-* kay.generics.login_required
-* kay.generics.admin_required
-* kay.generics.only_owner_can_write
-* kay.generics.only_owner_can_write_except_for_admin
+* kay.generics.crud.login_required
+* kay.generics.crud.admin_required
+* kay.generics.crud.only_owner_can_write
+* kay.generics.crud.only_owner_can_write_except_for_admin
 
 An example bellow shows how to use one of these presets:
 
 .. code-block:: python
 
-   class MyCRUDViewGroup(generics.CRUDViewGroup):
+   class MyCRUDViewGroup(crud.CRUDViewGroup):
      model = 'myapp.models.MyModel'
      form = 'myapp.forms.MyForm'
-     authorize = generics.only_owner_can_write_except_for_admin
+     authorize = crud.only_owner_can_write_except_for_admin
 
 TODO: detailed docs about ``authorize`` method.
