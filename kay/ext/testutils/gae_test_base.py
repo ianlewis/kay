@@ -140,6 +140,8 @@ class GAETestBase(unittest.TestCase):
         return not getattr(self.__class__, 'KIND_NAME_UNSWAPPED', GAETestBase.DEFAULT_KIND_NAME_UNSWAPPED)
 
     def swap_model_kind(self):
+        self.kind_method_swapped = True
+        self.original_class_for_kind_method = db.class_for_kind
         kprefix = self.kind_prefix()
 
         def kind_for_test_with_store_kinds(cls):
@@ -153,26 +155,44 @@ class GAETestBase(unittest.TestCase):
         def kind_for_test(cls):
             return kprefix + cls._meta.db_table
             
+        def class_for_kind_for_test(kind):
+            if kind.find(kprefix) == 0 and \
+                  db._kind_map.has_key(kind[len(kprefix):]):
+                return db._kind_map[kind[len(kprefix):]]
+            else:
+                try:
+                    return db._kind_map[kind]
+                except KeyError:
+                    import logging
+                    logging.error(db._kind_map)
+                    raise KindError('No implementation for kind \'%s\'' % kind)
+
         if self.may_cleanup_used_kind():
             db.Model.kind = classmethod(kind_for_test_with_store_kinds)
         else:
             db.Model.kind = classmethod(kind_for_test)
-
-        self._original_kind_map = db._kind_map
-        db._kind_map = {}
-        for k, v in self._original_kind_map.items():
-            db._kind_map[kprefix+k] = v
+        db.class_for_kind = class_for_kind_for_test
 
     def reswap_model_kind(self):
         @classmethod
         def original_kind(cls):
             return cls._meta.db_table
         db.Model.kind = original_kind
-        if hasattr(self, '_original_kind_map'):
-          db._kind_map = self._original_kind_map
+        db.class_for_kind = self.original_class_for_kind_method
+        delete_keys = []
+        elms = {}
+        kprefix = self.kind_prefix()
+        for key in db._kind_map.keys():
+            if key.startswith(kprefix):
+                 elms[key[len(kprefix):]] = db._kind_map[key]
+                 delete_keys.append(key)
+        for delete_key in delete_keys:
+            del db._kind_map[delete_key]
+        db._kind_map.update(elms)
         
 
     def _env_setUp(self):
+        self.kind_method_swapped = False
         self.original_kind_method = None
 
         if self.may_cleanup_used_kind():
@@ -214,5 +234,6 @@ class GAETestBase(unittest.TestCase):
             self.delete_all_entities_of_used_kind()
             global kind_names_for_test
             del kind_names_for_test
-        self.reswap_model_kind()
+        if self.kind_method_swapped:
+            self.reswap_model_kind()
         restore_environments(self)

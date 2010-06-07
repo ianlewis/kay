@@ -13,30 +13,21 @@ from kay.ext.testutils.gae_test_base import GAETestBase
 from kay.utils import url_for
 
 from kay.tests.restapp.models import RestModel
-logging.getLogger().setLevel(logging.ERROR)
+logging.getLogger().setLevel(logging.DEBUG)
 
-class RestTestCase(GAETestBase):
+class RestJSONTestCase(GAETestBase):
   KIND_NAME_UNSWAPPED = False
   USE_PRODUCTION_STUBS = True
   CLEANUP_USED_KIND = True
 
   def setUp(self):
-    try:
-      self.original_user = os.environ['USER_EMAIL']
-      self.original_is_admin = os.environ['USER_IS_ADMIN']
-      del os.environ['USER_EMAIL']
-      del os.environ['USER_IS_ADMIN']
-    except Exception:
-      pass
     s = LazySettings(settings_module='kay.tests.rest_settings')
     app = get_application(settings=s)
     self.client = Client(app, BaseResponse)
+    self.client.test_logout()
 
   def tearDown(self):
-    if hasattr(self, "original_user"):
-      os.environ["USER_EMAIL"] = self.original_user
-    if hasattr(self, "original_is_admin"):
-      os.environ["USER_IS_ADMIN"] = self.original_is_admin
+    self.client.test_logout()
 
   def test_rest_json(self):
 
@@ -168,6 +159,21 @@ class RestTestCase(GAETestBase):
                                headers=headers)
     self.assertEqual(response.status_code, 404)
 
+
+class RestTestCase(GAETestBase):
+  KIND_NAME_UNSWAPPED = False
+  USE_PRODUCTION_STUBS = True
+  CLEANUP_USED_KIND = True
+  KIND_PREFIX_IN_TEST = "t2"
+
+  def setUp(self):
+    s = LazySettings(settings_module='kay.tests.rest_settings')
+    app = get_application(settings=s)
+    self.client = Client(app, BaseResponse)
+    self.client.test_logout()
+
+  def tearDown(self):
+    self.client.test_logout()
 
   def test_rest_operations(self):
     self.client.test_login(email="test@example.com", is_admin="1")

@@ -27,7 +27,6 @@ local_manager = LocalManager([local])
 
 _translations_cache = {}
 _default_translations = None
-_standard_context_processors = None
 
 _timezone_cache = {}
 
@@ -201,18 +200,15 @@ def render_json_response(data, mimetype='application/json', **kwargs):
 
 def get_standard_processors():
   from kay.conf import settings
-  global _standard_context_processors
-  if _standard_context_processors is None:
-    processors = []
-    for path in settings.CONTEXT_PROCESSORS:
-      try:
-        func = import_string(path)
-      except (ImportError, AttributeError), e:
-        raise ImproperlyConfigured('Error importing request processor module'
-                                   ' %s: "%s"' % (path, e))
-      processors.append(func)
-    _standard_context_processors = tuple(processors)
-  return _standard_context_processors
+  processors = []
+  for path in settings.CONTEXT_PROCESSORS:
+    try:
+      func = import_string(path)
+    except (ImportError, AttributeError), e:
+      raise ImproperlyConfigured('Error importing request processor module'
+                                 ' %s: "%s"' % (path, e))
+    processors.append(func)
+  return tuple(processors)
 
 
 def to_local_timezone(datetime, tzname=None):

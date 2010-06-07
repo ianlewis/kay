@@ -264,7 +264,7 @@ def _load_default_test_modules():
         except (ImportError, AttributeError), e:
             logging.warn("Loading module %s.tests failed: '%s'." %
                          (app_name, e))
-            raise
+            pass
     return modules
 
 

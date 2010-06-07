@@ -1079,7 +1079,10 @@ class RESTViewGroup(ViewGroup):
             for model in models:
                 self.check_authority(request, OP_UPDATE, obj=model,
                                      model_name=model_name, prop_name=None)
-        db.put(models)
+        for model in models:
+          def txn():
+            db.put(model)
+          db.run_in_transaction(txn)
 
         # if input was not a list, convert single element models list
         # back to single element

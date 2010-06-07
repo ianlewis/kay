@@ -15,6 +15,7 @@ class GoogleBackendTestCase(GAETestBase):
   KIND_NAME_UNSWAPPED = False
   USE_PRODUCTION_STUBS = True
   CLEANUP_USED_KIND = True
+  KIND_PREFIX_IN_TEST = 't1'
   
   def setUp(self):
     try:
@@ -27,12 +28,10 @@ class GoogleBackendTestCase(GAETestBase):
     s = LazySettings(settings_module='kay.tests.google_settings')
     app = get_application(settings=s)
     self.client = Client(app, BaseResponse)
+    self.client.test_logout()
 
   def tearDown(self):
-    if hasattr(self, "original_user"):
-      os.environ["USER_EMAIL"] = self.original_user
-    if hasattr(self, "original_is_admin"):
-      os.environ["USER_IS_ADMIN"] = self.original_is_admin
+    self.client.test_logout()
 
   def test_login(self):
     response = self.client.get(url_for('auth_testapp/index'))
@@ -50,6 +49,7 @@ class DatastoreBackendTestCase(GAETestBase):
   KIND_NAME_UNSWAPPED = False
   USE_PRODUCTION_STUBS = True
   CLEANUP_USED_KIND = True
+  KIND_PREFIX_IN_TEST = 't2'
   
   def setUp(self):
     from kay.auth import create_new_user
@@ -59,7 +59,7 @@ class DatastoreBackendTestCase(GAETestBase):
     create_new_user("foobar", "password", is_admin=False)
 
   def tearDown(self):
-    pass
+    self.client.test_logout()
 
   def test_login(self):
     response = self.client.get(url_for('auth_testapp/index'))
@@ -80,6 +80,7 @@ class GAEMABackendTestCase(GAETestBase):
   KIND_NAME_UNSWAPPED = False
   USE_PRODUCTION_STUBS = True
   CLEANUP_USED_KIND = True
+  KIND_PREFIX_IN_TEST = 't3'
 
   def setUp(self):
     s = LazySettings(settings_module='kay.tests.gaema_settings')
@@ -87,7 +88,7 @@ class GAEMABackendTestCase(GAETestBase):
     self.client = Client(app, BaseResponse)
 
   def tearDown(self):
-    pass
+    self.client.test_logout(service='shehas.net')
 
   def test_login(self):
     response = self.client.get(url_for('gaema_testapp/index'))
