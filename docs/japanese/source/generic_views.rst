@@ -238,21 +238,25 @@ urls.py は変更しなくとも大丈夫です。
 ``list``, ``show``, ``create``, ``update``, ``delete`` に分類されていま
 す。
 
-``kay.generics.crud`` モジュールには便利なプリセットの関数がいくつか用
-意されていて、これらの中から選んで使う事もできます。
+``kay.generics`` パッケージには便利なプリセットの関数がいくつか用意され
+ていて、これらの中から選んで使う事もできます。
 
-* kay.generics.crud.login_required
-* kay.generics.crud.admin_required
-* kay.generics.crud.only_owner_can_write
-* kay.generics.crud.only_owner_can_write_except_for_admin
+* kay.generics.login_required
+* kay.generics.admin_required
+* kay.generics.only_owner_can_write
+* kay.generics.only_owner_can_write_except_for_admin
 
 下記の例ではこのうちの一つを使用しています:
 
 .. code-block:: python
 
+   from kay.generics import only_owner_can_write_except_for_admin
+   from kay.generics import crud
+
+
    class MyCRUDViewGroup(crud.CRUDViewGroup):
      model = 'myapp.models.MyModel'
      form = 'myapp.forms.MyForm'
-     authorize = crud.only_owner_can_write_except_for_admin
+     authorize = only_owner_can_write_except_for_admin
 
 TODO: ``authorize`` メソッドに関する詳細な説明

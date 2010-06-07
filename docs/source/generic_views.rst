@@ -237,21 +237,24 @@ defining ``authorize`` instance method on your own CRUDViewGroup
 subclass. These operations are classified in ``list``, ``show``,
 ``create``, ``update``, ``delete``.
 
-``kay.generics.crud`` module has useful presets for this method, so
+``kay.generics`` package has useful presets for this method, so
 you can choose one of them if you like.
 
-* kay.generics.crud.login_required
-* kay.generics.crud.admin_required
-* kay.generics.crud.only_owner_can_write
-* kay.generics.crud.only_owner_can_write_except_for_admin
+* kay.generics.login_required
+* kay.generics.admin_required
+* kay.generics.only_owner_can_write
+* kay.generics.only_owner_can_write_except_for_admin
 
 An example bellow shows how to use one of these presets:
 
 .. code-block:: python
 
+   from kay.generics import only_owner_can_write_except_for_admin
+   from kay.generics import crud
+
    class MyCRUDViewGroup(crud.CRUDViewGroup):
      model = 'myapp.models.MyModel'
      form = 'myapp.forms.MyForm'
-     authorize = crud.only_owner_can_write_except_for_admin
+     authorize = only_owner_can_write_except_for_admin
 
 TODO: detailed docs about ``authorize`` method.

@@ -61,6 +61,9 @@ from kay.i18n import gettext as _
 from kay.i18n import lazy_gettext
 from kay.routing import ViewGroup
 
+from kay.generics import (
+  OP_LIST, OP_SHOW, OP_CREATE, OP_UPDATE, OP_DELETE
+)
 
 def get_instance_type_name(value):
     """Returns the name of the type of the given instance."""
@@ -205,6 +208,7 @@ PROPERTY_TYPE_TO_XSD_TYPE = {
     get_type_name(db.RatingProperty) : XSD_PREFIX + ":integer",
     KEY_PROPERTY_TYPE : XSD_PREFIX + ":normalizedString"
     }
+
 
 def parse_date_time(dt_str, dt_format, dt_type, allows_microseconds):
     """Returns a datetime/date/time instance parsed from the given string using the given format info."""
@@ -831,6 +835,20 @@ class RESTViewGroup(ViewGroup):
                 actual_endpoint = prefix+actual_endpoint
             ret[actual_endpoint] = getattr(self, endpoint)
         return ret
+
+    def authorize(self, request, operation, obj=None, model_name=None,
+                  prop_name=None):
+        """ Raise AuthorizationError when the operation is not
+        permitted.
+        """
+        return True
+
+    def check_authority(self, request, operation, obj=None, model_name=None,
+                        prop_name=None):
+        try:
+            self.authorize(request, operation, obj, model_name, prop_name)
+        except NotAuthorized, e:
+            raise Forbidden("Access not allowed.")
 
     def metadata(self, request, model_name=None):
         impl = minidom.getDOMImplementation()

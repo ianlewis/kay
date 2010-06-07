@@ -878,6 +878,7 @@ myapp/forms.py:
 
 .. code-block:: python
 
+   from kay.generics import admin_required
    from kay.generics import crud
    from kay.routing import (
      ViewGroup, Rule
@@ -886,7 +887,7 @@ myapp/forms.py:
    class CategoryCRUDViewGroup(crud.CRUDViewGroup):
      model = 'myapp.models.Category'
      form = 'myapp.forms.CategoryForm'
-     authorize = crud.admin_required
+     authorize = admin_required
 
    view_groups = [
      ViewGroup(
