@@ -8,11 +8,13 @@ Kay test urls.
 """
 
 from kay.generics.rest import RESTViewGroup
+from kay.generics import admin_required
 
 class MyRESTViewGroup(RESTViewGroup):
   models = [
     'kay.tests.restapp.models.RestModel',
   ]
+  authorize = admin_required
 
 view_groups = [
   MyRESTViewGroup(),

@@ -1,4 +1,6 @@
 
+import logging
+
 from werkzeug import (
   BaseResponse, Request
 )
@@ -11,6 +13,7 @@ from kay.ext.testutils.gae_test_base import GAETestBase
 from kay.utils import url_for
 
 from kay.tests.restapp.models import RestModel
+logging.getLogger().setLevel(logging.ERROR)
 
 class RestTestCase(GAETestBase):
   KIND_NAME_UNSWAPPED = False
@@ -18,38 +21,98 @@ class RestTestCase(GAETestBase):
   CLEANUP_USED_KIND = True
 
   def setUp(self):
+    try:
+      self.original_user = os.environ['USER_EMAIL']
+      self.original_is_admin = os.environ['USER_IS_ADMIN']
+      del os.environ['USER_EMAIL']
+      del os.environ['USER_IS_ADMIN']
+    except Exception:
+      pass
     s = LazySettings(settings_module='kay.tests.rest_settings')
     app = get_application(settings=s)
     self.client = Client(app, BaseResponse)
 
   def tearDown(self):
-    pass
+    if hasattr(self, "original_user"):
+      os.environ["USER_EMAIL"] = self.original_user
+    if hasattr(self, "original_is_admin"):
+      os.environ["USER_IS_ADMIN"] = self.original_is_admin
 
   def test_rest_json(self):
 
     headers = Headers({"Accept": "application/json"})
 
     response = self.client.get('/rest/metadata', headers=headers)
+    self.assertEqual(response.status_code, 403)
+
+    self.client.test_login(email="test@example.com")
+    response = self.client.get('/rest/metadata', headers=headers)
+    self.assertEqual(response.status_code, 403)
+
+    self.client.test_login(email="test@example.com", is_admin="1")
+    response = self.client.get('/rest/metadata', headers=headers)
     self.assertEqual(response.status_code, 200)
 
+    self.client.test_logout()
+    response = self.client.get('/rest/metadata/RestModel', headers=headers)
+    self.assertEqual(response.status_code, 403)
+
+    self.client.test_login(email="test@example.com")
+    response = self.client.get('/rest/metadata/RestModel', headers=headers)
+    self.assertEqual(response.status_code, 403)
+
+    self.client.test_login(email="test@example.com", is_admin="1")
     response = self.client.get('/rest/metadata/RestModel', headers=headers)
     self.assertEqual(response.status_code, 200)
 
+
+    self.client.test_logout()
+    response = self.client.post(
+      '/rest/RestModel',
+      data='{"RestModel": {"i_prop": 12, "s_prop": "string"}}',
+      content_type="application/json; charset=utf-8")
+    self.assertEqual(response.status_code, 403)
+
+    self.client.test_login(email="test@example.com")
+    response = self.client.post(
+      '/rest/RestModel',
+      data='{"RestModel": {"i_prop": 12, "s_prop": "string"}}',
+      content_type="application/json; charset=utf-8")
+    self.assertEqual(response.status_code, 403)
+
+    self.client.test_login(email="test@example.com", is_admin="1")
     response = self.client.post(
       '/rest/RestModel',
       data='{"RestModel": {"i_prop": 12, "s_prop": "string"}}',
       content_type="application/json; charset=utf-8")
     self.assertEqual(response.status_code, 200)
+
     key = response.data
     elm = RestModel.get(key)
     self.assertEqual(elm.s_prop, "string")
     self.assertEqual(elm.i_prop, 12)
 
+    self.client.test_logout()
+    response = self.client.post(
+      '/rest/RestModel/%s' % key,
+      data='{"RestModel": {"i_prop": 14}}',
+      content_type="application/json; charset=utf-8")
+    self.assertEqual(response.status_code, 403)
+
+    self.client.test_login(email="test@example.com")
+    response = self.client.post(
+      '/rest/RestModel/%s' % key,
+      data='{"RestModel": {"i_prop": 14}}',
+      content_type="application/json; charset=utf-8")
+    self.assertEqual(response.status_code, 403)
+
+    self.client.test_login(email="test@example.com", is_admin="1")
     response = self.client.post(
       '/rest/RestModel/%s' % key,
       data='{"RestModel": {"i_prop": 14}}',
       content_type="application/json; charset=utf-8")
     self.assertEqual(response.status_code, 200)
+
     key2 = response.data
     self.assertEqual(key, key2)
     elm = RestModel.get(key)
@@ -85,9 +148,21 @@ class RestTestCase(GAETestBase):
     self.assertEqual(response.status_code, 200)
     self.assertEqual(response.data, "14")
 
+    self.client.test_logout()
+    response = self.client.delete('/rest/RestModel/%s' % key,
+                                  headers=headers)
+    self.assertEqual(response.status_code, 403)
+
+    self.client.test_login(email="test@example.com")
+    response = self.client.delete('/rest/RestModel/%s' % key,
+                                  headers=headers)
+    self.assertEqual(response.status_code, 403)
+
+    self.client.test_login(email="test@example.com", is_admin="1")
     response = self.client.delete('/rest/RestModel/%s' % key,
                                   headers=headers)
     self.assertEqual(response.status_code, 200)
+
 
     response = self.client.get('/rest/RestModel/%s' % key,
                                headers=headers)
@@ -95,6 +170,7 @@ class RestTestCase(GAETestBase):
 
 
   def test_rest_operations(self):
+    self.client.test_login(email="test@example.com", is_admin="1")
     response = self.client.get('/rest/metadata')
     self.assertEqual(response.status_code, 200)
 

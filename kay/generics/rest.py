@@ -858,11 +858,15 @@ class RESTViewGroup(ViewGroup):
                 model_handler = self.get_model_handler(model_name)
                 if(not model_handler):
                     return None
+                self.check_authority(request, OP_LIST, obj=None,
+                                     model_name=model_name, prop_name=None)
                 doc = impl.createDocument(XSD_NS, XSD_SCHEMA_NAME, None)
                 doc.documentElement.attributes[XSD_ATTR_XMLNS] = XSD_NS
                 model_handler.write_xsd_metadata(doc.documentElement,
                                                  model_name)
             else:
+                self.check_authority(request, OP_LIST, obj=None,
+                                     model_name=None, prop_name=None)
                 doc = impl.createDocument(None, TYPES_EL_NAME, None)
                 types_el = doc.documentElement
                 for model_name in self.model_handlers.iterkeys():
@@ -876,6 +880,8 @@ class RESTViewGroup(ViewGroup):
     def prop(self, request, model_name=None, key=None, prop=None):
         model_handler = self.get_model_handler(model_name)
         model = model_handler.get(key)
+        self.check_authority(request, OP_SHOW, obj=model,
+                             model_name=model_name, prop_name=prop)
         prop_handler = model_handler.get_property_handler(prop)
         prop_value = prop_handler.get_value(model)
         content_type = request.accept_mimetypes.best
@@ -895,6 +901,8 @@ class RESTViewGroup(ViewGroup):
         if real_method == "GET":
             model_handler = self.get_model_handler(model_name)
             model = model_handler.get(key)
+            self.check_authority(request, OP_SHOW, obj=model,
+                                 model_name=model_name, prop_name=None)
             if model is None:
                 return NotFound()
             return self.out_to_response(
@@ -906,6 +914,9 @@ class RESTViewGroup(ViewGroup):
             return self.update_impl(request, model_name, key, True)
         elif real_method == "DELETE":
             model_handler = self.get_model_handler(model_name)
+            model = model_handler.get(key)
+            self.check_authority(request, OP_DELETE, obj=model,
+                                 model_name=model_name, prop_name=None)
             try:
                 db.delete(db.Key(key))
                 return Response("OK")
@@ -925,6 +936,8 @@ class RESTViewGroup(ViewGroup):
         if real_method == "POST":
             return self.update_impl(request, model_name, None, False)
         elif real_method == "GET":
+            self.check_authority(request, OP_LIST, obj=None,
+                                 model_name=model_name, prop_name=None)
             return self.get_all_impl(request, model_name)
 
     def get_all_impl(self, request, model_name):
@@ -1059,6 +1072,13 @@ class RESTViewGroup(ViewGroup):
             finally:
                 doc.unlink()
 
+        if not model_key:
+            self.check_authority(request, OP_CREATE, obj=None,
+                                 model_name=model_name, prop_name=None)
+        else:
+            for model in models:
+                self.check_authority(request, OP_UPDATE, obj=model,
+                                     model_name=model_name, prop_name=None)
         db.put(models)
 
         # if input was not a list, convert single element models list
