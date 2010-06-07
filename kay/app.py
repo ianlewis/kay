@@ -26,6 +26,7 @@ from werkzeug.routing import (
   Map, Submount, RequestRedirect, EndpointPrefix
 )
 from werkzeug.utils import import_string
+from werkzeug.urls import url_encode
 from jinja2 import (
   Environment, Undefined,
 )
@@ -310,7 +311,12 @@ class KayApp(object):
     if self._request_middleware is None:
       self.load_middleware()
     try:
-      endpoint, values = local.url_adapter.match()
+      try:
+        endpoint, values = local.url_adapter.match()
+      except RequestRedirect, e:
+        if request.args:
+          e.new_url += '?' + url_encode(request.args)
+        raise e
       if self.app_settings.IS_MARKETPLACE_APP:
         if values.has_key(settings.MARKETPLACE_DOMAIN_NAME_KEY):
           setattr(request, settings.MARKETPLACE_DOMAIN_NAME_KEY,
