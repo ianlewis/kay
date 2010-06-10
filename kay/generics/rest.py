@@ -800,9 +800,9 @@ class RESTViewGroup(ViewGroup):
         Rule("/$prefix/<model_name>/<key>/<prop>", endpoint="$prefix/prop"),
     ])
 
-    def __init__(self, models=None, name="rest", **kwargs):
+    def __init__(self, models=None, prefix="rest", **kwargs):
       super(RESTViewGroup, self).__init__(**kwargs)
-      self.name = name
+      self.prefix = prefix
       self._models = models or self.models
       self.models_dict = {}
       self.model_handlers = {}
@@ -824,13 +824,12 @@ class RESTViewGroup(ViewGroup):
                 model_name, self.models_dict[model_name])
 
     def _get_rules(self):
-        return [self.rest_rule_template(prefix=self.name)]
+        return [self.rest_rule_template(prefix=self.prefix)]
 
     def _get_views(self, prefix=None):
-        self.prefix = prefix
         ret = {}
         for endpoint in ["metadata", "model", "entity", "prop"]:
-            actual_endpoint = self.name + "/" + endpoint
+            actual_endpoint = self.prefix + "/" + endpoint
             if prefix:
                 actual_endpoint = prefix+actual_endpoint
             ret[actual_endpoint] = getattr(self, endpoint)

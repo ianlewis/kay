@@ -13,7 +13,6 @@ from kay.ext.testutils.gae_test_base import GAETestBase
 from kay.utils import url_for
 
 from kay.tests.restapp.models import RestModel
-logging.getLogger().setLevel(logging.DEBUG)
 
 class RestJSONTestCase(GAETestBase):
   KIND_NAME_UNSWAPPED = False

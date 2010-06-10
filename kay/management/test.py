@@ -54,6 +54,7 @@ def setup_env():
   os.environ['USER_EMAIL'] = ''
   os.environ['SERVER_NAME'] = 'localhost'
   os.environ['SERVER_PORT'] = '80'
+  logging.getLogger().setLevel(logging.ERROR)
 
 
 def setup_stub():
