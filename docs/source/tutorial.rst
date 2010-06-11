@@ -695,7 +695,7 @@ myapp/models.py:
 
    class Comment(db.Model):
      user = kay.db.OwnerProperty()
-     category = db.ReferenceProperty(Category)
+     category = db.ReferenceProperty(Category, collection_name='comments')
      body = db.StringProperty(required=True, verbose_name=u'Your Comment')
      created = db.DateTimeProperty(auto_now_add=True)
 

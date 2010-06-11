@@ -26,11 +26,6 @@ kay.auth
 
 * Incorporate Ian's ChoiceBackend.
 
-kay.sessions
-------------
-
-* Implement lazy loading session data(as well as request.user)
-
 kay.utils.forms
 ---------------
 
