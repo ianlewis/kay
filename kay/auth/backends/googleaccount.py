@@ -20,13 +20,6 @@ from kay.auth.models import AnonymousUser
 class GoogleBackend(object):
   def get_user(self, request):
     try:
-      dot = settings.AUTH_USER_MODEL.rfind('.')
-      auth_module = settings.AUTH_USER_MODEL[:dot]
-      import sys
-      try:
-        del(sys.modules[auth_module])
-      except KeyError:
-        pass
       auth_model_class = import_string(settings.AUTH_USER_MODEL)
     except (ImportError, AttributeError), e:
       raise ImproperlyConfigured, \
