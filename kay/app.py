@@ -162,7 +162,7 @@ class KayApp(object):
             self.views.update(view_group.get_views(endpoint_prefix))
           except Exception, e:
             logging.error("Failed to mount ViewGroup: %s", e)
-            raise InternalServerError(e)
+            raise
       else:
         make_rules = getattr(url_mod, 'make_rules', None)
         if make_rules:
