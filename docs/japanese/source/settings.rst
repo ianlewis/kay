@@ -66,15 +66,26 @@ Kayアプリケーションの基本的な設定はプロジェクトディレ�
    セッション情報の有効期限を設定します。デフォルト値は ``3600`` (1時間) です。
 
    
+.. attribute:: SESSION_STORE
+
+   セッションの格納に使用する実装を選びます。有効な値は ``kay.sessions.sessionstore.GAESessionStore`` か ``kay.sessions.sessionstore.SecureCookieSessionStore`` のどちらかです。
+
+
 .. attribute:: LANG_COOKIE_AGE
 
    表示言語用のCookieの有効期限を設定します。デフォルト値は上述の ``COOKIE_AGE`` となっています。
 
-   .. seealso:: :doc:`i18n`
    
 .. attribute:: LANG_COOKIE_NAME
 
    表示言語のCookieの名称を設定します。デフォルト値は ``hl`` です。国際化が有効になっている場合、KayはこのCookieに設定されている言語でサイトを表示します。設定がない場合はブラウザの Accept-Language 設定から使用する言語を決定します。
+
+   .. seealso:: :doc:`i18n`
+
+   
+.. attribute:: FLASH_COOKIE_NAME:
+
+   フラッシュメッセージの格納に使用するクッキー名です。デフォルト値は ``KAY_FLASH`` です。
 
    
 .. attribute:: CACHE_MIDDLEWARE_SECONDS
@@ -129,6 +140,10 @@ Kayアプリケーションの基本的な設定はプロジェクトディレ�
         ('Mary', 'mary@example.com')
       )
 
+	  
+.. attribute:: NOTIFY_ERRORS_TO_GAE_ADMINS
+
+   このアトリビュートが True にセットされていて(デフォルトが True です)、アプリケーションに例外が発生すると、Kay はアプリケーションの管理者に対してメールを送信します。この機能はデバッグをオフ(``DEBUG=False``)にした時のみ動きます。また、 ``DEFAULT_MAIL_FROM`` を設定して送信元のメールアドレスを指定する必要があります。
 	  
 .. attribute:: TEMPLATE_DIRS
 
@@ -248,4 +263,23 @@ Kayアプリケーションの基本的な設定はプロジェクトディレ�
 .. attribute:: USE_DB_HOOK
 
    DBフックの有効/無効を設定します。Djangoのシグナルに相当します。DBに対して何らかのアクションがあった場合に起動させる処理がある場合は ``True`` を設定します。DBフックについてあまり詳しくない場合は ``False`` を指定してください。
+
+.. attribute:: DEFAULT_MAIL_FROM
+
+   ここで設定した e-mail アドレスがシステムが送信するメールの FROM として使用されます。
+
+.. attribute:: PER_DOMAIN_SETTINGS
+
+   この辞書を適切に設定すると、リクエストのドメインパートに応じて設定ファイルを変更する事ができます。キーとしてドメイン名を、値として設定ファイルのモジュール名を設定します。
+
+   簡単な例を示します
+
+   .. code-block:: python
+
+
+   PER_DOMAIN_SETTINGS = {
+     'foo.example.com': 'foo_settings',
+     'bar.example.com': 'bar_settings',
+   }
+
 

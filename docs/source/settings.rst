@@ -70,7 +70,7 @@ Items
 
    The cookie's age. The default is ``1209600`` seconds (2 weeks).
 
-   
+
 .. attribute:: COOKIE_NAME
 
    The cookie's name. The default is ``KAY_SESSION``.
@@ -80,18 +80,40 @@ Items
 
    The session information's age. The default is ``3600`` seconds (1 hour).
 
+
+.. attribute:: SESSION_STORE
+
+   Choose an implementation for storing a session. A valid value is
+   one of 'kay.sessions.sessionstore.GAESessionStore' or
+   'kay.sessions.sessionstore.SecureCookieSessionStore'.
+
    
+.. attribute:: LANG_COOKIE_AGE
+
+   The age of a cookie for determining which language to use. The
+   default value is the same as ``COOKIE_AGE`` above.
+
+
 .. attribute:: LANG_COOKIE_NAME
 
-   The cookie's name for the language. The default is ``hl``.
-   If i18n is enabled, Kay will display pages in the language specified with this cookie.
-   Otherwise Kay identifies the language from Accept-Language setting of the browser.
+   The cookie's name for the language. The default is ``hl``.  If i18n
+   is enabled, Kay will display pages in the language specified with
+   this cookie.  Otherwise Kay identifies the language from
+   Accept-Language setting of the browser.
+
+   .. seealso:: :doc:`i18n`
+
+
+.. attribute:: FLASH_COOKIE_NAME:
+
+   The name of a cookie for storing flash message. The default is
+   ``KAY_FLASH``.
 
    
 .. attribute:: CACHE_MIDDLEWARE_SECONDS
 
-   Specify how long to remain caches of HTML responses that views returned.
-   The default is ``3600`` (1 hour).
+   Specify how long to remain caches of HTML responses that views
+   returned.  The default is ``3600`` (1 hour).
 
    
 .. attribute:: CACHE_MIDDLEWARE_NAMESPACE
@@ -106,8 +128,9 @@ Items
    
 .. attribute:: ADD_APP_PREFIX_TO_KIND
 
-   If set to ``True``, you can add an application prefix to ``db.Model.kind()`` method.
-   The value of ``kind()`` will set to be ``applicationname_modelname`` (uncapitalized).
+   If set to ``True``, you can add an application prefix to
+   ``db.Model.kind()`` method.  The value of ``kind()`` will set to be
+   ``applicationname_modelname`` (uncapitalized).
 
 .. attribute:: FORMS_USE_XHTML
 
@@ -133,9 +156,12 @@ Items
    
 .. attribute:: ADMINS
 
-   Specify the administrator's username and email address in this tuple.
-   If some exception occurs on the server, Kay send the traceback to this email address.
-   This function works when you disable Debug ( ``DEBUG=False`` ).
+   OBSOLETE
+
+   Specify the administrator's username and email address in this
+   tuple.  If any exception occurs on the server, Kay send the
+   traceback to this email address.  This function works when you
+   disable debugging(``DEBUG=False``).
 
    (setting example)
 
@@ -146,6 +172,14 @@ Items
         ('Mary', 'mary@example.com')
       )
 
+
+.. attribute:: NOTIFY_ERRORS_TO_GAE_ADMINS
+
+   If this attribute is set to True (True by default), and when any
+   exception occurs on the server, Kay send the traceback to
+   administrators of the application. This feature works only when you
+   disable debugging(``DEBUG=False``). You need to configure sender
+   e-mail address of this mail by setting ``DEFAULT_MAIL_FROM``.
 	  
 .. attribute:: TEMPLATE_DIRS
 
@@ -160,7 +194,11 @@ Items
 
    .. seealso:: :doc:`i18n`
 
-   
+
+.. attribute:: DEFAULT_LANG
+
+   TODO
+
 .. attribute:: INSTALLED_APPS
 
    This tupple must contain application names you want to
@@ -258,7 +296,28 @@ Items
    
 .. attribute:: USE_DB_HOOK
 
-   If set to ``True``, DB hook is enabled. DB hook is similar to Django's signal.
-   You can run some processes when datastore is accessed.
-   If you are unfamiliar with DB hook, you should set this to ``False``.
-   The default is ``False``.
+   If set to ``True``, DB hook is enabled. DB hook is similar to
+   Django's signal.  You can run some processes when datastore is
+   accessed.  If you are unfamiliar with DB hook, you should set this
+   to ``False``.  The default is ``False``.
+
+.. attribute:: DEFAULT_MAIL_FROM
+
+   The e-mail address configured here is used for FROM address of
+   e-mails sent by Kay.
+
+.. attribute:: PER_DOMAIN_SETTINGS
+
+   If you define this dictionary appropriately, you can change
+   settings module by a domain part of a request. You need to set
+   domain names as its keys, and module name for its values.
+
+   Here is an example.
+
+   .. code-block:: python
+
+
+   PER_DOMAIN_SETTINGS = {
+     'foo.example.com': 'foo_settings',
+     'bar.example.com': 'bar_settings',
+   }
