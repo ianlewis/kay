@@ -798,9 +798,13 @@ myapp/models.py:
 
 * GAE にデプロイしたアプリに対して実行するには
 
+.. code-block:: bash
+
   $ python manage.py create_categories
 
 * 起動している開発用サーバーに対して実行するには
+
+.. code-block:: bash
 
   $ python manage.py create_categories -h localhost:8080 --no-secure
 

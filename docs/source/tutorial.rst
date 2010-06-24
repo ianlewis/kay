@@ -801,9 +801,13 @@ You can add 3 entities of ``Category`` as follows:
 
 * against appspot
 
+.. code-block:: bash
+
   $ python manage.py create_categories
 
 * against devserver
+
+.. code-block:: bash
 
   $ python manage.py create_categories -h localhost:8080 --no-secure
 
