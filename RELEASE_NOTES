@@ -5,8 +5,10 @@ Copyright 2009 by Accense Technology, Inc
 
 Kay framework - Release Notes
 
-Kay-0.10.0 - May, 2010
+Kay-1.0.0 - July 7th 2010 
 =============================
+
+- Model driven RESTful API auto generation
 
 - Model driven CRUD+list auto generation
 
