@@ -180,8 +180,11 @@ def get_css_urls(tag_name, auto_compile=False):
 
   css_config = get_css_config(tag_name)
   if not css_config['enabled']:
-    return [path if re.match(ur'https?://', path) else '/%s' %
-            path for path in css_config['source_files']]
+    if css_config['source_urls']:
+      return css_config['source_urls']
+    else:
+      return [path if re.match(ur'https?://', path) else '/%s' %
+              path for path in css_config['source_files']]
 
   if auto_compile:
     compile_css(tag_name)
@@ -318,8 +321,11 @@ def get_js_config(tag_name):
 def get_js_urls(tag_name, auto_compile=False):
   js_config = get_js_config(tag_name)
   if not js_config['enabled']:
-    return [path if re.match(ur'https?://', path) else '/%s' %
-            path for path in js_config['source_files']]
+    if js_config['source_urls']:
+      return js_config['source_urls']
+    else:
+      return [path if re.match(ur'https?://', path) else '/%s' %
+              path for path in js_config['source_files']]
 
   if auto_compile:
     compile_js(tag_name)

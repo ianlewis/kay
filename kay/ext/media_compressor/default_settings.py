@@ -12,6 +12,7 @@ COMPILE_MEDIA_CSS = {
     'arguments': '--template=high',
   },
   'source_files': (),
+  'source_urls': (),
   'output_filename': None,
 }
 
@@ -39,6 +40,7 @@ COMPILE_MEDIA_JS = {
     'path': '/usr/local/closure-compiler/compiler.jar', # path to compiler.jar
   },
   'source_files': (),
+  'source_urls': (),
   'output_filename': None,
 }
 
