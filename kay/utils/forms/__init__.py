@@ -32,6 +32,7 @@ except ImportError:
   from sha import new as sha1
 
 from werkzeug import escape, cached_property, MultiDict
+from jinja2.utils import Markup
 from google.appengine.ext import db
 
 from kay.utils import get_request, url_for
@@ -896,7 +897,10 @@ class FormWidget(MappingWidget):
       body = '<div style="display: none">%s</div>%s' % (hidden, body)
 
     if with_errors and not freeze:
-      body = self.errors() + body
+      if isinstance(body, Markup):
+        body = Markup(self.errors()) + body
+      else:
+        body = self.errors() + body
     if self.is_multipart:
       attrs['enctype'] = 'multipart/form-data'
     return html.form(body, action=action, method=method, **attrs)
