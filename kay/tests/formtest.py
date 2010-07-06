@@ -30,9 +30,9 @@ from kay.tests.models import (
   TestModel, TestModel2, TestModelForm, ModelFormTestModel, ModelFormTestForm,
   ValidationTestForm,
 )
+from kay.tests.utils import get_env
 from kay.ext.testutils.gae_test_base import GAETestBase
 
-from base import get_env
 
 class ModelFormTest(GAETestBase):
   KIND_NAME_UNSWAPPED = False
