@@ -743,6 +743,21 @@ several class attributes for configuring your ModelForm as follows:
   define help texts which will be displayed with forms as a dictionary
   with field names as keys.
 
+
+Lastly, you need to change how to save your entity.
+
+.. code-block:: python
+
+       comment = Comment(body=form['body'])
+       comment.put()
+
+Change above these lines in myapp/views.py to as follows:
+
+.. code-block:: python
+
+       comment = form.save()
+
+
 Custom management scripts
 =========================
 

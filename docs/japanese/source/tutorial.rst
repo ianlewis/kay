@@ -740,6 +740,21 @@ myapp/models.py:
   フォームフィールドにヘルプ文字列を与える時に使用します。フィールドの
   名前をキーにした辞書として設定します。
 
+
+最後にエンティティの保存方法を変更します。
+
+.. code-block:: python
+
+       comment = Comment(body=form['body'])
+       comment.put()
+
+上記の2行を下記のように書き換えましょう。
+
+.. code-block:: python
+
+       comment = form.save()
+
+
 管理用スクリプト
 ================
 
