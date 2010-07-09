@@ -741,7 +741,7 @@ myapp/models.py:
   名前をキーにした辞書として設定します。
 
 
-最後にエンティティの保存方法を変更します。
+最後に myapp/views.py 内、エンティティの保存方法を変更します。
 
 .. code-block:: python
 

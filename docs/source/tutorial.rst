@@ -744,7 +744,7 @@ several class attributes for configuring your ModelForm as follows:
   with field names as keys.
 
 
-Lastly, you need to change how to save your entity.
+Lastly, you need to change how to save your entity in your myapp/views.py.
 
 .. code-block:: python
 
