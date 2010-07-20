@@ -153,8 +153,8 @@ class KayApp(object):
           logging.error("Failed to import app '%s.urls'." % app)
           logging.debug("Reason:\n%s" % self._get_traceback(sys.exc_info()))
           raise
+      rules = []
       if hasattr(url_mod, 'view_groups'):
-        rules = []
         for view_group in getattr(url_mod, 'view_groups'):
           try:
             endpoint_prefix = app.split(".")[-1]
