@@ -239,7 +239,7 @@ def object_type_repr(obj):
     if obj.__class__.__module__ == '__builtin__':
         name = obj.__name__
     else:
-        name = obj.__class__.module__ + '.' + obj.__name__
+        name = obj.__class__.__module__ + '.' + obj.__name__
     return '%s object' % name
 
 
