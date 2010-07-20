@@ -39,6 +39,7 @@ from google.appengine.api import urlfetch_stub
 from google.appengine.api.memcache import memcache_stub
 from google.appengine.api import user_service_stub
 from google.appengine.api.labs.taskqueue import taskqueue_stub
+from google.appengine.api.images import images_stub
 
 from kay.conf import settings
 
@@ -74,6 +75,9 @@ def setup_stub():
 
   apiproxy_stub_map.apiproxy.RegisterStub(
     'taskqueue', taskqueue_stub.TaskQueueServiceStub())
+
+  apiproxy_stub_map.apiproxy.RegisterStub(
+    'images', images_stub.ImagesServiceStub())
 
 
 def runtest(target='', verbosity=0):
