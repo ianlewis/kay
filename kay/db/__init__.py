@@ -1,10 +1,18 @@
 
 from google.appengine.ext import db
+from werkzeug.utils import import_string
 
+from kay.conf import settings
 from kay.utils import local
 from kay.utils import forms
 
 class OwnerProperty(db.ReferenceProperty):
+
+  def __init__(self, **kwargs):
+    if not 'reference_class' in kwargs:
+      kwargs['reference_class'] = import_string(settings.AUTH_USER_MODEL)
+    super(OwnerProperty, self).__init__(**kwargs) 
+
   def default_value(self):
     if hasattr(local, 'request') and hasattr(local.request, 'user'):
       if local.request.user.is_anonymous():
