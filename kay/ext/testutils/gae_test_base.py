@@ -41,7 +41,10 @@ if not is_in_production():
     from google.appengine.api import user_service_stub
     from google.appengine.api.memcache import memcache_stub
     from google.appengine.api.labs.taskqueue import taskqueue_stub
-    from google.appengine.api.images import images_stub
+    try:
+        from google.appengine.api.images import images_stub
+    except ImportError:
+        pass
 
     AUTH_DOMAIN = 'gmail.com'
 
