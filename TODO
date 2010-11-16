@@ -11,6 +11,8 @@ Documentation
  * Template strategy
  * registration app
  * jsonrpc2 feature
+ * initial keyword argument of Form class
+ * how to add custom attribute on arbitrary form widgets
 
  * a description about disable_recording() in tearDown
 
