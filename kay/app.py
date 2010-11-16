@@ -90,7 +90,25 @@ def get_app_tailname(app):
     return app[dot+1:]
   else:
     return app
-  
+
+
+class LazyJinja2Env(object):
+  def __get__(self, kay_app, obj_type=None):
+    if not hasattr(kay_app, '_jinja2_env'):
+      kay_app.init_jinja2_environ()
+
+    if hasattr(kay_app, 'active_translations'):
+      if kay_app.app_settings.USE_I18N:
+        kay_app._jinja2_env.install_gettext_translations(
+          kay_app.active_translations)
+      else:
+        kay_app._jinja2_env.globals.update(
+          _=lambda x: x,
+          gettext=lambda x: x,
+          ngettext=lambda s, p, n: (n != 1 and (p,) or (s,))[0]
+        )
+    return kay_app._jinja2_env
+
 
 class KayApp(object):
 
@@ -101,7 +119,7 @@ class KayApp(object):
     self._request_middleware = self._response_middleware = \
         self._view_middleware = self._exception_middleware = None
     self.auth_backend = None
-    self.init_jinja2_environ()
+    self.__class__.jinja2_env = LazyJinja2Env()
 
   def get_mount_point(self, app):
     if app == 'kay._internal':
@@ -236,20 +254,20 @@ class KayApp(object):
       jinja2_ext.append(ext)
     env_dict.update(dict(loader = loader, undefined=NullUndefined,
                          extensions=jinja2_ext))
-    self.jinja2_env = Environment(**env_dict)
+    self._jinja2_env = Environment(**env_dict)
     for key, filter_str in self.app_settings.JINJA2_FILTERS.iteritems():
       try: 
         func = import_string(filter_str)
       except (ImportError, AttributeError):
         logging.warn('Cannot import %s.' % filter_str)
         continue
-      if self.jinja2_env.filters.has_key(key):
+      if self._jinja2_env.filters.has_key(key):
         logging.warn('Key "%s" has already defined, skipped.' % key)
         continue
       if not callable(func):
         logging.warn('%s is not a callable.' % filter_str)
         continue
-      self.jinja2_env.filters[key] = func
+      self._jinja2_env.filters[key] = func
 
   def load_middleware(self):
     self._response_middleware = []
@@ -296,16 +314,10 @@ class KayApp(object):
         translations_cache["trans:%s:%s" %
                      (self.app_settings.APP_NAME, lang)] = translations
       self.active_translations = translations
-      self.jinja2_env.install_gettext_translations(translations)
     else:
       from kay.i18n import KayNullTranslations
       lang = None
       self.active_translations = KayNullTranslations()
-      self.jinja2_env.globals.update(
-        _=lambda x: x,
-        gettext=lambda x: x,
-        ngettext=lambda s, p, n: (n != 1 and (p,) or (s,))[0]
-      )
     request.lang = lang
 
     if self._request_middleware is None:
