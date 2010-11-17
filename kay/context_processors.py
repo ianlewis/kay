@@ -9,8 +9,17 @@ Kay context processors.
 :license: BSD, see LICENSE for more details.
 """
 
-from kay.utils import url_for, reverse, create_login_url, create_logout_url
+from kay.utils import (
+  url_for, reverse, create_login_url, create_logout_url,
+  get_timezone, to_local_timezone, to_utc,
+)
 from kay.conf import settings
+
+
+def timezone_functions(request):
+  return {"get_timezone": get_timezone,
+          "to_local_timezone": to_local_timezone,
+          "to_utc": to_utc}
 
 def request(request):
   return {"request": request}
