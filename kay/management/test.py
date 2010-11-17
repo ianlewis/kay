@@ -79,8 +79,11 @@ def setup_stub():
   apiproxy_stub_map.apiproxy.RegisterStub(
     'taskqueue', taskqueue_stub.TaskQueueServiceStub())
 
-  apiproxy_stub_map.apiproxy.RegisterStub(
-    'images', images_stub.ImagesServiceStub())
+  try:
+    apiproxy_stub_map.apiproxy.RegisterStub(
+      'images', images_stub.ImagesServiceStub())
+  except NameError:
+    pass
 
 
 def runtest(target='', verbosity=0):
