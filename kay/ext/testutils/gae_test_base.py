@@ -94,7 +94,10 @@ def get_dev_apiproxy():
     _apiproxy.RegisterStub('mail', mail_stub.MailServiceStub()) 
     _apiproxy.RegisterStub('memcache', memcache_stub.MemcacheServiceStub()) 
     _apiproxy.RegisterStub('taskqueue', taskqueue_stub.TaskQueueServiceStub()) 
-    _apiproxy.RegisterStub('images', images_stub.ImagesServiceStub())
+    try:
+      _apiproxy.RegisterStub('images', images_stub.ImagesServiceStub())
+    except NameError:
+      pass
 
     return _apiproxy
 
