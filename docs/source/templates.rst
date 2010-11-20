@@ -54,6 +54,9 @@ with the name langugage_code.
 
 Adds the current :attr:`settings.MEDIA_URL` value to the template context with the name media_url.
 
+.. function:: timezone_functions()
+
+Adds a number of useful timezone related functions to the template context (:func:`get_timezone <kay.utils.get_timezone>`, :func:`to_local_timezone <kay.utils.to_local_timezone>`, :func:`to_utc <kay.utils.to_utc>`)
 
 Template Loading
 --------------------------
