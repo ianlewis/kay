@@ -41,6 +41,10 @@ template context に ``request`` の名前で ``Request`` オブジェクトを�
 
 ``media_url`` という名前で :attr:`settings.MEDIA_URL` の値を追加します。
 
+.. function:: timezone_functions()
+
+テンプレートコンテキストにいくつかの便利な時間帯関係の関数を追加します。(:func:`get_timezone <kay.utils.get_timezone>`, :func:`to_local_timezone <kay.utils.to_local_timezone>`, :func:`to_utc <kay.utils.to_utc>`)
+
 テンプレートの読み込み
 ----------------------
 
