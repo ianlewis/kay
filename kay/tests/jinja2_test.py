@@ -13,6 +13,8 @@ class Jinja2TestCase(GAETestBase):
     self.app = get_application(settings=s)
 
   def test_lazy_jinja2(self):
-    self.assertFalse(hasattr(self.app.app, '_jinja2_env'), "Jinja2 environment is loaded to early.")
+    self.assertFalse(hasattr(self.app.app, '_jinja2_env'),
+        "Jinja2 environment is loaded to early.")
     self.assertTrue(self.app.app.jinja2_env)
-    self.assertTrue(hasattr(self.app.app, '_jinja2_env'), "Jinja2 environment is not loaded")
+    self.assertTrue(hasattr(self.app.app, '_jinja2_env'),
+        "Jinja2 environment is not loaded")
